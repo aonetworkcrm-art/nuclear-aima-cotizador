@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuclear AIMA · Cotizador</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #141416;
+    --bg3: #1c1c1f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --muted: #7a7875;
+    --accent: #c9a96e;
+    --accent2: #e8c98a;
+    --danger: #e05c5c;
+    --success: #4cad7c;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px;
+    --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  /* ── SCREEN SYSTEM ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ── LANDING ── */
+  #screen-landing {
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%), var(--bg);
+  }
+  .landing-wrap { text-align: center; padding: 2rem; max-width: 440px; width: 100%; }
+  .logo-mark { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #c9a96e, #8b6c3a); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 24px; font-weight: 700; color: #0d0d0f; letter-spacing: -1px; }
+  .landing-title { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; }
+  .vip-badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05)); border: 0.5px solid rgba(201,169,110,0.3); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 1.25rem; letter-spacing: 0.02em; }
+  .landing-sub { font-size: 14px; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.6; }
+  .btn-group { display: flex; flex-direction: column; gap: 10px; }
+  .btn { padding: 13px 24px; border-radius: var(--r); border: none; cursor: pointer; font-size: 14px; font-weight: 500; font-family: var(--font); transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-ghost:hover { background: var(--bg3); border-color: rgba(255,255,255,0.25); }
+  .btn-sm { padding: 8px 16px; font-size: 13px; }
+  .btn-danger { background: rgba(224,92,92,0.15); color: var(--danger); border: 0.5px solid rgba(224,92,92,0.3); }
+  .btn-danger:hover { background: rgba(224,92,92,0.25); }
+  .btn-success { background: var(--success); color: #fff; }
+  .btn-success:hover { opacity: 0.9; }
+
+  /* ── ADMIN LOGIN ── */
+  #screen-admin-login {
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 60%), var(--bg);
+  }
+  .login-wrap { width: 100%; max-width: 400px; padding: 2rem; }
+  .login-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 2rem; }
+  .login-head { margin-bottom: 1.5rem; }
+  .login-head h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .login-head p { font-size: 13px; color: var(--muted); }
+  .field { margin-bottom: 1rem; }
+  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .field input { width: 100%; background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r); padding: 10px 14px; color: var(--text); font-size: 14px; font-family: var(--font); outline: none; transition: border 0.15s; }
+  .field input:focus { border-color: var(--accent); }
+  .error-msg { font-size: 12px; color: var(--danger); margin-top: 8px; display: none; }
+  .back-link { display: block; text-align: center; margin-top: 1rem; font-size: 13px; color: var(--muted); cursor: pointer; }
+  .back-link:hover { color: var(--text); }
+
+  /* ── KEY SETUP ── */
+  #screen-key-setup {
+    align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 60%), var(--bg);
+  }
+  .key-setup-wrap { width: 100%; max-width: 520px; padding: 2rem; }
+  .key-setup-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 2rem; }
+  .key-setup-head { text-align: center; margin-bottom: 1.5rem; }
+  .key-setup-head h2 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+  .key-setup-head p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .key-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
+  .key-item { display: flex; align-items: center; justify-content: space-between; background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r); padding: 10px 14px; }
+  .key-item-code { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.5px; user-select: all; }
+  .key-item-label { font-size: 11px; color: var(--muted); }
+  .key-setup-footer { text-align: center; }
+  .key-setup-footer p { font-size: 12px; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+
+  /* ── KEY MANAGEMENT (ADMIN) ── */
+  .key-mgmt { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 1.25rem; margin-bottom: 1.5rem; }
+  .key-mgmt h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 12px; }
+  .key-mgmt-item { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04); }
+  .key-mgmt-item:last-child { border-bottom: none; }
+  .key-mgmt-code { font-family: var(--mono); font-size: 12px; color: var(--text); user-select: all; word-break: break-all; }
+  .key-mgmt-actions { display: flex; gap: 6px; }
+
+  /* ── APP SHELL (admin + client) ── */
+  .app-shell { display: flex; flex-direction: column; min-height: 100vh; }
+  .topbar { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 0 1.5rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  .topbar-logo { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+  .topbar-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  .badge-admin { background: rgba(201,169,110,0.15); color: var(--accent); border: 0.5px solid rgba(201,169,110,0.3); }
+  .badge-client { background: rgba(76,173,124,0.12); color: var(--success); border: 0.5px solid rgba(76,173,124,0.3); }
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+  .app-body { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 2rem 1.5rem; }
+
+  /* ── FILTERS ── */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--border); background: transparent; color: var(--muted); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: var(--font); }
+  .filter-btn:hover { border-color: var(--border2); color: var(--text); }
+  .filter-btn.active { background: var(--accent); color: #0d0d0f; border-color: var(--accent); }
+
+  /* ── SERVICE TABLE ── */
+  .section-block { margin-bottom: 2rem; }
+  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
+  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .section-title { font-size: 13px; font-weight: 500; }
+  .section-count { font-size: 11px; color: var(--muted); background: var(--bg3); padding: 2px 8px; border-radius: 10px; }
+
+  .service-table { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); overflow: hidden; }
+  .service-table table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+  .service-table thead tr { border-bottom: 0.5px solid var(--border); }
+  .service-table thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  .service-table thead th.r { text-align: right; }
+  .service-table tbody tr { border-bottom: 0.5px solid var(--border); transition: background 0.1s; cursor: pointer; }
+  .service-table tbody tr:last-child { border-bottom: none; }
+  .service-table tbody tr:hover { background: var(--bg3); }
+  .service-table tbody tr.selected { background: rgba(201,169,110,0.06); border-color: rgba(201,169,110,0.15); }
+  .service-table td { padding: 10px 14px; vertical-align: middle; }
+  .service-table td.r { text-align: right; }
+  td.id { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 64px; }
+  td.desc-main { font-size: 13px; color: var(--text); }
+  td.desc-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  td.price { font-family: var(--mono); font-size: 13px; font-weight: 500; width: 80px; }
+  td.num-col { font-family: var(--mono); font-size: 12px; color: var(--muted); width: 70px; }
+  .price-tier-high { color: #7db8e8; }
+  .price-tier-mid { color: #6ecfa5; }
+  .price-tier-low { color: var(--muted); }
+
+  /* ── QTY INPUT ── */
+  .qty-input { width: 80px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 6px; padding: 5px 8px; color: var(--text); font-size: 12px; font-family: var(--mono); text-align: right; outline: none; }
+  .qty-input:focus { border-color: var(--accent); }
+  .qty-total { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 500; }
+
+  /* ── CART ── */
+  .cart-bar { position: sticky; bottom: 0; background: var(--bg2); border-top: 0.5px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .cart-summary { display: flex; align-items: center; gap: 16px; }
+  .cart-count { font-size: 13px; color: var(--muted); }
+  .cart-count span { color: var(--accent); font-weight: 600; }
+  .cart-total-label { font-size: 13px; color: var(--muted); }
+  .cart-total-val { font-size: 18px; font-weight: 600; font-family: var(--mono); color: var(--text); }
+  .cart-actions { display: flex; gap: 8px; }
+  .cart-empty-msg { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* ── MODAL ── */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
+  .modal-head { padding: 1.25rem 1.5rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .modal-head h3 { font-size: 16px; font-weight: 600; }
+  .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; padding: 2px 6px; }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 1.5rem; }
+  .modal-footer { padding: 1rem 1.5rem; border-top: 0.5px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+
+  /* ── QUOTE TABLE ── */
+  .quote-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 1rem; }
+  .quote-table th { text-align: left; padding: 6px 8px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--border); }
+  .quote-table th.r { text-align: right; }
+  .quote-table td { padding: 8px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.04); vertical-align: top; }
+  .quote-table td.r { text-align: right; font-family: var(--mono); }
+  .quote-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 0.5px solid var(--border); }
+  .quote-total-label { font-size: 13px; color: var(--muted); }
+  .quote-total-val { font-size: 22px; font-weight: 600; font-family: var(--mono); color: var(--accent); }
+  .remove-item { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 0 4px; }
+  .remove-item:hover { color: var(--danger); }
+
+  /* ── ADMIN SETTINGS ── */
+  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .setting-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); padding: 1.25rem; }
+  .setting-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 8px; }
+  .setting-val { font-size: 24px; font-weight: 600; font-family: var(--mono); color: var(--text); }
+  .setting-val span { font-size: 14px; color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .settings-grid { grid-template-columns: 1fr; }
+    .service-table thead { display: none; }
+    .service-table td.r { text-align: left; }
+    td.num-col { display: none; }
+    .cart-bar { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ── ADMIN CHANGE PWD ── */
+  .inline-form { display: flex; gap: 8px; align-items: flex-end; }
+  .inline-form .field { margin: 0; flex: 1; }
+
+  /* column widths */
+  .col-id { width: 64px; }
+  .col-desc { }
+  .col-price { width: 90px; }
+  .col-min { width: 65px; }
+  .col-max { width: 65px; }
+  .col-qty { width: 90px; }
+  .col-total { width: 90px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ LANDING ═══ -->
+<div id="screen-landing" class="screen active">
+  <div class="landing-wrap">
+    <div class="vip-badge">🔒 Panel Oficial Del Profesor · Acceso Privado VIP</div>
+    <div class="logo-mark">NA</div>
+    <h1 class="landing-title">Nuclear AIMA</h1>
+    <p class="landing-sub">Cotizador de servicios de Instagram Scaling Flow IA.<br>Selecciona tu tipo de acceso para continuar.</p>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="goTo('screen-client')">Ver precios y cotizar</button>
+      <button class="btn btn-ghost" onclick="goTo('screen-admin-login')">Acceso interno</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KEY SETUP (first time) ═══ -->
+<div id="screen-key-setup" class="screen">
+  <div class="key-setup-wrap">
+    <div class="key-setup-card">
+      <div class="key-setup-head">
+        <div style="font-size:32px;margin-bottom:8px;">🔑</div>
+        <h2>Configuración inicial</h2>
+        <p>Genera tus 4 llaves de acceso únicas.<br>Guárdalas en un lugar seguro — sin ellas no podrás entrar al panel interno.</p>
+      </div>
+      <div class="key-list" id="key-setup-list"></div>
+      <div class="key-setup-footer">
+        <p>⚠️ Estas llaves solo se muestran una vez. Copia cada una antes de continuar.</p>
+        <button class="btn btn-primary" onclick="confirmKeys()" style="width:100%;">✓ Ya guardé mis llaves — Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN LOGIN ═══ -->
+<div id="screen-admin-login" class="screen">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-head">
+        <h2>Acceso interno</h2>
+        <p>Ingresa una de tus llaves de acceso para continuar</p>
+      </div>
+      <div class="field">
+        <label>Llave de acceso</label>
+        <input type="password" id="admin-pwd-input" placeholder="••••••••••••••••" onkeydown="if(event.key==='Enter')adminLogin()" autocomplete="off" />
+        <div class="error-msg" id="pwd-error">Llave incorrecta</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%" onclick="adminLogin()">Entrar</button>
+    </div>
+    <span class="back-link" onclick="goTo('screen-landing')">← Volver</span>
+  </div>
+</div>
+
+<!-- ═══ ADMIN APP ═══ -->
+<div id="screen-admin" class="screen">
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-logo">Nuclear AIMA</span>
+        <span class="topbar-badge badge-admin">Interno</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-sm btn-ghost" onclick="openKeyModal()">🔑 Llaves</button>
+        <button class="btn btn-sm btn-danger" onclick="logout()">Salir</button>
+      </div>
+    </div>
+    <div class="app-body">
+      <div class="settings-grid">
+        <div class="setting-card">
+          <h4>Vista actual</h4>
+          <div class="setting-val">Precios <span>netos</span></div>
+        </div>
+        <div class="setting-card">
+          <h4>Markup clientes</h4>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
+            <div class="setting-val" id="markup-display">1000<span>%</span></div>
+            <div style="display:flex;gap:6px;margin-left:auto;">
+              <button class="btn btn-sm btn-ghost" onclick="setMarkup(500)">500%</button>
+              <button class="btn btn-sm btn-ghost" onclick="setMarkup(800)">800%</button>
+              <button class="btn btn-sm btn-ghost" onclick="setMarkup(1000)">1000%</button>
+              <button class="btn btn-sm btn-ghost" onclick="setMarkup(1500)">1500%</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="key-mgmt" id="admin-key-mgmt"></div>
+      <div id="admin-filters" class="filters"></div>
+      <div id="admin-services"></div>
+    </div>
+    <div class="cart-bar" id="admin-cart-bar">
+      <div class="cart-summary">
+        <div class="cart-count">Ítems seleccionados: <span id="admin-cart-count">0</span></div>
+        <div>
+          <div class="cart-total-label">Total neto</div>
+          <div class="cart-total-val" id="admin-cart-total">$0.00</div>
+        </div>
+      </div>
+      <div class="cart-actions">
+        <button class="btn btn-sm btn-ghost" onclick="clearCart('admin')">Limpiar</button>
+        <button class="btn btn-sm btn-ghost" onclick="openQuote('admin')">Ver cotización</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CLIENT APP ═══ -->
+<div id="screen-client" class="screen">
+  <div class="app-shell">
+    <div class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-logo">Nuclear AIMA</span>
+        <span class="topbar-badge badge-client">Cotizador</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-sm btn-ghost" onclick="goTo('screen-landing')">← Inicio</button>
+      </div>
+    </div>
+    <div class="app-body">
+      <div id="client-filters" class="filters"></div>
+      <div id="client-services"></div>
+    </div>
+    <div class="cart-bar" id="client-cart-bar">
+      <div class="cart-summary">
+        <div class="cart-count">Ítems seleccionados: <span id="client-cart-count">0</span></div>
+        <div>
+          <div class="cart-total-label">Total estimado</div>
+          <div class="cart-total-val" id="client-cart-total">$0.00</div>
+        </div>
+      </div>
+      <div class="cart-actions">
+        <button class="btn btn-sm btn-ghost" onclick="clearCart('client')">Limpiar</button>
+        <button class="btn btn-sm btn-ghost" onclick="openQuote('client')">Ver cotización</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUOTE MODAL ═══ -->
+<div class="modal-overlay" id="quote-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="quote-modal-title">Cotización</h3>
+      <button class="modal-close" onclick="closeModal('quote-modal')">×</button>
+    </div>
+    <div class="modal-body" id="quote-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-ghost" onclick="closeModal('quote-modal')">Cerrar</button>
+      <button class="btn btn-sm btn-ghost" onclick="downloadCSV()">Descargar CSV</button>
+      <button class="btn btn-sm btn-success" onclick="downloadPDF()">Descargar PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ KEY MODAL ═══ -->
+<div class="modal-overlay" id="key-modal">
+  <div class="modal" style="max-width:580px;">
+    <div class="modal-head">
+      <h3>🔑 Llaves de acceso</h3>
+      <button class="modal-close" onclick="closeModal('key-modal')">×</button>
+    </div>
+    <div class="modal-body" id="key-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-sm btn-ghost" onclick="closeModal('key-modal')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════
+// DATA
+// ═══════════════════════════════
+const SERVICES = [
+  // Seguidores Global
+  { id: '8573', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento 30 días · 50K/día', price: 0.38, min: 50, max: 100000 },
+  { id: '8574', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento 1 año · 50K/día', price: 0.44, min: 50, max: 100000 },
+  { id: '8575', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento de por vida · 50K/día', price: 0.53, min: 50, max: 100000 },
+  // Seguidores LATAM
+  { id: '8722', cat: 'Seguidores', subcat: 'Latinoamérica', name: 'Seguidores Instagram Latinoamérica', detail: 'Reabastecimiento 30 días · 30K/día', price: 4.72, min: 20, max: 250000 },
+  { id: '8723', cat: 'Seguidores', subcat: 'Latinoamérica', name: 'Seguidores Instagram Brasil', detail: 'Reabastecimiento 30 días · 30K/día', price: 4.72, min: 20, max: 150000 },
+  // Seguidores Premium
+  { id: '8497', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Instagram EE.UU.', detail: '100% Real Alta Calidad · 2K/día', price: 16.00, min: 10, max: 40000 },
+  { id: '8584', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Instagram Premium', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
+  { id: '8718', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Latinoamérica Premium', detail: 'Reabastecimiento 30 días · Máx 5K · 1K/día', price: 5.74, min: 10, max: 5000 },
+  { id: '8719', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Latinoamérica 100% Real', detail: 'Cancelación permitida · Caída 5–10% · 10K/día', price: 5.32, min: 10, max: 10000 },
+  { id: '8585', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Premium — Mujeres', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
+  { id: '8586', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Premium — Hombres', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
+  // Me Gusta
+  { id: '8576', cat: 'Me Gusta', subcat: 'Global', name: 'Me Gusta Instagram Global', detail: 'Reabastecimiento 30 días · 50K/día', price: 0.07, min: 100, max: 500000 },
+  { id: '8577', cat: 'Me Gusta', subcat: 'Global', name: 'Me Gusta Instagram Global', detail: 'Reabastecimiento de por vida · 50K/día', price: 0.09, min: 100, max: 500000 },
+  { id: '8571', cat: 'Me Gusta', subcat: 'Premium', name: 'Me Gusta Latinoamérica — Cuentas reales', detail: 'Con foto de perfil · Sin caída · Reposición 30 días', price: 0.40, min: 20, max: 50000 },
+  // Comentarios
+  { id: '8721', cat: 'Comentarios', subcat: 'Orgánico', name: 'Me Gusta + Comentarios · Descubrimiento', detail: '100% Orgánico · Máximo 500', price: 55.11, min: 5, max: 500 },
+  // Compartidos
+  { id: '8181', cat: 'Compartidos', subcat: 'Premium', name: 'Publicaciones Compartidas por Seguidores', detail: 'Cuentas reales 10K–100K · 1 pieza = $0.75', price: 750.00, min: 1, max: 50 },
+  // Visualizaciones
+  { id: '8039', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones IGTV + Reels', detail: 'Máx 20M · 5K/hora', price: 0.01, min: 100, max: 20000000 },
+  { id: '8390', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones Vídeo — Económico', detail: 'Todos los enlaces', price: 0.00, min: 250, max: 2000 },
+  { id: '8391', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones Vídeo + Reel + IGTV', detail: 'Rápido y estable · Todos los enlaces', price: 0.02, min: 100, max: 2000 },
+  // Historias
+  { id: '8587', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Global', detail: '100% Usuarios Globales', price: 0.39, min: 10, max: 1000 },
+  { id: '8588', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Latinoamérica', detail: '100% Usuarios Latinos', price: 0.39, min: 20, max: 50000 },
+  { id: '8589', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — España', detail: '100% Usuarios Españoles', price: 0.39, min: 10, max: 50000 },
+  { id: '8590', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Italia', detail: '100% Usuarios Italianos', price: 0.39, min: 20, max: 50000 },
+  // Impresiones
+  { id: '8393', cat: 'Impresiones', subcat: 'Alcance', name: 'Visitas al Perfil desde Publicaciones', detail: '50K/día', price: 0.14, min: 100, max: 100000 },
+  { id: '8392', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones + Alcance — Brasileños', detail: '50K/día', price: 0.09, min: 100, max: 100000 },
+  { id: '8394', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones [Inicio + Explorar + Ubicación + Perfil]', detail: '10K/día', price: 0.07, min: 10, max: 1000 },
+  { id: '8395', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones de Publicación — Todos los enlaces', detail: '50K/día', price: 0.04, min: 100, max: 10000 },
+  { id: '8397', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones + Elementos Compartidos', detail: 'Máx 5M · 100K/día', price: 0.55, min: 100, max: 5000000 },
+  // Automatizaciones
+  { id: '6899', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — IGTV + Reels', detail: 'Máx 100M · Rápido', price: 0.12, min: 100, max: 100000 },
+  { id: '6900', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — Rápido', detail: 'Máx 10M', price: 0.33, min: 100, max: 20000 },
+  { id: '6901', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — Instantáneo', detail: 'Máx 20M', price: 0.02, min: 100, max: 100000 },
+  { id: '6902', cat: 'Automatizaciones', subcat: 'Impresiones Auto', name: 'Auto Impresiones + Alcance + Visitas + Visualización', detail: 'Alta Calidad · Máx 5M · Rápido', price: 0.29, min: 100, max: 5000 },
+  // Guardados
+  { id: '8398', cat: 'Guardados', subcat: 'Estándar', name: 'Publicaciones Guardadas', detail: 'Máx 30K · 10K/día', price: 0.01, min: 5, max: 30000 },
+  { id: '8399', cat: 'Guardados', subcat: 'Estándar', name: 'Guardados Reales — Estable', detail: 'Todos los enlaces', price: 0.12, min: 10, max: 50000 },
+  { id: '6904', cat: 'Guardados', subcat: 'Auto', name: 'Guardados Auto — Alta calidad', detail: 'Máx 30K · Instantáneo · Siempre estable', price: 0.12, min: 10, max: 30000 },
+  { id: '6905', cat: 'Guardados', subcat: 'Auto', name: 'Guardados Auto — Instantáneo', detail: 'Máx 50K', price: 0.12, min: 10, max: 50000 },
+  // Contenido Compartido
+  { id: '8388', cat: 'Contenido Compartido', subcat: 'Estándar', name: 'Contenido Compartido — Súper rápido', detail: 'Garantía 1 año · 100K/día', price: 0.24, min: 100, max: 1000000 },
+  { id: '8389', cat: 'Contenido Compartido', subcat: 'Estándar', name: 'Compartido + Interacción + Alcance', detail: 'Máx 1M · 10K/día', price: 0.17, min: 10, max: 1000000 },
+];
+
+const CAT_ICONS = {
+  'Seguidores': { icon: '👤', bg: '#1a2535', color: '#7db8e8' },
+  'Me Gusta': { icon: '❤', bg: '#2a1a25', color: '#e87d9e' },
+  'Comentarios': { icon: '💬', bg: '#1a1a35', color: '#9e7de8' },
+  'Compartidos': { icon: '↗', bg: '#1a2a1a', color: '#6ecfa5' },
+  'Visualizaciones': { icon: '▶', bg: '#1a2535', color: '#7db8e8' },
+  'Impresiones': { icon: '📊', bg: '#2a251a', color: '#e8c96e' },
+  'Automatizaciones': { icon: '⚡', bg: '#252a1a', color: '#b8e87d' },
+  'Guardados': { icon: '🔖', bg: '#251a2a', color: '#c96ee8' },
+  'Contenido Compartido': { icon: '🔄', bg: '#1a2a25', color: '#6ecfa5' },
+};
+
+// ═══════════════════════════════
+// STATE
+// ═══════════════════════════════
+let accessKeys = JSON.parse(localStorage.getItem('smm_access_keys') || '[]');
+let MARKUP = parseFloat(localStorage.getItem('smm_markup') || '11'); // 11 = 1000%
+let adminCart = {};
+let clientCart = {};
+let currentQuoteMode = null;
+
+// ═══════════════════════════════
+// KEY GENERATION
+// ═══════════════════════════════
+function generateKey() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let key = '';
+  for (let i = 0; i < 20; i++) {
+    key += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  // Format as xxxx-xxxx-xxxx-xxxx-xxxx
+  return key.match(/.{1,4}/g).join('-');
+}
+
+function setupKeys() {
+  const keys = [];
+  for (let i = 0; i < 4; i++) {
+    keys.push(generateKey());
+  }
+  accessKeys = keys;
+  localStorage.setItem('smm_access_keys', JSON.stringify(keys));
+  return keys;
+}
+
+function renderKeySetup() {
+  const keys = setupKeys();
+  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
+  document.getElementById('key-setup-list').innerHTML = keys.map((k, i) => `
+    <div class="key-item">
+      <div>
+        <div class="key-item-label">${labels[i]}</div>
+        <div class="key-item-code">${k}</div>
+      </div>
+      <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:11px;">📋 Copiar</button>
+    </div>
+  `).join('');
+}
+
+function copyKey(key, btn) {
+  navigator.clipboard.writeText(key).then(() => {
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+  });
+}
+
+function confirmKeys() {
+  goTo('screen-landing');
+}
+
+function renderKeyManagement() {
+  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
+  document.getElementById('admin-key-mgmt').innerHTML = `
+    <h4>🔑 Llaves de acceso</h4>
+    ${accessKeys.map((k, i) => `
+      <div class="key-mgmt-item">
+        <div>
+          <div style="font-size:11px;color:var(--muted);">${labels[i]}</div>
+          <div class="key-mgmt-code">${k}</div>
+        </div>
+        <div class="key-mgmt-actions">
+          <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:10px;padding:4px 10px;">📋</button>
+          <button class="btn btn-sm btn-ghost" onclick="regenerateKey(${i})" style="font-size:10px;padding:4px 10px;color:var(--accent);">🔄</button>
+        </div>
+      </div>
+    `).join('')}
+    <div style="margin-top:10px;">
+      <button class="btn btn-sm btn-danger" onclick="resetAllKeys()" style="font-size:10px;">🔄 Regenerar todas las llaves</button>
+    </div>
+  `;
+}
+
+function regenerateKey(index) {
+  const newKey = generateKey();
+  accessKeys[index] = newKey;
+  localStorage.setItem('smm_access_keys', JSON.stringify(accessKeys));
+  renderKeyManagement();
+}
+
+function resetAllKeys() {
+  if (!confirm('¿Seguro? Las llaves actuales dejarán de funcionar inmediatamente.')) return;
+  setupKeys();
+  renderKeyManagement();
+}
+
+// ═══════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (id === 'screen-admin') {
+    renderKeyManagement();
+    renderApp('admin');
+  }
+  if (id === 'screen-client') renderApp('client');
+}
+
+function logout() {
+  adminCart = {};
+  goTo('screen-landing');
+}
+
+// ═══════════════════════════════
+// AUTH
+// ═══════════════════════════════
+function adminLogin() {
+  const val = document.getElementById('admin-pwd-input').value.trim();
+  const err = document.getElementById('pwd-error');
+  if (accessKeys.includes(val)) {
+    err.style.display = 'none';
+    document.getElementById('admin-pwd-input').value = '';
+    goTo('screen-admin');
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function openKeyModal() {
+  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
+  document.getElementById('key-modal-body').innerHTML = `
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Estas son tus 4 llaves de acceso. Puedes regenerar cualquier llave individual o todas a la vez.</p>
+    ${accessKeys.map((k, i) => `
+      <div class="key-mgmt-item">
+        <div style="flex:1;">
+          <div style="font-size:11px;color:var(--muted);">${labels[i]}</div>
+          <div class="key-mgmt-code" style="font-size:13px;">${k}</div>
+        </div>
+        <div class="key-mgmt-actions">
+          <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:10px;padding:4px 10px;">📋</button>
+          <button class="btn btn-sm btn-ghost" onclick="regenerateKey(${i})" style="font-size:10px;padding:4px 10px;color:var(--accent);">🔄 Regenerar</button>
+        </div>
+      </div>
+    `).join('')}
+    <div style="margin-top:1rem;padding-top:1rem;border-top:0.5px solid var(--border);">
+      <button class="btn btn-sm btn-danger" onclick="if(confirm('¿Seguro? Las llaves actuales dejarán de funcionar.')){resetAllKeys();openKeyModal();}">🔄 Regenerar todas las llaves</button>
+    </div>
+  `;
+  openModal('key-modal');
+}
+
+function setMarkup(pct) {
+  MARKUP = 1 + (pct / 100);
+  localStorage.setItem('smm_markup', MARKUP);
+  const el = document.getElementById('markup-display');
+  if (el) el.innerHTML = pct + '<span>%</span>';
+  clientCart = {};
+}
+
+
+function getPrice(s, mode) {
+  return mode === 'client' ? s.price * MARKUP : s.price;
+}
+
+function getPriceTier(p) {
+  if (p >= 5) return 'price-tier-high';
+  if (p >= 0.5) return 'price-tier-mid';
+  return 'price-tier-low';
+}
+
+function fmtPrice(p) {
+  return p < 0.01 ? '$0.00' : '$' + p.toFixed(p >= 10 ? 2 : p >= 1 ? 2 : 4);
+}
+
+function fmtNum(n) {
+  return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(0)+'K' : n;
+}
+
+function getCategories() {
+  return [...new Set(SERVICES.map(s => s.cat))];
+}
+
+let activeFilter = {};
+
+function renderApp(mode) {
+  const cats = getCategories();
+  const filtersEl = document.getElementById(mode + '-filters');
+  const servicesEl = document.getElementById(mode + '-services');
+  const cart = mode === 'admin' ? adminCart : clientCart;
+
+  if (!activeFilter[mode]) activeFilter[mode] = 'all';
+
+  // Filters
+  filtersEl.innerHTML = `<button class="filter-btn ${activeFilter[mode]==='all'?'active':''}" onclick="setFilter('${mode}','all')">Todos</button>` +
+    cats.map(c => `<button class="filter-btn ${activeFilter[mode]===c?'active':''}" onclick="setFilter('${mode}','${c}')">${c}</button>`).join('');
+
+  // Services grouped by category
+  const filteredCats = activeFilter[mode] === 'all' ? cats : [activeFilter[mode]];
+  servicesEl.innerHTML = filteredCats.map(cat => {
+    const items = SERVICES.filter(s => s.cat === cat);
+    const meta = CAT_ICONS[cat] || { icon: '•', bg: '#1a1a1a', color: '#aaa' };
+    return `
+    <div class="section-block">
+      <div class="section-head">
+        <div class="section-icon" style="background:${meta.bg}; color:${meta.color}; font-size:13px;">${meta.icon}</div>
+        <span class="section-title">${cat}</span>
+        <span class="section-count">${items.length}</span>
+      </div>
+      <div class="service-table">
+        <table>
+          <thead><tr>
+            <th class="col-id">ID</th>
+            <th class="col-desc">Servicio</th>
+            <th class="col-price r">$/1K</th>
+            <th class="col-min r">Mín</th>
+            <th class="col-max r">Máx</th>
+            <th class="col-qty r">Cantidad</th>
+            <th class="col-total r">Total</th>
+          </tr></thead>
+          <tbody>
+            ${items.map(s => renderRow(s, mode, cart)).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateCartBar(mode);
+}
+
+function renderRow(s, mode, cart) {
+  const p = getPrice(s, mode);
+  const qty = cart[s.id] || 0;
+  const total = qty > 0 ? (qty / 1000 * p) : 0;
+  const sel = qty > 0 ? 'selected' : '';
+  return `<tr class="${sel}" id="row-${mode}-${s.id}">
+    <td class="id">${s.id}</td>
+    <td>
+      <div class="desc-main">${s.name}</div>
+      <div class="desc-sub">${s.detail}</div>
+    </td>
+    <td class="r"><span class="price ${getPriceTier(p)}">${fmtPrice(p)}</span></td>
+    <td class="r num-col">${fmtNum(s.min)}</td>
+    <td class="r num-col">${fmtNum(s.max)}</td>
+    <td class="r">
+      <input class="qty-input" type="number" min="${s.min}" max="${s.max}" step="${s.min}" 
+        value="${qty || ''}" placeholder="${fmtNum(s.min)}"
+        onchange="setQty('${mode}','${s.id}',this.value,'${s.min}','${s.max}')"
+        onclick="event.stopPropagation()" />
+    </td>
+    <td class="r"><span class="qty-total">${qty > 0 ? '$'+total.toFixed(2) : '—'}</span></td>
+  </tr>`;
+}
+
+function setFilter(mode, cat) {
+  activeFilter[mode] = cat;
+  renderApp(mode);
+}
+
+function setQty(mode, id, rawVal, min, max) {
+  min = parseInt(min); max = parseInt(max);
+  let val = parseInt(rawVal) || 0;
+  if (val > 0 && val < min) val = min;
+  if (val > max) val = max;
+  const cart = mode === 'admin' ? adminCart : clientCart;
+  if (val <= 0) { delete cart[id]; } else { cart[id] = val; }
+
+  // Update just this row without full re-render
+  const s = SERVICES.find(x => x.id === id);
+  const p = getPrice(s, mode);
+  const total = val > 0 ? (val / 1000 * p) : 0;
+  const row = document.getElementById(`row-${mode}-${id}`);
+  if (row) {
+    row.className = val > 0 ? 'selected' : '';
+    row.querySelector('.qty-total').textContent = val > 0 ? '$' + total.toFixed(2) : '—';
+    row.querySelector('.qty-input').value = val > 0 ? val : '';
+  }
+  updateCartBar(mode);
+}
+
+function updateCartBar(mode) {
+  const cart = mode === 'admin' ? adminCart : clientCart;
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+  const total = ids.reduce((sum, id) => {
+    const s = SERVICES.find(x => x.id === id);
+    return s ? sum + (cart[id] / 1000 * getPrice(s, mode)) : sum;
+  }, 0);
+  document.getElementById(mode + '-cart-count').textContent = ids.length;
+  document.getElementById(mode + '-cart-total').textContent = '$' + total.toFixed(2);
+}
+
+function clearCart(mode) {
+  if (mode === 'admin') adminCart = {};
+  else clientCart = {};
+  renderApp(mode);
+}
+
+// ═══════════════════════════════
+// QUOTE MODAL
+// ═══════════════════════════════
+function openQuote(mode) {
+  currentQuoteMode = mode;
+  const cart = mode === 'admin' ? adminCart : clientCart;
+  const ids = Object.keys(cart).filter(id => cart[id] > 0);
+
+  document.getElementById('quote-modal-title').textContent =
+    mode === 'admin' ? 'Cotización interna (precios netos)' : 'Cotización de servicios';
+
+  if (ids.length === 0) {
+    document.getElementById('quote-modal-body').innerHTML =
+      '<p style="color:var(--muted);font-size:13px;">No hay servicios seleccionados. Ingresa cantidades en la tabla para cotizar.</p>';
+    openModal('quote-modal');
+    return;
+  }
+
+  const rows = ids.map(id => {
+    const s = SERVICES.find(x => x.id === id);
+    const p = getPrice(s, mode);
+    const qty = cart[id];
+    const total = qty / 1000 * p;
+    return { s, p, qty, total };
+  });
+
+  const grandTotal = rows.reduce((sum, r) => sum + r.total, 0);
+  const date = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  document.getElementById('quote-modal-body').innerHTML = `
+    <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Fecha: ${date}</p>
+    <table class="quote-table">
+      <thead><tr>
+        <th>Servicio</th>
+        <th class="r">Cantidad</th>
+        <th class="r">$/1K</th>
+        <th class="r">Total</th>
+        <th></th>
+      </tr></thead>
+      <tbody>
+        ${rows.map(r => `<tr>
+          <td>
+            <div style="font-size:13px;font-weight:500;">${r.s.name}</div>
+            <div style="font-size:11px;color:var(--muted);">ID ${r.s.id} · ${r.s.detail}</div>
+          </td>
+          <td class="r">${r.qty.toLocaleString()}</td>
+          <td class="r">${fmtPrice(r.p)}</td>
+          <td class="r" style="color:var(--accent);font-weight:500;">$${r.total.toFixed(2)}</td>
+          <td style="text-align:center"><button class="remove-item" onclick="removeFromQuote('${mode}','${r.s.id}')">×</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="quote-total-row">
+      <span class="quote-total-label">Total estimado</span>
+      <span class="quote-total-val" id="quote-grand-total">$${grandTotal.toFixed(2)}</span>
+    </div>
+    ${mode === 'client' ? '<p style="font-size:11px;color:var(--muted);margin-top:1rem;">Precios en USD. Sujeto a confirmación.</p>' : ''}
+  `;
+
+  openModal('quote-modal');
+}
+
+function removeFromQuote(mode, id) {
+  const cart = mode === 'admin' ? adminCart : clientCart;
+  delete cart[id];
+  updateCartBar(mode);
+  openQuote(mode);
+  // Also update row in table
+  const s = SERVICES.find(x => x.id === id);
+  const row = document.getElementById(`row-${mode}-${id}`);
+  if (row) {
+    row.className = '';
+    row.querySelector('.qty-total').textContent = '—';
+    row.querySelector('.qty-input').value = '';
+  }
+}
+
+// ═══════════════════════════════
+// DOWNLOADS
+// ═══════════════════════════════
+function getCartRows(mode) {
+  const cart = mode === 'admin' ? adminCart : clientCart;
+  return Object.keys(cart).filter(id => cart[id] > 0).map(id => {
+    const s = SERVICES.find(x => x.id === id);
+    const p = getPrice(s, mode);
+    const qty = cart[id];
+    return { s, p, qty, total: qty / 1000 * p };
+  });
+}
+
+function downloadCSV() {
+  const mode = currentQuoteMode;
+  const rows = getCartRows(mode);
+  if (!rows.length) return;
+
+  const date = new Date().toLocaleDateString('es-DO');
+  const header = ['ID', 'Servicio', 'Detalle', 'Cantidad', 'Precio/1K (USD)', 'Total (USD)'];
+  const lines = [
+    `Nuclear AIMA · Scaling Flow IA`,
+    `Cotización ${mode === 'admin' ? 'Interna' : 'Cliente'} — ${date}`,
+    '',
+    header.join(','),
+    ...rows.map(r => [
+      r.s.id, `"${r.s.name}"`, `"${r.s.detail}"`,
+      r.qty, r.p.toFixed(4), r.total.toFixed(2)
+    ].join(',')),
+    '',
+    `Total,,,,,"$${rows.reduce((s,r)=>s+r.total,0).toFixed(2)}"`,
+  ];
+
+  const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cotizacion_nuclear_aima_${Date.now()}.csv`;
+  a.click();
+}
+
+function downloadPDF() {
+  const mode = currentQuoteMode;
+  const rows = getCartRows(mode);
+  if (!rows.length) return;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const W = 210, margin = 18;
+  const date = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Header background
+  doc.setFillColor(20, 20, 22);
+  doc.rect(0, 0, W, 40, 'F');
+
+  // Logo area
+  doc.setFillColor(201, 169, 110);
+  doc.roundedRect(margin, 10, 20, 20, 3, 3, 'F');
+  doc.setTextColor(20, 20, 22);
+  doc.setFontSize(12); doc.setFont('helvetica', 'bold');
+  doc.text('NA', margin + 4, 23);
+
+  // Title
+  doc.setTextColor(240, 237, 232);
+  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
+  doc.text('Nuclear AIMA', margin + 26, 19);
+  doc.setFontSize(9); doc.setFont('helvetica', 'normal');
+  doc.setTextColor(150, 145, 140);
+  doc.text('Scaling Flow IA · Cotizador de Servicios Instagram', margin + 26, 26);
+  doc.text('Fecha: ' + date, margin + 26, 32);
+
+  // Label
+  doc.setFillColor(mode === 'admin' ? 201 : 76, mode === 'admin' ? 169 : 173, mode === 'admin' ? 110 : 124);
+  const labelText = mode === 'admin' ? 'PRECIOS NETOS — CONFIDENCIAL' : 'COTIZACIÓN CLIENTE';
+  doc.setFontSize(8); doc.setFont('helvetica', 'bold');
+  doc.setTextColor(mode === 'admin' ? 20 : 255, 20, 20);
+  const lw = doc.getTextWidth(labelText) + 8;
+  doc.roundedRect(W - margin - lw, 14, lw, 7, 1.5, 1.5, 'F');
+  doc.setTextColor(mode === 'admin' ? 20 : 255, mode === 'admin' ? 20 : 255, mode === 'admin' ? 22 : 255);
+  doc.text(labelText, W - margin - lw/2, 19, { align: 'center' });
+
+  let y = 50;
+
+  // Table header
+  doc.setFillColor(28, 28, 32);
+  doc.rect(margin, y, W - margin*2, 8, 'F');
+  doc.setFontSize(8); doc.setFont('helvetica', 'bold');
+  doc.setTextColor(120, 120, 115);
+  doc.text('SERVICIO', margin + 3, y + 5.5);
+  doc.text('CANTIDAD', W - 90, y + 5.5);
+  doc.text('$/1K', W - 65, y + 5.5);
+  doc.text('TOTAL USD', W - margin - 3, y + 5.5, { align: 'right' });
+  y += 8;
+
+  let grandTotal = 0;
+  rows.forEach((r, i) => {
+    const rowH = 14;
+    if (i % 2 === 1) {
+      doc.setFillColor(22, 22, 24);
+      doc.rect(margin, y, W - margin*2, rowH, 'F');
+    }
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold');
+    doc.setTextColor(240, 237, 232);
+    doc.text(r.s.name.substring(0, 52), margin + 3, y + 6);
+    doc.setFontSize(7.5); doc.setFont('helvetica', 'normal');
+    doc.setTextColor(120, 115, 110);
+    doc.text(`ID ${r.s.id} · ${r.s.detail.substring(0, 58)}`, margin + 3, y + 11);
+
+    doc.setFontSize(9); doc.setFont('helvetica', 'normal');
+    doc.setTextColor(180, 175, 170);
+    doc.text(r.qty.toLocaleString(), W - 90, y + 7.5);
+    doc.text('$' + r.p.toFixed(r.p < 0.01 ? 4 : 2), W - 65, y + 7.5);
+
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(201, 169, 110);
+    doc.text('$' + r.total.toFixed(2), W - margin - 3, y + 7.5, { align: 'right' });
+
+    grandTotal += r.total;
+    y += rowH;
+
+    if (y > 265) {
+      doc.addPage();
+      doc.setFillColor(20, 20, 22);
+      doc.rect(0, 0, W, 12, 'F');
+      y = 18;
+    }
+  });
+
+  // Total row
+  y += 4;
+  doc.setFillColor(201, 169, 110);
+  doc.rect(margin, y, W - margin*2, 12, 'F');
+  doc.setFontSize(11); doc.setFont('helvetica', 'bold');
+  doc.setTextColor(20, 20, 22);
+  doc.text('TOTAL ESTIMADO', margin + 3, y + 8);
+  doc.text('$' + grandTotal.toFixed(2), W - margin - 3, y + 8, { align: 'right' });
+
+  y += 22;
+  doc.setFontSize(8); doc.setFont('helvetica', 'normal');
+  doc.setTextColor(100, 95, 90);
+  if (mode === 'client') {
+    doc.text('Precios en dólares estadounidenses (USD). Cotización sujeta a confirmación.', margin, y);
+    doc.text('Nuclear AIMA · Scaling Flow IA · nuclearaima.com', margin, y + 5);
+  } else {
+    doc.text('DOCUMENTO CONFIDENCIAL — Solo uso interno Nuclear AIMA y Scaling Flow IA', margin, y);
+    doc.text(`Precios netos. Markup cliente activo: ${Math.round((MARKUP-1)*100)}%. No distribuir.`, margin, y + 5);
+  }
+
+  doc.save(`cotizacion_nuclear_aima_${Date.now()}.pdf`);
+}
+
+// ═══════════════════════════════
+// MODALS
+// ═══════════════════════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+// Enter key on login
+document.getElementById('admin-pwd-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') adminLogin();
+});
+
+// ═══════════════════════════════
+// INIT — Check if keys exist
+// ═══════════════════════════════
+(function init() {
+  if (accessKeys.length === 0) {
+    // First visit — show key setup
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-key-setup').classList.add('active');
+    renderKeySetup();
+  }
+})();
+</script>
+</body>
+</html>
