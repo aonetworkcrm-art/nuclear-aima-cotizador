@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔍 Live Search · Nodos Virales · Nuclear AIMA</title>
+<style>
+  :root {
+    --bg: #0d0d0f;
+    --bg2: #141416;
+    --bg3: #1c1c1f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --muted: #7a7875;
+    --accent: #c9a96e;
+    --accent2: #e8c98a;
+    --danger: #e05c5c;
+    --success: #4cad7c;
+    --cyan: #4ad0e0;
+    --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px;
+    --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 70%);
+  }
+  .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
+  .header .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+    border: 0.5px solid rgba(201,169,110,0.3);
+    border-radius: 20px; padding: 4px 12px;
+    font-size: 10px; font-weight: 500; color: var(--accent);
+    margin-bottom: 10px; letter-spacing: 0.02em;
+  }
+  .header p { font-size: 13px; color: var(--muted); }
+  .header .version { font-size: 10px; color: var(--muted); margin-top: 6px; font-family: var(--mono); }
+
+  /* STATS BAR */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-card .num {
+    font-size: 22px; font-weight: 600;
+    font-family: var(--mono);
+  }
+  .stat-card .lbl {
+    font-size: 9px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-top: 3px;
+  }
+  .stat-card.leak .num { color: var(--danger); }
+  .stat-card.recovered .num { color: var(--success); }
+  .stat-card.nodes .num { color: var(--cyan); }
+  .stat-card.songs .num { color: var(--accent); }
+
+  /* SEARCH */
+  .search-section {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .search-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-row input, .search-row select {
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: var(--font);
+    outline: none;
+    transition: border 0.15s;
+  }
+  .search-row input:focus, .search-row select:focus {
+    border-color: var(--accent);
+  }
+  .search-row input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-row input[type="number"] {
+    width: 90px;
+  }
+  .search-row select {
+    min-width: 140px;
+  }
+  .search-row button {
+    padding: 10px 20px;
+    border-radius: var(--r);
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font);
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-ghost:hover { background: var(--bg3); border-color: rgba(255,255,255,0.25); }
+  .btn-danger { background: rgba(224,92,92,0.15); color: var(--danger); border: 0.5px solid rgba(224,92,92,0.3); }
+  .btn-danger:hover { background: rgba(224,92,92,0.25); }
+  .filter-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    font-size: 10px;
+    border-radius: 12px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-tag:hover { border-color: var(--accent); color: var(--text); }
+  .filter-tag.active { background: rgba(201,169,110,0.15); border-color: var(--accent); color: var(--accent); }
+
+  /* TABLE */
+  .table-section {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 0.5px solid var(--border);
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .table-header h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+  }
+  .table-header .count {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .table-wrap {
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg3);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+  }
+  thead th:hover { color: var(--text); }
+  thead th .sort-arrow { margin-left: 4px; opacity: 0.4; }
+  thead th.sorted .sort-arrow { opacity: 1; color: var(--accent); }
+  tbody td {
+    padding: 8px 12px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.03);
+    vertical-align: middle;
+  }
+  tbody tr:hover td { background: rgba(201,169,110,0.03); }
+  tbody tr.high-value td { border-left: 2px solid var(--danger); }
+  tbody tr.medium-value td { border-left: 2px solid var(--gold); }
+  td .channel-name {
+    font-weight: 500;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  td .song-title { color: var(--muted); font-size: 11px; }
+  td .url-link {
+    color: var(--cyan);
+    text-decoration: none;
+    font-size: 10px;
+    font-family: var(--mono);
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+  }
+  td .url-link:hover { text-decoration: underline; }
+  .usd-high { color: var(--success); font-weight: 600; }
+  .usd-mid { color: var(--accent); font-weight: 500; }
+  .usd-low { color: var(--muted); }
+  .vph-bar {
+    display: inline-block;
+    height: 4px;
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--muted);
+  }
+  .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state p { font-size: 13px; }
+
+  /* EXECUTIVE REPORT */
+  .report-section {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r2);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  .report-section.visible { display: block; }
+  .report-section h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .report-item {
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: var(--r);
+    padding: 14px;
+  }
+  .report-item .lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .report-item .val { font-size: 20px; font-weight: 600; font-family: var(--mono); margin-top: 4px; }
+  .report-item .val.danger { color: var(--danger); }
+  .report-item .val.success { color: var(--success); }
+  .report-item .val.accent { color: var(--accent); }
+  .report-item .note { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+  /* LOADING */
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+  }
+  .loading .spinner {
+    width: 24px; height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .container { padding: 12px; }
+    .header h1 { font-size: 22px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .search-row input[type="text"] { min-width: 100%; }
+    .search-row { flex-direction: column; }
+    .search-row input[type="number"] { width: 100%; }
+    .search-row select { width: 100%; }
+    .table-header { flex-direction: column; text-align: center; }
+    table { font-size: 10px; }
+    thead th, tbody td { padding: 6px 8px; }
+  }
+
+  /* PRINT / REPORT STYLES */
+  @media print {
+    .search-section, .table-header .btn-ghost { display: none; }
+    body { background: #fff; color: #000; }
+    .stat-card { background: #f5f5f5; border: 1px solid #ddd; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">🔍 SISTEMA DE DETECCIÓN DE FUGAS</div>
+    <h1>Live Search · Nodos Virales</h1>
+    <p>Rastrea nodos de YouTube, calcula ingresos fugados y genera reportes ejecutivos para negociación con distribuidoras</p>
+    <div class="version">Powered by Nuclear AIMA · Datos en vivo · eCPM $1.20 merengue/tropical</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats" id="statsBar">
+    <div class="stat-card nodes"><div class="num" id="totalNodes">—</div><div class="lbl">Nodos Detectados</div></div>
+    <div class="stat-card songs"><div class="num" id="totalSongs">—</div><div class="lbl">Canciones Afectadas</div></div>
+    <div class="stat-card"><div class="num" id="totalViews">—</div><div class="lbl">Vistas Totales</div></div>
+    <div class="stat-card leak"><div class="num" id="totalLeaked">—</div><div class="lbl">Ingreso Fugado/mes</div></div>
+    <div class="stat-card recovered"><div class="num" id="projectedAnnual">—</div><div class="lbl">Proyección Anual</div></div>
+    <div class="stat-card"><div class="num" id="avgVph">—</div><div class="lbl">VPH Promedio</div></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-section">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Buscar por canción, canal o URL..." oninput="applyFilters()">
+      <select id="sortSelect" onchange="applyFilters()">
+        <option value="usd-desc">USD ⬇ Mayor fuga</option>
+        <option value="usd-asc">USD ⬆ Menor fuga</option>
+        <option value="views-desc">Vistas ⬇ Más vistas</option>
+        <option value="views-asc">Vistas ⬆ Menos vistas</option>
+        <option value="vph-desc">VPH ⬇ Mayor velocidad</option>
+        <option value="channel">Canal A-Z</option>
+      </select>
+      <input type="number" id="minUsd" placeholder="USD mín" value="0" onchange="applyFilters()" style="width:80px">
+      <input type="number" id="minViews" placeholder="Vistas mín" value="0" onchange="applyFilters()" style="width:80px">
+      <button class="btn-primary" onclick="generateReport()">📊 Generar Reporte</button>
+      <button class="btn-ghost" onclick="resetFilters()">✕ Limpiar</button>
+    </div>
+    <div class="filter-tags" id="filterTags">
+      <span class="filter-tag active" data-filter="all" onclick="setQuickFilter(this)">📡 Todos</span>
+      <span class="filter-tag" data-filter="high" onclick="setQuickFilter(this)">🔥 Alta fuga (>$1K)</span>
+      <span class="filter-tag" data-filter="mid" onclick="setQuickFilter(this)">💧 Media fuga ($100-$1K)</span>
+      <span class="filter-tag" data-filter="low" onclick="setQuickFilter(this)">💤 Baja fuga (&lt;$100)</span>
+      <span class="filter-tag" data-filter="viral" onclick="setQuickFilter(this)">🚀 Viral (>100K vistas)</span>
+      <span class="filter-tag" data-filter="recent" onclick="setQuickFilter(this)">🆕 Recientes (&lt;1 año)</span>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-section">
+    <div class="table-header">
+      <div>
+        <h3>📡 Nodos Detectados</h3>
+      </div>
+      <div class="count" id="resultCount">Cargando datos...</div>
+    </div>
+    <div class="table-wrap" id="tableWrap">
+      <div class="loading" id="loadingState">
+        <div class="spinner"></div>
+        <p>Cargando datos del sistema de detección...</p>
+      </div>
+      <table id="dataTable" style="display:none">
+        <thead>
+          <tr>
+            <th onclick="sortTable('channel')">Canal <span class="sort-arrow">↕</span></th>
+            <th onclick="sortTable('title')">Canción <span class="sort-arrow">↕</span></th>
+            <th onclick="sortTable('date')">Fecha <span class="sort-arrow">↕</span></th>
+            <th onclick="sortTable('views')">Vistas <span class="sort-arrow">↕</span></th>
+            <th onclick="sortTable('vph')">VPH <span class="sort-arrow">↕</span></th>
+            <th onclick="sortTable('usd')">USD/mes <span class="sort-arrow">↕</span></th>
+            <th>URL</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- EXECUTIVE REPORT -->
+  <div class="report-section" id="reportSection">
+    <h3>📊 Reporte Ejecutivo · Ingreso Fugado</h3>
+    <div class="report-grid" id="reportGrid"></div>
+    <div id="reportTopSongsContainer"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn-primary" onclick="window.print()">🖨️ Imprimir Reporte</button>
+      <button class="btn-ghost" onclick="document.getElementById('reportSection').classList.remove('visible')">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- BACK LINK -->
+  <div style="text-align:center;padding:20px 0;border-top:0.5px solid var(--border);margin-top:10px">
+    <a href="index.html" style="color:var(--accent);text-decoration:none;font-size:12px;letter-spacing:0.05em">← Volver al Dashboard Nuclear AIMA</a>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──
+let liveData = [];
+let filteredData = [];
+let catalogData = [];
+let currentSort = { col: 'usd', dir: 'desc' };
+let quickFilter = 'all';
+
+// ── LOAD CSVs ──
+async function loadData() {
+  try {
+    const [liveResp, catResp] = await Promise.all([
+      fetch('data/no_hay_nadie_mas_-_ramon_orlando_20260509_1909.csv'),
+      fetch('data/catalogo-completo-ramon-orlando.csv')
+    ]);
+    const liveCsv = await liveResp.text();
+    const catCsv = await catResp.text();
+
+    // Parse live search CSV
+    const liveLines = liveCsv.split('\n').filter(l => l.trim());
+    const liveHeader = parseCSVLine(liveLines[0]);
+    liveData = liveLines.slice(1).map(line => {
+      const vals = parseCSVLine(line);
+      const obj = {};
+      liveHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+      return obj;
+    }).filter(d => d.canal && d.usd);
+
+    // Parse catalog CSV
+    const catLines = catCsv.split('\n').filter(l => l.trim());
+    const catHeader = parseCSVLine(catLines[0]);
+    catalogData = catLines.slice(1).map(line => {
+      const vals = parseCSVLine(line);
+      const obj = {};
+      catHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+      return obj;
+    }).filter(d => d.Canción);
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('dataTable').style.display = '';
+    applyFilters();
+  } catch (e) {
+    document.getElementById('loadingState').innerHTML = `
+      <div class="empty-state">
+        <div class="icon">⚠️</div>
+        <p>Error cargando datos. Asegúrate de que el servidor local está corriendo.</p>
+      </div>`;
+  }
+}
+
+// ── CSV LINE PARSER (handles quotes) ──
+function parseCSVLine(line) {
+  const result = [];
+  let current = '', inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQuotes = !inQuotes; continue; }
+    if (ch === ',' && !inQuotes) { result.push(current); current = ''; }
+    else current += ch;
+  }
+  result.push(current);
+  return result;
+}
+
+// ── FORMAT NUMBERS ──
+function fmtNum(n) {
+  if (!n || isNaN(n)) return '0';
+  return Math.round(Number(n)).toLocaleString();
+}
+function fmtUsd(n) {
+  if (!n || isNaN(n)) return '$0';
+  return '$' + Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function fmtDate(dateStr) {
+  if (!dateStr || dateStr === '---') return '—';
+  return dateStr;
+}
+
+// ── APPLY FILTERS ──
+function applyFilters() {
+  const search = (document.getElementById('searchInput').value || '').toLowerCase();
+  const minUsd = parseFloat(document.getElementById('minUsd').value) || 0;
+  const minViews = parseFloat(document.getElementById('minViews').value) || 0;
+  const sortVal = document.getElementById('sortSelect').value;
+
+  filteredData = liveData.filter(d => {
+    const usd = parseFloat(d.usd) || 0;
+    const views = parseFloat(d.vistas) || 0;
+
+    // Search filter
+    if (search) {
+      const match = (d.canal + ' ' + d.titulo + ' ' + d.url).toLowerCase().includes(search);
+      if (!match) return false;
+    }
+
+    // USD filter
+    if (usd < minUsd) return false;
+
+    // Views filter
+    if (views < minViews) return false;
+
+    // Quick filter
+    if (quickFilter === 'high' && usd < 1000) return false;
+    if (quickFilter === 'mid' && (usd < 100 || usd >= 1000)) return false;
+    if (quickFilter === 'low' && usd >= 100) return false;
+    if (quickFilter === 'viral' && views < 100000) return false;
+    if (quickFilter === 'recent') {
+      // Check if date is recent (days, weeks, or months - not years)
+      const dateStr = d.fecha || '';
+      const isYearOld = /\d+\s*a/.test(dateStr);
+      if (isYearOld || dateStr === '---' || !dateStr) return false;
+    }
+
+    return true;
+  });
+
+  // Sort
+  const [col, dir] = sortVal.split('-');
+  filteredData.sort((a, b) => {
+    let valA, valB;
+    switch (col) {
+      case 'usd': valA = parseFloat(a.usd) || 0; valB = parseFloat(b.usd) || 0; break;
+      case 'views': valA = parseFloat(a.vistas) || 0; valB = parseFloat(b.vistas) || 0; break;
+      case 'vph': valA = parseFloat(a.vph) || 0; valB = parseFloat(b.vph) || 0; break;
+      case 'channel': valA = (a.canal || '').toLowerCase(); valB = (b.canal || '').toLowerCase(); break;
+      default: valA = parseFloat(a.usd) || 0; valB = parseFloat(b.usd) || 0;
+    }
+    if (typeof valA === 'string') return dir === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    return dir === 'asc' ? valA - valB : valB - valA;
+  });
+
+  renderTable();
+  updateStats();
+}
+
+// ── RENDER TABLE ──
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  const count = document.getElementById('resultCount');
+
+  if (filteredData.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="icon">🔍</div><p>No se encontraron nodos con los filtros actuales</p></div></td></tr>`;
+    count.textContent = '0 resultados';
+    return;
+  }
+
+  tbody.innerHTML = filteredData.map(d => {
+    const usd = parseFloat(d.usd) || 0;
+    const views = parseFloat(d.vistas) || 0;
+    const vph = parseFloat(d.vph) || 0;
+    const rowClass = usd > 1000 ? 'high-value' : usd > 100 ? 'medium-value' : '';
+    const usdClass = usd > 1000 ? 'usd-high' : usd > 100 ? 'usd-mid' : 'usd-low';
+    const vphWidth = Math.min(vph / 20, 100);
+
+    return `<tr class="${rowClass}">
+      <td><div class="channel-name" title="${escapeHtml(d.canal)}">${escapeHtml(d.canal)}</div></td>
+      <td><div class="song-title" title="${escapeHtml(d.titulo)}">${escapeHtml(d.titulo)}</div></td>
+      <td>${fmtDate(d.fecha)}</td>
+      <td>${fmtNum(views)}</td>
+      <td><span class="vph-bar" style="width:${vphWidth}px;background:${usd > 1000 ? 'var(--danger)' : usd > 100 ? 'var(--gold)' : 'var(--muted)'}"></span>${vph.toFixed(1)}</td>
+      <td class="${usdClass}">${fmtUsd(usd)}</td>
+      <td><a href="${escapeHtml(d.url)}" target="_blank" class="url-link" title="${escapeHtml(d.url)}">Ver en YouTube ↗</a></td>
+    </tr>`;
+  }).join('');
+
+  count.textContent = `${filteredData.length} resultados de ${liveData.length} nodos totales`;
+}
+
+// ── UPDATE STATS ──
+function updateStats() {
+  const total = filteredData;
+  let totalViews = 0, totalUsd = 0, totalVph = 0;
+  const songSet = new Set();
+
+  total.forEach(d => {
+    totalViews += parseFloat(d.vistas) || 0;
+    totalUsd += parseFloat(d.usd) || 0;
+    totalVph += parseFloat(d.vph) || 0;
+    if (d.titulo) songSet.add(d.titulo.trim());
+  });
+
+  document.getElementById('totalNodes').textContent = fmtNum(total.length);
+  document.getElementById('totalSongs').textContent = fmtNum(songSet.size);
+  document.getElementById('totalViews').textContent = fmtNum(totalViews);
+  document.getElementById('totalLeaked').textContent = fmtUsd(totalUsd);
+  document.getElementById('projectedAnnual').textContent = fmtUsd(totalUsd * 12);
+  document.getElementById('avgVph').textContent = total.length > 0 ? (totalVph / total.length).toFixed(1) : '0';
+}
+
+// ── QUICK FILTER ──
+function setQuickFilter(el) {
+  document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  quickFilter = el.dataset.filter;
+  applyFilters();
+}
+
+// ── RESET FILTERS ──
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('minUsd').value = '0';
+  document.getElementById('minViews').value = '0';
+  document.getElementById('sortSelect').value = 'usd-desc';
+  quickFilter = 'all';
+  document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+  document.querySelector('.filter-tag[data-filter="all"]').classList.add('active');
+  applyFilters();
+}
+
+// ── SORT TABLE ──
+function sortTable(col) {
+  const [currentCol, currentDir] = (document.getElementById('sortSelect').value || 'usd-desc').split('-');
+  let newDir = 'desc';
+  if (col === currentCol) newDir = currentDir === 'desc' ? 'asc' : 'desc';
+  document.getElementById('sortSelect').value = `${col}-${newDir}`;
+  applyFilters();
+}
+
+// ── GENERATE EXECUTIVE REPORT ──
+function generateReport() {
+  const total = filteredData;
+  if (total.length === 0) return;
+
+  let totalViews = 0, totalUsd = 0;
+  const songMap = new Map();
+
+  total.forEach(d => {
+    const views = parseFloat(d.vistas) || 0;
+    const usd = parseFloat(d.usd) || 0;
+    totalViews += views;
+    totalUsd += usd;
+    const title = (d.titulo || '').trim();
+    if (title) {
+      if (!songMap.has(title)) songMap.set(title, { views: 0, usd: 0, nodes: 0 });
+      const s = songMap.get(title);
+      s.views += views;
+      s.usd += usd;
+      s.nodes++;
+    }
+  });
+
+  // Top leaking songs
+  const topSongs = [...songMap.entries()]
+    .map(([name, data]) => ({ name, ...data }))
+    .sort((a, b) => b.usd - a.usd)
+    .slice(0, 12);
+
+  const reportGrid = document.getElementById('reportGrid');
+  reportGrid.innerHTML = `
+    <div class="report-item">
+      <div class="lbl">Total Nodos Auditados</div>
+      <div class="val accent">${fmtNum(total.length)}</div>
+    </div>
+    <div class="report-item">
+      <div class="lbl">Total Vistas Acumuladas</div>
+      <div class="val accent">${fmtNum(totalViews)}</div>
+    </div>
+    <div class="report-item">
+      <div class="lbl">Ingreso Fugado/mes</div>
+      <div class="val danger">${fmtUsd(totalUsd)}</div>
+      <div class="note">Sin reclamo activo de Content ID</div>
+    </div>
+    <div class="report-item">
+      <div class="lbl">Proyección Anual</div>
+      <div class="val success">${fmtUsd(totalUsd * 12)}</div>
+      <div class="note">Bajo administración activa</div>
+    </div>
+    <div class="report-item">
+      <div class="lbl">Valor Estimado Adelanto (3 años)</div>
+      <div class="val success">${fmtUsd(totalUsd * 36 * 0.7)}</div>
+      <div class="note"> Conservador · 70% del flujo proyectado</div>
+    </div>
+    <div class="report-item">
+      <div class="lbl">Top Canción con más fuga</div>
+      <div class="val accent">${topSongs[0]?.name || '—'}</div>
+      <div class="note">${fmtUsd(topSongs[0]?.usd || 0)}/mes · ${fmtNum(topSongs[0]?.nodes || 0)} nodos</div>
+    </div>
+  `;
+
+  // Top songs table
+  const topSongsContainer = document.getElementById('reportTopSongsContainer');
+  topSongsContainer.innerHTML = '';
+  if (topSongs.length > 0) {
+    const tableHtml = `
+      <div style="background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r);padding:14px;margin-top:12px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">🏆 Top Canciones por Ingreso Fugado</div>
+        <div style="overflow-x:auto">
+          <table style="font-size:11px">
+            <thead>
+              <tr>
+                <th style="padding:6px 10px;background:var(--bg2)">#</th>
+                <th style="padding:6px 10px;background:var(--bg2)">Canción</th>
+                <th style="padding:6px 10px;background:var(--bg2)">Nodos</th>
+                <th style="padding:6px 10px;background:var(--bg2)">Vistas</th>
+                <th style="padding:6px 10px;background:var(--bg2)">USD/mes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${topSongs.map((s, i) => `
+                <tr>
+                  <td style="padding:4px 10px">${i + 1}</td>
+                  <td style="padding:4px 10px">${escapeHtml(s.name)}</td>
+                  <td style="padding:4px 10px">${fmtNum(s.nodes)}</td>
+                  <td style="padding:4px 10px">${fmtNum(s.views)}</td>
+                  <td style="padding:4px 10px;color:var(--danger);font-weight:600">${fmtUsd(s.usd)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>`;
+    topSongsContainer.innerHTML = tableHtml;
+  }
+
+  document.getElementById('reportSection').classList.add('visible');
+  document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── ESCAPE HTML ──
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ── INIT ──
+loadData();
+</script>
+</body>
+</html>

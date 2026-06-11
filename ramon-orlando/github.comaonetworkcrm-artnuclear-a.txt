@@ -1,0 +1,504 @@
+github.com/aonetworkcrm-art/nuclear-aima-cotizador
+
+│ #   │ Llave                    │
+├─────┼──────────────────────────┤
+│ 1   │ tnmn-2fCc-gv5Z-cqat-Ve9P │
+│ 2   │ pZLs-MP4Q-4YDf-kvGB-MWgh │
+│ 3   │ nZXe-jhHw-srmu-EvgP-D8BJ │
+│ 4   │ fkPX-jgvs-Hg7e-7P59-48Pq 
+
+
+# TARIFARIO BASE DE INFRAESTRUCTURA E INSUMOS
+
+## DOCUMENTO DE CONTROL INTERNO CONFIDENCIAL
+
+
+
+* **Propósito**: Registro de costes netos de infraestructura corporativa (**Nuclear AIMA** y **Scaling Flow IA**).
+
+
+* **Restricción**: Prohibida su divulgación externa o exhibición a clientes finales.
+
+
+* **Fecha de Actualización**: Junio de 2026.
+
+
+* **Moneda**: Dólares estadounidenses ($).
+
+
+
+Este documento contiene el desglose consolidado de los costes base por cada 1,000 unidades (Coste Por Millar) provistos por nuestra plataforma de distribución interna. Esta información sirve exclusivamente como matriz operativa interna para el cálculo de presupuestos de la agencia, determinación de márgenes de utilidad y diseño de estrategias combinadas de tráfico e interacción.
+
+---
+
+### Seguidores de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8573** | Seguidores de Instagram | Calidad Global | Garantía: Reabastecimiento de 30 días | 50K por día
+
+ | $0.3800
+
+ | 50
+
+ | 100
+
+ |
+| **8574** | Seguidores de Instagram | Calidad Global | Garantía: Reabastecimiento de 1 año | 50K por día
+
+ | $0.4400
+
+ | 50
+
+ | 100
+
+ |
+| **8575** | Seguidores de Instagram | Calidad Global | Garantía: Reabastecimiento de por vida | 50K por día
+
+ | $0.5300
+
+ | 50
+
+ | 100
+
+ |
+
+### Seguidores de Instagram | Latinoamérica
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8722** | Seguidores de Instagram | Calidad de Latinoamérica | 30K por día | Garantía: Reabastecimiento de 30 días
+
+ | $4.7200
+
+ | 20
+
+ | 250
+
+ |
+| **8723** | Seguidores de Instagram | Calidad de Brasil | Garantía: Reabastecimiento de 30 días | 30K por día
+
+ | $4.7200
+
+ | 20
+
+ | 150
+
+ |
+
+### Seguidores de Instagram | Calidad Premium
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8497** | Seguidores de Instagram Estados Unidos | 100% Real Alta Calidad Premium | 2K por día
+
+ | $16.0000
+
+ | 10
+
+ | 40
+
+ |
+| **8584** | Seguidores de Instagram | Calidad Premium | Garantía: Reabastecimiento de 30 días | 20K por día
+
+ | $8.4500
+
+ | 20
+
+ | 2
+
+ |
+| **8718** | Seguidores de Instagram Latinoamericanos | Reabastecimiento de 30 días | Máximo: 5K | 1K por día
+
+ | $5.7400
+
+ | 10
+
+ | 5
+
+ |
+| **8719** | Seguidores de Instagram | Latinoamérica | Cuentas 100% Latinoamericanas | Cancelación permitida | Caída del 5% al 10% | 30 días de inicio instantáneo | Máximo 10K por día
+
+ | $5.3200
+
+ | 10
+
+ | 1
+
+ |
+| **8585** | Seguidores de Instagram | Calidad Premium - Mujeres | Garantía: Reabastecimiento de 30 días | 20K por día
+
+ | $8.4500
+
+ | 20
+
+ | 2
+
+ |
+| **8586** | Seguidores de Instagram | Calidad Premium - Hombres | Garantía: Reabastecimiento de 30 días | 20K por día
+
+ | $8.4500
+
+ | 20
+
+ | 2
+
+ |
+
+---
+
+### Me Gusta de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8577** | Seguidores de Instagram | Calidad Global | Garantía: Reabastecimiento de por vida | 50K por día (Nota: Listado como Me Gusta en origen)
+
+ | $0.0900
+
+ | 100
+
+ | 500
+
+ |
+| **8576** | Me Gusta de Instagram | Calidad Global | Garantía: Reabastecimiento de 30 días | 50K por día
+
+ | $0.0700
+
+ | 100
+
+ | 500
+
+ |
+
+### Me Gusta de Instagram | Premium
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8571** | Me Gusta de Instagram | Latinoamérica | Cuentas reales con foto de perfil | Sin caída | Reposición de 30 días
+
+ | $0.4000
+
+ | 20
+
+ | 50
+
+ |
+
+---
+
+### Comentarios de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8721** | Me Gusta + Comentarios de Instagram | Descubrimiento efectivo | Máximo: 500 | 100% Orgánico
+
+ | $55.1100
+
+ | 5
+
+ | 1
+
+ |
+
+---
+
+### Publicaciones Compartidas de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8181** | Publicaciones compartidas de Instagram [Máximo 50] | Seguidores (1 pieza = 0.75$) | Cuentas 100% reales y activas con más de 10K a 100K
+
+ | $750.0000
+
+ | 1
+
+ | 50
+
+ |
+
+---
+
+### Visualizaciones de Vídeo de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8039** | Visualizaciones de Instagram | Televisión de Instagram + Reels | Máximo 20M | 5K por hora
+
+ | $0.0100
+
+ | 100
+
+ | 217
+
+ |
+| **8390** | Visualizaciones de Vídeo de Instagram | Todos los enlaces | Económico
+
+ | $0.0000
+
+ | 250
+
+ | 2
+
+ |
+| **8391** | Visualizaciones de Vídeo de Instagram | Vídeo + Reel + Televisión de Instagram | Todos los enlaces | Rápido | Estable
+
+ | $0.0200
+
+ | 100
+
+ | 2
+
+ |
+
+---
+
+### Servicios de Impresiones de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8393** | Instagram Visitas al Perfil | Desde Publicaciones | 50K por día
+
+ | $0.1400
+
+ | 100
+
+ | 100
+
+ |
+| **8392** | Instagram Impresiones + Alcance | Usuarios Brasileños | 50K por día
+
+ | $0.0900
+
+ | 100
+
+ | 100
+
+ |
+| **8394** | Instagram Impresiones [Inicio + Explorar + Ubicación + Perfil] | 10K por día
+
+ | $0.0700
+
+ | 10
+
+ | 1
+
+ |
+| **8395** | Instagram Impresiones de Publicación | Todos los enlaces | 50K por día
+
+ | $0.0400
+
+ | 100
+
+ | 10
+
+ |
+| **8397** | Instagram Impresiones + Elementos compartidos | Máximo 5M | 100K por día
+
+ | $0.5500
+
+ | 100
+
+ | 5
+
+ |
+
+---
+
+### Visualizaciones de Historias de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8587** | Visualizaciones de Historias Globales de Instagram | 100% Usuarios Globales
+
+ | $0.3900
+
+ | 10
+
+ | 1
+
+ |
+| **8588** | Visualizaciones de Historias Latinoamericanas de Instagram | 100% Usuarios Latinos
+
+ | $0.3900
+
+ | 20
+
+ | 50
+
+ |
+| **8589** | Visualizaciones de Historias Españolas de Instagram | 100% Usuarios Españoles
+
+ | $0.3900
+
+ | 10
+
+ | 50
+
+ |
+| **8590** | Visualizaciones de Historias Italianas de Instagram | 100% Usuarios Italianos
+
+ | $0.3900
+
+ | 20
+
+ | 50
+
+ |
+
+---
+
+### Visualizaciones Automáticas de Instagram | Televisión de Instagram y REELS
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **6899** | Visualizaciones Automáticas de Instagram | Televisión de Instagram + Reels | Máximo 100M | Rápido
+
+ | $0.1200
+
+ | 100
+
+ | 100
+
+ |
+| **6900** | Visualizaciones Automáticas de Instagram | Máximo 10M | Rápido
+
+ | $0.3300
+
+ | 100
+
+ | 20
+
+ |
+| **6901** | Visualizaciones Automáticas de Instagram | Máximo 20M | Instantáneo
+
+ | $0.0200
+
+ | 100
+
+ | 100
+
+ |
+
+---
+
+### Automatización de Impresiones, Alcance, Interacción y Visitas al Perfil de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **6902** | Impresiones Automáticas de Instagram + Alcance + Visitas al Perfil + Visualización | Alta Calidad | Máximo 5M | Rápido
+
+ | $0.2900
+
+ | 100
+
+ | 5
+
+ |
+
+---
+
+### Publicaciones Guardadas de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8398** | Publicaciones Guardadas de Instagram | Máximo 30K | 10K por día
+
+ | $0.0100
+
+ | 5
+
+ | 30
+
+ |
+| **8399** | Publicaciones Guardadas Reales de Instagram | Todos los enlaces | Estable
+
+ | $0.1200
+
+ | 10
+
+ | 50
+
+ |
+
+### Guardados Automáticos de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **6904** | Guardados Automáticos de Instagram | Siempre Estable | Alta Calidad | Máximo 30K | Instantáneo
+
+ | $0.1200
+
+ | 10
+
+ | 30
+
+ |
+| **6905** | Guardados Automáticos de Instagram | Máximo 50K | Instantáneo
+
+ | $0.1200
+
+ | 10
+
+ | 30
+
+ |
+
+---
+
+### Contenido Compartido de Instagram
+
+
+
+| Identificador | Descripción Técnica del Servicio | Coste Base / 1K | Mínimo | Máximo |
+| --- | --- | --- | --- | --- |
+| **8388** | Contenido Compartido de Instagram | Garantía de 1 año | Súper Rápido | 100K por día
+
+ | $0.2400
+
+ | 100
+
+ | 1
+
+ |
+| **8389** | Contenido Compartido de Instagram + Interacción + Alcance | Súper Rápido | Máximo 1M | 10K por día
+
+ | $0.1700
+
+ | 10
+
+ | 1
+
+ |
+
+---
+
+**CONFIDENCIAL • CONTROL INTERNO**
+**INFRAESTRUCTURA OPERADA POR NUCLEAR AIMA Y SCALING FLOW IA**

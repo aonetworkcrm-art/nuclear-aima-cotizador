@@ -1,0 +1,226 @@
+Al analizar detalladamente el catálogo proporcionado, el desglose matemático exacto es el siguiente:
+
+* **Total de Álbumes:** 17
+* **Total de Canciones:** 178
+
+A continuación, tienes las **178 canciones ordenadas estrictamente de la más popular a la menos popular**, clasificadas según el nivel de popularidad indicado en tu documento. Dentro de cada rango, se especifica el álbum al que pertenece el tema para mantener el rastro del catálogo.
+
+---
+
+### 1. Popularidad: Mítica / Universal (4 canciones)
+
+*Los máximos hitos históricos y globales del maestro.*
+
+1. **Te Compro Tu Novia** *(Álbum 9: América Sin Queja)*
+2. **Loco de Amor** *(Álbum 3: Loco de Amor)*
+3. **Ring... Ring (El Teléfono)** *(Álbum 7: Ring... Ring)*
+4. **La Temperatura** *(Álbum 1: Los Orígenes y la Herencia)* - *Nota: Escalada aquí por el Recuento Global.*
+
+---
+
+### 2. Popularidad: Muy Alta (7 canciones)
+
+*Éxitos masivos de alta rotación radial y en streaming.*
+
+5. Tonto Corazón *(Álbum 2)*
+6. Dos Sonámbulos *(Álbum 4)*
+7. Noche de Bodas *(Álbum 6)*
+8. Cabecita Loca *(Álbum 7)*
+9. Esa Muchacha *(Álbum 10)*
+10. No Voy a Volver a Llorar *(Álbum 11)*
+11. El Tiki Tiki del Amor *(Álbum 17)*
+
+---
+
+### 3. Popularidad: Alta (34 canciones)
+
+*Clásicos de catálogo consolidados y tendencias activas.*
+
+12. El Juicio *(Álbum 1)*
+13. Micharén *(Álbum 1)*
+14. Weo *(Álbum 2)*
+15. Por un Pedazo de Tu Amor *(Álbum 2)*
+16. Mar de Amores *(Álbum 3)*
+17. Me Enamoré *(Álbum 3)*
+18. Amor de Conuco *(Álbum 4)*
+19. El Baile del Suá Suá *(Álbum 4)*
+20. El Hijo de la Mazurca *(Álbum 5)*
+21. El Merengazo *(Álbum 5)*
+22. Solo Ganar *(Álbum 6)*
+23. A Fuego Lento *(Álbum 6)*
+24. Doy *(Álbum 7)*
+25. El Hombre de la Noche *(Álbum 8)*
+26. Todos a Bailar *(Álbum 8)*
+27. América Sin Queja *(Álbum 9)*
+28. Ganas de Amarte *(Álbum 9)*
+29. El Maestro del Ritmo *(Álbum 10)*
+30. Balada de Amor *(Álbum 11)*
+31. Bachata de Amargue *(Álbum 12)*
+32. Lágrimas de Amor *(Álbum 12)*
+33. En Tierra Ajena *(Álbum 13)*
+34. Un Canto a Nueva York *(Álbum 13)*
+35. El Duro *(Álbum 14)*
+36. Mambo del Piano *(Álbum 14)*
+37. Adoración en el Trono *(Álbum 15)*
+38. Gracias por Tu Amor *(Álbum 15)*
+39. El Baile de la Vida *(Álbum 16)*
+40. Aunque No Quisieran (2026) *(Álbum 17)*
+41. El Merengue Vive *(Álbum 17)*
+42. Mambo 2026 *(Álbum 17)*
+43. El Legado Sigue *(Álbum 17)*
+
+---
+
+### 4. Popularidad: Media-Alta (24 canciones)
+
+*Temas con excelente desempeño y fuerte presencia en nichos.*
+
+44. No Matarás *(Álbum 1)*
+45. Tú Posesión *(Álbum 2)*
+46. Qué Ironía *(Álbum 3)*
+47. No Puedo Olvidarte *(Álbum 3)*
+48. Te Quiero, Te Quiero *(Álbum 4)*
+49. Raza Latina *(Álbum 5)*
+50. Te Extraño *(Álbum 5)*
+51. El Rompecorazones *(Álbum 6)*
+52. Que Vuelva el Amor *(Álbum 7)*
+53. Amor de Juventud *(Álbum 8)*
+54. Fiesta Dominicana *(Álbum 8)*
+55. Pedacito de Patria *(Álbum 9)*
+56. Esclavo de Tu Amor *(Álbum 9)*
+57. Por Ti Respiro *(Álbum 10)*
+58. Evolución de Merengue *(Álbum 11)*
+59. Corazón Herido *(Álbum 11)*
+60. Corazón Partido *(Álbum 12)*
+61. Nostalgia de Mi Pueblo *(Álbum 13)*
+62. El Regreso *(Álbum 13)*
+63. Merengue de la Calle *(Álbum 14)*
+64. Con el Piano Encendido *(Álbum 14)*
+65. Canto de Alabanza *(Álbum 15)*
+66. Alaba a Dios *(Álbum 15)*
+67. Crónicas del Día a Día *(Álbum 16)*
+68. Un Nuevo Despertar *(Álbum 16)*
+69. Colaboración de Oro *(Álbum 17)*
+70. Amor Digital *(Álbum 17)*
+
+---
+
+### 5. Popularidad: Media (98 canciones)
+
+*La base sólida del catálogo; temas estables de distribución regular.*
+
+71. Pagando Mi Ley *(Álbum 1)*
+72. Te Invito a Bailar *(Álbum 1)*
+73. Sisi y Ricardo *(Álbum 1)*
+74. Mentirosa *(Álbum 1)*
+75. Un rincón del alma *(Álbum 1)*
+76. Fiebre *(Álbum 2)*
+77. Al Son de los Tambores *(Álbum 2)*
+78. Bailando Contigo *(Álbum 2)*
+79. La Orquesta de Moda *(Álbum 2)*
+80. A Ritmo de Piano *(Álbum 2)*
+81. Vuelve *(Álbum 2)*
+82. Gotas de Fuego *(Álbum 3)*
+83. El Piano Mágico *(Álbum 3)*
+84. Noche de Luna *(Álbum 3)*
+85. Baila Mi Merengue *(Álbum 3)*
+86. Es Tarde Ya *(Álbum 3)*
+87. Cariño Lindo *(Álbum 4)*
+88. El Ritmo de la Noche *(Álbum 4)*
+89. Esencia Dominicana *(Álbum 4)*
+90. Juntos de Nuevo *(Álbum 4)*
+91. Piano Sincopado *(Álbum 4)*
+92. Herencia de Sangre *(Álbum 5)*
+93. Nostalgia de Cuco *(Álbum 5)*
+94. Baila Mi Pueblo *(Álbum 5)*
+95. Sabor Antillano *(Álbum 5)*
+96. El Son del Piano *(Álbum 5)*
+97. Tambores y Güira *(Álbum 5)*
+98. Dime Que Sí *(Álbum 6)*
+99. La Dueña de Mi Piano *(Álbum 6)*
+100. Merengue Caliente *(Álbum 6)*
+101. Falso Amor *(Álbum 6)*
+102. Para Siempre *(Álbum 6)*
+103. Ritmo Violento *(Álbum 6)*
+104. La Chica de la Foto *(Álbum 7)*
+105. Te Vas Conmigo *(Álbum 7)*
+106. Un Toque de Piano *(Álbum 7)*
+107. Corazón de Piedra *(Álbum 7)*
+108. Ritmo de la Calle *(Álbum 7)*
+109. Piano y Corazón *(Álbum 8)*
+110. No Me Dejes Solo *(Álbum 8)*
+111. Fuerza Latina *(Álbum 8)*
+112. El Ritmo Nos Une *(Álbum 8)*
+113. Dulce Amada *(Álbum 8)*
+114. A Todo Tren *(Álbum 8)*
+115. El Profesor de Baile *(Álbum 9)*
+116. Mi Piano Romántico *(Álbum 9)*
+117. Bailando el Ritmo *(Álbum 9)*
+118. No Llores Más *(Álbum 9)*
+119. Gente Alegre *(Álbum 9)*
+120. Gotas de Nostalgia *(Álbum 10)*
+121. Piano Virtuoso *(Álbum 10)*
+122. Amor Oculto *(Álbum 10)*
+123. El Baile de la Noche *(Álbum 10)*
+124. Sentimiento Puro *(Álbum 10)*
+125. Vuelve a Mí *(Álbum 10)*
+126. El Siglo Termina *(Álbum 11)*
+127. La Chica del Siglo *(Álbum 11)*
+128. Te Dedico Mi Piano *(Álbum 11)*
+129. Amor de Fin de Año *(Álbum 11)*
+130. Ritmo de Fin de Siglo *(Álbum 11)*
+131. Vuelve mi Amor *(Álbum 11)*
+132. Baila el Nuevo Ritmo *(Álbum 11)*
+133. Guitarra Amarga *(Álbum 12)*
+134. Mi Niña Consentida *(Álbum 12)*
+135. Por un Te Quiero *(Álbum 12)*
+136. Te Extraño Tanto *(Álbum 12)*
+137. Amor de Cuerdas *(Álbum 12)*
+138. Falso Juramento *(Álbum 12)*
+139. Baila Mi Bachata *(Álbum 12)*
+140. Lejos de Casa *(Álbum 13)*
+141. El Viajero Dominicano *(Álbum 13)*
+142. Recuerdos de Quisqueya *(Álbum 13)*
+143. Mi Piano en la Distancia *(Álbum 13)*
+144. Cartas de Amor *(Álbum 13)*
+145. Sabor de Patria *(Álbum 13)*
+146. La Fuerza del Ritmo *(Álbum 14)*
+147. Gozadera Total *(Álbum 14)*
+148. El Ritmo No Muere *(Álbum 14)*
+149. A Corazón Abierto *(Álbum 14)*
+150. Baila Sin Parar *(Álbum 14)*
+151. Sabor Callejero *(Álbum 14)*
+152. Ante Ti, Señor *(Álbum 15)*
+153. Piano Celestial *(Álbum 15)*
+154. Fe y Esperanza *(Álbum 15)*
+155. En Tu Presencia *(Álbum 15)*
+156. Canto de Victoria *(Álbum 15)*
+157. Volver a Empezar *(Álbum 16)*
+158. Abrazo Virtual *(Álbum 16)*
+159. Piano de la Esperanza *(Álbum 16)*
+160. Historias del Pueblo *(Álbum 16)*
+161. Canto de Fe *(Álbum 16)*
+162. Ritmo Sanador *(Álbum 16)*
+163. Unidos por el Ritmo *(Álbum 16)*
+164. Piano Moderno *(Álbum 17)*
+165. Ritmo de la Nueva Ola *(Álbum 17)*
+166. Sencillo de Corazón *(Álbum 17)*
+167. Raíces y Futuro *(Álbum 17)*
+168. Canto de Oro (Final de Antología) *(Álbum 17)*
+
+---
+
+### 6. Popularidad: Baja (10 canciones)
+
+*Obras instrumentales, conceptuales o de nicho académico/sacro.*
+
+169. Sinfonía en Merengue (Instrumental) *(Álbum 1)*
+170. Unión Eterna *(Álbum 4)*
+171. Un Canto al Caribe *(Álbum 5)*
+172. Llamada Perdida *(Álbum 7)*
+173. Unión de Naciones *(Álbum 9)*
+174. Fin de Fiesta *(Álbum 10)*
+175. Despedida de Amor *(Álbum 12)*
+176. Fin del Mambo *(Álbum 14)*
+177. Oración Final *(Álbum 15)*
+178. Cierre de Crónicas *(Álbum 16)*

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏛️ ONAPI · ONDA · Fundación Legal · Nuclear AIMA</title>
+<style>
+  :root {
+    --bg: #0d0d0f; --bg2: #141416; --bg3: #1c1c1f;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8; --muted: #7a7875;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --success: #4cad7c; --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 70%);
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+  .header {
+    text-align: center; padding: 30px 0 20px;
+    border-bottom: 0.5px solid var(--border); margin-bottom: 24px;
+  }
+  .header .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
+    border: 0.5px solid rgba(201,169,110,0.3); border-radius: 20px;
+    padding: 4px 12px; font-size: 10px; font-weight: 500;
+    color: var(--accent); margin-bottom: 10px; letter-spacing: 0.02em;
+  }
+  .header h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.5px; }
+  .header p { font-size: 13px; color: var(--muted); max-width: 600px; margin: 8px auto 0; line-height: 1.5; }
+
+  /* PHASE CARD */
+  .phase-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); padding: 24px; margin-bottom: 16px;
+  }
+  .phase-card h2 {
+    font-size: 16px; font-weight: 600; margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .phase-card h2 .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--accent); color: #0d0d0f;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .phase-card .subtitle {
+    font-size: 11px; color: var(--muted); margin-bottom: 14px;
+    padding-left: 38px;
+  }
+  .phase-card .content { font-size: 13px; line-height: 1.7; color: var(--text); }
+  .phase-card .content p { margin-bottom: 12px; }
+  .phase-card .content strong { color: var(--accent); }
+  .phase-card .highlight {
+    background: rgba(201,169,110,0.08); border-left: 2px solid var(--accent);
+    padding: 12px 16px; border-radius: 0 var(--r) var(--r) 0; margin: 12px 0;
+    font-size: 12px; line-height: 1.6;
+  }
+  .phase-card .highlight.danger { border-left-color: var(--danger); background: rgba(224,92,92,0.08); }
+  .phase-card .highlight.success { border-left-color: var(--success); background: rgba(76,173,124,0.08); }
+  .phase-card .highlight .label {
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em;
+    font-weight: 600; margin-bottom: 4px;
+  }
+  .phase-card .highlight.danger .label { color: var(--danger); }
+  .phase-card .highlight.success .label { color: var(--success); }
+  .phase-card .highlight .label { color: var(--accent); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; margin: 20px 0; }
+  .timeline::before {
+    content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 24px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item .dot {
+    position: absolute; left: -24px; top: 4px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg2);
+  }
+  .timeline-item .dot.success { background: var(--success); }
+  .timeline-item .dot.danger { background: var(--danger); }
+  .timeline-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .timeline-item .time { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+
+  /* COST TABLE */
+  .cost-table {
+    width: 100%; border-collapse: collapse; font-size: 12px;
+    margin: 16px 0;
+  }
+  .cost-table th {
+    text-align: left; padding: 10px 12px;
+    color: var(--muted); font-weight: 500;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border); background: var(--bg3);
+  }
+  .cost-table td {
+    padding: 10px 12px; border-bottom: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .cost-table tr:hover td { background: rgba(201,169,110,0.03); }
+  .cost-table .total-row td { font-weight: 600; color: var(--accent); border-top: 1px solid var(--border); }
+
+  /* CHECKLIST */
+  .checklist { margin: 16px 0; }
+  .checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04);
+    cursor: pointer; transition: opacity 0.15s;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-item .checkbox {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 1.5px solid var(--border2); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; margin-top: 1px;
+  }
+  .checklist-item.done .checkbox {
+    background: var(--success); border-color: var(--success);
+  }
+  .checklist-item.done .checkbox::after {
+    content: '✓'; color: #0d0d0f; font-size: 11px; font-weight: 700;
+  }
+  .checklist-item.done .check-text { opacity: 0.5; text-decoration: line-through; }
+  .checklist-item .check-text { font-size: 13px; }
+  .checklist-item .check-sub {
+    font-size: 10px; color: var(--muted); margin-top: 2px;
+  }
+  .checklist-progress {
+    height: 4px; background: var(--bg3); border-radius: 2px; margin: 12px 0 8px;
+    overflow: hidden;
+  }
+  .checklist-progress .bar {
+    height: 100%; background: linear-gradient(90deg, var(--accent), var(--success));
+    border-radius: 2px; transition: width 0.5s ease; width: 0%;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow-diagram {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; flex-wrap: wrap; margin: 20px 0;
+  }
+  .flow-node {
+    background: var(--bg3); border: 0.5px solid var(--border);
+    border-radius: var(--r); padding: 12px 16px;
+    text-align: center; min-width: 120px; flex: 1;
+  }
+  .flow-node .icon { font-size: 20px; margin-bottom: 4px; }
+  .flow-node .name { font-size: 10px; font-weight: 600; }
+  .flow-node .cost { font-size: 9px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+  .flow-arrow { font-size: 18px; color: var(--muted); flex-shrink: 0; }
+
+  /* RESOURCE LINKS */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px; margin: 16px 0;
+  }
+  .resource-card {
+    background: var(--bg3); border: 0.5px solid var(--border);
+    border-radius: var(--r); padding: 14px;
+    text-decoration: none; color: inherit; transition: all 0.15s;
+  }
+  .resource-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .resource-card .rc-icon { font-size: 20px; margin-bottom: 6px; }
+  .resource-card .rc-title { font-size: 12px; font-weight: 600; }
+  .resource-card .rc-url { font-size: 9px; color: var(--cyan); font-family: var(--mono); margin-top: 3px; word-break: break-all; }
+
+  .back-link {
+    text-align: center; padding: 20px 0;
+    border-top: 0.5px solid var(--border); margin-top: 10px;
+  }
+  .back-link a { color: var(--accent); text-decoration: none; font-size: 12px; letter-spacing: 0.05em; }
+  .back-link a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .container { padding: 12px; }
+    .phase-card { padding: 16px; }
+    .flow-diagram { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .cost-table { font-size: 10px; }
+    .cost-table th, .cost-table td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="badge">🏛️ FASE 1 · FUNDACIÓN LEGAL LOCAL</div>
+    <h1>ONAPI · ONDA · SRL</h1>
+    <p>Guía completa paso a paso para constituir tu sello independiente dominicano y obtener la facultad legal para administrar catálogos musicales, reclamar derechos ante YouTube y negociar con distribuidoras internacionales.</p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="phase-card">
+    <h2>📋 Visión General de la Fase 1</h2>
+    <p class="subtitle" style="padding-left:0">El orden correcto: ONDA/ONAPI → Sello Independiente → Distribuidora (adelanto) → LLC Wyoming → Tokenización</p>
+    <div class="content">
+      <p>La <strong>Fase 1: Fundación Legal Local</strong> es el cimiento de todo el proyecto. Sin estos 4 documentos no puedes firmar contratos con distribuidoras, no puedes abrir cuentas bancarias corporativas, no puedes <strong>reclamar derechos ante YouTube</strong> ni ante ASCAP, y no puedes presentarte ante Believe o The Orchard como un sello serio.</p>
+      <p>Esta fase convierte una idea en una <strong>empresa real con poder legal</strong> para administrar catálogos musicales, negociar adelantos de 6 cifras y reclamar ingresos fugados de Content ID.</p>
+    </div>
+    <div class="highlight success">
+      <div class="label">💰 Inversión Total</div>
+      <strong>~$1,000 USD</strong> · 4 pasos · ~30 días hábiles · Sin necesidad del artista
+    </div>
+  </div>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="phase-card">
+    <h2>🔀 Diagrama de Flujo</h2>
+    <p class="subtitle" style="padding-left:0">El camino legal hacia el adelanto con distribuidora</p>
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="icon">🏛️</div>
+        <div class="name">ONAPI</div>
+        <div class="cost">$100 · 5-10 días</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="icon">🏢</div>
+        <div class="name">SRL + RNC</div>
+        <div class="cost">$450 · 15-20 días</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="icon">🎵</div>
+        <div class="name">ONDA</div>
+        <div class="cost">$150 · 10-15 días</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="icon">📜</div>
+        <div class="name">Contrato Matriz</div>
+        <div class="cost">$300 · 3-5 días</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="border-color:var(--accent)">
+        <div class="icon">🎯</div>
+        <div class="name">¡A Distribuidora!</div>
+        <div class="cost">Adelanto $50K-$150K</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 1: ONAPI -->
+  <div class="phase-card">
+    <h2><span class="step-num">1</span> Registro del Nombre Comercial en ONAPI</h2>
+    <p class="subtitle"><strong>Oficina Nacional de la Propiedad Industrial</strong> — onapi.gob.do</p>
+    <div class="content">
+      <p><strong>¿Por qué es importante?</strong> Si no registras el nombre, cualquier persona puede usarlo. Más importante aún, cuando te presentes ante distribuidoras internacionales o ante YouTube con un reclamo de derechos, el <strong>certificado de ONAPI</strong> es la primera prueba de que existes como entidad formal.</p>
+      <p><strong>Cómo hacerlo:</strong> Inicia el proceso en línea a través del portal <strong>E-SERPI</strong> en el sitio oficial de ONAPI: <strong>onapi.gob.do</strong>. También puedes ir físicamente a sus oficinas en la Av. Los Próceres, Santo Domingo.</p>
+    </div>
+    <div class="highlight">
+      <div class="label">⚡ Clases Críticas (Clasificación de Niza)</div>
+      <strong>Clase 41</strong> — Producción musical, edición discográfica, gestión de entretenimiento, administración de catálogos.<br>
+      <strong>Clase 35</strong> — Gestión de negocios comerciales, administración de activos intangibles.<br>
+      <span style="color:var(--muted);font-size:11px">Registrar ambas desde el inicio te evita tener que volver a pagar más adelante.</span>
+    </div>
+    <div class="highlight success">
+      <div class="label">💰 Costo</div>
+      <strong>RD$4,755 a RD$6,000</strong> (~$100 USD) · <strong>Tiempo:</strong> 5 a 10 días hábiles
+    </div>
+    <div class="highlight">
+      <div class="label">💡 Tip Práctico</div>
+      Antes de pagar, busca en el portal de ONAPI si el nombre que elegiste ya está registrado. Elige un nombre que suene institucional y funcione tanto en español como en inglés. Ejemplos: <em>"Antilles Music Group", "Heritage Catalog Assets", "Caribe Legacy Records"</em>.
+    </div>
+  </div>
+
+  <!-- PASO 2: SRL -->
+  <div class="phase-card">
+    <h2><span class="step-num">2</span> Constitución de la SRL</h2>
+    <p class="subtitle"><strong>Sociedad de Responsabilidad Limitada</strong> — Registro Mercantil + RNC</p>
+    <div class="content">
+      <p><strong>¿Por qué es importante?</strong> Ninguna distribuidora internacional seria —ni Believe, ni The Orchard, ni SonoSuite— firma contratos con personas físicas para gestión de catálogos de este tamaño. Necesitan una <strong>contraparte corporativa</strong>. Además, para abrir una cuenta bancaria que reciba transferencias internacionales de regalías, necesitas el RNC de una empresa.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>1. Estatutos</h4>
+        <div class="time">Redacta los estatutos con objeto social que incluya distribución digital, gestión de catálogos y explotación de fonogramas.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>2. Pago de Impuesto</h4>
+        <div class="time">Paga el impuesto de constitución en la DGII.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>3. Cámara de Comercio</h4>
+        <div class="time">Lleva el expediente completo (estatutos, comprobante de pago, cédulas de socios, certificado de ONAPI) a la Cámara de Comercio y Producción de tu provincia.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>4. RNC</h4>
+        <div class="time">Con el Registro Mercantil, solicita el RNC en la DGII a través de su Oficina Virtual.</div>
+      </div>
+    </div>
+    <div class="highlight success">
+      <div class="label">💰 Costo</div>
+      <strong>RD$24,000 a RD$30,000</strong> (~$450 USD) incluyendo honorarios de abogado · <strong>Tiempo:</strong> 15 a 20 días hábiles
+    </div>
+    <div class="highlight">
+      <div class="label">💡 Tip Práctico</div>
+      Abre la <strong>cuenta bancaria corporativa</strong> inmediatamente después de recibir el RNC. Los bancos que mejor manejan transferencias internacionales de regalías en RD son <strong>Banreservas</strong> y <strong>BHD León</strong>.
+    </div>
+  </div>
+
+  <!-- PASO 3: ONDA -->
+  <div class="phase-card">
+    <h2><span class="step-num">3</span> Registro en la ONDA como Productor Fonográfico</h2>
+    <p class="subtitle"><strong>Oficina Nacional de Derecho de Autor</strong> — El paso más poderoso y el que casi todos omiten</p>
+    <div class="content">
+      <p><strong>¿Por qué es el paso más importante?</strong> Hay dos tipos de derechos en una canción: el derecho del <strong>autor o compositor</strong>, y el derecho del <strong>productor del fonograma</strong> (la grabación en sí).</p>
+      <p>Al registrar tu SRL como <strong>Productora Fonográfica activa</strong>, el Estado dominicano te reconoce como una entidad con facultad legal para <strong>poseer, distribuir y reclamar masters</strong>. Cuando YouTube recibe un reclamo de derechos de tu empresa respaldado por una certificación de la ONDA, <strong>lo procesa con prioridad institucional</strong>.</p>
+    </div>
+    <div class="highlight success">
+      <div class="label">🎯 El Poder Real</div>
+      <strong>Claim & Monetize</strong>, nunca Takedown. No eliminas videos de terceros — reclamas la monetización. El tráfico histórico acumulado y la imagen del artista se protegen mientras el dinero de publicidad se desvía a tu cuenta.
+    </div>
+    <div class="highlight">
+      <div class="label">📍 Cómo hacerlo</div>
+      Vas físicamente a las oficinas de la <strong>ONDA en Santo Domingo</strong> con los documentos de tu SRL ya constituida. Solicitas el registro bajo la categoría de <strong>Productor Fonográfico</strong>, no como autor individual. Llevas: RNC, Registro Mercantil y certificado de ONAPI.
+    </div>
+    <div class="highlight success">
+      <div class="label">💰 Costo</div>
+      <strong>RD$8,000 a RD$10,000</strong> (~$150 USD) · <strong>Tiempo:</strong> 10 a 15 días hábiles
+    </div>
+    <div class="highlight">
+      <div class="label">💡 Tip Clave</div>
+      En la misma visita, pregunta por el proceso de <strong>registro de Obra Colectiva</strong>. Esto permite registrar las 178 canciones como compilación (<strong>&lt; RD$10,000</strong>) en lugar de individualmente (<strong>&gt; RD$300,000</strong>).
+    </div>
+  </div>
+
+  <!-- PASO 4: CONTRATO -->
+  <div class="phase-card">
+    <h2><span class="step-num">4</span> El Contrato Matriz de Administración</h2>
+    <p class="subtitle"><strong>Plantilla legal</strong> para administrar catálogos de artistas</p>
+    <div class="content">
+      <p>Un abogado especializado en entretenimiento redacta la plantilla de administración que usarás con todos los artistas. Este contrato debe incluir:</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Mandato de Administración Exclusiva</h4>
+        <div class="time">Poder para negociar distribución, reclamar derechos, registrar ISRCs y administrar plataformas digitales en nombre del artista.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Cláusula Claim & Monetize</h4>
+        <div class="time">No se eliminarán videos de terceros sino que se reclamará la monetización, protegiendo el tráfico orgánico acumulado.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Split de Regalías</h4>
+        <div class="time"><strong>70%</strong> para el artista · <strong>30%</strong> para el sello</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Adelanto Recuperable No Reembolsable</h4>
+        <div class="time">Estructura clara de recuperación del adelanto contra regalías futuras.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Duración y Explotación Web3</h4>
+        <div class="time">Mínimo 10 años con renovación automática. Cláusula que autorice la tokenización y mercado secundario.</div>
+      </div>
+    </div>
+    <div class="highlight success">
+      <div class="label">💰 Costo</div>
+      <strong>RD$15,000 a RD$18,000</strong> (~$300 USD) · <strong>Tiempo:</strong> 3 a 5 días
+    </div>
+    <div class="highlight">
+      <div class="label">💡 Tip Práctico</div>
+      Busca un abogado que haya trabajado específicamente con <strong>artistas o sellos</strong>, no un abogado corporativo general. La ONDA puede orientarte sobre profesionales especializados en derecho de autor en el país.
+    </div>
+  </div>
+
+  <!-- COST TABLE -->
+  <div class="phase-card">
+    <h2>💵 Tabla de Costos y Tiempos</h2>
+    <p class="subtitle" style="padding-left:0">Inversión total de la Fase 1: ~$1,000 USD</p>
+    <div style="overflow-x:auto">
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Paso</th>
+            <th>Institución</th>
+            <th>Costo USD</th>
+            <th>Costo RD$</th>
+            <th>Tiempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Registro de Nombre Comercial</td>
+            <td>ONAPI</td>
+            <td>~$100</td>
+            <td>RD$4,755-6,000</td>
+            <td>5-10 días</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Constitución SRL + RNC</td>
+            <td>Cámara Comercio / DGII</td>
+            <td>~$450</td>
+            <td>RD$24,000-30,000</td>
+            <td>15-20 días</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Registro Productor Fonográfico</td>
+            <td>ONDA</td>
+            <td>~$150</td>
+            <td>RD$8,000-10,000</td>
+            <td>10-15 días</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Contrato Matriz de Administración</td>
+            <td>Abogado Especializado</td>
+            <td>~$300</td>
+            <td>RD$15,000-18,000</td>
+            <td>3-5 días</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="2"><strong>Total Fase 1</strong></td>
+            <td>—</td>
+            <td><strong>~$1,000</strong></td>
+            <td><strong>~RD$55,000</strong></td>
+            <td><strong>~30 días</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DOCUMENTS YOU GET -->
+  <div class="phase-card">
+    <h2>📜 Los 4 Documentos que Obtienes</h2>
+    <p class="subtitle" style="padding-left:0">Tu escudo legal para todo lo que viene después</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Certificado de ONAPI</h4>
+        <div class="time">Tu nombre comercial es tuyo. Nadie más puede usarlo.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>RNC + Registro Mercantil</h4>
+        <div class="time">Tu empresa existe ante el Estado dominicano.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Certificación ONDA como Productor Fonográfico</h4>
+        <div class="time">Tienes facultad legal para administrar masters y reclamar derechos ante YouTube con prioridad institucional.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>Contrato Matriz Firmado</h4>
+        <div class="time">Términos exactos en que cada artista te confía su legado.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="phase-card">
+    <h2>✅ Checklist de la Fase 1</h2>
+    <p class="subtitle" style="padding-left:0">Marca cada paso completado</p>
+    <div class="checklist-progress">
+      <div class="bar" id="progressBar"></div>
+    </div>
+    <div class="checklist" id="checklist">
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Registrar nombre comercial en ONAPI (Clase 41 + 35)</div>
+          <div class="check-sub">onapi.gob.do · ~$100 · 5-10 días</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Constituir la SRL con objeto social musical</div>
+          <div class="check-sub">Cámara de Comercio + DGII · ~$450 · 15-20 días</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Abrir cuenta bancaria corporativa</div>
+          <div class="check-sub">Banreservas o BHD León · Inmediato después del RNC</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Registrarse en ONDA como Productor Fonográfico</div>
+          <div class="check-sub">ONDA Santo Domingo · ~$150 · 10-15 días</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Preguntar por registro de Obra Colectiva en ONDA</div>
+          <div class="check-sub">Reduce costo de 178 canciones de RD$300K a &lt;RD$10K</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">Redactar Contrato Matriz con abogado especializado</div>
+          <div class="check-sub">Split 70/30 · Claim & Monetize · Web3 · 10 años</div>
+        </div>
+      </div>
+      <div class="checklist-item" onclick="toggleCheck(this)">
+        <div class="checkbox"></div>
+        <div>
+          <div class="check-text">¡Listo para Fase 2! Auditoría del catálogo</div>
+          <div class="check-sub">Con los 4 documentos puedes negociar con distribuidoras</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="phase-card">
+    <h2>🔗 Recursos Oficiales</h2>
+    <p class="subtitle" style="padding-left:0">Enlaces directos a las instituciones y plataformas clave</p>
+    <div class="resource-grid">
+      <a href="https://onapi.gob.do" target="_blank" class="resource-card">
+        <div class="rc-icon">🏛️</div>
+        <div class="rc-title">ONAPI · Portal E-SERPI</div>
+        <div class="rc-url">onapi.gob.do</div>
+      </a>
+      <a href="https://onda.gob.do" target="_blank" class="resource-card">
+        <div class="rc-icon">🎵</div>
+        <div class="rc-title">ONDA · Oficina Nacional de Derecho de Autor</div>
+        <div class="rc-url">onda.gob.do</div>
+      </a>
+      <a href="https://www.dgii.gov.do" target="_blank" class="resource-card">
+        <div class="rc-icon">💵</div>
+        <div class="rc-title">DGII · RNC y Obligaciones Fiscales</div>
+        <div class="rc-url">dgii.gov.do</div>
+      </a>
+      <a href="https://www.camarasantodomingo.do" target="_blank" class="resource-card">
+        <div class="rc-icon">🏢</div>
+        <div class="rc-title">Cámara de Comercio de Santo Domingo</div>
+        <div class="rc-url">camarasantodomingo.do</div>
+      </a>
+      <a href="https://www.banreservas.com" target="_blank" class="resource-card">
+        <div class="rc-icon">🏦</div>
+        <div class="rc-title">Banreservas · Cuenta Corporativa</div>
+        <div class="rc-url">banreservas.com</div>
+      </a>
+      <a href="https://www.bhd.com.do" target="_blank" class="resource-card">
+        <div class="rc-icon">🏦</div>
+        <div class="rc-title">BHD León · Cuenta Corporativa</div>
+        <div class="rc-url">bhd.com.do</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- NEXT PHASES -->
+  <div class="phase-card">
+    <h2>🚀 Lo que viene después (Fases siguientes)</h2>
+    <p class="subtitle" style="padding-left:0">Con los 4 documentos en mano, puedes avanzar a:</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>🔍 Fase 2 — Auditoría del Catálogo</h4>
+        <div class="time">Bot de Python para auditar 178 canciones, identificar nodos sin reclamo de Content ID, calcular ingreso fugado.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>📝 Fase 3 — Contacto con el Artista</h4>
+        <div class="time">Presentación oficial, firma del Contrato Matriz, registro en ONDA del catálogo como Obra Colectiva.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>💵 Fase 4 — Registro en Plataformas de Cobro</h4>
+        <div class="time">SoundExchange (retroactivo $40K-$80K), ASCAP/BMI, DistroKid para ISRCs temporales.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>🤝 Fase 5 — Distribución y Content ID</h4>
+        <div class="time">Pitch a Believe o The Orchard para adelanto. Activación de Content ID con política "Monetize".</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html">← Volver al Dashboard Nuclear AIMA</a>
+  </div>
+</div>
+
+<script>
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  updateProgress();
+}
+function updateProgress() {
+  const items = document.querySelectorAll('.checklist-item');
+  const done = document.querySelectorAll('.checklist-item.done');
+  const pct = items.length > 0 ? (done.length / items.length) * 100 : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+</script>
+</body>
+</html>

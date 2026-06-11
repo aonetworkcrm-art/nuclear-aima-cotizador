@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Monetización · Streaming 24/7</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.7;
+            padding: 0;
+        }
+        .pdf-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 48px;
+        }
+
+        /* ===== HEADER ===== */
+        .pdf-header {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 2px solid rgba(124,58,237,0.2);
+            margin-bottom: 40px;
+        }
+        .pdf-header .brand {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .pdf-header .brand span {
+            background: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pdf-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 16px 0 8px;
+            background: linear-gradient(135deg, #00f5ff 0%, #7c3aed 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pdf-header .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+        }
+        .pdf-header .badge {
+            display: inline-block;
+            margin-top: 16px;
+            background: rgba(245,158,11,0.1);
+            border: 1px solid rgba(245,158,11,0.2);
+            color: #f59e0b;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* ===== SECTIONS ===== */
+        .pdf-section {
+            margin-bottom: 48px;
+            padding: 36px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            position: relative;
+        }
+        .pdf-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 16px 0 0 16px;
+        }
+        .pdf-section.section-1::before { background: linear-gradient(180deg, #00f5ff, #7c3aed); }
+        .pdf-section.section-2::before { background: linear-gradient(180deg, #7c3aed, #f472b6); }
+        .pdf-section.section-3::before { background: linear-gradient(180deg, #f472b6, #f59e0b); }
+        .pdf-section.section-4::before { background: linear-gradient(180deg, #f59e0b, #22d3ee); }
+        .pdf-section.section-5::before { background: linear-gradient(180deg, #22d3ee, #00f5ff); }
+        .pdf-section.section-6::before { background: linear-gradient(180deg, #7c3aed, #f59e0b); }
+
+        .pdf-section h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .pdf-section h2 .num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .pdf-section.section-1 h2 .num { background: rgba(0,245,255,0.15); color: #00f5ff; }
+        .pdf-section.section-2 h2 .num { background: rgba(124,58,237,0.15); color: #a78bfa; }
+        .pdf-section.section-3 h2 .num { background: rgba(244,114,182,0.15); color: #f472b6; }
+        .pdf-section.section-4 h2 .num { background: rgba(245,158,11,0.15); color: #f59e0b; }
+        .pdf-section.section-5 h2 .num { background: rgba(34,211,238,0.15); color: #22d3ee; }
+        .pdf-section.section-6 h2 .num { background: rgba(124,58,237,0.15); color: #a78bfa; }
+
+        .pdf-section p {
+            color: #aaa;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .pdf-section p:last-child { margin-bottom: 0; }
+        .pdf-section strong { color: #fff; }
+        .pdf-section .highlight-box {
+            background: rgba(0,245,255,0.05);
+            border: 1px solid rgba(0,245,255,0.12);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+        .pdf-section .highlight-box.gold { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.15); }
+        .pdf-section .highlight-box.purple { background: rgba(124,58,237,0.05); border-color: rgba(124,58,237,0.15); }
+        .pdf-section .highlight-box h4 { color: #00f5ff; margin-bottom: 8px; font-size: 1rem; }
+        .pdf-section .highlight-box.gold h4 { color: #f59e0b; }
+        .pdf-section .highlight-box.purple h4 { color: #a78bfa; }
+
+        ul.pdf-list { list-style: none; margin: 16px 0; }
+        ul.pdf-list li {
+            padding: 10px 0;
+            padding-left: 28px;
+            position: relative;
+            color: #bbb;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        ul.pdf-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #7c3aed;
+            font-weight: 700;
+        }
+        ul.pdf-list li strong { color: #fff; }
+
+        .stat-row {
+            display: flex;
+            gap: 24px;
+            margin: 20px 0;
+        }
+        .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .stat-item .number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-item .label { color: #666; font-size: 0.85rem; margin-top: 4px; }
+
+        /* ===== FOOTER ===== */
+        .pdf-footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            margin-top: 40px;
+        }
+        .pdf-footer p { color: #555; font-size: 0.85rem; }
+        .pdf-footer .cta {
+            display: inline-block;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease-in-out infinite;
+            color: #fff;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body { background: #fff; color: #333; }
+            .pdf-container { padding: 20px; }
+            .pdf-section { background: #f9f9f9; border-color: #ddd; }
+            .pdf-section p { color: #555; }
+            .pdf-section strong { color: #111; }
+            .pdf-header .subtitle { color: #666; }
+            .pdf-header .brand span { -webkit-text-fill-color: #7c3aed; }
+            .pdf-header h1 { -webkit-text-fill-color: #7c3aed; }
+            .stat-item .number { -webkit-text-fill-color: #7c3aed; }
+            .pdf-footer .cta { display: none; }
+            ul.pdf-list li { color: #555; }
+            ul.pdf-list li strong { color: #111; }
+            .highlight-box { background: #f0f0f0; border-color: #ccc; }
+            .highlight-box h4 { color: #7c3aed !important; }
+        }
+        @media (max-width: 600px) {
+            .pdf-container { padding: 24px 16px; }
+            .pdf-header h1 { font-size: 1.6rem; }
+            .pdf-section { padding: 24px 16px; }
+            .stat-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-container">
+
+        <!-- HEADER -->
+        <div class="pdf-header">
+            <div class="brand">⚡ Nuclear<span>AIMA</span></div>
+            <h1>Guía Definitiva de Monetización para Streaming 24/7</h1>
+            <p class="subtitle">Cómo duplicar tus ingresos, eliminar comisiones y construir una máquina de dinero que trabaja mientras duermes</p>
+            <div class="badge">📄 Edición Exclusiva · Producido por Nuclear AIMA + Scaling Flow IA</div>
+        </div>
+
+        <!-- SECTION 1 -->
+        <div class="pdf-section section-1">
+            <h2><span class="num">1</span> El Problema: El 30% que te está matando</h2>
+            <p>Si estás usando <strong>YouTube Super Chat</strong> o <strong>Twitch Bits</strong> para monetizar tu contenido en vivo, estás perdiendo <strong>hasta el 30% de cada donación</strong> que entra.</p>
+            <div class="highlight-box gold">
+                <h4>💰 La matemática real</h4>
+                <p><strong>Con YouTube:</strong> El usuario paga $10 → YouTube se queda $3 → Tú recibes $7</p>
+                <p><strong>Con tu propio sistema:</strong> El usuario paga $10 → Stripe cobra $0.30 (3%) → Tú recibes $9.70</p>
+                <p style="margin-top:12px;"><strong>Diferencia: 38% más de ingresos netos.</strong> En $100,000 de donaciones anuales, eso son <strong>$38,000 extra</strong> que hoy estás regalando.</p>
+            </div>
+            <p>Este es el argumento de venta más poderoso que tienes. No solo ofreces tecnología — <strong>estás devolviendo el 27% de comisión perdido</strong> directamente a las ganancias de tu cliente.</p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div class="pdf-section section-2">
+            <h2><span class="num">2</span> Las 5 Fuentes de Ingreso del Streaming 24/7</h2>
+            <p>La transmisión tradicional solo usa una: <strong>donaciones directas</strong>. Nuestro sistema activa <strong>5 fuentes simultáneas</strong> que multiplican los ingresos:</p>
+            <ul class="pdf-list">
+                <li><strong>Donaciones Directas:</strong> Sin comisión del 30%. El 97% va directo al creador.</li>
+                <li><strong>Suscripciones / Membresías:</strong> Pago recurrente mensual por contenido exclusivo. Precios desde $4.99/mes.</li>
+                <li><strong>Economía de Puntos:</strong> Los espectadores acumulan puntos por tiempo visto y los canjean por recompensas. +300% engagement comprobado.</li>
+                <li><strong>Pay-Per-View:</strong> Eventos especiales con entrada pagada. Ideal para conciertos, torneos y lanzamientos.</li>
+                <li><strong>Patrocinios y Datos:</strong> Reportes de audiencia para marcas que pagan por publicidad segmentada.</li>
+            </ul>
+            <div class="highlight-box purple">
+                <h4>📊 Proyección Anual (Stream con 1,000 espectadores diarios)</h4>
+                <p><strong>Modelo tradicional (solo donaciones):</strong> ~$24,000/año<br>
+                <strong>Con sistema 5 fuentes:</strong> ~$97,000/año <strong style="color:#22c55e;">(+304%)</strong></p>
+            </div>
+        </div>
+
+        <!-- SECTION 3 -->
+        <div class="pdf-section section-3">
+            <h2><span class="num">3</span> Cómo Aumenta tu Margen de Ganancia en el Tiempo</h2>
+            <p>Esto es lo que la mayoría de los creadores NO entiende: <strong>el streaming 24/7 es un activo que se aprecia solo.</strong></p>
+            <div class="stat-row">
+                <div class="stat-item">
+                    <div class="number">Mes 1-3</div>
+                    <div class="label">Inversión + Setup. Empiezas a ver tracción y las primeras donaciones.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">Mes 4-6</div>
+                    <div class="label">La audiencia se estabiliza. Los puntos de lealtad retienen espectadores.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">Mes 7-12</div>
+                    <div class="label">Monetización total activa. Stream trabaja 24/7 sin intervención humana.</div>
+                </div>
+            </div>
+            <p><strong>El punto clave:</strong> En el mes 12, estás ganando dinero mientras duermes, viajas o creas nuevo contenido. <strong>Tu margen de ganancia neto pasa de 30% (mes 1) a 85%+ (mes 12)</strong> porque los costos fijos se diluyen con el crecimiento de ingresos.</p>
+            <div class="highlight-box gold">
+                <h4>📈 Tabla de Rentabilidad Proyectada</h4>
+                <p><strong>Inversión Inicial (setup):</strong> $2,500 - $5,000 (único pago)<br>
+                <strong>Costo operativo mensual:</strong> $200 - $800 (VPS, APIs, herramientas)<br>
+                <strong>Ingreso promedio mensual (mes 6+):</strong> $3,000 - $15,000<br>
+                <strong>Margen neto (mes 12):</strong> 75% - 92%</p>
+            </div>
+        </div>
+
+        <!-- SECTION 4 -->
+        <div class="pdf-section section-4">
+            <h2><span class="num">4</span> Estrategias de Monetización que Nadie Está Usando</h2>
+            <p>Mientras todos compiten por Super Chats, tú puedes implementar estrategias que <strong>multiplican el valor por usuario:</strong></p>
+            <ul class="pdf-list">
+                <li><strong>Batallas de Donaciones en Vivo:</strong> Dos equipos compitiendo. La audiencia dona para que SU equipo gane. Incremento típico: <strong>400% en donaciones</strong>.</li>
+                <li><strong>Metas Comunitarias con Recompensa Física:</strong> "Si llegamos a $10,000, el streamer se tira en paracaídas". La gente dona para VER que pase algo.</li>
+                <li><strong>Ruleta de Puntos:</strong> Los usuarios gastan sus puntos de lealtad para girar una ruleta y ganar premios. Adicción pura = más tiempo en el stream.</li>
+                <li><strong>Subastas en Vivo:</strong> El mejor postor gana un saludo, una mención o un producto. Precios promedio: $50 - $500 por subasta.</li>
+                <li><strong>NFTs Sociales / Badges Digitales:</strong> Insignias exclusivas que los usuarios compran para mostrar en el chat. Edición limitada.</li>
+            </ul>
+            <p><strong>El principio detrás de todo:</strong> La gente no dona por necesidad. Dona por <strong>estatus, pertenencia y entretenimiento</strong>. Tu sistema debe activar esos 3 gatillos simultáneamente.</p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div class="pdf-section section-5">
+            <h2><span class="num">5</span> Casos de Proyección: Lo que Puedes Lograr</h2>
+            <div class="stat-row">
+                <div class="stat-item">
+                    <div class="number">$34K</div>
+                    <div class="label">Donaciones mensuales récord en un reality show 24/7</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">+300%</div>
+                    <div class="label">Incremento de audiencia al implementar multi-plataforma</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">4.5M</div>
+                    <div class="label">Horas vistas al mes con transmisión continua</div>
+                </div>
+            </div>
+            <p>Estos números son reales y alcanzables. La diferencia entre un stream que genera $500/mes y uno que genera $34,000/mes no es la calidad del contenido — <strong>es el sistema de monetización</strong>.</p>
+            <div class="highlight-box purple">
+                <h4>🎯 El Multiplicador de 10x</h4>
+                <p>Un stream con 500 espectadores promedio y el sistema correcto de monetización puede generar <strong>más ingresos que un stream con 5,000 espectadores sin sistema</strong>. No se trata de cuántos te ven. Se trata de <strong>cómo generas valor por cada uno</strong>.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div class="pdf-section section-6">
+            <h2><span class="num">6</span> Tu Plan de Acción: Próximos 7 Días</h2>
+            <p>Esto es lo que puedes hacer <strong>hoy mismo</strong> para empezar a transformar tu streaming en una máquina de ingresos:</p>
+            <ul class="pdf-list">
+                <li><strong>Día 1:</strong> Contáctanos para una llamada de diagnóstico gratuita de 15 minutos.</li>
+                <li><strong>Día 2-3:</strong> Configuramos tu VPS y sistema de transmisión 24/7.</li>
+                <li><strong>Día 4:</strong> Activamos tu sistema de donaciones directas (bye 30% de YouTube).</li>
+                <li><strong>Día 5:</strong> Implementamos el sistema de puntos de lealtad y widgets interactivos.</li>
+                <li><strong>Día 6:</strong> Conectamos analytics y te enviamos tu primer reporte de métricas.</li>
+                <li><strong>Día 7:</strong> ¡Estás transmitiendo 24/7 con 5 fuentes de ingreso activas!</li>
+            </ul>
+            <div class="highlight-box gold">
+                <h4>⚡ ¿Listo para el siguiente nivel?</h4>
+                <p>Esto es solo el comienzo. Nosotros no solo configuramos tecnología — <strong>construimos sistemas de ingresos automatizados</strong> que trabajan para ti 24/7.</p>
+                <p style="margin-top:12px;">Cada día que esperas, estás perdiendo el 30% de tus donaciones. <strong>El momento de actuar es ahora.</strong></p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="pdf-footer">
+            <p>© 2025 Nuclear AIMA · Streaming 24/7 Profesional</p>
+            <p style="margin-top:4px;">⚡ Nuclear AIMA · 📈 Scaling Flow IA</p>
+            <a href="#" class="cta" onclick="window.print(); return false;">📥 Descargar como PDF</a>
+            <p style="margin-top:12px; color:#888;">Haz clic en "Descargar como PDF" y elige "Guardar como PDF" en tu navegador.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Auto-prompt to print/save as PDF when page loads
+        setTimeout(() => {
+            if (!window.matchMedia('print').matches) {
+                const download = confirm('📥 ¿Quieres descargar esta guía como PDF? Haz clic en "Aceptar" y elige "Guardar como PDF" en tu navegador.');
+                if (download) window.print();
+            }
+        }, 1500);
+    </script>
+</body>
+</html>

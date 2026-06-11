@@ -1,0 +1,102 @@
+CONTRATO DE ASESORAMIENTO ESTRATÉGICO Y ADMINISTRACIÓN TECNOLÓGICA
+
+ENTRE LAS PARTES:
+EL SELLO: Ramón Orlando Music Records SAS, empresa debidamente constituida bajo las leyes de la República Dominicana, con RNC número [NÚMERO], representada por el señor Ramón Orlando Valoy García, mayor de edad, dominicano, titular de la Cédula de Identidad y Electoral número [NÚMERO], en su calidad de Representante Legal, en lo adelante denominado "EL SELLO".
+EL ASESOR: [Tu nombre completo], mayor de edad, dominicano, titular de la Cédula número [NÚMERO], actuando en nombre y representación de Nuclear AIMA, bajo el proyecto Scalin Flow IA y su división Nuclear Music Network, en lo adelante denominado "EL ASESOR".
+Ambas partes, de mutuo acuerdo, libre y voluntariamente, convienen en celebrar el presente Contrato de Asesoramiento Estratégico y Administración Tecnológica, sujeto a las siguientes cláusulas y condiciones.
+
+CLÁUSULA PRIMERA — OBJETO DEL CONTRATO
+EL ASESOR prestará a EL SELLO servicios exclusivos de asesoramiento estratégico, arquitectura tecnológica y administración operativa del catálogo musical compuesto por 178 canciones en 17 álbumes de autoría del señor Ramón Orlando Valoy García, incluyendo sin limitarse a las siguientes actividades:
+Auditoría técnica del catálogo mediante sistemas propietarios de análisis de datos y rastreo de nodos digitales.
+Diseño y ejecución de la estrategia de negociación con distribuidoras internacionales para la obtención de contratos de distribución con adelanto garantizado.
+Implementación de infraestructura tecnológica incluyendo sistemas de distribución digital, Smart Contracts, tokenización de catálogos y plataformas de venta de experiencias.
+Gestión operativa de las relaciones con plataformas digitales, incluyendo reclamación de Content ID, registro de ISRCs y administración de playlists.
+Diseño y ejecución de la estrategia de marketing digital para el evento del 50 Aniversario en el Estadio Olímpico Félix Sánchez y proyectos futuros.
+
+CLÁUSULA SEGUNDA — SOBERANÍA DEL ARTISTA
+Queda expresamente establecido que EL SELLO y el señor Ramón Orlando Valoy García conservan en todo momento la propiedad intelectual, los derechos morales y la titularidad legal sobre la totalidad de las obras musicales objeto de este contrato.
+EL ASESOR actúa en calidad de arquitecto estratégico y operativo bajo mandato de EL SELLO. Su función es de servicio y asesoramiento, no de titularidad ni copropiedad de los activos musicales.
+Ninguna acción tomada por EL ASESOR podrá interpretarse como cesión de derechos a su favor sobre el catálogo musical de EL SELLO.
+
+CLÁUSULA TERCERA — AUTORIDAD OPERATIVA DEL ASESOR
+Para el cumplimiento del objeto de este contrato, EL SELLO otorga a EL ASESOR las siguientes facultades operativas específicas:
+Representar a EL SELLO en negociaciones con distribuidoras internacionales incluyendo pero no limitándose a The Orchard, Believe Music, Sony Music y cualquier otra entidad del sector de distribución musical.
+Enviar comunicaciones formales en nombre de EL SELLO a plataformas digitales, sociedades de gestión colectiva y cualquier entidad relacionada con la administración del catálogo.
+Administrar los accesos a plataformas de distribución, dashboards de analítica y sistemas de Content ID en nombre de EL SELLO.
+Diseñar, desplegar y administrar contratos inteligentes y activos digitales vinculados al catálogo de EL SELLO.
+Negociar y firmar acuerdos operativos con proveedores tecnológicos, plataformas de boletería y empresas de marketing digital, siempre dentro de los límites aprobados por EL SELLO.
+Ninguna acción que implique la cesión permanente de derechos sobre el catálogo, la firma de contratos con distribuidoras multinacionales o el compromiso de sumas superiores a [MONTO A ACORDAR] podrá ejecutarse sin la aprobación escrita previa del Representante Legal de EL SELLO.
+
+CLÁUSULA CUARTA — COMPENSACIÓN DEL ASESOR
+Como contraprestación por los servicios prestados, EL SELLO reconoce a EL ASESOR las siguientes formas de compensación.
+Honorarios por gestión de negociación: Un porcentaje del [PORCENTAJE A ACORDAR, RANGO SUGERIDO 15% A 25%] sobre el monto bruto de cualquier adelanto o Minimum Guarantee obtenido mediante la gestión de EL ASESOR con distribuidoras internacionales, pagadero en el momento del desembolso del adelanto.
+Honorarios de administración continua: Un porcentaje del [PORCENTAJE A ACORDAR, RANGO SUGERIDO 20% A 30%] sobre los ingresos netos generados por el catálogo bajo administración activa, descontados los costos operativos previamente aprobados por EL SELLO. Este porcentaje se liquidará mensualmente.
+Honorarios por el evento del 50 Aniversario: Un porcentaje del [PORCENTAJE A ACORDAR] sobre los ingresos netos generados por la estrategia de venta de experiencias, boletería NFT y streaming privado del evento del 23 de septiembre de 2026, descontados los costos operativos.
+Honorarios tecnológicos: Los ingresos provenientes del mercado secundario de tokens digitales vinculados al catálogo se distribuirán según la estructura acordada en el Anexo Técnico de este contrato.
+Todos los porcentajes y montos serán acordados y completados por ambas partes antes de la firma del presente documento.
+
+CLÁUSULA QUINTA — CONFIDENCIALIDAD ABSOLUTA
+Esta cláusula es de carácter irrenunciable y su violación constituye causa de rescisión inmediata y daños y perjuicios.
+EL SELLO y el señor Ramón Orlando Valoy García se obligan a mantener absoluta confidencialidad sobre los siguientes elementos durante la vigencia de este contrato y por un período de cinco años posterior a su terminación.
+La identidad, nombre comercial y términos de los acuerdos con cualquier distribuidora internacional con la que EL ASESOR negocie en nombre de EL SELLO.
+La arquitectura tecnológica, metodología de auditoría, sistemas de rastreo de nodos, algoritmos de análisis y código propietario desarrollado por EL ASESOR bajo el proyecto Scalin Flow IA.
+Los términos económicos de este contrato, incluyendo porcentajes de compensación y montos negociados.
+La estrategia de marketing, estructura de tokenización y modelo de boletería NFT diseñado por EL ASESOR para el evento del 50 Aniversario.
+Cualquier información comercial, técnica o estratégica intercambiada entre las partes durante la ejecución de este contrato.
+La violación de esta cláusula por parte de EL SELLO o cualquier miembro de su equipo dará derecho a EL ASESOR a reclamar daños y perjuicios equivalentes al valor total del adelanto obtenido o proyectado, según corresponda.
+
+CLÁUSULA SEXTA — EXCLUSIVIDAD
+Durante la vigencia de este contrato, EL SELLO no podrá contratar los servicios de ninguna otra persona natural o jurídica para los fines descritos en la Cláusula Primera sin el consentimiento escrito previo de EL ASESOR.
+EL SELLO no podrá negociar directamente con distribuidoras internacionales, plataformas de boletería Web3 ni instituciones de financiamiento musical sin la participación y conocimiento de EL ASESOR.
+
+CLÁUSULA SÉPTIMA — PROPIEDAD INTELECTUAL TECNOLÓGICA
+Todo el software, código, algoritmos, sistemas de auditoría, contratos inteligentes, dashboards y arquitectura tecnológica desarrollada por EL ASESOR en el marco de este contrato es y seguirá siendo propiedad exclusiva de Nuclear AIMA y Scalin Flow IA.
+EL SELLO tendrá derecho de uso de estas herramientas durante la vigencia del contrato. Al término del mismo, EL ASESOR podrá retirar el acceso a dichas herramientas, salvo acuerdo de licenciamiento posterior.
+Los catálogos tokenizados y los Smart Contracts desplegados permanecerán activos para beneficio de EL SELLO, pero la administración de dichos contratos podrá ser transferida según lo acuerden las partes al momento de la terminación.
+
+CLÁUSULA OCTAVA — DURACIÓN Y RENOVACIÓN
+Este contrato tendrá una duración inicial de [NÚMERO] años contados a partir de la fecha de firma.
+Al vencimiento del período inicial, el contrato se renovará automáticamente por períodos iguales y sucesivos, salvo que cualquiera de las partes notifique su intención de no renovar mediante comunicación escrita enviada con no menos de seis meses de anticipación a la fecha de vencimiento.
+La notificación de no renovación deberá realizarse mediante acto de alguacil o documento notariado para tener validez legal.
+
+CLÁUSULA NOVENA — CAUSAS DE RESCISIÓN
+Este contrato podrá ser rescindido por cualquiera de las partes en los siguientes casos.
+Por incumplimiento grave de las obligaciones establecidas, previo aviso escrito con treinta días de anticipación para que la parte incumplidora corrija la situación.
+Por violación de la cláusula de confidencialidad, con efecto inmediato y sin necesidad de aviso previo.
+Por mutuo acuerdo escrito entre las partes.
+En caso de rescisión por causas atribuibles a EL SELLO, EL ASESOR tendrá derecho a percibir la totalidad de los honorarios devengados hasta la fecha de rescisión más una compensación equivalente a seis meses de honorarios promedio calculados sobre los últimos doce meses de ejecución del contrato.
+
+CLÁUSULA DÉCIMA — RESOLUCIÓN DE CONFLICTOS
+Cualquier disputa derivada de la interpretación o ejecución de este contrato será resuelta en primera instancia mediante negociación directa entre las partes en un plazo máximo de treinta días.
+Si la negociación directa no resulta en acuerdo, las partes se someterán a mediación ante la Cámara de Comercio y Producción de Santo Domingo.
+Si la mediación tampoco resulta en acuerdo, las partes se someterán a los tribunales competentes de la República Dominicana, renunciando expresamente a cualquier otro fuero que pudiera corresponderles.
+
+CLÁUSULA UNDÉCIMA — DISPOSICIONES FINALES
+Este contrato representa el acuerdo completo entre las partes y reemplaza cualquier negociación verbal o escrita previa sobre los mismos temas.
+Las modificaciones a este contrato solo serán válidas si constan por escrito y están firmadas por ambas partes.
+Si alguna cláusula de este contrato fuera declarada nula o inaplicable, las demás cláusulas mantendrán plena vigencia.
+
+FIRMAS
+En la ciudad de Santo Domingo, República Dominicana, a los [DÍA] días del mes de [MES] del año [AÑO].
+
+POR EL SELLO:
+Ramón Orlando Valoy García
+Representante Legal
+Ramón Orlando Music Records SAS
+Cédula: [NÚMERO]
+Firma: ___________________________
+
+POR EL ASESOR:
+[Tu nombre completo]
+En nombre de Nuclear AIMA / Scalin Flow IA
+Cédula: [NÚMERO]
+Firma: ___________________________
+
+TESTIGOS:
+Nombre: ___________________________ Cédula: ___________
+Nombre: ___________________________ Cédula: ___________
+
+Instrucciones antes de firmar
+Los espacios entre corchetes deben completarse antes de la firma. Los porcentajes de compensación en la Cláusula Cuarta son los más importantes y deben acordarse verbalmente entre ustedes antes de poner los números en papel. Una vez que tengas claridad sobre esos números, el contrato está listo para llevar al notario.
+El notario debe legalizar las firmas y el documento debe enviarse a la Procuraduría General para su legalización, que es el requisito que exige la ONDA para procesar el registro con un tercero como administrador.
+¿Quieres que ajustemos alguna cláusula específica o que agreguemos algún anexo técnico con los detalles del sistema Scalin Flow IA?
