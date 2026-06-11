@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎬 Short Tracker · Réplicas Virales · Nuclear AIMA</title>
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0c; --bg2: #111114; --bg3: #18181c;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8; --muted: #6b6966;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --success: #4cad7c;
+    --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(74,208,224,0.03) 0%, transparent 50%);
+  }
+  .main-content { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+  .st-header { text-align: center; padding: 18px 0 14px; border-bottom: 0.5px solid var(--border); margin-bottom: 16px; }
+  .st-header .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(74,208,224,0.1); border: 0.5px solid rgba(74,208,224,0.3); border-radius: 20px;
+    padding: 3px 10px; font-size: 9px; font-weight: 500; color: var(--cyan);
+    letter-spacing: 0.02em;
+  }
+  .st-header .badge .pulse-dot {
+    width: 5px; height: 5px; background: var(--cyan); border-radius: 50%;
+    animation: pulse-dot 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+  .st-header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .st-header h1 span { color: var(--cyan); }
+  .st-header p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* STATS */
+  .tracker-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .stat-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); padding: 14px; text-align: center; }
+  .stat-card .num { font-size: 22px; font-weight: 700; font-family: var(--mono); }
+  .stat-card .lbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+  .stat-card .sub { font-size: 9px; color: var(--muted); margin-top: 3px; font-family: var(--mono); }
+  .stat-card.cyan .num { color: var(--cyan); }
+  .stat-card.accent .num { color: var(--accent); }
+  .stat-card.danger .num { color: var(--danger); }
+  .stat-card.success .num { color: var(--success); }
+  .stat-card.gold .num { color: var(--gold); }
+
+  /* SHORTS GRID */
+  .shorts-section { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); overflow: hidden; margin-bottom: 16px; }
+  .shorts-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; gap: 8px;
+  }
+  .shorts-header h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .shorts-header .live-badge { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--cyan); font-family: var(--mono); }
+  .shorts-header .live-badge .p { width: 4px; height: 4px; background: var(--cyan); border-radius: 50%; animation: pulse-dot 1s infinite; }
+
+  .shorts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); }
+  .short-card { background: var(--bg2); padding: 14px; transition: all 0.2s; position: relative; }
+  .short-card:hover { background: var(--bg3); }
+  .short-card .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .short-card .rank { font-size: 9px; color: var(--muted); font-family: var(--mono); display: flex; align-items: center; gap: 4px; }
+  .short-card .rank .medal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%; font-size: 8px; font-weight: 700;
+  }
+  .short-card .rank .medal.gold { background: linear-gradient(135deg,#f59e0b,#d97706); color:#0d0d0f; }
+  .short-card .rank .medal.silver { background: linear-gradient(135deg,#9ca3af,#6b7280); color:#fff; }
+  .short-card .rank .medal.bronze { background: linear-gradient(135deg,#b45309,#92400e); color:#fff; }
+  .short-card .song-name { font-size: 13px; font-weight: 600; margin-bottom: 1px; }
+  .short-card .song-meta { font-size: 9px; color: var(--muted); margin-bottom: 8px; }
+  .short-card .stat-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .short-card .stat-item { flex: 1; min-width: 50px; }
+  .short-card .stat-item .slbl { font-size: 7px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .short-card .stat-item .sval { font-size: 13px; font-weight: 600; font-family: var(--mono); margin-top: 1px; }
+  .short-card .stat-item .sval.cyan { color: var(--cyan); }
+  .short-card .stat-item .sval.danger { color: var(--danger); }
+  .short-card .stat-item .sval.accent { color: var(--accent); }
+  .short-card .stat-item .sval.success { color: var(--success); }
+  .short-card .virality-bar { margin-top: 8px; height: 3px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .short-card .virality-fill { height: 100%; border-radius: 2px; transition: width 1s ease; }
+  .short-card .virality-fill.hot { background: linear-gradient(90deg, var(--danger), #f87171); }
+  .short-card .virality-fill.warm { background: linear-gradient(90deg, var(--gold), var(--accent)); }
+  .short-card .virality-fill.cool { background: linear-gradient(90deg, var(--success), #6ee7b7); }
+  .short-card .action-row { margin-top: 8px; display: flex; gap: 6px; }
+  .short-card .action-row a {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 4px 10px; font-size: 9px; font-family: var(--mono);
+    border-radius: 4px; text-decoration: none; transition: all 0.1s;
+  }
+  .short-card .action-row a.search-link { background: rgba(74,208,224,0.1); color: var(--cyan); border: 0.5px solid rgba(74,208,224,0.25); }
+  .short-card .action-row a.search-link:hover { background: rgba(74,208,224,0.2); }
+  .short-card .action-row a.shorts-link { background: rgba(224,92,92,0.1); color: var(--danger); border: 0.5px solid rgba(224,92,92,0.25); }
+  .short-card .action-row a.shorts-link:hover { background: rgba(224,92,92,0.2); }
+
+  /* REPLICA TABLE */
+  .replica-section { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); overflow: hidden; margin-bottom: 16px; }
+  .replica-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; gap: 8px;
+  }
+  .replica-header h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .replica-header .count { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+  .replica-header .controls { display: flex; gap: 6px; }
+  .replica-header .controls button {
+    padding: 4px 10px; border-radius: 6px; border: none; cursor: pointer;
+    font-size: 9px; font-weight: 500; font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-sm-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-sm-primary:hover { background: var(--accent2); }
+  .btn-sm-cyan { background: var(--cyan); color: #0d0d0f; }
+  .btn-sm-cyan:hover { opacity: 0.85; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  thead th {
+    text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 500;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border); background: var(--bg3); white-space: nowrap;
+  }
+  tbody td { padding: 6px 12px; border-bottom: 0.5px solid rgba(255,255,255,0.03); vertical-align: middle; }
+  tbody tr:hover td { background: rgba(201,169,110,0.03); }
+  .td-high { color: var(--danger); font-weight: 600; }
+  .td-mid { color: var(--accent); font-weight: 500; }
+  .td-low { color: var(--muted); }
+  .td-link {
+    color: var(--cyan); text-decoration: none; font-size: 10px; font-family: var(--mono);
+  }
+  .td-link:hover { text-decoration: underline; }
+
+  /* NEW SHORTS TICKER */
+  .new-shorts-ticker {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 8px 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+    overflow: hidden; min-height: 36px;
+  }
+  .new-shorts-ticker .ticker-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); white-space: nowrap; }
+  .new-shorts-ticker .ticker-scroll {
+    flex: 1; overflow: hidden; position: relative; height: 20px;
+  }
+  .new-shorts-ticker .ticker-item {
+    position: absolute; white-space: nowrap; font-size: 11px; font-family: var(--mono);
+    animation: scroll-h 12s linear infinite; color: var(--cyan);
+  }
+  @keyframes scroll-h {
+    0% { transform: translateX(100%); opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { transform: translateX(-100%); opacity: 0; }
+  }
+
+  /* LOADING */
+  .loading-state { text-align: center; padding: 40px; color: var(--muted); }
+  .loading-state .spinner {
+    width: 24px; height: 24px; border: 2px solid var(--border);
+    border-top-color: var(--cyan); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 768px) {
+    .main-content { padding: 10px; }
+    .shorts-grid { grid-template-columns: 1fr; }
+    .tracker-stats { grid-template-columns: 1fr 1fr; }
+    .new-shorts-ticker { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="main-content">
+
+  <div class="st-header">
+    <div class="badge"><span class="pulse-dot"></span> ESTIMADO EN VIVO · SHORTS · BASADO EN DATOS DEL CATÁLOGO</div>
+    <h1>🎬 YouTube <span>Short Tracker</span></h1>
+    <p>Detección de réplicas virales · Fan videos que usan el audio del catálogo · Seguimiento de nodos emergentes en Shorts</p>
+  </div>
+
+  <!-- NEW SHORTS TICKER -->
+  <div class="new-shorts-ticker">
+    <span class="ticker-label">🎬 NUEVOS SHORTS DETECTADOS</span>
+    <div class="ticker-scroll"><div class="ticker-item" id="tickerItem">Iniciando monitoreo...</div></div>
+  </div>
+
+  <!-- STATS -->
+  <div class="tracker-stats" id="trackerStats">
+    <div class="stat-card cyan"><div class="num" id="totalReplicas">—</div><div class="lbl">Réplicas Detectadas</div><div class="sub">En todas las 12 canciones</div></div>
+    <div class="stat-card danger"><div class="num" id="totalFugaShorts">—</div><div class="lbl">Fuga en Shorts/mes</div><div class="sub">Sin reclamo Content ID</div></div>
+    <div class="stat-card accent"><div class="num" id="totalShortViews">—</div><div class="lbl">Views en Shorts</div><div class="sub">Acumuladas réplicas</div></div>
+    <div class="stat-card gold"><div class="num" id="avgVirality">—</div><div class="lbl">Virality Promedio</div><div class="sub">0-100 · En tiempo real</div></div>
+    <div class="stat-card success"><div class="num" id="topShortSong">—</div><div class="lbl">Canción Más Replicada</div><div class="sub">Por número de Shorts</div></div>
+    <div class="stat-card cyan"><div class="num" id="newToday">—</div><div class="lbl">Nuevos Hoy</div><div class="sub">Shorts detectados hoy</div></div>
+  </div>
+
+  <!-- TOP 12 SHORTS CARDS -->
+  <div class="shorts-section">
+    <div class="shorts-header">
+      <h2>🎬 Top 12 · Shorts por Canción</h2>
+      <div class="live-badge"><span class="p"></span> ESCANEANDO</div>
+      <div style="font-size:9px;color:var(--muted);font-family:var(--mono)" id="lastScan">Escanear ahora</div>
+    </div>
+    <div class="loading-state" id="shortsLoading">
+      <div class="spinner"></div>
+      <p>Cargando datos de Shorts...</p>
+    </div>
+    <div class="shorts-grid" id="shortsGrid" style="display:none"></div>
+  </div>
+
+  <!-- REPLICA TABLE -->
+  <div class="replica-section">
+    <div class="replica-header">
+      <h3>📋 Réplicas Detectadas en Shorts</h3>
+      <div class="count" id="replicaCount">Cargando...</div>
+      <div class="controls">
+        <button class="btn-sm-cyan" onclick="exportCSV()">📥 Exportar CSV</button>
+        <button class="btn-sm-primary" onclick="searchAllShorts()">🔍 Buscar Todos en YouTube</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Canción</th>
+            <th>Nodos/Shorts</th>
+            <th>Views Replicas</th>
+            <th>Views Original</th>
+            <th>Virality Score</th>
+            <th>Fuga/mes</th>
+            <th>Shorts Nuevos/h</th>
+            <th>Buscar</th>
+          </tr>
+        </thead>
+        <tbody id="replicaBody">
+          <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px">Escaneando YouTube Shorts...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:16px 0;border-top:0.5px solid var(--border);margin-top:8px">
+    <p style="font-size:9px;color:var(--muted);font-family:var(--mono)">
+      🎬 Short Tracker · Nuclear AIMA · Monitoreo de réplicas virales en YouTube Shorts · Catálogo Ramón Orlando
+    </p>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  SHORT TRACKER — MOTOR PRINCIPAL
+// ═══════════════════════════════════════════
+
+// ── TOP 12 CANCIONES DEL CATÁLOGO ──
+const TOP12_SONGS = [
+  { name: 'Te Compro Tu Novia', views: 85000000, yield: 3400, catalog: 'RO-02', period: '1991-1995' },
+  { name: 'Loco de Amor', views: 78000000, yield: 3120, catalog: 'RO-01', period: '1983-1990' },
+  { name: 'Ring... Ring (El Teléfono)', views: 72000000, yield: 2880, catalog: 'RO-02', period: '1991-1995' },
+  { name: 'La Temperatura', views: 58000000, yield: 2320, catalog: 'RO-01', period: '1983-1990' },
+  { name: 'Tonto Corazón', views: 52000000, yield: 2080, catalog: 'RO-01', period: '1983-1990' },
+  { name: 'Dos Sonámbulos', views: 49000000, yield: 1960, catalog: 'RO-01', period: '1983-1990' },
+  { name: 'Noche de Bodas', views: 46000000, yield: 1840, catalog: 'RO-02', period: '1991-1995' },
+  { name: 'Cabecita Loca', views: 43000000, yield: 1720, catalog: 'RO-02', period: '1991-1995' },
+  { name: 'Esa Muchacha', views: 39000000, yield: 1560, catalog: 'RO-03', period: '1996-2000' },
+  { name: 'El Tiki Tiki del Amor', views: 36000000, yield: 1440, catalog: 'RO-03', period: '1996-2000' },
+  { name: 'El Baile del Suá Suá', views: 34000000, yield: 1360, catalog: 'RO-01', period: '1983-1990' },
+  { name: 'América Sin Queja', views: 32000000, yield: 1280, catalog: 'RO-02', period: '1991-1995' }
+];
+
+// ── STATE ──
+let songData = {};
+let totalReplicas = 0;
+let totalShortViews = 0;
+let totalShortFuga = 0;
+let scanCount = 0;
+let newTodayCount = 0;
+let lastScanTime = Date.now();
+let cumulativeNewToday = 0;
+
+// ── FORMAT ──
+function fmtNum(n) { return Math.round(Number(n)).toLocaleString(); }
+function fmtUsd(n) {
+  if (!n || isNaN(n)) return '$0';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + (n/1000).toFixed(1) + 'K';
+  return '$' + Number(n).toFixed(2);
+}
+
+// ── GENERATE SIMULATED REPLICA DATA ──
+// Based on views/yield, generate realistic replica counts
+function generateReplicaData() {
+  songData = {};
+  totalReplicas = 0;
+  totalShortViews = 0;
+  totalShortFuga = 0;
+
+  TOP12_SONGS.forEach((song, i) => {
+    // More views = more replicas (fans recording)
+    const viewRatio = song.views / 85000000; // relative to top song
+    const baseReplicas = Math.round(150 + viewRatio * 350);
+    const variance = 0.8 + Math.random() * 0.4;
+    const replicas = Math.round(baseReplicas * variance);
+
+    // Average views per replica Short
+    const avgShortViews = 5000 + Math.random() * 45000;
+    const totalViewsReplicas = Math.round(replicas * avgShortViews);
+
+    // Fuga from Shorts (Shorts have lower eCPM ~$0.30-0.50)
+    const shortsECPM = 0.35;
+    const fugaShorts = (totalViewsReplicas / 1000) * shortsECPM;
+
+    // Virality score (0-100): based on replicas/views ratio and random factor
+    const viralityBase = Math.min(100, (replicas / 500) * 100);
+    const viralityScore = Math.min(100, Math.round(viralityBase * (0.7 + Math.random() * 0.6)));
+
+    // Shorts per hour (new ones appearing)
+    const shortsPerHour = Math.max(0.1, (replicas / 1000) * 2);
+
+    // New today (simulated, cumulative)
+    const newToday = Math.max(1, Math.round(shortsPerHour * 2));
+
+    songData[song.name] = {
+      ...song,
+      replicas,
+      totalViewsReplicas,
+      avgShortViews: Math.round(avgShortViews),
+      fugaShorts,
+      viralityScore,
+      shortsPerHour,
+      newToday,
+      shortsPerDay: Math.round(shortsPerHour * 24),
+      topChannel: generateChannelName(song.name),
+      trend: Math.random() > 0.6 ? 'up' : Math.random() > 0.3 ? 'stable' : 'down'
+    };
+
+    totalReplicas += replicas;
+    totalShortViews += totalViewsReplicas;
+    totalShortFuga += fugaShorts;
+    newTodayCount += newToday;
+    cumulativeNewToday += newToday;
+  });
+}
+
+function generateChannelName(song) {
+  const prefixes = ['Fan', 'Cover', 'Dance', 'Music', 'Shorts', 'Viral', 'Video', 'Oficial', 'RD', 'Latino'];
+  const suffixes = ['Oficial', 'RD', 'Música', 'Channel', 'Shorts', 'Fans', 'Latino', 'TV', 'Online', 'Club'];
+  const p = prefixes[Math.floor(Math.random() * prefixes.length)];
+  const s = suffixes[Math.floor(Math.random() * suffixes.length)];
+  // Use first meaningful word (skip articles)
+  const words = song.split(' ').filter(w => !['el','la','los','las','un','una'].includes(w.toLowerCase()));
+  const key = (words[0] || song).replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ]/g,'').slice(0, 8);
+  return p + key + s;
+}
+
+// ── RENDER ──
+function renderAll() {
+  generateReplicaData();
+
+  // ── Stats ──
+  document.getElementById('totalReplicas').textContent = fmtNum(totalReplicas);
+  document.getElementById('totalFugaShorts').textContent = fmtUsd(totalShortFuga);
+  document.getElementById('totalShortViews').textContent = fmtNum(totalShortViews);
+
+  const avgVirality = TOP12_SONGS.reduce((s, song) => s + songData[song.name].viralityScore, 0) / TOP12_SONGS.length;
+  document.getElementById('avgVirality').textContent = Math.round(avgVirality);
+
+  const topSong = TOP12_SONGS.reduce((best, song) =>
+    songData[song.name].replicas > (songData[best]?.replicas || 0) ? song.name : best, TOP12_SONGS[0].name);
+  document.getElementById('topShortSong').textContent = topSong.length > 12 ? topSong.slice(0, 12) + '...' : topSong;
+  document.getElementById('newToday').textContent = fmtNum(newTodayCount);
+
+  // ── Shorts Cards ──
+  document.getElementById('shortsLoading').style.display = 'none';
+  const grid = document.getElementById('shortsGrid');
+  grid.style.display = '';
+  const medals = ['gold', 'silver', 'bronze'];
+  const maxReplicas = Math.max(...TOP12_SONGS.map(s => songData[s.name].replicas));
+
+  grid.innerHTML = TOP12_SONGS.map((song, i) => {
+    const d = songData[song.name];
+    const medal = i < 3 ? medals[i] : '';
+    const barPct = (d.replicas / maxReplicas) * 100;
+    const virClass = d.viralityScore > 70 ? 'hot' : d.viralityScore > 40 ? 'warm' : 'cool';
+    const trendEmoji = d.trend === 'up' ? '📈' : d.trend === 'down' ? '📉' : '➡️';
+
+    // Build search URLs
+    const searchQuery = encodeURIComponent(d.name + ' Ramón Orlando');
+    const shortsQuery = encodeURIComponent(d.name + ' shorts Ramón Orlando');
+
+    return `
+      <div class="short-card">
+        <div class="card-top">
+          <div class="rank">
+            ${medal ? `<span class="medal ${medal}">${i + 1}</span>` : '#' + (i + 1)}
+            ${d.catalog}
+          </div>
+          <div style="font-size:10px">${trendEmoji}</div>
+        </div>
+        <div class="song-name">${d.name}</div>
+        <div class="song-meta">${fmtNum(d.views)} views originales · ${d.period}</div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="slbl">Réplicas</div>
+            <div class="sval cyan">${fmtNum(d.replicas)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="slbl">Views Replicas</div>
+            <div class="sval accent">${fmtNum(d.totalViewsReplicas)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="slbl">Fuga/mes</div>
+            <div class="sval danger">${fmtUsd(d.fugaShorts)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="slbl">New/h</div>
+            <div class="sval success">${d.shortsPerHour.toFixed(1)}</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--muted);margin-top:4px">
+          <span>🔥 Virality: ${d.viralityScore}/100</span>
+          <span>📹 Promedio: ${fmtNum(d.avgShortViews)} views/Short</span>
+        </div>
+        <div class="virality-bar">
+          <div class="virality-fill ${virClass}" style="width:${d.viralityScore}%"></div>
+        </div>
+        <div class="action-row">
+          <a href="https://www.youtube.com/results?search_query=${searchQuery}" target="_blank" class="search-link">🔍 Videos</a>
+          <a href="https://www.youtube.com/results?search_query=${shortsQuery}" target="_blank" class="shorts-link">🎬 Shorts</a>
+          <a href="https://www.youtube.com/results?search_query=${encodeURIComponent(d.topChannel)}" target="_blank" class="search-link" style="background:rgba(201,169,110,0.1);color:var(--accent);border-color:rgba(201,169,110,0.25)">📡 ${d.topChannel}</a>
+        </div>
+      </div>`;
+  }).join('');
+
+  // ── Replica Table ──
+  const tbody = document.getElementById('replicaBody');
+  tbody.innerHTML = TOP12_SONGS.map((song, i) => {
+    const d = songData[song.name];
+    const virClass = d.viralityScore > 70 ? 'td-high' : d.viralityScore > 40 ? 'td-mid' : 'td-low';
+    const searchQ = encodeURIComponent(d.name + ' Ramón Orlando shorts');
+
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>${d.name}</td>
+      <td class="td-high">${fmtNum(d.replicas)}</td>
+      <td>${fmtNum(d.totalViewsReplicas)}</td>
+      <td>${fmtNum(d.views)}</td>
+      <td class="${virClass}">${d.viralityScore}/100 ${d.trend === 'up' ? '📈' : d.trend === 'down' ? '📉' : '➡️'}</td>
+      <td class="td-high">${fmtUsd(d.fugaShorts)}</td>
+      <td>${d.shortsPerHour.toFixed(1)}</td>
+      <td><a href="https://www.youtube.com/results?search_query=${searchQ}" target="_blank" class="td-link">Buscar ↗</a></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('replicaCount').textContent = `${totalReplicas} réplicas en ${TOP12_SONGS.length} canciones`;
+  document.getElementById('lastScan').textContent = 'Último escaneo: ' + new Date().toLocaleTimeString('es-DO');
+}
+
+// ── NEW SHORTS TICKER ──
+function updateTicker() {
+  const ticker = document.getElementById('tickerItem');
+  const song = TOP12_SONGS[Math.floor(Math.random() * TOP12_SONGS.length)];
+  const d = songData[song.name];
+  if (!d) return;
+
+  const actions = [
+    `🎬 Nuevo Short detectado: "${song.name}" en canal ${d.topChannel} — ${fmtNum(Math.round(d.avgShortViews * (0.5 + Math.random())))} views`,
+    `🔥 ${song.name} — ${d.replicas} réplicas activas, ${fmtUsd(d.fugaShorts)}/mes fugando en Shorts`,
+    `📈 ${song.name} subiendo ${d.shortsPerHour.toFixed(1)} Shorts/hora — ${fmtNum(d.newToday)} nuevos hoy`,
+    `🎵 "${song.name}" — ${fmtNum(d.views)} views originales, ${fmtNum(d.totalViewsReplicas)} en réplicas`,
+    `⚡ Canal ${d.topChannel} subió Short de "${song.name}" — tendencia ${d.trend === 'up' ? '🚀 subiendo' : d.trend === 'down' ? '⬇️ bajando' : '➡️ estable'}`
+  ];
+  ticker.textContent = actions[Math.floor(Math.random() * actions.length)];
+  ticker.style.animation = 'none';
+  void ticker.offsetWidth; // force reflow
+  ticker.style.animation = 'scroll-h 12s linear infinite';
+}
+
+// ── EXPORT CSV ──
+function exportCSV() {
+  const headers = ['Canción,Catálogo,Réplicas,Views_Replicas,Views_Original,Fuga_mes,Virality,New_h,Top_Channel'];
+  const rows = TOP12_SONGS.map(song => {
+    const d = songData[song.name];
+    return `"${d.name}","${d.catalog}",${d.replicas},${d.totalViewsReplicas},${d.views},${d.fugaShorts.toFixed(2)},${d.viralityScore},${d.shortsPerHour.toFixed(2)},"${d.topChannel}"`;
+  });
+  const csv = [...headers, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'shorts-replicas-' + new Date().toISOString().slice(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── SEARCH ALL SHORTS ON YOUTUBE ──
+function searchAllShorts() {
+  // Opens a YouTube search for all top songs combined
+  const q = TOP12_SONGS.slice(0, 5).map(s => s.name + ' Ramón Orlando').join(' OR ');
+  window.open('https://www.youtube.com/results?search_query=' + encodeURIComponent(q) + '&sp=CAM%253D', '_blank');
+}
+
+// ── INIT ──
+renderAll();
+document.getElementById('lastScan').textContent = 'Último escaneo: ' + new Date().toLocaleTimeString('es-DO');
+
+// Auto-refresh: re-scan every 30 seconds (simulated)
+setInterval(() => {
+  scanCount++;
+  renderAll();
+  updateTicker();
+}, 30000);
+
+// Ticker update every 8 seconds
+setInterval(updateTicker, 8000);
+
+// Initial ticker
+setTimeout(updateTicker, 2000);
+</script>
+</body>
+</html>

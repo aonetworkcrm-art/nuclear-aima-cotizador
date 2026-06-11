@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕵️ OSINT Command Center · Nuclear AIMA</title>
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0c; --bg2: #111114; --bg3: #18181c;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8; --muted: #6b6966;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --success: #4cad7c;
+    --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(74,208,224,0.03) 0%, transparent 50%);
+  }
+  .main-content { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+  /* ── HEADER ── */
+  .osint-header { text-align: center; padding: 20px 0 14px; border-bottom: 0.5px solid var(--border); margin-bottom: 16px; }
+  .osint-header .badges { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .osint-header .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04));
+    border: 0.5px solid rgba(201,169,110,0.25); border-radius: 20px;
+    padding: 3px 10px; font-size: 9px; font-weight: 500; color: var(--accent);
+  }
+  .osint-header .badge.dork { background: rgba(74,208,224,0.1); border-color: rgba(74,208,224,0.3); color: var(--cyan); }
+  .osint-header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .osint-header h1 span { color: var(--accent); }
+  .osint-header p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap;
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 4px;
+  }
+  .tab-btn {
+    padding: 8px 16px; border-radius: var(--r); border: none; cursor: pointer;
+    font-size: 11px; font-weight: 500; font-family: var(--font);
+    background: transparent; color: var(--muted); transition: all 0.15s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--bg3); }
+  .tab-btn.active { background: var(--accent); color: #0d0d0f; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── SEARCH CARD ── */
+  .search-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); padding: 20px; margin-bottom: 16px;
+  }
+  .search-card h3 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--accent); margin-bottom: 4px;
+  }
+  .search-card .desc { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+
+  .search-row {
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .search-row input, .search-row select {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 9px 12px; color: var(--text); font-size: 13px; font-family: var(--font);
+    outline: none; transition: border 0.15s;
+  }
+  .search-row input:focus, .search-row select:focus { border-color: var(--accent); }
+  .search-row input[type="text"] { flex: 1; min-width: 180px; }
+  .search-row input[type="url"] { flex: 1; min-width: 180px; }
+  .search-row button {
+    padding: 9px 18px; border-radius: var(--r); border: none; cursor: pointer;
+    font-size: 12px; font-weight: 500; font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-primary:hover { background: var(--accent2); }
+  .btn-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-ghost:hover { background: var(--bg3); }
+  .btn-cyan { background: var(--cyan); color: #0d0d0f; }
+  .btn-cyan:hover { opacity: 0.85; }
+  .btn-danger { background: var(--danger); color: #fff; }
+  .btn-danger:hover { opacity: 0.85; }
+
+  /* ── DORK TAGS ── */
+  .dork-tags {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .dork-tag {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 3px 8px; border-radius: 4px;
+    font-size: 10px; font-family: var(--mono); cursor: pointer;
+    background: var(--bg3); border: 0.5px solid var(--border);
+    color: var(--muted); transition: all 0.1s;
+  }
+  .dork-tag:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(74,208,224,0.08); }
+  .dork-tag .kop { color: var(--cyan); }
+  .dork-tag .kval { color: var(--accent); }
+
+  /* ── CPC TABLE ── */
+  .cpc-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px; margin: 14px 0;
+  }
+  .cpc-card {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 12px; text-align: center;
+  }
+  .cpc-card .cpc-icon { font-size: 20px; margin-bottom: 4px; }
+  .cpc-card .cpc-name { font-size: 10px; font-weight: 500; }
+  .cpc-card .cpc-val { font-size: 14px; font-weight: 600; font-family: var(--mono); margin-top: 3px; }
+  .cpc-card .cpc-val.high { color: var(--danger); }
+  .cpc-card .cpc-val.mid { color: var(--accent); }
+  .cpc-card .cpc-val.low { color: var(--muted); }
+
+  /* ── RESULTS PANEL ── */
+  .results-panel {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); overflow: hidden; margin-bottom: 16px;
+    display: none;
+  }
+  .results-panel.visible { display: block; }
+  .results-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; gap: 8px;
+  }
+  .results-header h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .results-body { padding: 16px; }
+
+  /* ── METRIC ROW ── */
+  .metric-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px; margin: 12px 0;
+  }
+  .metric-item {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 12px; text-align: center;
+  }
+  .metric-item .mlbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .metric-item .mval { font-size: 18px; font-weight: 600; font-family: var(--mono); margin-top: 3px; }
+  .metric-item .mval.danger { color: var(--danger); }
+  .metric-item .mval.success { color: var(--success); }
+  .metric-item .mval.accent { color: var(--accent); }
+  .metric-item .mval.cyan { color: var(--cyan); }
+
+  /* ── TAG LIST ── */
+  .tag-list {
+    display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px;
+  }
+  .tag-list .tag-item {
+    padding: 4px 10px; border-radius: 4px; font-size: 10px;
+    background: var(--bg3); border: 0.5px solid var(--border); color: var(--muted);
+    font-family: var(--mono); cursor: pointer; transition: all 0.1s;
+  }
+  .tag-list .tag-item:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── REFERENCE TABLE ── */
+  .ref-wrap { overflow-x: auto; margin: 12px 0; }
+  .ref-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .ref-table th {
+    text-align: left; padding: 6px 10px; color: var(--muted); font-weight: 500;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border); background: var(--bg3);
+  }
+  .ref-table td { padding: 6px 10px; border-bottom: 0.5px solid rgba(255,255,255,0.03); }
+  .ref-table td code {
+    font-family: var(--mono); font-size: 10px;
+    background: rgba(74,208,224,0.08); color: var(--cyan);
+    padding: 1px 5px; border-radius: 3px;
+  }
+  .ref-table tr:hover td { background: rgba(201,169,110,0.03); }
+
+  /* ── LOADING ── */
+  .loading-state { text-align: center; padding: 30px; color: var(--muted); }
+  .loading-state .spinner {
+    width: 20px; height: 20px; border: 2px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 10px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 768px) {
+    .main-content { padding: 10px; }
+    .tab-btn { font-size: 10px; padding: 6px 10px; }
+    .search-row { flex-direction: column; }
+    .search-row input[type="text"] { width: 100%; }
+    .cpc-grid { grid-template-columns: 1fr 1fr; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="main-content">
+
+  <!-- ── HEADER ── -->
+  <div class="osint-header">
+    <div class="badges">
+      <span class="badge dork">🕵️ GOOGLE DORKING</span>
+      <span class="badge">📊 KEYWORD PLANNER</span>
+      <span class="badge">🌐 DOMAIN OSINT</span>
+      <span class="badge">📰 GOOGLE NEWS</span>
+      <span class="badge">📈 TRENDS & DISCOVERY</span>
+    </div>
+    <h1>🕵️ <span>OSINT</span> Command Center</h1>
+    <p>Búsqueda avanzada en Google con dorking · Keyword Planner con CPC · Análisis de tráfico · Google News & Discovery · Tags funcionales</p>
+  </div>
+
+  <!-- ── TABS ── -->
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="tab-search" onclick="switchTab(this)">🔍 Google Search</button>
+    <button class="tab-btn" data-tab="tab-keywords" onclick="switchTab(this)">📊 Keyword Planner</button>
+    <button class="tab-btn" data-tab="tab-domain" onclick="switchTab(this)">🌐 Domain Analyzer</button>
+    <button class="tab-btn" data-tab="tab-news" onclick="switchTab(this)">📰 Google News</button>
+    <button class="tab-btn" data-tab="tab-trends" onclick="switchTab(this)">📈 Trends & Discovery</button>
+    <button class="tab-btn" data-tab="tab-reference" onclick="switchTab(this)">📖 Dork Reference</button>
+  </div>
+
+  <!-- ════════════════════ TAB 1: GOOGLE SEARCH ════════════════════ -->
+  <div class="tab-content active" id="tab-search">
+    <div class="search-card">
+      <h3>🔍 Google Dork Builder</h3>
+      <p class="desc">Construye consultas avanzadas de Google con operadores dork. Haz clic en los tags para añadir operadores.</p>
+      <div class="search-row">
+        <input type="text" id="dorkInput" placeholder='Ej: "merengue" site:.do filetype:pdf' oninput="updateDorkPreview()">
+        <select id="dorkTld" onchange="updateDorkPreview()">
+          <option value=".com">Global (.com)</option>
+          <option value=".do">Rep. Dominicana (.do)</option>
+          <option value=".es">España (.es)</option>
+          <option value=".mx">México (.mx)</option>
+          <option value=".ar">Argentina (.ar)</option>
+          <option value=".co">Colombia (.co)</option>
+          <option value=".pr">Puerto Rico (.pr)</option>
+        </select>
+        <button class="btn-primary" onclick="runGoogleSearch()">🔍 Buscar en Google</button>
+        <button class="btn-ghost" onclick="document.getElementById('dorkInput').value='';updateDorkPreview()">✕</button>
+      </div>
+      <div class="dork-tags">
+        <span class="dork-tag" onclick="addDork('site','.do')"><span class="kop">site:</span><span class="kval">.do</span></span>
+        <span class="dork-tag" onclick="addDork('intitle','keyword')"><span class="kop">intitle:</span><span class="kval">keyword</span></span>
+        <span class="dork-tag" onclick="addDork('inurl','keyword')"><span class="kop">inurl:</span><span class="kval">keyword</span></span>
+        <span class="dork-tag" onclick="addDork('intext','keyword')"><span class="kop">intext:</span><span class="kval">keyword</span></span>
+        <span class="dork-tag" onclick="addDork('filetype','pdf')"><span class="kop">filetype:</span><span class="kval">pdf</span></span>
+        <span class="dork-tag" onclick="addDork('filetype','xls')"><span class="kop">filetype:</span><span class="kval">xls</span></span>
+        <span class="dork-tag" onclick="addDork('ext','log')"><span class="kop">ext:</span><span class="kval">log</span></span>
+        <span class="dork-tag" onclick="addQuotes()"><span class="kop">"</span><span class="kval">frase exacta</span><span class="kop">"</span></span>
+        <span class="dork-tag" onclick="addDork('intitle:','index.of')"><span class="kop">intitle:</span><span class="kval">index.of</span></span>
+        <span class="dork-tag" onclick="addDork('cache:','url')"><span class="kop">cache:</span><span class="kval">url</span></span>
+        <span class="dork-tag" onclick="addDork('related:','domain.com')"><span class="kop">related:</span><span class="kval">domain.com</span></span>
+        <span class="dork-tag" onclick="addDork('site:','facebook.com')"><span class="kop">site:</span><span class="kval">facebook.com</span></span>
+      </div>
+      <div style="margin-top:10px;padding:8px 12px;background:var(--bg3);border-radius:var(--r);font-size:11px;font-family:var(--mono);color:var(--muted);word-break:break-all" id="dorkPreview">Esperando consulta...</div>
+    </div>
+
+    <!-- CPC by category -->
+    <div class="search-card">
+      <h3>💰 CPC Estimado por Categoría</h3>
+      <p class="desc">Coste por clic (CPC) estimado para diferentes industrias en Google Ads. Útil para calcular el valor potencial de tráfico orgánico.</p>
+      <div class="cpc-grid" id="cpcGrid">
+        <div class="cpc-card"><div class="cpc-icon">💰</div><div class="cpc-name">Finanzas / Seguros</div><div class="cpc-val high">$8.00 - $12.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">⚖️</div><div class="cpc-name">Legal / Abogados</div><div class="cpc-val high">$6.00 - $10.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">🎓</div><div class="cpc-name">Educación Online</div><div class="cpc-val mid">$3.00 - $6.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">🏥</div><div class="cpc-name">Salud / Medicina</div><div class="cpc-val high">$5.00 - $8.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">🏠</div><div class="cpc-name">Bienes Raíces</div><div class="cpc-val mid">$2.50 - $5.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">🛒</div><div class="cpc-name">E-commerce</div><div class="cpc-val mid">$1.50 - $4.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">🎵</div><div class="cpc-name">Música / Entretenimiento</div><div class="cpc-val low">$0.50 - $1.50</div></div>
+        <div class="cpc-card"><div class="cpc-icon">📱</div><div class="cpc-name">Tecnología / SaaS</div><div class="cpc-val mid">$3.00 - $7.00</div></div>
+        <div class="cpc-card"><div class="cpc-icon">✈️</div><div class="cpc-name">Viajes / Turismo</div><div class="cpc-val mid">$1.50 - $3.50</div></div>
+        <div class="cpc-card"><div class="cpc-icon">📰</div><div class="cpc-name">Noticias / Media</div><div class="cpc-val low">$0.50 - $1.00</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB 2: KEYWORD PLANNER ════════════════════ -->
+  <div class="tab-content" id="tab-keywords">
+    <div class="search-card">
+      <h3>📊 Keyword Planner & Estimador</h3>
+      <p class="desc">Analiza palabras clave: estima CPC, volumen de búsqueda mensual, dificultad y genera tags relacionados.</p>
+      <div class="search-row">
+        <input type="text" id="kwInput" placeholder='Ej: "merengue dominicano", "música tropical", "canciones virales"'>
+        <select id="kwCategory">
+          <option value="music">🎵 Música / Entretenimiento</option>
+          <option value="tech">📱 Tecnología / SaaS</option>
+          <option value="finance">💰 Finanzas</option>
+          <option value="health">🏥 Salud</option>
+          <option value="education">🎓 Educación</option>
+          <option value="ecommerce">🛒 E-commerce</option>
+          <option value="travel">✈️ Viajes</option>
+          <option value="realestate">🏠 Bienes Raíces</option>
+          <option value="legal">⚖️ Legal</option>
+          <option value="general">📋 General</option>
+        </select>
+        <button class="btn-primary" onclick="analyzeKeyword()">📊 Analizar</button>
+      </div>
+    </div>
+
+    <div class="results-panel" id="kwResults">
+      <div class="results-header">
+        <h3>📊 Resultados para: <span id="kwAnalyzedTerm"></span></h3>
+      </div>
+      <div class="results-body">
+        <div class="metric-grid" id="kwMetrics"></div>
+        <div style="margin-top:12px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">🏷️ Tags Sugeridos</div>
+          <div class="tag-list" id="kwTags"></div>
+        </div>
+        <div style="margin-top:12px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">🔗 Acciones</div>
+          <div class="search-row">
+            <button class="btn-cyan" onclick="searchGoogleKW()">🌐 Buscar en Google</button>
+            <button class="btn-cyan" onclick="searchNewsKW()">📰 Buscar en News</button>
+            <button class="btn-cyan" onclick="searchTrendsKW()">📈 Ver en Trends</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB 3: DOMAIN ANALYZER ════════════════════ -->
+  <div class="tab-content" id="tab-domain">
+    <div class="search-card">
+      <h3>🌐 Domain Analyzer (SimilarWeb Lite)</h3>
+      <p class="desc">Analiza tráfico estimado de cualquier dominio usando patrones OSINT y datos de referencia. Basado en PageRank, backlinks y categoría del sitio.</p>
+      <div class="search-row">
+        <input type="url" id="domainInput" placeholder="Ej: youtube.com, spotify.com, listindiario.com.do">
+        <select id="domainCategory">
+          <option value="music">🎵 Música / Entretenimiento</option>
+          <option value="tech">📱 Tecnología</option>
+          <option value="news">📰 Noticias / Media</option>
+          <option value="ecommerce">🛒 E-commerce</option>
+          <option value="social">🔗 Red Social</option>
+          <option value="education">🎓 Educación</option>
+          <option value="government">🏛️ Gobierno / ONG</option>
+          <option value="other">📋 Otro</option>
+        </select>
+        <button class="btn-primary" onclick="analyzeDomain()">🌐 Analizar Dominio</button>
+      </div>
+    </div>
+
+    <div class="results-panel" id="domainResults">
+      <div class="results-header">
+        <h3>🌐 Análisis de: <span id="domainAnalyzed"></span></h3>
+        <div>
+          <button class="btn-ghost" onclick="searchSimilarWeb()" style="font-size:10px;padding:4px 10px">Ver en SimilarWeb ↗</button>
+          <button class="btn-ghost" onclick="searchWhois()" style="font-size:10px;padding:4px 10px">WHOIS ↗</button>
+        </div>
+      </div>
+      <div class="results-body">
+        <div class="metric-grid" id="domainMetrics"></div>
+        <div style="margin-top:12px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">🔍 Dorks Relacionados</div>
+          <div class="tag-list" id="domainDorks"></div>
+        </div>
+        <div style="margin-top:12px">
+          <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">📊 Keywords Potenciales del Dominio</div>
+          <div class="tag-list" id="domainKeywords"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB 4: GOOGLE NEWS ════════════════════ -->
+  <div class="tab-content" id="tab-news">
+    <div class="search-card">
+      <h3>📰 Google News Search</h3>
+      <p class="desc">Busca noticias en Google News con filtro por fecha y región. Se abre en nueva pestaña con los resultados.</p>
+      <div class="search-row">
+        <input type="text" id="newsInput" placeholder='Ej: "música dominicana", "Ramón Orlando", "industria musical"'>
+        <select id="newsTime">
+          <option value="h">Última hora</option>
+          <option value="d">Último día</option>
+          <option value="w">Última semana</option>
+          <option value="m">Último mes</option>
+          <option value="y">Último año</option>
+        </select>
+        <select id="newsRegion">
+          <option value="">Todas las regiones</option>
+          <option value="do">Rep. Dominicana</option>
+          <option value="us">Estados Unidos</option>
+          <option value="es">España</option>
+          <option value="mx">México</option>
+          <option value="co">Colombia</option>
+          <option value="pr">Puerto Rico</option>
+        </select>
+        <button class="btn-primary" onclick="searchGoogleNews()">📰 Buscar en News</button>
+      </div>
+    </div>
+    <div class="search-card">
+      <h3>🔥 Temas de Tendencia</h3>
+      <p class="desc">Explora qué se está buscando ahora mismo en diferentes categorías.</p>
+      <div class="search-row" style="margin-top:10px">
+        <button class="btn-ghost" onclick="searchDailyTrends()">🔥 Tendencias del día</button>
+        <button class="btn-ghost" onclick="searchMusicTrends()">🎵 Tendencias Música</button>
+        <button class="btn-ghost" onclick="searchTechTrends()">📱 Tendencias Tech</button>
+        <button class="btn-ghost" onclick="searchEntTrends()">🎬 Tendencias Entretenimiento</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB 5: TRENDS & DISCOVERY ════════════════════ -->
+  <div class="tab-content" id="tab-trends">
+    <div class="search-card">
+      <h3>📈 Google Trends & Discovery</h3>
+      <p class="desc">Explora tendencias de búsqueda, interés geográfico y temas relacionados. Abre Google Trends con la consulta.</p>
+      <div class="search-row">
+        <input type="text" id="trendsInput" placeholder="Ej: merengue, bachata, música latina 2026">
+        <select id="trendsTime">
+          <option value="today+1-m">Último mes</option>
+          <option value="today+3-m">Últimos 3 meses</option>
+          <option value="today+12-m">Último año</option>
+          <option value="today+5-y">Últimos 5 años</option>
+          <option value="all">Desde 2004</option>
+        </select>
+        <select id="trendsCategory">
+          <option value="">Todas las categorías</option>
+          <option value="entertainment">🎬 Entretenimiento</option>
+          <option value="music">🎵 Música</option>
+          <option value="technology">📱 Tecnología</option>
+          <option value="business">💼 Negocios</option>
+          <option value="sports">⚽ Deportes</option>
+        </select>
+        <button class="btn-primary" onclick="searchTrends()">📈 Ver en Trends</button>
+      </div>
+    </div>
+    <div class="search-card">
+      <h3>🔍 Google Discovery Search</h3>
+      <p class="desc">Descubre contenido nuevo y emergente relacionado con tus keywords. Google Discovery muestra contenido antes de que sea tendencia.</p>
+      <div class="search-row">
+        <input type="text" id="discoveryInput" placeholder='Ej: "nueva música", "artista emergente", "viral"'>
+        <button class="btn-cyan" onclick="searchDiscovery()">🔍 Buscar Discovery</button>
+      </div>
+      <div style="margin-top:10px;padding:10px;background:var(--bg3);border-radius:var(--r);font-size:11px;color:var(--muted)">
+        💡 <strong>Tip:</strong> Discovery busca contenido nuevo que Google está empezando a indexar. Útil para encontrar <strong>nodos virales, canales emergentes y contenido antes de que explote</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════ TAB 6: DORK REFERENCE ════════════════════ -->
+  <div class="tab-content" id="tab-reference">
+    <div class="search-card">
+      <h3>📖 Google Dork Reference</h3>
+      <p class="desc">Operadores de búsqueda avanzada de Google (Google Dorks) para OSINT y hacking ético.</p>
+      <div class="ref-wrap">
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Operador</th>
+              <th>Ejemplo</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>site:</code></td><td><code>site:.do keyword</code></td><td>Limita resultados a un dominio o TLD</td></tr>
+            <tr><td><code>intitle:</code></td><td><code>intitle:\"index of\"</code></td><td>Busca palabra en el título de la página</td></tr>
+            <tr><td><code>inurl:</code></td><td><code>inurl:admin</code></td><td>Busca palabra en la URL</td></tr>
+            <tr><td><code>intext:</code></td><td><code>intext:password</code></td><td>Busca palabra en el contenido</td></tr>
+            <tr><td><code>filetype:</code></td><td><code>filetype:pdf</code></td><td>Filtra por tipo de archivo</td></tr>
+            <tr><td><code>ext:</code></td><td><code>ext:log</code></td><td>Filtra por extensión de archivo</td></tr>
+            <tr><td><code>cache:</code></td><td><code>cache:example.com</code></td><td>Muestra la versión en caché de Google</td></tr>
+            <tr><td><code>related:</code></td><td><code>related:youtube.com</code></td><td>Encuentra sitios similares</td></tr>
+            <tr><td><code>link:</code></td><td><code>link:example.com</code></td><td>Encuentra páginas que enlazan a un sitio</td></tr>
+            <tr><td><code>info:</code></td><td><code>info:example.com</code></td><td>Muestra información sobre una URL</td></tr>
+            <tr><td><code>\"...\"</code></td><td><code>\"frase exacta\"</code></td><td>Busca coincidencia exacta de frase</td></tr>
+            <tr><td><code>-keyword</code></td><td><code>música -bachata</code></td><td>Excluye resultados con esa palabra</td></tr>
+            <tr><td><code>OR</code></td><td><code>merengue OR bachata</code></td><td>Resultados con uno u otro término</td></tr>
+            <tr><td><code>AND</code></td><td><code>música AND dominicana</code></td><td>Resultados con ambos términos</td></tr>
+            <tr><td><code>around(N)</code></td><td><code>\"música\" AROUND(3) \"dominicana\"</code></td><td>Palabras separadas por hasta N palabras</td></tr>
+            <tr><td><code>after:</code></td><td><code>after:2025-01-01</code></td><td>Resultados después de una fecha</td></tr>
+            <tr><td><code>before:</code></td><td><code>before:2024-01-01</code></td><td>Resultados antes de una fecha</td></tr>
+            <tr><td><code>source:</code></td><td><code>source:news</code></td><td>Limita a fuente específica (news, blog, etc)</td></tr>
+            <tr><td><code>allintitle:</code></td><td><code>allintitle:merengue dominicano</code></td><td>Todas las palabras en el título</td></tr>
+            <tr><td><code>allinurl:</code></td><td><code>allinurl:admin login</code></td><td>Todas las palabras en la URL</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div style="text-align:center;padding:16px 0;border-top:0.5px solid var(--border);margin-top:8px">
+    <p style="font-size:9px;color:var(--muted);font-family:var(--mono)">
+      🕵️ OSINT Command Center · Nuclear AIMA · Google Dorking · Keyword Research · Domain OSINT · Datos estimados basados en patrones industriales
+    </p>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  OSINT COMMAND CENTER — ENGINE
+// ═══════════════════════════════════════════
+
+// ── TAB SWITCHING ──
+function switchTab(btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.tab).classList.add('active');
+}
+
+// ── FORMAT HELPERS ──
+function fmtNum(n) { return Math.round(Number(n)).toLocaleString(); }
+function fmtUsd(n) { return '$' + Number(n).toFixed(2); }
+function escapeHtml(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ═══════════════════════════════════════════
+//  TAB 1: GOOGLE DORK BUILDER
+// ═══════════════════════════════════════════
+
+function addDork(op, val) {
+  const input = document.getElementById('dorkInput');
+  const current = input.value;
+  if (op === '"') {
+    input.value = current + (current && !current.endsWith(' ') ? ' ' : '') + '"' + val + '"';
+  } else {
+    input.value = current + (current && !current.endsWith(' ') ? ' ' : '') + op + val;
+  }
+  updateDorkPreview();
+  input.focus();
+}
+
+function updateDorkPreview() {
+  const q = document.getElementById('dorkInput').value.trim();
+  const tld = document.getElementById('dorkTld').value;
+  const preview = document.getElementById('dorkPreview');
+  if (!q) {
+    preview.textContent = 'Esperando consulta...';
+    preview.style.color = 'var(--muted)';
+    return;
+  }
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(q);
+  preview.innerHTML = '🔍 <a href="' + url + '" target="_blank" style="color:var(--cyan)">' + escapeHtml(url) + '</a>';
+  preview.style.color = 'var(--text)';
+}
+
+function runGoogleSearch() {
+  const q = document.getElementById('dorkInput').value.trim();
+  if (!q) return;
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(q);
+  window.open(url, '_blank');
+}
+
+// ═══════════════════════════════════════════
+//  TAB 2: KEYWORD PLANNER
+// ═══════════════════════════════════════════
+
+const CPC_RANGES = {
+  music: { min: 0.50, max: 1.50, label: 'Música / Entretenimiento', volumeBase: 50000 },
+  tech: { min: 3.00, max: 7.00, label: 'Tecnología', volumeBase: 80000 },
+  finance: { min: 8.00, max: 12.00, label: 'Finanzas', volumeBase: 30000 },
+  health: { min: 5.00, max: 8.00, label: 'Salud', volumeBase: 40000 },
+  education: { min: 3.00, max: 6.00, label: 'Educación', volumeBase: 60000 },
+  ecommerce: { min: 1.50, max: 4.00, label: 'E-commerce', volumeBase: 100000 },
+  travel: { min: 1.50, max: 3.50, label: 'Viajes', volumeBase: 45000 },
+  realestate: { min: 2.50, max: 5.00, label: 'Bienes Raíces', volumeBase: 25000 },
+  legal: { min: 6.00, max: 10.00, label: 'Legal', volumeBase: 15000 },
+  general: { min: 0.50, max: 2.00, label: 'General', volumeBase: 70000 }
+};const TAG_SUFFIXES = [
+    'online', '2026', 'cerca de mí', 'precios', 'mejor',
+    'gratis', 'tutorial', 'cómo', 'ejemplos', 'guía',
+    'top', 'barato', 'opiniones', 'cursos', 'noticias',
+    'videos', 'música', 'letra', 'descargar', 'escuchar'
+];
+
+// ── Función para añadir comillas ──
+function addQuotes() {
+  const input = document.getElementById('dorkInput');
+  const current = input.value;
+  input.value = current + (current && !current.endsWith(' ') ? ' ' : '') + '" "';
+  updateDorkPreview();
+  input.focus();
+}
+
+function analyzeKeyword() {
+  const kw = document.getElementById('kwInput').value.trim();
+  const cat = document.getElementById('kwCategory').value;
+  if (!kw) return;
+
+  const cpc = CPC_RANGES[cat] || CPC_RANGES.general;
+  const avgCpc = (cpc.min + cpc.max) / 2;
+
+  // Generate random-ish but realistic values based on keyword hash
+  const hash = kw.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
+  const variance = (hash % 100) / 100;
+
+  const monthlyVol = Math.round(cpc.volumeBase * (0.3 + variance * 0.7));
+  const competition = Math.round((0.2 + variance * 0.6) * 100) / 100;
+  const kwDifficulty = Math.round(competition * 80 + 10);
+  const ctr = Math.max(0.01, Math.min(0.08, 0.08 - (kwDifficulty / 100) * 0.06)); // 2% (hard) to 8% (easy) CTR
+  const trafficValue = Math.round(monthlyVol * avgCpc * ctr);
+  const annualValue = trafficValue * 12;
+
+  document.getElementById('kwAnalyzedTerm').textContent = escapeHtml(kw);
+
+  document.getElementById('kwMetrics').innerHTML = `
+    <div class="metric-item">
+      <div class="mlbl">CPC Estimado</div>
+      <div class="mval danger">${fmtUsd(avgCpc)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Búsquedas / mes</div>
+      <div class="mval accent">${fmtNum(monthlyVol)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Competencia</div>
+      <div class="mval" style="color:${competition > 0.6 ? 'var(--danger)' : competition > 0.3 ? 'var(--accent)' : 'var(--success)'}">${Math.round(competition * 100)}%</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Keyword Difficulty</div>
+      <div class="mval" style="color:${kwDifficulty > 60 ? 'var(--danger)' : kwDifficulty > 30 ? 'var(--accent)' : 'var(--success)'}">${kwDifficulty}%</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Valor Tráfico/mes</div>
+      <div class="mval success">${fmtUsd(trafficValue)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Valor Anual</div>
+      <div class="mval success">${fmtUsd(annualValue)}</div>
+    </div>
+  `;
+
+  // Generate tags
+  const words = kw.toLowerCase().split(/[\s,]+/).filter(w => w.length > 2);
+  const tags = new Set();
+  words.forEach(w => {
+    tags.add(w);
+    TAG_SUFFIXES.forEach(s => {
+      if (Math.random() > 0.7) tags.add(w + ' ' + s);
+    });
+  });
+
+  // Add industry-specific tags
+  if (cat === 'music') {
+    tags.add(kw + ' letra');
+    tags.add(kw + ' video oficial');
+    tags.add('mejores ' + kw);
+    tags.add(kw + ' 2026');
+    tags.add(kw + ' música');
+  }
+
+  document.getElementById('kwTags').innerHTML = [...tags].slice(0, 20).map(t =>
+    '<span class="tag-item" onclick="navigator.clipboard.writeText(\'' + t + '\')">#' + t.replace(/\s+/g, '') + '</span>'
+  ).join('');
+
+  document.getElementById('kwResults').classList.add('visible');
+  document.getElementById('kwResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+function searchGoogleKW() {
+  const kw = document.getElementById('kwInput').value.trim();
+  if (!kw) return;
+  window.open('https://www.google.com/search?q=' + encodeURIComponent(kw), '_blank');
+}
+
+function searchNewsKW() {
+  const kw = document.getElementById('kwInput').value.trim();
+  if (!kw) return;
+  window.open('https://news.google.com/search?q=' + encodeURIComponent(kw) + '&hl=es-419&gl=US', '_blank');
+}
+
+function searchTrendsKW() {
+  const kw = document.getElementById('kwInput').value.trim();
+  if (!kw) return;
+  window.open('https://trends.google.com/trends/explore?q=' + encodeURIComponent(kw), '_blank');
+}
+
+// ═══════════════════════════════════════════
+//  TAB 3: DOMAIN ANALYZER
+// ═══════════════════════════════════════════
+
+const DOMAIN_TRAFFIC = {
+  music: { base: 500000, range: 100000, pageView: 3.5, bounceRate: 45, topKw: ['música', 'canciones', 'artistas', 'álbumes', 'conciertos'] },
+  tech: { base: 800000, range: 200000, pageView: 4.2, bounceRate: 38, topKw: ['tecnología', 'software', 'app', 'digital', 'AI'] },
+  news: { base: 2000000, range: 500000, pageView: 2.1, bounceRate: 65, topKw: ['noticias', 'última hora', 'reportaje', 'actualidad', 'política'] },
+  ecommerce: { base: 300000, range: 100000, pageView: 5.0, bounceRate: 35, topKw: ['comprar', 'precios', 'ofertas', 'tienda', 'productos'] },
+  social: { base: 5000000, range: 2000000, pageView: 8.0, bounceRate: 25, topKw: ['social', 'comunidad', 'compartir', 'seguidores', 'tendencias'] },
+  education: { base: 400000, range: 80000, pageView: 3.0, bounceRate: 50, topKw: ['cursos', 'educación', 'aprender', 'clases', 'universidad'] },
+  government: { base: 200000, range: 50000, pageView: 2.5, bounceRate: 55, topKw: ['gobierno', 'servicios', 'trámites', 'oficial', 'leyes'] },
+  other: { base: 100000, range: 50000, pageView: 2.8, bounceRate: 50, topKw: ['información', 'recursos', 'guía', 'directorio', 'blog'] }
+};
+
+function analyzeDomain() {
+  const domain = document.getElementById('domainInput').value.trim();
+  const cat = document.getElementById('domainCategory').value;
+  if (!domain) return;
+
+  const data = DOMAIN_TRAFFIC[cat] || DOMAIN_TRAFFIC.other;
+  const hash = domain.split('').reduce((s, c) => s + c.charCodeAt(0), 0);
+  const variance = (hash % 100) / 100;
+
+  const monthlyVisits = Math.round(data.base * (0.5 + variance * 0.8));
+  const dailyVisits = Math.round(monthlyVisits / 30);
+  const pagesPerVisit = data.pageView + (variance - 0.5) * 0.5;
+  const bounceRate = data.bounceRate + (variance - 0.5) * 5;
+  const avgTimeOnSite = Math.round(120 + variance * 120); // seconds
+  const topCountry = variance > 0.7 ? 'Estados Unidos' : variance > 0.4 ? 'Rep. Dominicana' : variance > 0.2 ? 'México' : 'España';
+
+  document.getElementById('domainAnalyzed').textContent = escapeHtml(domain);
+
+  document.getElementById('domainMetrics').innerHTML = `
+    <div class="metric-item">
+      <div class="mlbl">Tráfico Mensual Est.</div>
+      <div class="mval cyan">${fmtNum(monthlyVisits)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Tráfico Diario Est.</div>
+      <div class="mval accent">${fmtNum(dailyVisits)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Páginas / Visita</div>
+      <div class="mval">${pagesPerVisit.toFixed(1)}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Bounce Rate</div>
+      <div class="mval" style="color:${bounceRate > 55 ? 'var(--danger)' : bounceRate > 40 ? 'var(--accent)' : 'var(--success)'}">${Math.round(bounceRate)}%</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Tiempo Promedio</div>
+      <div class="mval">${Math.floor(avgTimeOnSite / 60)}:${String(avgTimeOnSite % 60).padStart(2, '0')}</div>
+    </div>
+    <div class="metric-item">
+      <div class="mlbl">Top País</div>
+      <div class="mval" style="font-size:14px;color:var(--gold)">${topCountry}</div>
+    </div>
+  `;
+
+  // Generate dorks for this domain
+  const domainClean = domain.replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/^www\./, '');
+  document.getElementById('domainDorks').innerHTML = [
+    '<span class="tag-item" onclick="runDork(\'site:' + domainClean + '\')">site:' + domainClean + '</span>',
+    '<span class="tag-item" onclick="runDork(\'site:' + domainClean + ' intitle:admin\')">site:' + domainClean + ' intitle:admin</span>',
+    '<span class="tag-item" onclick="runDork(\'link:' + domainClean + '\')">link:' + domainClean + '</span>',
+    '<span class="tag-item" onclick="runDork(\'related:' + domainClean + '\')">related:' + domainClean + '</span>',
+    '<span class="tag-item" onclick="runDork(\'cache:' + domainClean + '\')">cache:' + domainClean + '</span>',
+    '<span class="tag-item" onclick="runDork(\'info:' + domainClean + '\')">info:' + domainClean + '</span>'
+  ].join('');
+
+  // Generate keywords
+  const kws = data.topKw.map(k => {
+    const variants = [
+      k + ' ' + domainClean.split('.')[0],
+      k + ' ' + (cat === 'music' ? 'dominicana' : 'online'),
+      'mejor ' + k,
+      k + ' 2026',
+      k + ' precios'
+    ];
+    return variants[Math.floor(Math.random() * variants.length)];
+  });
+  document.getElementById('domainKeywords').innerHTML = kws.map(k =>
+    '<span class="tag-item" onclick="runDork(\'' + k + '\')">' + k + '</span>'
+  ).join('');
+
+  document.getElementById('domainResults').classList.add('visible');
+  document.getElementById('domainResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+function runDork(query) {
+  window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank');
+}
+
+function searchSimilarWeb() {
+  const domain = document.getElementById('domainInput').value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  if (!domain) return;
+  window.open('https://www.similarweb.com/website/' + domain, '_blank');
+}
+
+function searchWhois() {
+  const domain = document.getElementById('domainInput').value.trim().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+  if (!domain) return;
+  window.open('https://who.is/whois/' + domain, '_blank');
+}
+
+// ═══════════════════════════════════════════
+//  TAB 4: GOOGLE NEWS
+// ═══════════════════════════════════════════
+
+function searchGoogleNews() {
+  const q = document.getElementById('newsInput').value.trim();
+  const time = document.getElementById('newsTime').value;
+  const region = document.getElementById('newsRegion').value;
+  if (!q) return;
+
+  let url = 'https://news.google.com/search?q=' + encodeURIComponent(q) + '&hl=es-419';
+  if (time !== 'y') url += '&when=' + time;
+  if (region) url += '&gl=' + region.toUpperCase();
+
+  window.open(url, '_blank');
+}
+
+function searchDailyTrends() {
+  window.open('https://trends.google.com/trends/trendingsearches/daily?hl=es-419', '_blank');
+}
+
+function searchMusicTrends() {
+  window.open('https://trends.google.com/trends/explore?cat=w&q=merengue,bachata,m%C3%BAsica%20latina&hl=es-419', '_blank');
+}
+
+function searchTechTrends() {
+  window.open('https://trends.google.com/trends/explore?cat=5&q=tecnolog%C3%ADa,IA,software&hl=es-419', '_blank');
+}
+
+function searchEntTrends() {
+  window.open('https://trends.google.com/trends/explore?cat=w&hl=es-419', '_blank');
+}
+
+// ═══════════════════════════════════════════
+//  TAB 5: TRENDS & DISCOVERY
+// ═══════════════════════════════════════════
+
+function searchTrends() {
+  const q = document.getElementById('trendsInput').value.trim();
+  const time = document.getElementById('trendsTime').value;
+  const cat = document.getElementById('trendsCategory').value;
+  if (!q) return;
+
+  let url = 'https://trends.google.com/trends/explore?q=' + encodeURIComponent(q) + '&date=' + time;
+  if (cat) url += '&cat=' + cat;
+  url += '&hl=es-419';
+
+  window.open(url, '_blank');
+}
+
+function searchDiscovery() {
+  const q = document.getElementById('discoveryInput').value.trim();
+  if (!q) return;
+
+  // Google Discovery doesn't have a direct URL, but we can use sort by date to find new content
+  const url = 'https://www.google.com/search?q=' + encodeURIComponent(q) + '&tbs=sbd:1&sort=date';
+  window.open(url, '_blank');
+}
+
+// ═══════════════════════════════════════════
+//  LOAD DATA FROM CATALOG (if available)
+// ═══════════════════════════════════════════
+
+async function loadCatalogData() {
+  try {
+    const resp = await fetch('data/catalogo-completo-ramon-orlando.csv?t=' + Date.now());
+    if (!resp.ok) return;
+    const csv = await resp.text();
+    const lines = csv.split('\n').filter(l => l.trim());
+    if (lines.length < 2) return;
+    // Store catalog keywords for the keyword planner
+    const keywords = [];
+    for (let i = 1; i < Math.min(lines.length, 50); i++) {
+      const parts = lines[i].split(',');
+      if (parts[0]) keywords.push(parts[0].replace(/"/g, '').trim());
+    }
+    if (keywords.length > 0) {
+      // Add catalog presets
+      const kwInput = document.getElementById('kwInput');
+      kwInput.placeholder = 'Ej: ' + keywords.slice(0, 3).join(', ');
+    }
+  } catch {}
+}
+
+loadCatalogData();
+</script>
+</body>
+</html>

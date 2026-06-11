@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔮 Oráculo en Vivo · Nuclear AIMA · Tiempo Real</title>
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0c; --bg2: #111114; --bg3: #18181c;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8; --muted: #6b6966;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --danger2: #ff3333;
+    --success: #4cad7c; --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse at 80% 80%, rgba(224,92,92,0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 60%, rgba(74,208,224,0.02) 0%, transparent 40%);
+  }
+  .main-content { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+  /* ── HEADER ── */
+  .oracle-header { text-align: center; padding: 18px 0 14px; border-bottom: 0.5px solid var(--border); margin-bottom: 16px; }
+  .oracle-header .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .oracle-header .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04));
+    border: 0.5px solid rgba(201,169,110,0.25); border-radius: 20px;
+    padding: 3px 10px; font-size: 9px; font-weight: 500; color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .oracle-header .badge.live {
+    background: rgba(224,92,92,0.12); border-color: rgba(224,92,92,0.3); color: var(--danger);
+  }
+  .oracle-header .badge.live .pulse-dot {
+    width: 5px; height: 5px; background: var(--danger); border-radius: 50%;
+    animation: pulse-dot 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+  .oracle-header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .oracle-header h1 span.live-text { color: var(--danger); }
+  .oracle-header h1 span.accent-text { color: var(--accent); }
+  .oracle-header .subtitle { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .oracle-header .last-update { font-size: 9px; color: var(--muted); margin-top: 6px; font-family: var(--mono); }
+
+  /* ── LIVE TICKER ── */
+  .live-ticker {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 0.5px solid var(--border); border-radius: var(--r2);
+    padding: 16px 20px; margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .live-ticker::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--danger), var(--accent), transparent);
+    animation: scanline 3s linear infinite;
+  }
+  @keyframes scanline { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+  .live-ticker .ticker-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; display: flex; gap: 16px; }
+  .live-ticker .ticker-label .elapsed { color: var(--cyan); }
+  .live-ticker .ticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .ticker-item { text-align: center; }
+  .ticker-item .tnum { font-size: 28px; font-weight: 700; font-family: var(--mono); letter-spacing: -0.5px; }
+  .ticker-item .tlbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+  .ticker-item.danger .tnum { color: var(--danger); }
+  .ticker-item.accent .tnum { color: var(--accent); }
+  .ticker-item.cyan .tnum { color: var(--cyan); }
+  .ticker-item.success .tnum { color: var(--success); }
+  .ticker-item.gold .tnum { color: var(--gold); }
+  .ticker-item .tnum .decimal { font-size: 16px; font-weight: 500; }
+
+  /* ── TICKER RATE ROW ── */
+  .ticker-rates {
+    display: flex; gap: 16px; justify-content: center; margin-top: 10px;
+    flex-wrap: wrap; padding-top: 10px; border-top: 0.5px solid var(--border);
+  }
+  .ticker-rates .rate { font-size: 10px; font-family: var(--mono); color: var(--muted); }
+  .ticker-rates .rate strong { color: var(--text); }
+
+  /* ── MASTER STATS ── */
+  .master-stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .master-stat {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 14px; text-align: center; position: relative; overflow: hidden;
+  }
+  .master-stat .glow {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .master-stat .num { font-size: 22px; font-weight: 700; font-family: var(--mono); position: relative; }
+  .master-stat .lbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+  .master-stat .sub { font-size: 9px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+  .master-stat.danger .num { color: var(--danger); }
+  .master-stat.success .num { color: var(--success); }
+  .master-stat.accent .num { color: var(--accent); }
+  .master-stat.cyan .num { color: var(--cyan); }
+  .master-stat.gold .num { color: var(--gold); }
+
+  /* ── SESSION COUNTER ── */
+  .session-bar {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--bg3); border-radius: var(--r);
+    padding: 10px 16px; margin-bottom: 16px;
+    border: 0.5px solid var(--border); flex-wrap: wrap;
+  }
+  .session-bar .s-icon { font-size: 22px; }
+  .session-bar .s-info { flex: 1; min-width: 120px; }
+  .session-bar .s-info .slbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .session-bar .s-info .sval { font-size: 18px; font-weight: 700; font-family: var(--mono); }
+  .session-bar .s-info .sval.danger { color: var(--danger); }
+  .session-bar .s-info .sval.accent { color: var(--accent); }
+  .session-bar .s-info .sval.success { color: var(--success); }
+
+  /* ── TOP 12 ── */
+  .top12-section {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); overflow: hidden; margin-bottom: 16px;
+  }
+  .top12-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border);
+    flex-wrap: wrap; gap: 8px;
+  }
+  .top12-header h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .top12-header .live-indicator { display: flex; align-items: center; gap: 4px; font-size: 9px; color: var(--danger); font-family: var(--mono); }
+  .top12-header .live-indicator .p { width: 4px; height: 4px; background: var(--danger); border-radius: 50%; animation: pulse-dot 1s infinite; }
+  .top12-header .count { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+  .top12-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); }
+  .top12-card { background: var(--bg2); padding: 12px; position: relative; transition: all 0.2s; }
+  .top12-card:hover { background: var(--bg3); }
+  .top12-card .rank { font-size: 9px; color: var(--muted); font-family: var(--mono); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+  .top12-card .rank .medal {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 50%; font-size: 8px; font-weight: 700;
+  }
+  .top12-card .rank .medal.gold { background: linear-gradient(135deg,#f59e0b,#d97706); color:#0d0d0f; }
+  .top12-card .rank .medal.silver { background: linear-gradient(135deg,#9ca3af,#6b7280); color:#fff; }
+  .top12-card .rank .medal.bronze { background: linear-gradient(135deg,#b45309,#92400e); color:#fff; }
+  .top12-card .song-name { font-size: 12px; font-weight: 600; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top12-card .song-catalog { font-size: 9px; color: var(--muted); margin-bottom: 6px; }
+  .top12-card .stat-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .top12-card .stat-item { flex: 1; min-width: 55px; }
+  .top12-card .stat-item .slbl { font-size: 7px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .top12-card .stat-item .sval { font-size: 13px; font-weight: 600; font-family: var(--mono); margin-top: 1px; }
+  .top12-card .stat-item .sval.danger { color: var(--danger); }
+  .top12-card .stat-item .sval.success { color: var(--success); }
+  .top12-card .stat-item .sval.accent { color: var(--accent); }
+  .top12-card .live-views { font-size: 10px; font-family: var(--mono); color: var(--cyan); margin-top: 4px; }
+  .top12-card .bar-container { margin-top: 5px; height: 2px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+  .top12-card .bar-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+  .top12-card .bar-fill.gold { background: linear-gradient(90deg,var(--gold),var(--accent)); }
+  .top12-card .bar-fill.green { background: linear-gradient(90deg,var(--success),#6ee7b7); }
+  .top12-card .bar-fill.red { background: linear-gradient(90deg,var(--danger),#f87171); }
+
+  /* ── FULL TABLE ── */
+  .full-table-section {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); overflow: hidden; margin-bottom: 16px;
+  }
+  .full-table-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; gap: 8px;
+  }
+  .full-table-header h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .full-table-header .count { font-size: 10px; color: var(--muted); font-family: var(--mono); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  thead th {
+    text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 500;
+    font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;
+    border-bottom: 0.5px solid var(--border); background: var(--bg3); white-space: nowrap;
+  }
+  tbody td { padding: 6px 12px; border-bottom: 0.5px solid rgba(255,255,255,0.03); vertical-align: middle; }
+  tbody tr:hover td { background: rgba(201,169,110,0.03); }
+  .yh { color: var(--success); font-weight: 600; }
+  .ym { color: var(--accent); font-weight: 500; }
+  .yl { color: var(--muted); }
+
+  /* ── HISTORICAL CHART ── */
+  .history-section {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); overflow: hidden; margin-bottom: 16px;
+  }
+  .history-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 16px; border-bottom: 0.5px solid var(--border); flex-wrap: wrap; gap: 8px;
+  }
+  .history-header h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); }
+  .history-header .controls { display: flex; gap: 6px; }
+  .history-header .controls button {
+    padding: 4px 10px; border-radius: 6px; border: none;
+    cursor: pointer; font-size: 9px; font-weight: 500;
+    font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-sm-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-sm-primary:hover { background: var(--accent2); }
+  .btn-sm-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-sm-ghost:hover { background: var(--bg3); }
+
+  .chart-container { padding: 16px; position: relative; min-height: 160px; }
+  .chart-bars {
+    display: flex; align-items: flex-end; gap: 4px; height: 100px;
+    padding: 0 8px; position: relative;
+  }
+  .chart-bar-wrap {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    height: 100%; justify-content: flex-end; position: relative;
+  }
+  .chart-bar {
+    width: 100%; min-width: 12px; border-radius: 3px 3px 0 0;
+    transition: height 0.8s ease; position: relative;
+    background: linear-gradient(180deg, var(--accent), var(--gold));
+    cursor: pointer;
+  }
+  .chart-bar:hover { opacity: 0.8; }
+  .chart-bar-label {
+    font-size: 7px; color: var(--muted); margin-top: 3px;
+    font-family: var(--mono); white-space: nowrap; transform: rotate(-45deg);
+    transform-origin: left center; position: absolute; bottom: -18px; left: 50%;
+  }
+  .chart-bar-value {
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+    font-size: 7px; color: var(--accent); font-family: var(--mono);
+    white-space: nowrap; opacity: 0; transition: opacity 0.2s;
+  }
+  .chart-bar-wrap:hover .chart-bar-value { opacity: 1; }
+  .chart-empty {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center; color: var(--muted);
+  }
+  .chart-empty .icon { font-size: 28px; margin-bottom: 6px; }
+  .chart-empty p { font-size: 11px; }
+  .chart-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; padding: 8px 16px 12px; }
+  .chart-stat { text-align: center; }
+  .chart-stat .cnum { font-size: 13px; font-weight: 600; font-family: var(--mono); color: var(--accent); }
+  .chart-stat .clbl { font-size: 7px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ── LOADING ── */
+  .loading-state { text-align: center; padding: 40px; color: var(--muted); }
+  .loading-state .spinner {
+    width: 24px; height: 24px; border: 2px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .main-content { padding: 10px; }
+    .oracle-header h1 { font-size: 20px; }
+    .live-ticker .ticker-grid { grid-template-columns: 1fr 1fr; }
+    .ticker-item .tnum { font-size: 22px; }
+    .master-stats { grid-template-columns: 1fr 1fr; }
+    .top12-grid { grid-template-columns: 1fr; }
+    .session-bar { flex-direction: column; text-align: center; }
+    .chart-bars { height: 70px; }
+  }
+</style>
+</head>
+<body>
+<div class="main-content">
+
+  <!-- ── HEADER ── -->
+  <div class="oracle-header">
+    <div class="badges">
+      <span class="badge live"><span class="pulse-dot"></span> TIEMPO REAL · SEGUNDO A SEGUNDO</span>
+      <span class="badge">⚡ 100ms TICK RATE</span>
+      <span class="badge">💾 localStorage · HISTÓRICO</span>
+    </div>
+    <h1>🔮 Oráculo de <span class="accent-text">Yield</span> <span class="live-text">en Vivo</span></h1>
+    <p class="subtitle">190 canciones auditadas · Recontando vistas y fugas segundo a segundo · Histórico con fechas · Proyecciones en tiempo real</p>
+    <div class="last-update" id="lastUpdate">Inicializando motor de tiempo real...</div>
+  </div>
+
+  <!-- ── LIVE TICKER ── -->
+  <div class="live-ticker">
+    <div class="ticker-label">
+      <span>⚡ TIEMPO TRANSCURRIDO EN ESTA SESIÓN</span>
+      <span class="elapsed" id="elapsedTime">00:00:00</span>
+    </div>
+    <div class="ticker-grid">
+      <div class="ticker-item danger">
+        <div class="tnum" id="liveLostMoney">$0.00</div>
+        <div class="tlbl">Perdido en esta sesión</div>
+      </div>
+      <div class="ticker-item cyan">
+        <div class="tnum" id="liveViews">0</div>
+        <div class="tlbl">Reproducciones en sesión</div>
+      </div>
+      <div class="ticker-item accent">
+        <div class="tnum" id="liveLostToday">$0</div>
+        <div class="tlbl">Perdido hoy (estimado)</div>
+      </div>
+      <div class="ticker-item gold">
+        <div class="tnum" id="liveViewsToday">0</div>
+        <div class="tlbl">Reproducciones hoy (est.)</div>
+      </div>
+      <div class="ticker-item success">
+        <div class="tnum" id="liveAdelanto">$0</div>
+        <div class="tlbl">Adelanto estimado (3yr)</div>
+      </div>
+    </div>
+    <div class="ticker-rates">
+      <span class="rate">🔥 <strong id="rateViewsPerSec">0</strong> views/seg</span>
+      <span class="rate">💰 <strong id="ratePerSec">$0.00</strong>/seg</span>
+      <span class="rate">📈 <strong id="ratePerMin">$0.00</strong>/min</span>
+      <span class="rate">📊 <strong id="ratePerHour">$0.00</strong>/hora</span>
+      <span class="rate">💵 <strong id="ratePerDay">$0.00</strong>/día</span>
+    </div>
+  </div>
+
+  <!-- ── MASTER STATS ── -->
+  <div class="master-stats" id="masterStats">
+    <div class="master-stat danger">
+      <div class="glow"></div>
+      <div class="num" id="totalYieldMonth">—</div>
+      <div class="lbl">Yield Real / Mes</div>
+      <div class="sub">Basado en datos auditados</div>
+    </div>
+    <div class="master-stat danger">
+      <div class="glow"></div>
+      <div class="num" id="totalYieldYear">—</div>
+      <div class="lbl">Proyección Anual</div>
+      <div class="sub">Yield mensual × 12</div>
+    </div>
+    <div class="master-stat accent">
+      <div class="glow"></div>
+      <div class="num" id="totalSongs">—</div>
+      <div class="lbl">Canciones Auditadas</div>
+      <div class="sub">Catálogo completo</div>
+    </div>
+    <div class="master-stat cyan">
+      <div class="glow"></div>
+      <div class="num" id="totalNodes">—</div>
+      <div class="lbl">Nodos Detectados</div>
+      <div class="sub">Canales sin monetizar</div>
+    </div>
+    <div class="master-stat gold">
+      <div class="glow"></div>
+      <div class="num" id="totalViews">—</div>
+      <div class="lbl">Vistas Totales</div>
+      <div class="sub">Acumuladas catálogo</div>
+    </div>
+    <div class="master-stat success">
+      <div class="glow"></div>
+      <div class="num" id="adelantoEstimado">—</div>
+      <div class="lbl">Adelanto Estimado</div>
+      <div class="sub">3yr · 70% flujo</div>
+    </div>
+  </div>
+
+  <!-- ── SESSION COUNTER ── -->
+  <div class="session-bar">
+    <div class="s-icon">⏱️</div>
+    <div class="s-info">
+      <div class="slbl">Esta sesión · Desde que abriste esta página</div>
+      <div class="sval danger" id="sessionLostMoney">$0.00 perdidos</div>
+    </div>
+    <div class="s-info">
+      <div class="slbl">Views acumuladas en sesión</div>
+      <div class="sval accent" id="sessionViewsAccum">0 reproducciones</div>
+    </div>
+    <div class="s-info">
+      <div class="slbl">Equivale a (en vistas totales)</div>
+      <div class="sval success" id="sessionViewsPercent">0% del catálogo</div>
+    </div>
+  </div>
+
+  <!-- ── TOP 12 ── -->
+  <div class="top12-section">
+    <div class="top12-header">
+      <h2>🏆 Top 12 · Live Counters</h2>
+      <div class="live-indicator"><span class="p"></span> EN VIVO</div>
+      <div class="count" id="top12Count">Cargando...</div>
+    </div>
+    <div class="loading-state" id="top12Loading">
+      <div class="spinner"></div>
+      <p>Iniciando motores de tiempo real...</p>
+    </div>
+    <div class="top12-grid" id="top12Grid" style="display:none"></div>
+  </div>
+
+  <!-- ── FULL TABLE ── -->
+  <div class="full-table-section">
+    <div class="full-table-header">
+      <h3>📋 Catálogo Completo · 190 Canciones</h3>
+      <div class="count" id="tableCount">Ordenado por Yield ⬇</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Canción</th>
+            <th>Cat.</th>
+            <th>Nodos</th>
+            <th>Vistas</th>
+            <th>Yield/mes</th>
+            <th>Yield/año</th>
+            <th>$/seg</th>
+            <th>Aud.</th>
+          </tr>
+        </thead>
+        <tbody id="fullTableBody">
+          <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:24px">Cargando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── HISTORICAL CHART ── -->
+  <div class="history-section">
+    <div class="history-header">
+      <h3>📈 Histórico de Crecimiento</h3>
+      <div class="controls">
+        <button class="btn-sm-ghost" onclick="clearHistory()">🗑️ Limpiar</button>
+        <button class="btn-sm-primary" onclick="saveSnapshot()">💾 Guardar ahora</button>
+      </div>
+    </div>
+    <div class="chart-container" id="chartContainer">
+      <div class="chart-empty" id="chartEmpty">
+        <div class="icon">📊</div>
+        <p>Aún no hay datos históricos. Los snapshots se guardan automáticamente cada hora.</p>
+        <p style="font-size:9px;margin-top:6px;color:var(--muted)">Haz clic en "Guardar ahora" para crear el primer punto.</p>
+      </div>
+      <div class="chart-bars" id="chartBars" style="display:none"></div>
+    </div>
+    <div class="chart-stats" id="chartStats" style="display:none"></div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <div style="text-align:center;padding:16px 0;border-top:0.5px solid var(--border);margin-top:8px">
+    <p style="font-size:9px;color:var(--muted);font-family:var(--mono)">
+      🔮 Oráculo Nuclear AIMA · Tiempo real 100ms · eCPM $1.20 merengue/tropical · Snapshots cada hora · localStorage
+    </p>
+  </div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  ORÁCULO EN TIEMPO REAL — MOTOR PRINCIPAL
+// ═══════════════════════════════════════════
+
+// ── STATE ──
+let catalogData = [];
+let liveSearchData = [];
+let totalMonthlyYield = 0;
+let totalMonthlyViews = 0;
+let viewsPerSec = 0;
+let dollarsPerSec = 0;
+
+// Session accumulators
+let sessionViews = 0;
+let sessionDollars = 0;
+let sessionStartTime = Date.now();
+let lastTickTime = Date.now();
+
+// Per-song real-time data
+let songLiveData = {}; // { "Loco de Amor": { viewsPerSec, dollarsPerSec, sessionViews, sessionDollars } }
+
+// ── CONSTANTS ──
+const ECPM = 1.20;
+
+// ── FORMAT HELPERS ──
+function fmtNum(n) { return Math.round(Number(n)).toLocaleString(); }
+function fmtUsd(n) {
+  if (!n || isNaN(n)) return '$0';
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + (n/1000).toFixed(1) + 'K';
+  return '$' + Number(n).toFixed(2);
+}
+function fmtUsdInt(n) {
+  if (!n || isNaN(n)) return '$0';
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtTime(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+}
+
+// ── CSV PARSER ──
+function parseCSVLine(line) {
+  const result = []; let current = '', inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQuotes = !inQuotes; continue; }
+    if (ch === ',' && !inQuotes) { result.push(current); current = ''; }
+    else current += ch;
+  }
+  result.push(current);
+  return result;
+}
+
+// ── PARSE YIELD ──
+function parseYield(str) {
+  if (!str) return 0;
+  return parseFloat(String(str).replace(/[$,\s]/g,'')) || 0;
+}
+function parseIntVal(str) {
+  if (!str) return 0;
+  return parseInt(String(str).replace(/[^0-9]/g,'')) || 0;
+}
+
+// ═══════════════════════════════════════════
+//  DATA LOADING
+// ═══════════════════════════════════════════
+
+async function loadData() {
+  try {
+    const [catResp, liveResp] = await Promise.all([
+      fetch('data/catalogo-completo-ramon-orlando.csv?t=' + Date.now()),
+      fetch('data/no_hay_nadie_mas_-_ramon_orlando_20260509_1909.csv?t=' + Date.now())
+    ]);
+
+    // ── Catalog CSV ──
+    const catCsv = await catResp.text();
+    const catLines = catCsv.split('\n').filter(l => l.trim());
+    if (catLines.length < 2) throw new Error('No catalog data');
+    const catHeader = parseCSVLine(catLines[0]);
+    catalogData = catLines.slice(1).map(line => {
+      const vals = parseCSVLine(line);
+      const obj = {};
+      catHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+      return obj;
+    }).filter(d => d.Canción);
+
+    // ── Live Search CSV (for VPH data) ──
+    const liveCsv = await liveResp.text();
+    const liveLines = liveCsv.split('\n').filter(l => l.trim());
+    if (liveLines.length > 1) {
+      const liveHeader = parseCSVLine(liveLines[0]);
+      liveSearchData = liveLines.slice(1).map(line => {
+        const vals = parseCSVLine(line);
+        const obj = {};
+        liveHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+        return obj;
+      }).filter(d => d.canal);
+    }
+
+    // ── Calculate global rates ──
+    calculateRates();
+    renderAll();
+    restoreHistory();
+
+    document.getElementById('lastUpdate').textContent =
+      '🟢 En vivo · ' + new Date().toLocaleString('es-DO') +
+      ' · ' + catalogData.length + ' canciones · ' +
+      liveSearchData.length + ' nodos monitoreados';
+
+  } catch (e) {
+    document.getElementById('top12Loading').innerHTML = `
+      <div style="text-align:center;padding:30px;color:var(--muted)">
+        <div style="font-size:28px;margin-bottom:8px">⚠️</div>
+        <p>Error: ${e.message}</p>
+      </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════
+//  RATE CALCULATIONS
+// ═══════════════════════════════════════════
+
+function calculateRates() {
+  if (!catalogData.length) return;
+
+  // Total monthly yield and views
+  totalMonthlyYield = 0;
+  totalMonthlyViews = 0;
+  let totalNodes = 0;
+  let totalViewsAll = 0;
+
+  catalogData.forEach(d => {
+    const y = parseYield(d['Yield/mes']);
+    totalMonthlyYield += y;
+    totalNodes += parseIntVal(d.Nodos);
+    totalViewsAll += parseIntVal(d.Vistas);
+    // Estimate monthly views from yield: views = (yield * 1000) / eCPM
+    const monthlyViews = y > 0 ? (y * 1000) / ECPM : 0;
+    totalMonthlyViews += monthlyViews;
+  });
+
+  // Per-second rates
+  const secsPerMonth = 30 * 24 * 3600;
+  viewsPerSec = totalMonthlyViews / secsPerMonth;
+  dollarsPerSec = totalMonthlyYield / secsPerMonth;
+
+  // Per-song live data
+  songLiveData = {};
+  catalogData.forEach(d => {
+    const y = parseYield(d['Yield/mes']);
+    const songViewsPerMonth = y > 0 ? (y * 1000) / ECPM : 0;
+    songLiveData[d.Canción] = {
+      name: d.Canción,
+      catalog: d.Catálogo,
+      period: d.Período,
+      nodes: parseIntVal(d.Nodos),
+      totalViews: parseIntVal(d.Vistas),
+      yieldMonth: y,
+      yieldYear: y * 12,
+      viewsPerSec: songViewsPerMonth / secsPerMonth,
+      dollarsPerSec: y / secsPerMonth,
+      sessionViews: 0,
+      sessionDollars: 0,
+      auditada: d.Auditada
+    };
+  });
+}
+
+// ═══════════════════════════════════════════
+//  LIVE TICKER ENGINE
+// ═══════════════════════════════════════════
+
+function tick() {
+  const now = Date.now();
+  const delta = (now - lastTickTime) / 1000; // seconds since last tick
+  lastTickTime = now;
+
+  // Accumulate session data
+  const viewsDelta = viewsPerSec * delta;
+  const dollarsDelta = dollarsPerSec * delta;
+  sessionViews += viewsDelta;
+  sessionDollars += dollarsDelta;
+
+  // Per-song accumulation
+  Object.keys(songLiveData).forEach(name => {
+    const song = songLiveData[name];
+    song.sessionViews += song.viewsPerSec * delta;
+    song.sessionDollars += song.dollarsPerSec * delta;
+  });
+
+  // Session elapsed
+  const elapsed = now - sessionStartTime;
+  document.getElementById('elapsedTime').textContent = fmtTime(elapsed);
+
+  // Session accumulators
+  document.getElementById('liveLostMoney').textContent = '$' + sessionDollars.toFixed(2);
+  document.getElementById('liveViews').textContent = fmtNum(sessionViews);
+
+  // Today estimates (hours since midnight * rates)
+  const nowDate = new Date();
+  const hoursToday = nowDate.getHours() + (nowDate.getMinutes() / 60);
+  const todayDollars = dollarsPerSec * hoursToday * 3600;
+  const todayViews = viewsPerSec * hoursToday * 3600;
+  document.getElementById('liveLostToday').textContent = fmtUsdInt(todayDollars);
+  document.getElementById('liveViewsToday').textContent = fmtNum(todayViews);
+
+  // Adelanto estimate (3-year at 70% of monthly yield)
+  const adelanto = totalMonthlyYield * 36 * 0.7;
+  document.getElementById('liveAdelanto').textContent = fmtUsdInt(adelanto);
+
+  // Rates
+  document.getElementById('rateViewsPerSec').textContent = viewsPerSec.toFixed(1);
+  document.getElementById('ratePerSec').textContent = '$' + dollarsPerSec.toFixed(4);
+  document.getElementById('ratePerMin').textContent = '$' + (dollarsPerSec * 60).toFixed(2);
+  document.getElementById('ratePerHour').textContent = '$' + (dollarsPerSec * 3600).toFixed(2);
+  document.getElementById('ratePerDay').textContent = '$' + (dollarsPerSec * 86400).toFixed(2);
+
+  // Session bar
+  document.getElementById('sessionLostMoney').textContent = '$' + sessionDollars.toFixed(2) + ' perdidos';
+  document.getElementById('sessionViewsAccum').textContent = fmtNum(sessionViews) + ' reproducciones';
+  const pctOfCatalog = totalMonthlyViews > 0 ? (sessionViews / totalMonthlyViews * 100) : 0;
+  document.getElementById('sessionViewsPercent').textContent = pctOfCatalog.toFixed(4) + '% del catálogo';
+
+  // Update Top 12 live counters
+  updateTop12Live();
+}
+
+// ── UPDATE TOP 12 LIVE COUNTERS ──
+function updateTop12Live() {
+  const cards = document.querySelectorAll('.top12-card');
+  cards.forEach((card, i) => {
+    const name = card.dataset.songName;
+    if (!name || !songLiveData[name]) return;
+    const song = songLiveData[name];
+    const viewsEl = card.querySelector('.live-views-count');
+    const dollarEl = card.querySelector('.live-dollars-count');
+    if (viewsEl) {
+      viewsEl.textContent = fmtNum(song.sessionViews);
+    }
+    if (dollarEl) {
+      dollarEl.textContent = song.sessionDollars.toFixed(6);
+    }
+  });
+}
+
+// ═══════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════
+
+function renderAll() {
+  if (!catalogData.length) return;
+
+  // Sort by yield descending
+  const sorted = [...catalogData].sort((a, b) => {
+    return parseYield(b['Yield/mes']) - parseYield(a['Yield/mes']);
+  });
+
+  const totalNodes = sorted.reduce((s, d) => s + parseIntVal(d.Nodos), 0);
+  const totalViewsAll = sorted.reduce((s, d) => s + parseIntVal(d.Vistas), 0);
+  const totalAnnual = totalMonthlyYield * 12;
+  const adelanto = totalMonthlyYield * 36 * 0.7;
+
+  // Master stats
+  document.getElementById('totalYieldMonth').textContent = fmtUsdInt(totalMonthlyYield);
+  document.getElementById('totalYieldYear').textContent = fmtUsdInt(totalAnnual);
+  document.getElementById('totalSongs').textContent = fmtNum(sorted.length);
+  document.getElementById('totalNodes').textContent = fmtNum(totalNodes);
+  document.getElementById('totalViews').textContent = fmtNum(totalViewsAll);
+  document.getElementById('adelantoEstimado').textContent = fmtUsdInt(adelanto);
+
+  // Top 12 cards
+  const top12 = sorted.slice(0, 12);
+  const maxYield = parseYield(top12[0]?.['Yield/mes']) || 1;
+  const medals = ['gold', 'silver', 'bronze'];
+
+  document.getElementById('top12Loading').style.display = 'none';
+  const grid = document.getElementById('top12Grid');
+  grid.style.display = '';
+  grid.innerHTML = top12.map((d, i) => {
+    const y = parseYield(d['Yield/mes']);
+    const yClass = y > 2000 ? 'danger' : y > 1000 ? 'accent' : 'success';
+    const barClass = y > 2000 ? 'red' : y > 1000 ? 'gold' : 'green';
+    const barPct = (y / maxYield) * 100;
+    const medal = i < 3 ? medals[i] : '';
+    const vps = (y > 0 ? (y * 1000) / ECPM : 0) / (30 * 24 * 3600);
+    const dsp = y / (30 * 24 * 3600);
+    const nodes = parseIntVal(d.Nodos);
+    const views = parseIntVal(d.Vistas);
+
+    return `
+      <div class="top12-card" data-song-name="${d.Canción}">
+        <div class="rank">
+          ${medal ? `<span class="medal ${medal}">${i + 1}</span>` : '#' + (i + 1)}
+          ${d.Catálogo || ''}
+        </div>
+        <div class="song-name" title="${d.Canción}">${d.Canción}</div>
+        <div class="song-catalog">${fmtNum(nodes)} nodos · ${fmtNum(views)} vistas</div>
+        <div class="stat-row">
+          <div class="stat-item">
+            <div class="slbl">Yield/mes</div>
+            <div class="sval ${yClass}">${fmtUsd(y)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="slbl">$/seg</div>
+            <div class="sval ${yClass}">$${dsp.toFixed(6)}</div>
+          </div>
+          <div class="stat-item">
+            <div class="slbl">Aud.</div>
+            <div class="sval" style="font-size:12px">${(d.Auditada || '').trim() === 'Sí' ? '✅' : '⏳'}</div>
+          </div>
+        </div>
+        <div class="live-views" style="display:flex;justify-content:space-between">
+          <span>▶ <span class="live-views-count">0</span> ahora</span>
+          <span style="color:var(--danger)">💰 $<span class="live-dollars-count">0.00</span> sesión</span>
+        </div>
+        <div class="bar-container">
+          <div class="bar-fill ${barClass}" style="width:${barPct}%"></div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('top12Count').textContent =
+    top12.length + ' canciones · ' + fmtUsdInt(top12.reduce((s,d) => s + parseYield(d['Yield/mes']),0)) + '/mes combinado';
+
+  // Full table
+  const tbody = document.getElementById('fullTableBody');
+  tbody.innerHTML = sorted.map((d, i) => {
+    const y = parseYield(d['Yield/mes']);
+    const yClass = y > 2000 ? 'yh' : y > 1000 ? 'ym' : 'yl';
+    const annual = y * 12;
+    const dsp = y / (30 * 24 * 3600);
+    const views = parseIntVal(d.Vistas);
+    const nodes = parseIntVal(d.Nodos);
+    return `<tr>
+      <td>${i + 1}</td>
+      <td>${d.Canción || ''}</td>
+      <td>${d.Catálogo || ''}</td>
+      <td>${fmtNum(nodes)}</td>
+      <td>${fmtNum(views)}</td>
+      <td class="${yClass}">${fmtUsd(y)}</td>
+      <td class="${yClass}">${fmtUsd(annual)}</td>
+      <td style="font-size:10px;font-family:var(--mono);color:var(--muted)">$${dsp.toFixed(6)}</td>
+      <td>${(d.Auditada || '').trim() === 'Sí' ? '✅' : '⏳'}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tableCount').textContent = sorted.length + ' canciones · Yield ⬇';
+}
+
+// ═══════════════════════════════════════════
+//  HISTORICAL TRACKING (localStorage)
+// ═══════════════════════════════════════════
+
+const HISTORY_KEY = 'nuclear-oracle-history';
+
+function getHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function saveHistory(history) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch {}
+}
+
+function saveSnapshot() {
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0] + ' ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+  const history = getHistory();
+  const lastEntry = history.length > 0 ? history[history.length - 1] : null;
+
+  // Only save if at least 5 minutes have passed since last
+  if (lastEntry) {
+    const lastTime = lastEntry.timestamp || new Date(lastEntry.date).getTime();
+    if (now.getTime() - lastTime < 5 * 60 * 1000) {
+      // Update the last entry instead of creating a new one
+      lastEntry.yield = totalMonthlyYield;
+      lastEntry.views = totalMonthlyViews;
+      lastEntry.songs = catalogData.length;
+      lastEntry.date = dateStr;
+      lastEntry.timestamp = now.getTime();
+      saveHistory(history);
+      renderChart();
+      return;
+    }
+  }
+
+  history.push({
+    date: dateStr,
+    timestamp: now.getTime(),
+    yield: totalMonthlyYield,
+    views: totalMonthlyViews,
+    songs: catalogData.length,
+    percentRecovered: 0
+  });
+
+  saveHistory(history);
+  renderChart();
+}
+
+function restoreHistory() {
+  renderChart();
+}
+
+function clearHistory() {
+  if (confirm('¿Borrar todo el histórico de snapshots?')) {
+    localStorage.removeItem(HISTORY_KEY);
+    renderChart();
+  }
+}
+
+function renderChart() {
+  const history = getHistory();
+  const container = document.getElementById('chartContainer');
+  const bars = document.getElementById('chartBars');
+  const empty = document.getElementById('chartEmpty');
+  const stats = document.getElementById('chartStats');
+
+  if (history.length === 0) {
+    empty.style.display = '';
+    bars.style.display = 'none';
+    stats.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  bars.style.display = 'flex';
+  stats.style.display = 'flex';
+
+  const maxYield = Math.max(...history.map(h => h.yield), 1);
+
+  bars.innerHTML = history.map((h, i) => {
+    const height = (h.yield / maxYield) * 100;
+    return `
+      <div class="chart-bar-wrap">
+        <div class="chart-bar" style="height:${height}%">
+          <span class="chart-bar-value">${fmtUsdInt(h.yield)}</span>
+        </div>
+        <span class="chart-bar-label">${h.date.split(' ')[0]}</span>
+      </div>`;
+  }).join('');
+
+  const first = history[0];
+  const last = history[history.length - 1];
+  const growth = last.yield - first.yield;
+  const growthPct = first.yield > 0 ? ((last.yield - first.yield) / first.yield * 100) : 0;
+
+  stats.innerHTML = `
+    <div class="chart-stat">
+      <div class="cnum">${history.length}</div>
+      <div class="clbl">Snapshots</div>
+    </div>
+    <div class="chart-stat">
+      <div class="cnum">${fmtUsdInt(last.yield)}</div>
+      <div class="clbl">Último Yield</div>
+    </div>
+    <div class="chart-stat">
+      <div class="cnum" style="color:${growth >= 0 ? 'var(--success)' : 'var(--danger)'}">${growth >= 0 ? '+' : ''}${fmtUsdInt(growth)}</div>
+      <div class="clbl">Crecimiento total</div>
+    </div>
+    <div class="chart-stat">
+      <div class="cnum" style="color:${growthPct >= 0 ? 'var(--success)' : 'var(--danger)'}">${growthPct >= 0 ? '+' : ''}${growthPct.toFixed(1)}%</div>
+      <div class="clbl">% Crecimiento</div>
+    </div>
+    <div class="chart-stat">
+      <div class="cnum">${fmtUsdInt(last.yield * 12)}</div>
+      <div class="clbl">Proy. Anual</div>
+    </div>
+    <div class="chart-stat">
+      <div class="cnum" style="color:var(--cyan)">${fmtNum(Math.round(totalMonthlyViews))}</div>
+      <div class="clbl">Views/mes</div>
+    </div>`;
+}
+
+// ── AUTO-SAVE SNAPSHOT every hour ──
+setInterval(saveSnapshot, 3600000);
+
+// ═══════════════════════════════════════════
+//  ENGINE START
+// ═══════════════════════════════════════════
+
+// Start live ticker (100ms for smooth counter)
+lastTickTime = Date.now();
+setInterval(tick, 100);
+
+// Load data
+loadData();
+</script>
+</body>
+</html>

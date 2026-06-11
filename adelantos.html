@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💰 Adelantos · Financiamiento · Nuclear AIMA</title>
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0c; --bg2: #111114; --bg3: #18181c;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8; --muted: #6b6966;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --success: #4cad7c;
+    --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(76,173,124,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 100%, rgba(201,169,110,0.03) 0%, transparent 50%);
+  }
+  .main-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+  .ad-header { text-align: center; padding: 18px 0 14px; border-bottom: 0.5px solid var(--border); margin-bottom: 16px; }
+  .ad-header .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, rgba(76,173,124,0.12), rgba(76,173,124,0.04));
+    border: 0.5px solid rgba(76,173,124,0.3); border-radius: 20px;
+    padding: 3px 10px; font-size: 9px; font-weight: 500; color: var(--success);
+    letter-spacing: 0.02em;
+  }
+  .ad-header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  .ad-header h1 span { color: var(--success); }
+  .ad-header p { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── TAB NAV ── */
+  .tab-nav {
+    display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap;
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 4px;
+  }
+  .tab-btn {
+    padding: 7px 14px; border-radius: var(--r); border: none; cursor: pointer;
+    font-size: 10px; font-weight: 500; font-family: var(--font);
+    background: transparent; color: var(--muted); transition: all 0.15s;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--bg3); }
+  .tab-btn.active { background: var(--accent); color: #0d0d0f; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── PLATFORM CARD ── */
+  .platform-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); padding: 20px; margin-bottom: 14px;
+  }
+  .platform-card .p-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+  .platform-card .p-icon { font-size: 32px; flex-shrink: 0; }
+  .platform-card .p-info { flex: 1; }
+  .platform-card .p-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+  .platform-card .p-info .p-tag {
+    display: inline-flex; align-items: center; gap: 3px;
+    padding: 2px 8px; border-radius: 4px; font-size: 9px; font-weight: 500;
+    margin-top: 3px;
+  }
+  .platform-card .p-info .p-tag.advance { background: rgba(76,173,124,0.12); color: var(--success); border: 0.5px solid rgba(76,173,124,0.3); }
+  .platform-card .p-info .p-tag.dist { background: rgba(74,208,224,0.1); color: var(--cyan); border: 0.5px solid rgba(74,208,224,0.25); }
+  .platform-card .p-info .p-tag.royalty { background: rgba(245,158,11,0.1); color: var(--gold); border: 0.5px solid rgba(245,158,11,0.25); }
+  .platform-card .p-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+  .platform-card .p-metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .platform-card .p-metric { background: var(--bg3); border-radius: var(--r); padding: 10px; text-align: center; }
+  .platform-card .p-metric .mlbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .platform-card .p-metric .mval { font-size: 14px; font-weight: 600; font-family: var(--mono); margin-top: 2px; }
+  .platform-card .p-metric .mval.success { color: var(--success); }
+  .platform-card .p-metric .mval.accent { color: var(--accent); }
+  .platform-card .p-metric .mval.cyan { color: var(--cyan); }
+  .platform-card .p-steps { margin: 12px 0; }
+  .platform-card .p-step {
+    display: flex; gap: 10px; padding: 8px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04);
+  }
+  .platform-card .p-step:last-child { border-bottom: none; }
+  .platform-card .p-step .step-num {
+    width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700; background: var(--accent); color: #0d0d0f;
+  }
+  .platform-card .p-step .step-text { font-size: 12px; line-height: 1.5; }
+  .platform-card .p-step .step-text strong { color: var(--accent); }
+  .platform-card .p-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .platform-card .p-actions a {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 7px 14px; border-radius: var(--r); text-decoration: none;
+    font-size: 11px; font-weight: 500; font-family: var(--font);
+    transition: all 0.15s;
+  }
+  .btn-success { background: var(--success); color: #0d0d0f; }
+  .btn-success:hover { opacity: 0.85; }
+  .btn-ghost-ext { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
+  .btn-ghost-ext:hover { background: var(--bg3); }
+
+  /* ── CALCULATOR ── */
+  .calc-section {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); padding: 20px; margin-bottom: 14px;
+  }
+  .calc-section h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 4px; }
+  .calc-section .desc { font-size: 11px; color: var(--muted); margin-bottom: 14px; }
+  .calc-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .calc-row input, .calc-row select {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 9px 12px; color: var(--text); font-size: 13px; font-family: var(--font);
+    outline: none; transition: border 0.15s;
+  }
+  .calc-row input:focus, .calc-row select:focus { border-color: var(--accent); }
+  .calc-row input[type="number"] { width: 140px; }
+  .calc-row button {
+    padding: 9px 18px; border-radius: var(--r); border: none; cursor: pointer;
+    font-size: 12px; font-weight: 500; font-family: var(--font); transition: all 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: #0d0d0f; }
+  .btn-primary:hover { background: var(--accent2); }
+  .calc-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .calc-result {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 14px; text-align: center;
+  }
+  .calc-result .clbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .calc-result .cval { font-size: 20px; font-weight: 700; font-family: var(--mono); margin-top: 3px; }
+  .calc-result .cval.success { color: var(--success); }
+  .calc-result .cval.danger { color: var(--danger); }
+  .calc-result .cval.accent { color: var(--accent); }
+  .calc-result .cval.cyan { color: var(--cyan); }
+  .calc-result .cnote { font-size: 9px; color: var(--muted); margin-top: 3px; }
+
+  /* ── STRATEGY BOX ── */
+  .strategy-box {
+    background: linear-gradient(135deg, rgba(76,173,124,0.06), rgba(201,169,110,0.04));
+    border: 0.5px solid rgba(76,173,124,0.2); border-radius: var(--r2);
+    padding: 16px 20px; margin-bottom: 14px;
+  }
+  .strategy-box h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--success); margin-bottom: 8px; }
+  .strategy-box .s-item { font-size: 12px; line-height: 1.7; margin-bottom: 6px; padding-left: 16px; border-left: 2px solid var(--success); }
+  .strategy-box .s-item strong { color: var(--accent); }
+
+  /* ── PITCH DECK ── */
+  .pitch-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: var(--r2); padding: 20px; margin-bottom: 14px;
+  }
+  .pitch-card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 10px; }
+  .pitch-card .metric-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin-bottom: 14px;
+  }
+  .pitch-card .metric-item {
+    background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 12px; text-align: center;
+  }
+  .pitch-card .metric-item .mlbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .pitch-card .metric-item .mval { font-size: 16px; font-weight: 600; font-family: var(--mono); margin-top: 3px; }
+  .pitch-card .metric-item .mval.success { color: var(--success); }
+  .pitch-card .metric-item .mval.danger { color: var(--danger); }
+  .pitch-card .metric-item .mval.accent { color: var(--accent); }
+  .pitch-card .metric-item .mval.cyan { color: var(--cyan); }
+
+  .highlight-box {
+    background: rgba(201,169,110,0.06); border-left: 2px solid var(--accent);
+    padding: 10px 14px; border-radius: 0 var(--r) var(--r) 0; margin: 10px 0;
+    font-size: 11px; line-height: 1.6;
+  }
+  .highlight-box .hl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: var(--accent); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; margin: 14px 0; }
+  .timeline::before {
+    content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item { position: relative; margin-bottom: 16px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item .dot {
+    position: absolute; left: -22px; top: 4px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg2);
+  }
+  .timeline-item .dot.success { background: var(--success); }
+  .timeline-item .dot.danger { background: var(--danger); }
+  .timeline-item h4 { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+  .timeline-item .time { font-size: 9px; color: var(--muted); font-family: var(--mono); }
+
+  @media (max-width: 768px) {
+    .main-content { padding: 10px; }
+    .tab-btn { font-size: 9px; padding: 5px 8px; }
+    .platform-card { padding: 14px; }
+    .calc-row { flex-direction: column; }
+    .calc-row input[type="number"] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="main-content">
+
+  <div class="ad-header">
+    <div class="badge">💰 FINANCIAMIENTO · ADELANTOS · DISTRIBUCIÓN</div>
+    <h1>💰 <span>Adelantos</span> · Plataformas de Financiamiento</h1>
+    <p>Guía completa para conseguir adelantos sobre el catálogo de Ramón Orlando — Desde SoundExchange hasta Believe/The Orchard</p>
+  </div>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="tab-strategy" onclick="switchTab(this)">🎯 Estrategia</button>
+    <button class="tab-btn" data-tab="tab-platforms" onclick="switchTab(this)">🏦 Plataformas</button>
+    <button class="tab-btn" data-tab="tab-calculator" onclick="switchTab(this)">🧮 Calculadora</button>
+    <button class="tab-btn" data-tab="tab-pitch" onclick="switchTab(this)">📋 Pitch Deck</button>
+  </div>
+
+  <!-- ════════════ TAB 1: ESTRATEGIA ════════════ -->
+  <div class="tab-content active" id="tab-strategy">
+
+    <div class="strategy-box">
+      <h3>🎯 Estrategia de Adelanto — El Orden Correcto</h3>
+      <div class="s-item">
+        <strong>1. SoundExchange (Retroactivo)</strong> — El dinero más inmediato y sin costo. Reclamar regalías digitales no reclamadas de los últimos 3 años. Potencial: <strong>$40K - $80K USD</strong>
+      </div>
+      <div class="s-item">
+        <strong>2. Registro ONDA + ONAPI</strong> — Sin este paso ninguna distribuidora seria te firma. Establece la existencia legal del sello/artista.
+      </div>
+      <div class="s-item">
+        <strong>3. Auditoría del Catálogo con "The Tool"</strong> — Usa tu herramienta de auditoría ("The Tool") para documentar los 178 temas: nodos, vistas, yield mensual, ingreso fugado. Con solo 12 canciones ya tienes datos para negociar. Este es <strong>tu argumento central</strong>.
+      </div>
+      <div class="s-item">
+        <strong>4. Campaña de Distribución</strong> — Subir los 178 temas a través de un agregador (DistroKid, TuneCore) para generar ISRCs y empezar a generar historial de ingresos verificable.
+      </div>
+      <div class="s-item">
+        <strong>5. Acercamiento a Distribuidoras con Adelanto</strong> — Con 12 canciones auditadas y su reporte de ingreso fugado, tocas la puerta de <strong>Believe Music</strong> o <strong>The Orchard</strong>. Rango realista: <strong>$150K - $500K USD</strong>.
+      </div>
+      <div class="s-item">
+        <strong>6. beatBread (Puente)</strong> — Mientras negocias, beatBread puede darte un adelanto rápido de <strong>$1K - $10M+</strong> sin ceder propiedad. Ideal como puente.
+      </div>
+    </div>
+
+    <div class="strategy-box" style="border-color:rgba(224,92,92,0.2);background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(201,169,110,0.03))">
+      <h3 style="color:var(--danger)">⚡ La Métrica Clave — Ingreso Mensual Fugado</h3>
+      <div class="s-item" style="border-left-color:var(--danger)">
+        <strong>No es el total de vistas lo que importa.</strong> El número que abre las puertas de Believe y The Orchard es el <strong>ingreso mensual fugado</strong> — el dinero que se está perdiendo cada mes porque canales de terceros están monetizando el contenido sin autorización. Eso es lo que hace que el adelanto sea justificable para ellos.
+      </div>
+      <div class="s-item" style="border-left-color:var(--danger)">
+        <strong>Con las 12 canciones principales ya tienes suficiente</strong> para una primera conversación. No necesitas las 178. Las 12 con mayor goteo (yield) son tu argumento de apertura.
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>💰 SoundExchange — $40K-$80K inmediatos</h4>
+        <div class="time">Sin costo · Sin contrato · Solo reclamar</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot success"></div>
+        <h4>🏛️ ONDA/ONAPI — Fundación legal</h4>
+        <div class="time">~$1,000 USD · 30 días</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>📊 Auditoría — Reporte de ingreso fugado</h4>
+        <div class="time">Herramienta de auditoría · 12 canciones top</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot"></div>
+        <h4>📡 Distribución inicial — ISRCs + historial</h4>
+        <div class="time">DistroKid/TuneCore · 3-6 meses de historial</div>
+      </div>
+      <div class="timeline-item">
+        <div class="dot danger"></div>
+        <h4>🤝 Believe / The Orchard — Adelanto $150K-$500K</h4>
+        <div class="time">Con historial + auditoría + ONDA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ TAB 2: PLATAFORMAS ════════════ -->
+  <div class="tab-content" id="tab-platforms">
+
+    <!-- SoundExchange -->
+    <div class="platform-card">
+      <div class="p-header">
+        <div class="p-icon">💰</div>
+        <div class="p-info">
+          <h3>SoundExchange</h3>
+          <span class="p-tag royalty">REGALÍAS RETROACTIVAS</span>
+          <div class="p-desc">Reclama regalías digitales no reclamadas de los últimos 3 años. Es el dinero más inmediato y sin costo. SoundExchange recauda regalías por reproducciones en servicios de radio digital por internet, satélite y cable. Si el catálogo de Ramón Orlando nunca se ha registrado, hay potencialmente <strong>$40K-$80K USD</strong> esperando.</div>
+        </div>
+      </div>
+      <div class="p-metrics">
+        <div class="p-metric"><div class="mlbl">Potencial Estimado</div><div class="mval success">$40K - $80K</div></div>
+        <div class="p-metric"><div class="mlbl">Costo</div><div class="mval success">GRATIS</div></div>
+        <div class="p-metric"><div class="mlbl">Tiempo</div><div class="mval accent">2-4 semanas</div></div>
+        <div class="p-metric"><div class="mlbl">Sin contrato</div><div class="mval" style="color:var(--success);font-size:20px">✅</div></div>
+      </div>
+      <div class="p-steps">
+        <div class="p-step"><span class="step-num">1</span><div class="step-text"><strong>Registrar cuenta</strong> en <strong>soundexchange.com</strong> como artista o titular de derechos</div></div>
+        <div class="p-step"><span class="step-num">2</span><div class="step-text">Ingresar el catálogo completo con <strong>números ISRC</strong> (si no tienes, Distribuidor temporal como DistroKid)</div></div>
+        <div class="p-step"><span class="step-num">3</span><div class="step-text">SoundExchange audita y paga <strong>regalías retroactivas</strong> de hasta 3 años atrás</div></div>
+        <div class="p-step"><span class="step-num">4</span><div class="step-text">El pago llega directamente a la <strong>cuenta bancaria</strong> registrada. Sin split, sin intermediarios</div></div>
+      </div>
+      <div class="p-actions">
+        <a href="https://www.soundexchange.com" target="_blank" class="btn-success">🌐 Ir a SoundExchange</a>
+      </div>
+    </div>
+
+    <!-- beatBread -->
+    <div class="platform-card">
+      <div class="p-header">
+        <div class="p-icon">🏦</div>
+        <div class="p-info">
+          <h3>beatBread</h3>
+          <span class="p-tag advance">ADELANTO FLEXIBLE</span>
+          <div class="p-desc">Adelantos flexibles sobre masters y publishing que brindan libertad financiera a artistas, sellos, compositores y titulares de derechos independientes, <strong>sin tener que ceder la propiedad</strong>. Desde <strong>$1,000 hasta $10 millones+</strong>. Más de 2,000 clientes en 6 continentes desde 2020. Compara ofertas de múltiples distribuidores a través de su Red de Financiamiento.</div>
+        </div>
+      </div>
+      <div class="p-metrics">
+        <div class="p-metric"><div class="mlbl">Rango Adelanto</div><div class="mval success">$1K - $10M+</div></div>
+        <div class="p-metric"><div class="mlbl">Ceder Propiedad</div><div class="mval" style="color:var(--success);font-size:20px">❌ NO</div></div>
+        <div class="p-metric"><div class="mlbl">Tiempo</div><div class="mval accent">1-4 semanas</div></div>
+        <div class="p-metric"><div class="mlbl">Clientes</div><div class="mval cyan">2,000+</div></div>
+      </div>
+      <div class="p-steps">
+        <div class="p-step"><span class="step-num">1</span><div class="step-text"><strong>Crear cuenta</strong> en <strong>beatbread.com</strong> — proceso rápido</div></div>
+        <div class="p-step"><span class="step-num">2</span><div class="step-text"><strong>Subir catálogo</strong> y conectar distribuidora actual (o la que usarás)</div></div>
+        <div class="p-step"><span class="step-num">3</span><div class="step-text">beatBread analiza tus ingresos de streaming y genera una <strong>oferta de adelanto</strong> personalizada</div></div>
+        <div class="p-step"><span class="step-num">4</span><div class="step-text"><strong>Compara ofertas</strong> de múltiples distribuidores en su Red de Financiamiento</div></div>
+        <div class="p-step"><span class="step-num">5</span><div class="step-text"><strong>Elige plazo y tasa</strong> de recuperación — tú controlas los términos</div></div>
+        <div class="p-step"><span class="step-num">6</span><div class="step-text">El dinero se deposita directamente. <strong>Sin perder ownership</strong></div></div>
+      </div>
+      <div class="p-actions">
+        <a href="https://beatbread.com" target="_blank" class="btn-success">🌐 Ir a beatBread</a>
+        <a href="https://www.youtube.com/watch?v=BIubvMmTkv0" target="_blank" class="btn-ghost-ext">▶️ Ver Video Explicativo</a>
+      </div>
+    </div>
+
+    <!-- Believe Music -->
+    <div class="platform-card">
+      <div class="p-header">
+        <div class="p-icon">🎵</div>
+        <div class="p-info">
+          <h3>Believe Music</h3>
+          <span class="p-tag dist">DISTRIBUIDORA + ADELANTO</span>
+          <div class="p-desc">Distribuidora digital internacional con presencia en más de 50 países. Ofrecen contratos de distribución con <strong>adelanto (Signing Bonus)</strong> para catálogos de alto valor. Para el volumen de Ramón Orlando, <strong>$150K - $500K USD</strong> con historial demostrado. Requieren: empresa constituida (o carta notariada), ISRCs activos, historial de ingresos verificable de 6-12 meses, y un reporte de auditoría profesional.</div>
+        </div>
+      </div>
+      <div class="p-metrics">
+        <div class="p-metric"><div class="mlbl">Adelanto Est.</div><div class="mval success">$150K - $500K</div></div>
+        <div class="p-metric"><div class="mlbl">ISRCs Requeridos</div><div class="mval accent">Sí</div></div>
+        <div class="p-metric"><div class="mlbl">Historial Ingresos</div><div class="mval accent">6-12 meses</div></div>
+        <div class="p-metric"><div class="mlbl">Presencia Global</div><div class="mval cyan">50+ países</div></div>
+      </div>
+      <div class="strategy-box" style="margin:12px 0;padding:12px">
+        <div class="s-item" style="font-size:11px"><strong>¿Cómo acercarse?</strong> Presenta el catálogo como un <strong>activo con flujo de caja demostrado</strong>, no como una promesa. Lleva el reporte de auditoría con: URLs de nodos, canales, fechas, vistas totales, yield mensual estimado, y columna de reclamo Content ID activo o no. El número clave: <strong>ingreso mensual fugado total</strong>.</div>
+      </div>
+      <div class="p-actions">
+        <a href="https://www.believe.com" target="_blank" class="btn-success">🌐 Ir a Believe</a>
+      </div>
+    </div>
+
+    <!-- The Orchard -->
+    <div class="platform-card">
+      <div class="p-header">
+        <div class="p-icon">🍎</div>
+        <div class="p-info">
+          <h3>The Orchard</h3>
+          <span class="p-tag dist">DISTRIBUIDORA + ADELANTO</span>
+          <div class="p-desc">Filial de Sony Music. Una de las distribuidoras más grandes del mundo con presencia en todos los mercados. Ofrecen adelantos significativos para catálogos con potencial comprobado. El proceso es similar al de Believe: requieren auditoría, historial y estructura legal. Su red de alcance global y su conexión con Sony les permite ofrecer términos competitivos.</div>
+        </div>
+      </div>
+      <div class="p-metrics">
+        <div class="p-metric"><div class="mlbl">Adelanto Est.</div><div class="mval success">$150K - $500K+</div></div>
+        <div class="p-metric"><div class="mlbl">Filial de</div><div class="mval" style="font-size:12px">Sony Music</div></div>
+        <div class="p-metric"><div class="mlbl">Requisitos</div><div class="mval accent">Auditoría + Legal</div></div>
+        <div class="p-metric"><div class="mlbl">Alcance</div><div class="mval cyan">Global</div></div>
+      </div>
+      <div class="p-actions">
+        <a href="https://www.theorchard.com" target="_blank" class="btn-success">🌐 Ir a The Orchard</a>
+      </div>
+    </div>
+
+    <!-- SonoSuite / Otras -->
+    <div class="platform-card">
+      <div class="p-header">
+        <div class="p-icon">📡</div>
+        <div class="p-info">
+          <h3>SonoSuite · Otras Opciones</h3>
+          <span class="p-tag dist">DISTRIBUIDORA ALTERNATIVA</span>
+          <div class="p-desc">Alternativas para distribución y financiamiento. SonoSuite ofrece distribución con alcance global y condiciones flexibles para sellos independientes latinos. Ideal como segunda opción si Believe o The Orchard no cierran rápido.</div>
+        </div>
+      </div>
+      <div class="p-metrics">
+        <div class="p-metric"><div class="mlbl">Tipo</div><div class="mval accent">Distribuidora</div></div>
+        <div class="p-metric"><div class="mlbl">Enfoque</div><div class="mval cyan">Latinoamérica</div></div>
+        <div class="p-metric"><div class="mlbl">Flexibilidad</div><div class="mval success">Alta</div></div>
+        <div class="p-metric"><div class="mlbl">Adelanto</div><div class="mval accent">Según catálogo</div></div>
+      </div>
+      <div class="p-actions">
+        <a href="https://sonomo.com" target="_blank" class="btn-success">🌐 Ir a SonoSuite</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════ TAB 3: CALCULADORA ════════════ -->
+  <div class="tab-content" id="tab-calculator">
+    <div class="calc-section">
+      <h3>🧮 Calculadora de Adelanto Estimado</h3>
+      <p class="desc">Basada en el yield mensual del catálogo y las tasas del mercado. Ingresa los datos de tu auditoría para estimar el adelanto posible.</p>
+      <div class="calc-row">
+        <input type="number" id="calcYield" placeholder="Yield total/mes ($)" value="66824">
+        <select id="calcECPM">
+          <option value="1.20">eCPM $1.20 (Merengue/Tropical)</option>
+          <option value="2.00">eCPM $2.00 (Urbano/Latino)</option>
+          <option value="3.50">eCPM $3.50 (Pop General)</option>
+          <option value="5.00">eCPM $5.00 (Premium)</option>
+        </select>
+        <select id="calcConfidence">
+          <option value="1.0">Auditoría completa (100%)</option>
+          <option value="0.8">Auditoría parcial 80%</option>
+          <option value="0.6">Estimación inicial 60%</option>
+        </select>
+        <button class="btn-primary" onclick="calculateAdvance()">🧮 Calcular</button>
+      </div>
+      <div class="calc-results" id="calcResults">
+        <div class="calc-result"><div class="clbl">Yield Total / Mes</div><div class="cval accent" id="crYield">$66,824</div><div class="cnote">Basado en auditoría</div></div>
+        <div class="calc-result"><div class="clbl">Proyección Anual</div><div class="cval success" id="crAnnual">$801,888</div><div class="cnote">Yield × 12 meses</div></div>
+        <div class="calc-result"><div class="clbl">Adelanto 3 Años</div><div class="cval success" id="crAdvance3yr">$1,683,965</div><div class="cnote">Al 70% del flujo</div></div>
+        <div class="calc-result"><div class="clbl">Adelanto Realista</div><div class="cval danger" id="crAdvanceReal">$150K - $500K</div><div class="cnote">Sin ISRCs activos</div></div>
+        <div class="calc-result"><div class="clbl">Views / Mes Est.</div><div class="cval cyan" id="crViewsMonth">55.7M</div><div class="cnote">Basado en eCPM</div></div>
+        <div class="calc-result"><div class="clbl">Valor SoundsExchange</div><div class="cval gold" id="crSoundex">$40K - $80K</div><div class="cnote">Retroactivo 3 años</div></div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <div class="hl">💡 Cómo usar esto</div>
+      Los rangos realistas para un primer acercamiento sin ISRC activo están entre <strong>$50K y $150K</strong>. Una vez que tengas 6-12 meses de historial de ingresos verificables en plataformas, el rango sube a <strong>$150K - $500K</strong>. La calculadora usa el yield mensual de tu auditoría como base.
+    </div>
+  </div>
+
+  <!-- ════════════ TAB 4: PITCH DECK ════════════ -->
+  <div class="tab-content" id="tab-pitch">
+    <div class="pitch-card">
+      <h3>📋 Pitch Deck para Distribuidoras</h3>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:12px">Lo que necesitas para presentarte ante Believe, The Orchard o beatBread con el catálogo de Ramón Orlando.</p>
+
+      <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">🏆 Datos Clave del Catálogo</div>
+      <div class="metric-grid" id="pitchMetrics">
+        <div class="metric-item"><div class="mlbl">Canciones</div><div class="mval accent">190</div></div>
+        <div class="metric-item"><div class="mlbl">Álbumes</div><div class="mval accent">17</div></div>
+        <div class="metric-item"><div class="mlbl">Vistas Totales</div><div class="mval cyan" id="pitchViews">2.8B+</div></div>
+        <div class="metric-item"><div class="mlbl">Yield/mes</div><div class="mval success" id="pitchYield">$66.8K</div></div>
+        <div class="metric-item"><div class="mlbl">Nodos Detectados</div><div class="mval danger" id="pitchNodes">15,000+</div></div>
+        <div class="metric-item"><div class="mlbl">Adelanto Est.</div><div class="mval success">$150K - $500K</div></div>
+      </div>
+
+      <div style="margin-top:14px">
+        <div style="font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">📄 Documentos Necesarios</div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <h4>Reporte de Auditoría</h4>
+            <div class="time">De las 12 canciones principales con nodos, vistas, yield/mes, y columna de Content ID</div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <h4>Ingreso Mensual Fugado</h4>
+            <div class="time">La métrica #1 — no el total de vistas, sino cuánto se pierde cada mes</div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <h4>Certificado ONDA/ONAPI</h4>
+            <div class="time">Prueba de registro legal del sello o del artista como productor fonográfico</div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <h4>Carta de Autorización</h4>
+            <div class="time">Notariada, simple, que autoriza a gestionar la negociación del catálogo</div>
+          </div>
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <h4>Lista Oficial de Catálogo</h4>
+            <div class="time">178 canciones con títulos exactos, años, álbumes. Crítico para metadatos limpios</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box" style="margin-top:14px">
+        <div class="hl">🔥 El Argumento de Apertura</div>
+        <strong>"Este catálogo de 190 canciones está generando $66,824/mes en ingresos no reclamados. Con 12 canciones ya auditadas que muestran $34,700/mes en fuga solo de nodos identificados. El potencial de recuperación anual es de $800,000+. Ofrecemos el 100% del catálogo para distribución con Content ID activo a cambio de un adelanto de $150K-$500K."</strong>
+      </div>
+    </div>
+
+    <div class="pitch-card">
+      <h3>📊 Estrategia de Negociación</h3>
+      <div class="highlight-box" style="margin-top:0">
+        <div class="hl">💡 Orden de Contacto Recomendado</div>
+        <strong>1. SoundExchange</strong> — Primero, por ser el más rápido y sin costo (~$40K-$80K)<br>
+        <strong>2. beatBread</strong> — Adelanto puente mientras preparas el pitch para las grandes ($1K-$10M+)<br>
+        <strong>3. Believe Music</strong> — Primer acercamiento a distribuidora grande con adelanto<br>
+        <strong>4. The Orchard</strong> — Segunda opción si Believe no cierra rápido (Sony Music backing)<br>
+        <strong>5. SonoSuite</strong> — Alternativa latina con condiciones flexibles
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:16px 0;border-top:0.5px solid var(--border);margin-top:8px">
+    <p style="font-size:9px;color:var(--muted);font-family:var(--mono)">
+      💰 Adelantos · Nuclear AIMA · Basado en datos del catálogo Ramón Orlando · Tasas de mercado 2026
+    </p>
+  </div>
+</div>
+
+<script>
+function switchTab(btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.tab).classList.add('active');
+}
+
+function fmtNum(n) { return Math.round(Number(n)).toLocaleString(); }
+function fmtUsd(n) {
+  if (!n || isNaN(n)) return '$0';
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(1) + 'K';
+  return '$' + Number(n).toFixed(2);
+}
+
+function calculateAdvance() {
+  const yieldMonth = parseFloat(document.getElementById('calcYield').value) || 66824;
+  const ecpm = parseFloat(document.getElementById('calcECPM').value) || 1.20;
+  const confidence = parseFloat(document.getElementById('calcConfidence').value) || 1.0;
+
+  const adjustedYield = yieldMonth * confidence;
+  const annual = adjustedYield * 12;
+  const advance3yr = adjustedYield * 36 * 0.7;
+  const monthlyViews = (adjustedYield * 1000) / ecpm;
+
+  document.getElementById('crYield').textContent = fmtUsd(adjustedYield);
+  document.getElementById('crAnnual').textContent = fmtUsd(annual);
+  document.getElementById('crAdvance3yr').textContent = fmtUsd(advance3yr);
+
+  // Realistic ranges (without active ISRCs: $50K-$150K; with history: $150K-$500K)
+  const noHistoryLow = Math.round(adjustedYield * 0.75);
+  const noHistoryHigh = Math.round(adjustedYield * 2.25);
+  const realLow = Math.round(adjustedYield * 2.5);
+  const realHigh = Math.round(adjustedYield * 7.5);
+  document.getElementById('crAdvanceReal').textContent = fmtUsd(realLow) + ' - ' + fmtUsd(realHigh);
+
+  document.getElementById('crViewsMonth').textContent = fmtNum(Math.round(monthlyViews));
+
+  // SoundExchange estimate
+  const sxLow = Math.round(adjustedYield * 0.6);
+  const sxHigh = Math.round(adjustedYield * 1.2);
+  document.getElementById('crSoundex').textContent = fmtUsd(sxLow) + ' - ' + fmtUsd(sxHigh);
+}
+
+// Load catalog data for pitch metrics
+async function loadCatalogData() {
+  try {
+    const resp = await fetch('data/catalogo-completo-ramon-orlando.csv?t=' + Date.now());
+    const csv = await resp.text();
+    const lines = csv.split('\n').filter(l => l.trim());
+    if (lines.length < 2) return;
+
+    let totalYield = 0, totalViews = 0, totalNodes = 0;
+    for (let i = 1; i < lines.length; i++) {
+      const parts = [];
+      let current = '', inQuotes = false;
+      for (const ch of lines[i]) {
+        if (ch === '"') { inQuotes = !inQuotes; continue; }
+        if (ch === ',' && !inQuotes) { parts.push(current); current = ''; }
+        else current += ch;
+      }
+      parts.push(current);
+      if (parts.length >= 7) {
+        totalViews += parseInt(parts[4]?.replace(/[^0-9]/g,'')) || 0;
+        totalYield += parseInt(parts[5]?.replace(/[^0-9]/g,'')) || 0;
+        totalNodes += parseInt(parts[3]?.replace(/[^0-9]/g,'')) || 0;
+      }
+    }
+
+    document.getElementById('pitchViews').textContent = fmtNum(totalViews);
+    document.getElementById('pitchYield').textContent = fmtUsd(totalYield);
+    document.getElementById('pitchNodes').textContent = fmtNum(totalNodes);
+    document.getElementById('calcYield').value = totalYield;
+    calculateAdvance();
+  } catch {}
+}
+
+loadCatalogData();
+</script>
+</body>
+</html>
