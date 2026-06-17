@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuclear AIMA · Propuesta Maestra · Ramón Orlando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PRINT PDF STYLES — Full Proposal
+   ============================================================ */
+@page {
+  size: A4;
+  margin: 2cm 2.2cm;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #C9A84C;
+  --gold2: #e8c98a;
+  --gold3: #8b6c3a;
+  --bg: #ffffff;
+  --bg2: #f8f7f4;
+  --bg3: #f0eee8;
+  --text: #1a1a1c;
+  --text2: #444246;
+  --muted: #888682;
+  --border: #dddcd8;
+  --danger: #c0392b;
+  --success: #27ae60;
+  --blue: #2980b9;
+  --purple: #8e44ad;
+  --cyan: #16a085;
+  --font: 'Inter', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --display: 'Playfair Display', serif;
+}
+html { font-size: 10pt; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.55;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Cover Page */
+.cover-page {
+  page-break-after: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  text-align: center;
+  padding: 4cm 2cm;
+}
+.cover-logo {
+  width: 72px; height: 72px; border-radius: 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold3));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 30px; font-weight: 800; color: #fff;
+}
+.cover-title {
+  font-size: 28pt; font-weight: 900;
+  letter-spacing: -0.04em; line-height: 1.05;
+  margin-bottom: 0.5rem;
+}
+.cover-sub {
+  font-family: var(--display); font-size: 12pt;
+  font-style: italic; color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.cover-line { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem auto; border-radius: 2px; }
+.cover-meta { font-size: 9pt; color: var(--muted); line-height: 1.8; }
+.confidential { font-size: 7pt; color: var(--danger); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2rem; }
+
+/* Section styling */
+h1 { font-size: 18pt; font-weight: 800; letter-spacing: -0.02em; color: var(--text); margin-top: 1.5rem; margin-bottom: 0.8rem; page-break-after: avoid; page-break-before: always; }
+h1:first-of-type { page-break-before: auto; }
+h2 { font-size: 14pt; font-weight: 700; letter-spacing: -0.01em; color: var(--gold3); margin-top: 1.2rem; margin-bottom: 0.5rem; page-break-after: avoid; }
+h3 { font-size: 11pt; font-weight: 600; color: var(--text); margin-top: 1rem; margin-bottom: 0.3rem; page-break-after: avoid; }
+h4 { font-size: 9pt; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem; }
+p { margin-bottom: 0.6rem; font-size: 9.5pt; color: var(--text2); }
+.gold { color: var(--gold3); }
+.muted { color: var(--muted); }
+.mono { font-family: var(--mono); }
+
+/* Table of Contents */
+.toc { page-break-after: always; padding: 2cm 0; }
+.toc-title { font-size: 18pt; font-weight: 800; margin-bottom: 1.5rem; }
+.toc-item { display: flex; padding: 0.4rem 0; border-bottom: 0.5px solid var(--border); font-size: 9.5pt; }
+.toc-num { width: 2.5rem; font-family: var(--mono); color: var(--gold3); font-weight: 600; }
+.toc-title-item { flex: 1; color: var(--text); }
+
+/* Content page */
+.content { padding: 0; }
+.section { margin-bottom: 1.2rem; }
+.section-break { page-break-inside: avoid; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin: 0.6rem 0 1rem; page-break-inside: avoid; }
+thead th {
+  text-align: left; padding: 0.4rem 0.5rem;
+  font-size: 7.5pt; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg3);
+}
+thead th.r, tbody td.r { text-align: right; }
+tbody td {
+  padding: 0.35rem 0.5rem;
+  border-bottom: 0.5px solid var(--border);
+  font-size: 8pt;
+}
+tbody tr:nth-child(even) { background: var(--bg2); }
+td.mono { font-family: var(--mono); }
+td.gold { color: var(--gold3); font-weight: 600; }
+td.danger { color: var(--danger); }
+td.success { color: var(--success); }
+
+/* Cards / highlights */
+.highlight-box {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 0.6rem 0;
+  page-break-inside: avoid;
+}
+.highlight-gold {
+  background: linear-gradient(135deg, #fdf8ee, #faf5e6);
+  border: 0.5px solid rgba(201,169,76,0.3);
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 0.6rem 0;
+  page-break-inside: avoid;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 0.6rem 0; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; margin: 0.6rem 0; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem; margin: 0.6rem 0; }
+
+.stat-box {
+  text-align: center;
+  padding: 0.6rem;
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+}
+.stat-num { font-family: var(--mono); font-size: 14pt; font-weight: 700; color: var(--gold3); }
+.stat-label { font-size: 7pt; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; margin-top: 0.2rem; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px; border-radius: 10px;
+  font-size: 7pt; font-weight: 600;
+}
+.badge-gold { background: rgba(201,169,76,0.15); color: var(--gold3); }
+.badge-blue { background: rgba(41,128,185,0.12); color: var(--blue); }
+.badge-success { background: rgba(39,174,96,0.12); color: var(--success); }
+.badge-danger { background: rgba(192,57,43,0.1); color: var(--danger); }
+
+/* Signature block */
+.signature-block {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.signature-row { display: flex; justify-content: space-between; margin-top: 2rem; gap: 2rem; }
+.signature-col { flex: 1; }
+.signature-line { border-top: 1px solid var(--text); width: 100%; margin-top: 3rem; padding-top: 0.3rem; font-size: 8pt; }
+
+/* Misc */
+.quote-text { font-family: var(--display); font-size: 11pt; font-style: italic; color: var(--gold3); line-height: 1.5; }
+.page-footer { font-size: 7pt; color: var(--muted); text-align: center; margin-top: 1rem; border-top: 0.5px solid var(--border); padding-top: 0.5rem; }
+@media print { .no-print { display: none; } }
+.print-btn {
+  display: block; margin: 1rem auto; padding: 0.6rem 2rem;
+  background: var(--gold3); color: #fff; border: none; border-radius: 6px;
+  font-size: 10pt; font-family: var(--font); cursor: pointer;
+}
+.print-btn:hover { background: #7a5e2a; }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+
+<!-- ═══ COVER ═══ -->
+<div class="cover-page">
+  <div class="cover-logo">NA</div>
+  <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(201,169,76,0.12);border:0.5px solid rgba(201,169,76,0.25);border-radius:20px;padding:4px 14px;font-size:8pt;font-weight:500;color:var(--gold3);margin-bottom:1.5rem;">
+    🔒 Documento Confidencial · Acceso Privado VIP
+  </div>
+  <h1 class="cover-title">Operación<br><span style="color:var(--gold3);">"50 Años de Infinito<br>para Ramón Orlando"</span></h1>
+<div style="font-size:10pt;color:var(--gold3);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">Estructura Perpetua y Crecimiento Infinito</div>
+  <div class="cover-sub">Arquitectura de Ecosistema, Marketing de Guerrilla<br>y Capitalización de Activos para el Maestro Ramón Orlando</div>
+  <div class="cover-line"></div>
+  <div class="cover-meta">
+    <strong>Presentado a:</strong> Ramón Orlando Valoy García<br>
+    <strong>Emitido por:</strong> Nuclear AIMA · Scaling Flow IA · Nuclear Music Networks<br>
+    <strong>CEO &amp; Arquitecto de Sistemas:</strong> Romny Regalado<br>
+    <strong>Versión:</strong> 2.0 — Junio 2026
+  </div>
+  <div class="confidential">CONFIDENCIAL — Prohibida la divulgación externa</div>
+</div>
+
+<!-- ═══ TOC ═══ -->
+<div class="toc">
+  <div class="toc-title">Índice General</div>
+  <div class="toc-item"><span class="toc-num">01</span><span class="toc-title-item">Manifiesto del Arquitecto</span></div>
+  <div class="toc-item"><span class="toc-num">02</span><span class="toc-title-item">Visión Operativa: El Estadio Automático</span></div>
+  <div class="toc-item"><span class="toc-num">03</span><span class="toc-title-item">Resumen Ejecutivo: Lo que Recibe el Maestro</span></div>
+  <div class="toc-item"><span class="toc-num">04</span><span class="toc-title-item">Los 12 Módulos de Infraestructura</span></div>
+  <div class="toc-item"><span class="toc-num">05</span><span class="toc-title-item">Estructura Financiera: Los 5 Colchones ($40,000)</span></div>
+  <div class="toc-item"><span class="toc-num">06</span><span class="toc-title-item">Desglose Semanal de ROI — Etapa 3A</span></div>
+  <div class="toc-item"><span class="toc-num">07</span><span class="toc-title-item">Desglose Semanal de ROI — Etapa 3B</span></div>
+  <div class="toc-item"><span class="toc-num">08</span><span class="toc-title-item">Master Plan: 8 Fases, 64 Tareas</span></div>
+  <div class="toc-item"><span class="toc-num">09</span><span class="toc-title-item">Marco Legal: ONAPI · ONDA · SAS</span></div>
+  <div class="toc-item"><span class="toc-num">10</span><span class="toc-title-item">Estrategia de Repago y Amortización Acelerada</span></div>
+  <div class="toc-item"><span class="toc-num">11</span><span class="toc-title-item">Tokenización y Ecosistema Web3</span></div>
+  <div class="toc-item"><span class="toc-num">12</span><span class="toc-title-item">Plan de Libertad y Legado</span></div>
+  <div class="toc-item"><span class="toc-num">13</span><span class="toc-title-item">Cronograma hacia el 23 de Septiembre</span></div>
+  <div class="toc-item"><span class="toc-num">14</span><span class="toc-title-item">Anexos Técnicos</span></div>
+</div>
+
+<!-- ═══ SECTION 1: MANIFIESTO ═══ -->
+<div class="content" style="page-break-before: auto;">
+<h1>1. Manifiesto del Arquitecto</h1>
+
+<div class="highlight-gold">
+<p class="quote-text">"La industria de la música tradicional comete un error histórico: trata a los grandes creadores como activos temporales. Se consume su talento, se llenan estadios, se musicalizan las vidas de millones de personas y, al final del día, la riqueza generada por esa obra se queda atrapada en las cuentas de intermediarios."</p>
+</div>
+
+<p>Usted ha entregado <strong>50 años de su vida</strong> a construir el patrimonio cultural de nuestra nación y de América Latina. Su piano, sus composiciones y sus arreglos son inmortales. Sin embargo, su paz financiera actual y el legado de su descendencia no pueden depender de que una disquera decida liquidar a tiempo o de que las plataformas paguen centavos por reproducciones dispersas.</p>
+
+<p><strong>Nuclear AIMA</strong> no es una agencia de marketing. Es una <strong>fábrica de ingeniería de activos digitales</strong>. Hemos construido un ecosistema de 12 módulos interconectados que funcionan 24/7.</p>
+
+<p>Esta propuesta no es un servicio. Es la <strong>migración tecnológica</strong> de su carrera del siglo XX al siglo XXI. Es el plan para que 50 años de genialidad musical se conviertan en un flujo de caja incancelable para usted y su familia, para siempre.</p>
+
+<!-- ═══ SECTION 2: VISIÓN ═══ -->
+<h1>2. Visión Operativa: El Estadio Automático</h1>
+
+<p>El concierto del <strong>23 de septiembre en el Estadio Olímpico</strong> no es un punto de llegada. Es el <strong>catalizador</strong> que dispara todo el sistema. La estrategia está diseñada para que el pico de atención del evento se traduzca en activos financieros permanentes.</p>
+
+<h2>El Principio de la Ingeniería de Colchones</h2>
+
+<p>Invertir $40,000 USD en un proyecto de esta magnitud no se hace de una vez. Se hace mediante <strong>colchones financieros</strong> que filtran el capital a través de capas operativas. Cada colchón activa una capa diferente del ecosistema. Si un colchón no está listo, el siguiente no se activa. Esto protege el capital y asegura que cada dólar tenga un propósito medible.</p>
+
+<div class="highlight-box" style="text-align:center;font-family:var(--mono);font-size:9pt;line-height:2;">
+INVERSIÓN TOTAL: $40,000 USD<br>
+├── <strong>Etapa 1:</strong> $4,000 (10%) — Activación e Infraestructura Base<br>
+├── <strong>Etapa 2:</strong> $10,000 (25%) — Streaming y Producción 24/7<br>
+├── <strong>Etapa 3A:</strong> $13,000 (32.5%) — Lanzamiento de Tráfico y Generación de Leads<br>
+└── <strong>Etapa 3B:</strong> $13,000 (32.5%) — Conversión, Tokenización y Escalado
+</div>
+
+<!-- ═══ SECTION 3: RESUMEN ═══ -->
+<h1>3. Resumen Ejecutivo</h1>
+
+<div class="grid-4">
+  <div class="stat-box"><div class="stat-num">190</div><div class="stat-label">Canciones Auditadas</div></div>
+  <div class="stat-box"><div class="stat-num" style="color:var(--danger);">15K+</div><div class="stat-label">Nodos sin Content ID</div></div>
+  <div class="stat-box"><div class="stat-num" style="color:var(--danger);">$66.8K</div><div class="stat-label">Fuga / mes</div></div>
+  <div class="stat-box"><div class="stat-num">$801K</div><div class="stat-label">Proyección Anual</div></div>
+</div>
+
+<h2>Lo que Recibe el Maestro</h2>
+
+<div class="grid-2">
+  <div>
+    <p>✅ Auditoría completa de 190 canciones en 150+ plataformas</p>
+    <p>✅ Recuperación retroactiva entidades de gestión ($40K-$80K)</p>
+    <p>✅ Streaming 24/7 con 4 cámaras PTZ profesionales</p>
+    <p>✅ Automatización de marketing: 125+ posts por tirada</p>
+    <p>✅ SEO y posicionamiento con indexación acelerada</p>
+    <p>✅ Dashboard en vivo con métricas en tiempo real</p>
+  </div>
+  <div>
+    <p>✅ Tokenización de 6 catálogos en blockchain (Base/Polygon)</p>
+    <p>✅ Boletería NFT con plataforma blockchain + Smart Links de afiliados</p>
+    <p>✅ Estructura legal completa (ONAPI + ONDA + SAS)</p>
+    <p>✅ Acceso a adelantos de $500K-$1M con distribuidoras globales</p>
+    <p>✅ Plan de Libertad y Legado generacional</p>
+    <p>✅ 6 personas de audiencia segmentadas con copys personalizados</p>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: 12 MÓDULOS ═══ -->
+<h1>4. Los 12 Módulos de Infraestructura</h1>
+
+<h2>4.1 Auditoría de Activos</h2>
+<p>Infraestructura de vigilancia digital que opera scripts de alta precisión en Python, barriendo más de <strong>150 plataformas globales</strong> para detectar nodos huérfanos (reproducciones generadas pero jamás cobradas).</p>
+<div class="highlight-box">
+<p><strong>Hallazgos Detectados:</strong></p>
+<p>• 300M+ reproducciones huérfanas identificadas</p>
+<p>• $730,905/mes en ingresos fugados en videos largos</p>
+<p>• $39,500/mes en fugas de YouTube Shorts</p>
+<p>• 15,000+ nodos (canales) sin monetizar</p>
+</div>
+
+<h2>4.2 Oráculo de Yield en Vivo</h2>
+<p>Panel de monitoreo en tiempo real que calcula segundo a segundo el rendimiento del catálogo.</p>
+<div class="grid-4">
+  <div class="stat-box"><div class="stat-num">20.8</div><div class="stat-label">views/segundo</div></div>
+  <div class="stat-box"><div class="stat-num">$89.87</div><div class="stat-label">/hora</div></div>
+  <div class="stat-box"><div class="stat-num">$2,157</div><div class="stat-label">/día</div></div>
+  <div class="stat-box"><div class="stat-num">$64.7K</div><div class="stat-label">/mes</div></div>
+</div>
+
+<h2>4.3 Live Search — Detección de Nodos Virales</h2>
+<p>Sistema que rastrea nodos de YouTube, calcula ingresos fugados y genera reportes ejecutivos para negociación con distribuidoras.</p>
+
+<table>
+<thead><tr><th>Nodo</th><th>Canción</th><th class="r">Vistas</th><th class="r">Fuga/mes</th></tr></thead>
+<tbody>
+<tr><td>Karen Records</td><td>Te Compro Tu Novia</td><td class="r mono">84.0M</td><td class="r mono gold">$291,656</td></tr>
+<tr><td>Los Cantantes — Topic</td><td>No Hay Pesos</td><td class="r mono">43.0M</td><td class="r mono gold">$149,300</td></tr>
+<tr><td>The New York Band</td><td>Nadie Como Tú</td><td class="r mono">22.0M</td><td class="r mono gold">$76,386</td></tr>
+<tr><td>Berna Marie</td><td>No Hay Nadie Más</td><td class="r mono">10.0M</td><td class="r mono gold">$34,721</td></tr>
+<tr><td>Toño Rosario</td><td>Que Sabe Nadie</td><td class="r mono">5.2M</td><td class="r mono gold">$18,054</td></tr>
+</tbody>
+</table>
+
+<h2>4.4 Short Tracker — Réplicas en YouTube Shorts</h2>
+<p>Detección de réplicas virales que usan el audio del catálogo. <strong>4,397 réplicas</strong> detectadas en 12 canciones, <strong>112,827,640 views</strong> acumuladas, <strong>$39,500/mes</strong> en fuga adicional en Shorts.</p>
+
+<h2>4.5 OSINT Command Center</h2>
+<p>Centro de inteligencia con Google Dorking, Keyword Planner con CPC, análisis de tráfico web, Google News y Discovery.</p>
+
+<h2>4.6 Streaming 24/7 Profesional</h2>
+<p>Infraestructura completa con <strong>4 cámaras PTZ</strong> (PTZOptics Move 4K), mezclador Blackmagic ATEM Mini Pro, audio profesional Focusrite Scarlett 2i2 y micrófonos Shure SM7B. Transmisión simultánea a YouTube, Twitch, Facebook, TikTok y más.</p>
+
+<h2>4.7 Cotizador de Tráfico Incentivado</h2>
+<p>Análisis de costes de tráfico incentivado con más de <strong>40 servicios</strong> categorizados: Seguidores, Me Gusta, Visualizaciones, Impresiones, Automatizaciones, Guardados y más. Precios calculados con márgenes competitivos para sostenibilidad del proyecto.</p>
+
+<h2>4.8 AdsPro — Estrategia de Campañas</h2>
+<p>Centro de inteligencia publicitaria con <strong>6 personas de audiencia</strong>, 32+ grupos de Facebook, 12 conceptos creativos y 22+ plantillas de copy. ROAS Global de <strong>3.0x</strong> en 6 plataformas activas.</p>
+
+<h2>4.9 Plan Semanal de Grupos Facebook</h2>
+<p>Calendario de contenido orgánico para <strong>16 grupos priorizados</strong> (280K+ miembros cada uno) con rotación de 4 semanas temáticas.</p>
+
+<h2>4.10 Indexación Automatizada SEO</h2>
+<p>Software que captura noticias frescas, modula el contenido con etiquetas SEO optimizadas y publica automáticamente en blogs de Blogger mediante APIs para indexación acelerada en Google (24-48 horas).</p>
+
+<h2>4.11 CRM Social Multicanal — Automatización de Conversión</h2>
+<p>Sistema de automatización de DMs, comentarios inteligentes, flujos de captura y cierre de ventas para Instagram.</p>
+
+<h2>4.12 Dashboard Unificado de Campañas</h2>
+<p>Panel de control con métricas agregadas de 6 plataformas: Google Ads (ROAS 4.1x), Meta Ads (2.3x), YouTube Ads (2.8x), TikTok Ads (3.4x), LinkedIn Ads (1.8x), X/Twitter Ads (2.1x).</p>
+
+<!-- ═══ SECTION 5: ESTRUCTURA FINANCIERA ═══ -->
+<h1>5. Estructura Financiera: Los 5 Colchones ($40,000 USD)</h1>
+
+<h2>5.1 Etapa 1: Activación e Infraestructura Base — $4,000</h2>
+<p><strong>Duración:</strong> Semanas 1-2 · <strong>Objetivo:</strong> Establecer la base legal, técnica y de auditoría.</p>
+<table>
+<thead><tr><th>Componente</th><th class="r">Inversión</th></tr></thead>
+<tbody>
+<tr><td>Constitución Legal (ONAPI + SAS + ONDA)</td><td class="r mono">$1,050</td></tr>
+<tr><td>Contrato Matriz de Administración</td><td class="r mono">$300</td></tr>
+<tr><td>Auditoría Inicial (12 canciones top)</td><td class="r mono">$500</td></tr>
+<tr><td>Configuración de Infraestructura Técnica</td><td class="r mono">$1,000</td></tr>
+<tr><td>Instalación de Software Propietario</td><td class="r mono">$500</td></tr>
+<tr><td>Horas de Ingeniería y Arquitectura</td><td class="r mono">$650</td></tr>
+<tr><td><strong>Total Etapa 1</strong></td><td class="r mono gold"><strong>$4,000</strong></td></tr>
+</tbody>
+</table>
+
+<h2>5.2 Etapa 2: Streaming y Producción 24/7 — $10,000</h2>
+<p><strong>Duración:</strong> Semanas 2-4 · <strong>Objetivo:</strong> Implementar el sistema de transmisión profesional en vivo.</p>
+<table>
+<thead><tr><th>Componente</th><th class="r">Inversión</th></tr></thead>
+<tbody>
+<tr><td>Cámaras PTZ (4 unidades)</td><td class="r mono">$4,000</td></tr>
+<tr><td>Mezclador de Video ATEM Mini Pro</td><td class="r mono">$800</td></tr>
+<tr><td>Interfaz de Audio + Micrófonos Profesionales</td><td class="r mono">$1,000</td></tr>
+<tr><td>Switch PoE+, Cableado y Accesorios</td><td class="r mono">$300</td></tr>
+<tr><td>Servidor VPS para Streaming 24/7 (6 meses)</td><td class="r mono">$800</td></tr>
+<tr><td>Configuración, Licencias e Instalación</td><td class="r mono">$2,100</td></tr>
+<tr><td>Horas de Ingeniería de Producción</td><td class="r mono">$1,000</td></tr>
+<tr><td><strong>Total Etapa 2</strong></td><td class="r mono gold"><strong>$10,000</strong></td></tr>
+</tbody>
+</table>
+
+<h2>5.3 Etapa 3A: Tráfico y Generación de Leads — $13,000</h2>
+<p><strong>Duración:</strong> Semanas 5-8 (4 semanas) · <strong>Objetivo:</strong> Inyectar tráfico masivo y generar leads calificados.</p>
+<table>
+<thead><tr><th>Componente</th><th class="r">Inversión</th><th class="r">%</th></tr></thead>
+<tbody>
+<tr><td>Infraestructura de Tráfico Web</td><td class="r mono">$3,500</td><td class="r mono">27%</td></tr>
+<tr><td>Campañas de Tráfico Masivo POP/Push</td><td class="r mono">$2,500</td><td class="r mono">19%</td></tr>
+<tr><td>Automatización de Redes Sociales</td><td class="r mono">$2,000</td><td class="r mono">15%</td></tr>
+<tr><td>Landing Pages y Embudos de Captura</td><td class="r mono">$1,500</td><td class="r mono">12%</td></tr>
+<tr><td>Generación de Contenido Masivo</td><td class="r mono">$1,500</td><td class="r mono">12%</td></tr>
+<tr><td>Keyword Research y SEO Inicial</td><td class="r mono">$1,000</td><td class="r mono">8%</td></tr>
+<tr><td>Monitoreo y Optimización</td><td class="r mono">$1,000</td><td class="r mono">8%</td></tr>
+<tr><td><strong>Total Etapa 3A</strong></td><td class="r mono gold"><strong>$13,000</strong></td><td class="r mono gold"><strong>100%</strong></td></tr>
+</tbody>
+</table>
+
+<h2>5.4 Etapa 3B: Conversión, Tokenización y Escalado — $13,000</h2>
+<p><strong>Duración:</strong> Semanas 9-12 (4 semanas) · <strong>Objetivo:</strong> Convertir leads en compradores, activar Web3, escalar campañas.</p>
+<table>
+<thead><tr><th>Componente</th><th class="r">Inversión</th><th class="r">%</th></tr></thead>
+<tbody>
+<tr><td>Campañas de Retargeting Cross-platform</td><td class="r mono">$3,500</td><td class="r mono">27%</td></tr>
+<tr><td>Activación de Smart Links y Afiliados</td><td class="r mono">$2,500</td><td class="r mono">19%</td></tr>
+<tr><td>Infraestructura Web3 y Tokenización</td><td class="r mono">$2,000</td><td class="r mono">15%</td></tr>
+<tr><td>Preventa de Boletos NFT</td><td class="r mono">$2,000</td><td class="r mono">15%</td></tr>
+<tr><td>Escalado de Campañas Ganadoras</td><td class="r mono">$1,500</td><td class="r mono">12%</td></tr>
+<tr><td>Streaming Privado y Acceso Virtual (PPV)</td><td class="r mono">$1,000</td><td class="r mono">8%</td></tr>
+<tr><td>Reportes y Optimización Final</td><td class="r mono">$500</td><td class="r mono">4%</td></tr>
+<tr><td><strong>Total Etapa 3B</strong></td><td class="r mono gold"><strong>$13,000</strong></td><td class="r mono gold"><strong>100%</strong></td></tr>
+</tbody>
+</table>
+
+<!-- ═══ SECTION 6: ROI 3A ═══ -->
+<h1>6. Desglose Semanal de ROI — Etapa 3A</h1>
+
+<table>
+<thead><tr><th>Semana</th><th>Inversión</th><th>Acciones Clave</th><th class="r">Leads Esperados</th><th class="r">CPL</th></tr></thead>
+<tbody>
+<tr><td class="mono gold">5</td><td class="r mono">$3,250</td><td>Setup tráfico base · Meta Ads · CRM multicanal · 125+ posts</td><td class="r mono">400-600</td><td class="r mono">$5.41-$8.13</td></tr>
+<tr><td class="mono gold">6</td><td class="r mono">$3,250</td><td>Escalado Pop/Push · TikTok Ads · Google Ads · A/B Testing</td><td class="r mono">600-900</td><td class="r mono">$3.61-$5.42</td></tr>
+<tr><td class="mono gold">7</td><td class="r mono">$3,250</td><td>Remarketing · YouTube Pre-roll · PopAds GEO · UGC Viral</td><td class="r mono">800-1,200</td><td class="r mono">$2.71-$4.06</td></tr>
+<tr><td class="mono gold">8</td><td class="r mono">$3,250</td><td>Consolidación · Push · Optimización pre-conversión</td><td class="r mono">700-800</td><td class="r mono">$4.06-$4.64</td></tr>
+</tbody>
+</table>
+
+<div class="highlight-gold">
+<p><strong>ROI Acumulado Etapa 3A:</strong> 2,500 - 3,500 leads totales · 1.5M - 2.5M impresiones · CPL promedio $3.71-$5.20 · Alcance orgánico 500K - 1M</p>
+</div>
+
+<!-- ═══ SECTION 7: ROI 3B ═══ -->
+<h1>7. Desglose Semanal de ROI — Etapa 3B</h1>
+
+<table>
+<thead><tr><th>Semana</th><th>Inversión</th><th class="r">Conversiones</th><th class="r">Boletos NFT</th><th class="r">Ingreso Est.</th></tr></thead>
+<tbody>
+<tr><td class="mono gold">9</td><td class="r mono">$3,250</td><td class="r mono">100-150</td><td class="r mono">50-100</td><td class="r mono gold">$15K-$40K</td></tr>
+<tr><td class="mono gold">10</td><td class="r mono">$3,250</td><td class="r mono">150-250</td><td class="r mono">100-200</td><td class="r mono gold">$25K-$60K</td></tr>
+<tr><td class="mono gold">11</td><td class="r mono">$3,250</td><td class="r mono">400-600</td><td class="r mono">300-500</td><td class="r mono gold">$50K-$120K</td></tr>
+<tr><td class="mono gold">12</td><td class="r mono">$3,250</td><td class="r mono">350-600</td><td class="r mono">50-100</td><td class="r mono gold">$35K-$130K</td></tr>
+</tbody>
+</table>
+
+<div class="highlight-gold">
+<p><strong>ROI Total Etapa 3B:</strong> 1,000-1,600 conversiones · 500-800 boletos preventa NFT · 200-400 accesos virtuales PPV</p>
+<p><strong>Ingreso Estimado Total:</strong> $125,000 - $350,000 USD · <strong>ROAS:</strong> 9.6x - 26.9x sobre $13K invertido</p>
+<p><strong>ROI General del Proyecto ($40K):</strong> 3.1x - 8.75x</p>
+</div>
+
+<!-- ═══ SECTION 8: MASTER PLAN ═══ -->
+<h1>8. Master Plan: 8 Fases, 64 Tareas</h1>
+
+<div class="grid-2">
+<div>
+<h2>Fase 1: Fundación Legal ($800-$1,200)</h2>
+<p>Registro ONAPI (Clase 41+35) · Estatutos SAS · Registro Mercantil · RNC · Certificado ONDA · Contrato de Administración · Cuenta bancaria · Lista oficial de 190 canciones</p>
+
+<h2>Fase 2: Auditoría Técnica</h2>
+<p>Auditar 12 canciones principales · Generar reporte ejecutivo · Expandir a 190 canciones · Calcular yield · Identificar nodos sin Content ID · Preparar matriz de nodos · Exportar PDF</p>
+
+<h2>Fase 3: Gestión con el Artista</h2>
+<p>Reunión con Ramón Orlando · Explicar registro ONDA · Firmar carta de autorización · Obtener documentos</p>
+
+<h2>Fase 4: Sociedades de Gestión</h2>
+<p>Registro entidades de gestión · Reclamar regalías retroactivas · Sociedades autores · Content ID · ISRCs · División en 6 colecciones</p>
+</div>
+<div>
+<h2>Fase 5: Pitch a Multinacionales</h2>
+<p>4 Mensajes estratégicos: Sondeo → Datos → Propuesta formal con adelanto → Cierre con deadline del 23S. Objetivo: $500K-$1M USD.</p>
+
+<h2>Fase 6: Web3 y Tokenización ($2K-$5K)</h2>
+<p>LLC Wyoming · Smart contracts Base/Polygon · Tokens RO-01 a RO-06 · Frontend · Preventa VIP · Afiliados con smartlinks · Plataforma blockchain</p>
+
+<h2>Fase 7: Evento 50 Aniversario</h2>
+<p>Campaña marketing orgánico · Venta experiencias premium · Smartlinks 40+ artistas · Acceso virtual diáspora $25 · Content ID en picos</p>
+
+<h2>Fase 8: Ejecución y Escalabilidad</h2>
+<p>Firmar contrato distribuidora · Recibir capital adelanto · Documentar MVP · Replicar modelo a nuevos catálogos</p>
+</div>
+</div>
+
+<!-- ═══ SECTION 9: MARCO LEGAL ═══ -->
+<h1>9. Marco Legal: Fundación del Sello</h1>
+
+<h2>Los 4 Pasos Estratégicos</h2>
+
+<p>Se establece la estructura legal corporativa y de gestión que blinda el patrimonio del Maestro y permite operar con distribuidoras multinacionales y plataformas globales.</p>
+
+<div class="grid-2">
+<div class="highlight-box" style="border-left:3px solid #C9A84C;">
+<p><strong>🛡️ Protección Patrimonial</strong></p>
+<p>Separación legal entre los activos personales del Maestro y los activos comerciales del sello.</p>
+</div>
+<div class="highlight-box" style="border-left:3px solid #2980b9;">
+<p><strong>🏛️ Presencia Institucional</strong></p>
+<p>Figura legal para registrar catálogos, reclamar regalías y suscribir contratos con distribuidoras globales.</p>
+</div>
+<div class="highlight-box" style="border-left:3px solid #27ae60;">
+<p><strong>🎯 Prioridad ante Plataformas</strong></p>
+<p>Gestión de reclamos de Content ID, cobro de regalías y administración del catálogo con respaldo legal.</p>
+</div>
+<div class="highlight-box" style="border-left:3px solid #8e44ad;">
+<p><strong>🔗 Preparación para Web3</strong></p>
+<p>Estructura corporativa necesaria para tokenización del catálogo y emisión de activos digitales.</p>
+</div>
+</div>
+
+<p style="font-size:8pt;color:var(--muted);font-style:italic;margin-top:1rem;">* Los detalles específicos del proceso — incluyendo costos, tiempos, documentos requeridos y cronograma de cada paso — se entregan en la sesión de trabajo posterior a la activación del proyecto.</p>
+
+<!-- ═══ SECTION 10: REPAGO ═══ -->
+<h1>10. Estrategia de Repago y Amortización Acelerada</h1>
+
+<p>No dependemos únicamente de las regalías de streaming para saldar el adelanto. Fragmentamos la deuda y la atacamos simultáneamente desde <strong>3 fuentes de capital independientes</strong>.</p>
+
+<div class="grid-3">
+<div class="highlight-gold">
+<p><strong>💰 Fuente 1: Recobro Pasivo</strong></p>
+<p>300M+ vistas huérfanas · Sistema de auditoría · 30% retención</p>
+</div>
+<div class="highlight-gold">
+<p><strong>🏟️ Fuente 2: Impacto en Vivo</strong></p>
+<p>Taquilla Estadio Olímpico · Preventa Fiat/NFT · 15% retención</p>
+</div>
+<div class="highlight-gold">
+<p><strong>🌐 Fuente 3: Convergencia Web3</strong></p>
+<p>Solana Blinks · NFTs · 100% flujo libre</p>
+</div>
+</div>
+
+<table>
+<thead><tr><th>Modelo</th><th class="r">Tiempo de Repago</th></tr></thead>
+<tbody>
+<tr><td>Streaming tradicional (solo regalías)</td><td class="r mono">48 meses</td></tr>
+<tr><td>Sistema de Auditoría (Catálogo + Taquilla)</td><td class="r mono gold">14 meses</td></tr>
+<tr><td><strong>Sistema Total (Web3 cruzado)</strong></td><td class="r mono" style="color:var(--success);font-weight:700;">9 meses</td></tr>
+</tbody>
+</table>
+
+<p><strong>FLUJO:</strong> Mes 1-3 (Setup e Inyección) → Mes 4-6 (Tracción Olímpica / amortización del 50%+) → Mes 7-9 (Cierre y Soberanía / 100% pagado)</p>
+
+<!-- ═══ SECTION 11: TOKENIZACIÓN ═══ -->
+<h1>11. Tokenización y Ecosistema Web3</h1>
+
+<h2>Los 6 Catálogos Tokenizados (190 Canciones)</h2>
+<table>
+<thead><tr><th>Catálogo</th><th>Época</th><th>Yield/mes</th></tr></thead>
+<tbody>
+<tr><td class="gold">RO-01 — Clásicos del Merengue</td><td>1975-1990</td><td class="r mono gold">$15,000+</td></tr>
+<tr><td class="gold">RO-02 — Década de Oro</td><td>1990-2000</td><td class="r mono gold">$18,000+</td></tr>
+<tr><td>RO-03 — Baladas y Sentimiento</td><td>2001</td><td class="r mono gold">$1,688</td></tr>
+<tr><td>RO-04 — Colaboraciones y Duetos</td><td>2005-2007</td><td class="r mono gold">$1,616</td></tr>
+<tr><td>RO-05 — Espiritual y Motivacional</td><td>2014</td><td class="r mono gold">$924</td></tr>
+<tr><td class="gold">RO-06 — 50 Aniversario Remasterizado</td><td>2021-2026</td><td class="r mono gold">$3,536</td></tr>
+</tbody>
+</table>
+
+<h2>Arquitectura del Smart Contract (Base/Polygon)</h2>
+<div class="highlight-box" style="font-family:var(--mono);font-size:8pt;line-height:1.8;">
+[SRL Dominicana] → [LLC Wyoming] → [Smart Contract — Base Network]<br>
+├── Token RO-01 (Clásicos del Merengue)<br>
+├── Token RO-02 (Década de Oro)<br>
+├── Token RO-03 (Baladas y Sentimiento)<br>
+├── Token RO-04 (Colaboraciones)<br>
+├── Token RO-05 (Espiritual)<br>
+└── Token RO-06 (50 Aniversario)
+</div>
+
+<h2>Boletería NFT con Plataforma Blockchain</h2>
+<div class="grid-3">
+<div class="stat-box"><div class="stat-label">Paquete Individual</div><div class="stat-num" style="font-size:12pt;">$499</div><div class="stat-label">Boleto + kit premium + NFT</div></div>
+<div class="stat-box"><div class="stat-label">Paquete Familiar</div><div class="stat-num" style="font-size:12pt;">$998</div><div class="stat-label">Paga 2, lleva 3</div></div>
+<div class="stat-box"><div class="stat-label">Ganancia Neta</div><div class="stat-num" style="font-size:12pt;color:var(--success);">$23,650</div><div class="stat-label">50 grupos de hospitalidad</div></div>
+</div>
+
+<!-- ═══ SECTION 12: LIBERTAD ═══ -->
+<h1>12. Plan de Libertad y Legado</h1>
+
+<div class="grid-3">
+<div class="highlight-gold">
+<p><strong>🛡️ Paz Financiera Inmediata</strong></p>
+<p>— Adelanto de $500K-$1M con distribuidoras multinacionales<br>— Blindaje económico personal<br>— Financiamiento del evento sin tocar ahorros</p>
+</div>
+<div class="highlight-gold">
+<p><strong>👁️ Control del Patrimonio</strong></p>
+<p>— Toma de control de 300M+ reproducciones huérfanas<br>— Blindaje ONDA/ONAPI/SAS de metadatos<br>— Recobro retroactivo entidades de gestión</p>
+</div>
+<div class="highlight-gold">
+<p><strong>🌌 Eternidad Digital</strong></p>
+<p>— Tokenización del catálogo en Base/Polygon<br>— Smart contracts para regalías automáticas<br>— Streaming privado para la diáspora mundial</p>
+</div>
+</div>
+
+<div class="highlight-gold" style="text-align:center;">
+<p class="quote-text">"Hemos diseñado la fortaleza; usted solo tiene que dar el paso para habitarla. Hagamos historia, blindemos el futuro y aseguremos la eternidad de su música."</p>
+<p style="margin-top:0.3rem;">— Romny Regalado · CEO & Arquitecto de Sistemas · Nuclear AIMA</p>
+</div>
+
+<!-- ═══ SECTION 13: CRONOGRAMA ═══ -->
+<h1>13. Cronograma hacia el 23 de Septiembre</h1>
+
+<div class="highlight-box">
+<p><strong>Semana 1-2 · Junio:</strong> Registro ONDA · SAS · Carta autorización · Auditoría inicial · Mensaje 1 multinacionales</p>
+<p><strong>Semana 3-4 · Junio:</strong> Certificado ONDA · RNC · Auditoría completa · Streaming 24/7 · Campañas iniciales · Mensaje 2</p>
+<p><strong>Semana 5-8 · Julio:</strong> <span class="gold">ETAPA 3A</span> · Tráfico masivo $13K · Mensaje 3 · Grupos Facebook · Indexación SEO · 2,500+ leads</p>
+<p><strong>Semana 9-12 · Agosto:</strong> <span class="gold">ETAPA 3B</span> · Retargeting · Smart Links · Preventa NFT · Mensaje 4 · Adelanto en curso</p>
+<p><strong>Semana 13-16 · Ago-Sep:</strong> LLC Wyoming · Adelanto confirmado · Escalado masivo · Urgencia pre-evento</p>
+<p><strong style="color:var(--success);">23 SEPTIEMBRE:</strong> 🏟️ <strong>ESTADIO OLÍMPICO</strong> — Transmisión 24/7 · Tokens concierto · PPV Diáspora · Content ID activo</p>
+<p><strong>Octubre+:</strong> Liquidación adelanto · Escalamiento · MVP · Replicación del sistema</p>
+</div>
+
+<!-- ═══ SECTION 14: ANEXOS ═══ -->
+<h1>14. Anexos Técnicos</h1>
+
+<h2>A. Matriz de Costos de Tráfico Incentivado</h2>
+<table>
+<thead><tr><th>Tipo de Insumo</th><th>ID + Eco</th><th class="r">Costo /1K</th><th>ID Premium</th><th class="r">Costo /1K</th></tr></thead>
+<tbody>
+<tr><td>Visualizaciones</td><td>#8390 Video Económico</td><td class="r mono">$0.00</td><td>#6900 Auto 10M</td><td class="r mono">$0.33</td></tr>
+<tr><td>Impresiones</td><td>#8395 Impresiones Post</td><td class="r mono">$0.04</td><td>#8397 + Compartidos</td><td class="r mono">$0.55</td></tr>
+<tr><td>Seguidores</td><td>#8573 Calidad Global</td><td class="r mono">$0.38</td><td>#8497 Premium EE.UU.</td><td class="r mono">$16.00</td></tr>
+<tr><td>Interacción Élite</td><td>#8721 Likes + Comentarios</td><td class="r mono">$55.11</td><td>#8181 Compartidos >10K</td><td class="r mono">$750.00</td></tr>
+</tbody>
+</table>
+
+<h2>B. Plataformas de Distribución y Adelantos</h2>
+<table>
+<thead><tr><th>Plataforma</th><th>Tipo</th><th class="r">Adelanto</th><th>Requisito</th></tr></thead>
+<tbody>
+<tr><td>Distribuidoras AAA</td><td>Distribución + adelanto</td><td class="r mono gold">$500K-$1M+</td><td>Registro ONDA + ISRCs + auditoría</td></tr>
+<tr><td>Distribuidoras medianas</td><td>Distribución + adelanto</td><td class="r mono gold">$50K-$500K</td><td>Catálogo auditado + historial</td></tr>
+<tr><td>Entidades de gestión colectiva</td><td>Cobro retroactivo</td><td class="r mono gold">$40K-$80K</td><td>Registro Rights Owner</td></tr>
+<tr><td>Distribución DIY</td><td>Sin adelanto</td><td class="r mono">$0</td><td>Metadatos limpios</td></tr>
+<tr><td>Financiamiento datos</td><td>Según catálogo</td><td class="r mono">$1K-$10M+</td><td>Datos de auditoría + proyecciones</td></tr>
+</tbody>
+</table>
+
+<h2>C. Conversiones de Moneda (Junio 2026)</h2>
+<table>
+<thead><tr><th>Concepto</th><th class="r">USD</th><th class="r">RD$</th></tr></thead>
+<tbody>
+<tr><td>Inversión Total Proyecto</td><td class="r mono gold">$40,000</td><td class="r mono">RD$2,360,000</td></tr>
+<tr><td>Adelanto Estimado</td><td class="r mono gold">$500K-$1M</td><td class="r mono">RD$29.5M-RD$59M</td></tr>
+<tr><td>Yield Mensual Fugado</td><td class="r mono" style="color:var(--danger);">$66,800</td><td class="r mono">RD$3,941,200</td></tr>
+<tr><td>Costo Fase Legal</td><td class="r mono gold">$710-$1,050</td><td class="r mono">RD$41,800-RD$61,800</td></tr>
+</tbody>
+</table>
+
+<!-- ═══ SIGNATURES ═══ -->
+<div class="signature-block">
+<p style="text-align:center;font-size:8pt;color:var(--muted);">En la ciudad de Santo Domingo, República Dominicana, a los ______ días del mes de ________________ del año dos mil veintiséis (2026).</p>
+
+<div class="signature-row">
+<div class="signature-col">
+<p><strong>Por Ramón Orlando Music Records SAS:</strong></p>
+<div class="signature-line">Ramón Orlando Valoy García — Representante Legal</div>
+</div>
+<div class="signature-col">
+<p><strong>Por Nuclear AIMA / Scaling Flow IA:</strong></p>
+<div class="signature-line">Romny Regalado — CEO & Arquitecto de Sistemas</div>
+</div>
+</div>
+
+<p style="margin-top:2rem;text-align:center;font-size:7pt;color:var(--muted);">
+Documento CONFIDENCIAL — Prohibida su reproducción o divulgación sin autorización expresa de Nuclear AIMA.<br>
+© 2026 Nuclear AIMA · Scaling Flow IA · Nuclear Music Networks · Todos los derechos reservados · Versión 2.0 — Junio 2026
+</p>
+</div>
+
+</div>
+
+<script>
+  // Auto-open print dialog when loaded
+  if (window.location.search.includes('?print')) {
+    setTimeout(() => window.print(), 500);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 AdsPro · Estrategia de Campañas · Ramón Orlando · Nuclear AIMA</title>
+<meta name="description" content="Centro de inteligencia publicitaria para Ramón Orlando. Basado en análisis de 178 canciones, 17 álbumes y 15K+ nodos de audiencia. Personas, grupos, creativos y copys para campañas pagas.">
+<meta name="keywords" content="adspro, estrategia publicitaria, Ramón Orlando, targeting audiencias, Facebook groups, creativos, copys, campañas pagas, merengue, Nuclear AIMA">
+<meta name="author" content="Nuclear AIMA">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="AdsPro · Estrategia de Campañas · Ramón Orlando">
+<meta property="og:description" content="Inteligencia publicitaria basada en datos reales del catálogo: 6 personas de audiencia, 30+ grupos de Facebook, 12 conceptos creativos y 20+ plantillas de copy.">
+<meta property="og:site_name" content="Nuclear AIMA">
+<meta property="og:locale" content="es_DO">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23a78bfa' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='56' font-weight='700' fill='%23f0ede8'%3EAdsPro%3C/text%3E%3Ctext x='600' y='300' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='28' fill='%23a78bfa'%3EEstrategia de Campa%C3%B1as%3C/text%3E%3Ctext x='600' y='380' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EPersonas %C2%B7 Grupos %C2%B7 Creativos %C2%B7 Copys%3C/text%3E%3Ctext x='600' y='440' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3EBasado en 178 canciones %C2%B7 17 %C3%81lbumes %C2%B7 6 %C3%89pocas%3C/text%3E%3Ctext x='600' y='510' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:url" content="https://nuclearaima.com/adspro-estrategia.html">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AdsPro · Estrategia de Campañas · Ramón Orlando">
+<meta name="twitter:description" content="Inteligencia publicitaria para campañas pagas: audiencias, grupos, creativos y copys basados en datos reales del catálogo.">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23a78bfa' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='56' font-weight='700' fill='%23f0ede8'%3EAdsPro%3C/text%3E%3Ctext x='600' y='300' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='28' fill='%23a78bfa'%3EEstrategia de Campa%C3%B1as%3C/text%3E%3Ctext x='600' y='380' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EPersonas %C2%B7 Grupos %C2%B7 Creativos %C2%B7 Copys%3C/text%3E%3Ctext x='600' y='440' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3EBasado en 178 canciones %C2%B7 17 %C3%81lbumes %C2%B7 6 %C3%89pocas%3C/text%3E%3Ctext x='600' y='510' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0c; --bg2:#111114; --bg3:#18181c; --bg4:#202024;
+    --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.12);
+    --text:#f0ede8; --muted:#6b6966;
+    --accent:#c9a96e; --accent2:#e8c98a;
+    --danger:#e05c5c; --success:#4cad7c;
+    --cyan:#4ad0e0; --gold:#f59e0b; --purple:#a78bfa; --pink:#f472b6;
+    --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Fira Code',monospace;
+    --r:10px; --r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 0% 0%,rgba(167,139,250,0.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 100% 100%,rgba(201,169,110,0.03) 0%,transparent 50%);
+  }
+  .mc{max-width:1200px;margin:0 auto;padding:20px}
+
+  /* ── Header ── */
+  .ap-header{text-align:center;padding:28px 0 16px;border-bottom:0.5px solid var(--border);margin-bottom:16px}
+  .ap-badges{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+  .ap-badge{display:inline-flex;align-items:center;gap:4px;font-size:7px;font-weight:600;letter-spacing:0.07em;padding:3px 9px;border-radius:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);text-transform:uppercase}
+  .ap-badge.purple{background:linear-gradient(135deg,rgba(167,139,250,0.15),rgba(167,139,250,0.05));border-color:rgba(167,139,250,0.3);color:var(--purple)}
+  .ap-badge.gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border-color:rgba(245,158,11,0.3);color:var(--gold)}
+  .ap-badge.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04));border-color:rgba(74,208,224,0.25);color:var(--cyan)}
+  .ap-badge.green{background:linear-gradient(135deg,rgba(76,173,124,0.1),rgba(76,173,124,0.03));border-color:rgba(76,173,124,0.2);color:var(--success)}
+  .ap-title{font-size:24px;font-weight:700;letter-spacing:-0.4px;margin-bottom:3px}
+  .ap-title .hl{color:var(--purple)}
+  .ap-title .hl2{color:var(--accent)}
+  .ap-sub{font-size:10px;color:var(--muted);max-width:680px;margin:0 auto;line-height:1.6}
+  .ap-version{font-size:8px;color:var(--muted);font-family:var(--mono);margin-top:5px}
+
+  /* ── Stats Row ── */
+  .ap-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+  @media(max-width:800px){.ap-stats{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:500px){.ap-stats{grid-template-columns:1fr 1fr}}
+  .ap-stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px 10px;text-align:center;transition:all 0.2s}
+  .ap-stat:hover{border-color:rgba(167,139,250,0.3);transform:translateY(-1px)}
+  .ap-stat .ap-sn{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+  .ap-stat .ap-sv{font-size:16px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .ap-stat .ap-sv.purple{color:var(--purple)}.ap-stat .ap-sv.gold{color:var(--gold)}
+  .ap-stat .ap-sv.success{color:var(--success)}.ap-stat .ap-sv.cyan{color:var(--cyan)}
+  .ap-stat .ap-sv.accent{color:var(--accent)}.ap-stat .ap-sv.danger{color:var(--danger)}
+  .ap-stat .ap-ss{font-size:7px;color:var(--muted);margin-top:1px}
+
+  /* ── Section Title ── */
+  .ap-st{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:20px 0 8px;padding-bottom:5px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+  .ap-st .hl{color:var(--purple)}
+  .ap-st .hl2{color:var(--accent)}
+
+  /* ── Actions ── */
+  .ap-actions{display:flex;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+  .ap-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r2);border:none;cursor:pointer;font-size:11px;font-weight:600;font-family:var(--font);transition:all 0.2s;text-decoration:none}
+  .ap-btn-primary{background:linear-gradient(135deg,rgba(167,139,250,0.2),rgba(167,139,250,0.08));color:var(--purple);border:0.5px solid rgba(167,139,250,0.4)}
+  .ap-btn-primary:hover{background:rgba(167,139,250,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(167,139,250,0.12)}
+  .ap-btn-back{background:var(--bg2);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .ap-btn-back:hover{background:var(--bg3);transform:translateY(-1px)}
+  .ap-btn-gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));color:var(--gold);border:0.5px solid rgba(245,158,11,0.35)}
+  .ap-btn-gold:hover{background:rgba(245,158,11,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.12)}
+
+  /* ── Persona Cards ── */
+  .ap-personas{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px;margin:0 0 14px}
+  .ap-pcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all 0.2s}
+  .ap-pcard:hover{border-color:rgba(167,139,250,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+  .ap-pcard-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)}
+  .ap-pcard-icon{font-size:24px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg4);border:0.5px solid var(--border);flex-shrink:0}
+  .ap-pcard-info{flex:1}
+  .ap-pcard-info h3{font-size:12px;font-weight:600}
+  .ap-pcard-info .ap-pcard-sub{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .ap-pcard-body{padding:10px 14px}
+  .ap-pcard .ap-pdemo{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px;padding-bottom:8px;border-bottom:0.5px solid var(--border)}
+  .ap-pcard .ap-pdemo span{font-size:8px;color:var(--muted)}
+  .ap-pcard .ap-pdemo strong{font-size:9px;font-family:var(--mono);color:var(--text)}
+  .ap-pcard .ap-ppl{font-size:9px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+  .ap-pcard .ap-ptop{font-size:8px}
+  .ap-pcard .ap-ptop strong{color:var(--accent)}
+  .ap-pcard .ap-ptop .song{color:var(--cyan)}
+  .ap-pcard .ap-ptag{display:inline-flex;font-size:6px;padding:2px 6px;border-radius:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin:1px 2px}
+  .ap-ptag.cyan{background:rgba(74,208,224,0.12);color:var(--cyan)}
+  .ap-ptag.gold{background:rgba(245,158,11,0.12);color:var(--gold)}
+  .ap-ptag.purple{background:rgba(167,139,250,0.12);color:var(--purple)}
+  .ap-ptag.green{background:rgba(76,173,124,0.12);color:var(--success)}
+  .ap-ptag.pink{background:rgba(244,114,182,0.12);color:var(--pink)}
+  .ap-ptag.accent{background:rgba(201,169,110,0.12);color:var(--accent)}
+
+  /* ── Group Cards ── */
+  .ap-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin:0 0 14px}
+  .ap-gcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px 12px;transition:all 0.15s}
+  .ap-gcard:hover{border-color:rgba(167,139,250,0.2);background:var(--bg3);transform:translateY(-1px)}
+  .ap-gcard .gg-head{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+  .ap-gcard .gg-icon{font-size:12px}
+  .ap-gcard .gg-name{font-size:10px;font-weight:500}
+  .ap-gcard .gg-meta{font-size:7px;color:var(--muted);font-family:var(--mono);margin-left:auto}
+  .ap-gcard .gg-desc{font-size:8px;color:var(--muted);line-height:1.5}
+  .ap-gcard .gg-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+  .ap-gcard .gg-tag{font-size:6px;padding:1px 5px;border-radius:3px;background:var(--bg4);color:var(--muted);border:0.5px solid var(--border)}
+
+
+  /* ── Asset Cards ── */
+  .ap-assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin:8px 0 14px}
+  .ap-acard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all 0.15s}
+  .ap-acard:hover{border-color:rgba(167,139,250,0.2);transform:translateY(-1px)}
+  .ap-acard .ac-head{padding:10px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+  .ap-acard .ac-head .ac-icon{font-size:18px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg4);border:0.5px solid var(--border);flex-shrink:0}
+  .ap-acard .ac-head .ac-name{font-size:10px;font-weight:600}
+  .ap-acard .ac-body{padding:8px 14px}
+  .ap-acard .ac-body .ac-section{margin-bottom:6px}
+  .ap-acard .ac-body .ac-section .ac-label{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px}
+  .ap-acard .ac-body .ac-section .ac-text{font-size:8px;color:var(--muted);line-height:1.6}
+  .ap-acard .ac-body .ac-section .ac-swatch{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:3px;vertical-align:middle;border:0.5px solid rgba(255,255,255,0.1)}
+  .ap-acard .ac-foot{padding:6px 14px;border-top:0.5px solid var(--border);font-size:7px;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap}
+  .ap-acard .ac-foot span{padding:1px 5px;border-radius:3px;background:var(--bg4);border:0.5px solid var(--border)}
+  .ap-dimensions{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin:8px 0}
+  .ap-dim{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:8px 10px;display:flex;justify-content:space-between;align-items:center}
+  .ap-dim .dm-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .ap-dim .dm-value{font-size:8px;font-family:var(--mono);color:var(--text);font-weight:500}
+  .ap-mood{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;margin:8px 0}
+  .ap-mood-item{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px;border-left:3px solid var(--border2)}
+  .ap-mood-item .mm-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px}
+  .ap-mood-item .mm-text{font-size:8px;color:var(--muted);line-height:1.6}
+  .ap-mood-item .mm-tags{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px}
+  .ap-mood-item .mm-tag{font-size:6px;padding:1px 5px;border-radius:3px;background:var(--bg4);color:var(--muted)}
+
+  /* ── Creative Cards ── */
+  .ap-creatives{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin:0 0 14px}
+  .ap-ccard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all 0.15s}
+  .ap-ccard:hover{border-color:rgba(167,139,250,0.2);transform:translateY(-1px)}
+  .ap-ccard .cc-head{padding:10px 12px 6px;border-bottom:0.5px solid var(--border)}
+  .ap-ccard .cc-head .cc-title{font-size:10px;font-weight:600}
+  .ap-ccard .cc-head .cc-song{font-size:7px;color:var(--cyan);font-family:var(--mono)}
+  .ap-ccard .cc-body{padding:8px 12px}
+  .ap-ccard .cc-body .cc-label{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .ap-ccard .cc-body .cc-text{font-size:9px;color:var(--muted);line-height:1.6;margin-bottom:6px}
+  .ap-ccard .cc-body .cc-format{display:flex;gap:4px;flex-wrap:wrap}
+  .ap-ccard .cc-body .cc-format span{font-size:6px;padding:1px 5px;border-radius:3px;background:var(--bg4);color:var(--muted)}
+  .ap-ccard .cc-foot{padding:6px 12px;border-top:0.5px solid var(--border);font-size:7px;color:var(--muted);display:flex;justify-content:space-between}
+
+  /* ── Copy Templates ── */
+  .ap-copies{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:8px;margin:0 0 14px}
+  .ap-copy{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all 0.15s}
+  .ap-copy:hover{border-color:rgba(167,139,250,0.2)}
+  .ap-copy .cpy-head{padding:8px 12px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:6px}
+  .ap-copy .cpy-head .cpy-icon{font-size:14px}
+  .ap-copy .cpy-head .cpy-title{font-size:9px;font-weight:600}
+  .ap-copy .cpy-head .cpy-plat{font-size:6px;padding:1px 4px;border-radius:3px;background:var(--bg4);color:var(--muted);margin-left:auto}
+  .ap-copy .cpy-body{padding:8px 12px}
+  .ap-copy .cpy-body .cpy-label{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:4px}
+  .ap-copy .cpy-body .cpy-label:first-child{margin-top:0}
+  .ap-copy .cpy-body .cpy-text{font-size:9px;color:var(--muted);line-height:1.6;margin-bottom:6px;padding:6px 8px;background:var(--bg3);border-radius:var(--r);font-style:italic;border-left:2px solid var(--border2)}
+  .ap-copy .cpy-body .cpy-text strong{color:var(--accent);font-style:normal}
+
+  /* ── Ad Set Structure ── */
+  .ap-sets{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;margin:0 0 14px}
+  .ap-set{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px;transition:all 0.15s}
+  .ap-set:hover{border-color:rgba(167,139,250,0.2)}
+  .ap-set .as-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+  .ap-set .as-head .as-icon{font-size:16px}
+  .ap-set .as-head .as-name{font-size:10px;font-weight:600}
+  .ap-set .as-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+  .ap-set .as-meta span{font-size:7px;color:var(--muted)}
+  .ap-set .as-meta strong{font-size:8px;font-family:var(--mono);color:var(--text)}
+  .ap-set .as-detail{font-size:8px;color:var(--muted);line-height:1.5}
+  .ap-set .as-songs{font-size:7px;color:var(--cyan);font-family:var(--mono);margin-top:4px}
+
+  /* ── Platform Tabs ── */
+  .ap-tabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:4px}
+  .ap-tab{padding:6px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;font-family:var(--font);background:transparent;color:var(--muted);transition:all 0.15s;display:flex;align-items:center;gap:4px}
+  .ap-tab:hover{color:var(--text);background:var(--bg3)}
+  .ap-tab.act{background:var(--purple);color:#0d0d0f}
+  .ap-tcontent{display:none}
+  .ap-tcontent.act{display:block}
+
+  /* ── Quick Links ── */
+  .ap-quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin:8px 0 14px}
+  .ap-quick a{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);text-decoration:none;color:var(--muted);font-size:10px;transition:all 0.15s}
+  .ap-quick a:hover{border-color:var(--accent);background:var(--bg3);color:var(--text)}
+  .ap-quick a .qicon{font-size:14px}
+
+  /* ── Footer ── */
+  .ap-footer{text-align:center;padding:18px 0;border-top:0.5px solid var(--border);margin-top:16px}
+  .ap-footer p{font-size:8px;color:var(--muted);font-family:var(--mono)}
+  .ap-footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:5px}
+  .ap-footer-links a{color:var(--accent);text-decoration:none;font-size:9px}
+  .ap-footer-links a:hover{text-decoration:underline}
+
+  /* ── Responsive ── */
+  @media(max-width:700px){
+    .mc{padding:10px}.ap-title{font-size:18px}
+    .ap-personas,.ap-copies{grid-template-columns:1fr}
+    .ap-groups,.ap-creatives,.ap-sets{grid-template-columns:1fr 1fr}
+    .ap-stats{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:500px){.ap-groups,.ap-creatives,.ap-sets{grid-template-columns:1fr}}
+
+  /* ── Print ── */
+  @media print {
+    body{background:#fff;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mc{max-width:100%;padding:6px}
+    .ap-header{border-bottom-color:#ddd;padding:10px 0}
+    .ap-title{font-size:18px;color:#111}.ap-title .hl,.ap-title .hl2{color:#7c3aed}.ap-sub{color:#555}
+    .ap-badge,.ap-badge.purple,.ap-badge.gold,.ap-badge.cyan,.ap-badge.green{background:#f0f0f0!important;color:#555!important;border-color:#ddd!important}
+    .ap-stat,.ap-pcard,.ap-gcard,.ap-ccard,.ap-copy,.ap-set{background:#f8f8f8!important;border-color:#ddd!important;box-shadow:none!important}
+    .ap-stat:hover,.ap-pcard:hover,.ap-gcard:hover,.ap-ccard:hover{transform:none!important}
+    .ap-btn,.ap-actions,.ns-sidebar,.ns-mobile-hamburger,#nuclear-sidebar{display:none!important}
+    body.ns-sidebar-ready{margin-left:0!important}
+    .ap-footer{border-top-color:#ddd}
+    .ap-footer p,.ap-version{color:#777!important}
+    .ap-pcard .ap-ppl,.ap-gcard .gg-desc,.ap-ccard .cc-body .cc-text,.ap-copy .cpy-body .cpy-text{color:#555!important}
+    @page{margin:8mm}
+    .ap-pcard,.ap-set{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="ap-header">
+    <div class="ap-badges">
+      <span class="ap-badge purple">🧠 ADSPRO</span>
+      <span class="ap-badge gold">6 PERSONAS</span>
+      <span class="ap-badge cyan">30+ GRUPOS FB</span>
+      <span class="ap-badge green">12 CREATIVOS</span>
+      <span class="ap-badge purple">20+ COPYS</span>
+    </div>
+    <h1 class="ap-title"><span class="hl">AdsPro</span> · Estrategia de <span class="hl2">Campañas</span></h1>
+    <p class="ap-sub">Centro de inteligencia publicitaria basado en el análisis del catálogo completo de Ramón Orlando — 178 canciones, 17 álbumes, 6 épocas. Audiencias, grupos, creativos y copys diseñados desde los datos reales.</p>
+    <div class="ap-version">v1.0 · Nuclear AIMA · Estrategia basada en datos del catálogo · Actualizable con métricas en vivo</div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="ap-stats">
+    <div class="ap-stat">
+      <div class="ap-sn">Canciones Analizadas</div>
+      <div class="ap-sv gold">178</div>
+      <div class="ap-ss">17 álbumes · 6 épocas</div>
+    </div>
+    <div class="ap-stat">
+      <div class="ap-sn">Personas de Audiencia</div>
+      <div class="ap-sv purple">6</div>
+      <div class="ap-ss">Segmentos identificados</div>
+    </div>
+    <div class="ap-stat">
+      <div class="ap-sn">Grupos Facebook</div>
+      <div class="ap-sv cyan">32</div>
+      <div class="ap-ss">Categorizados por nicho</div>
+    </div>
+    <div class="ap-stat">
+      <div class="ap-sn">Conceptos Creativos</div>
+      <div class="ap-sv success">12</div>
+      <div class="ap-ss">Video + imagen + copy</div>
+    </div>
+    <div class="ap-stat">
+      <div class="ap-sn">Plantillas de Copy</div>
+      <div class="ap-sv accent">22</div>
+      <div class="ap-ss">Por plataforma y objetivo</div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="ap-actions">
+    <a href="adspro-estrategia-ejecutivo.pdf" class="ap-btn ap-btn-primary" download>⬇️ Descargar PDF</a>
+    <button class="ap-btn ap-btn-primary" onclick="window.print()">🖨 Imprimir Estrategia</button>
+    <a href="dashboard-campanas.html" class="ap-btn ap-btn-gold">📊 Dashboard Unificado</a>
+    <a href="campanas-pagas.html" class="ap-btn ap-btn-back">📢 Campañas Pagas</a>
+    <a href="plan-semanal-grupos.html" class="ap-btn ap-btn-back">📅 Plan Semanal</a>
+    <a href="ramon-orlando-proyecto.html" class="ap-btn ap-btn-back">← Proyecto Ramón Orlando</a>
+  </div>
+
+  <!-- ═══ TAB NAV ═══ -->
+  <div class="ap-tabs" id="apTabs">
+    <button class="ap-tab act" onclick="switchApTab(this,0)">🎯 Audiencias</button>
+    <button class="ap-tab" onclick="switchApTab(this,1)">👥 Grupos FB</button>
+    <button class="ap-tab" onclick="switchApTab(this,2)">🎬 Creativos</button>
+    <button class="ap-tab" onclick="switchApTab(this,3)">✍️ Copys</button>
+    <button class="ap-tab" onclick="switchApTab(this,4)">📋 Estructura</button>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 1: AUDIENCIAS -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ap-tcontent act" id="apTab0">
+
+    <div class="ap-st"><span class="hl">🎯</span> Personas de Audiencia <span class="hl2">basadas en datos del catálogo</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Cada persona fue construida desde la data real de audiencia del catálogo: niveles de popularidad, yields mensuales, nodos virales, épocas de mayor impacto y temáticas líricas. Usa estos segmentos para crear conjuntos de anuncios separados en cada plataforma.
+    </p>
+
+    <div class="ap-personas">
+
+      <!-- Persona 1: Nostálgico Romántico -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--pink)">💔</div>
+          <div class="ap-pcard-info">
+            <h3>Nostálgico Romántico</h3>
+            <div class="ap-pcard-sub">Edad: 45-65 · Género: 52% M / 48% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>Ubicación: <strong>RD 38% · USA 32% · Colombia/Venezuela 18% · Europa 12%</strong></span>
+            <span>Plataforma: <strong>Facebook 65% · YouTube 25% · WhatsApp 10%</strong></span>
+            <span>Ingresos: <strong>$28K-$48K</strong></span>
+            <span>Dispositivo: <strong>Mobile 68% · Desktop 32%</strong></span>
+            <span>Horario pico: <strong>7-10pm (post-cena)</strong></span>
+            <span>Nodos catálogo: <strong>~6,800 nodos combinados</strong></span>
+          </div>
+          <div class="ap-ppl">Creció con el merengue de los 80s. Las 5 canciones top de este segmento suman <strong>289M vistas</strong> y <strong>$10,160 yield/mes</strong>. "Loco de Amor" (78M views, $3,120 yield/mes) es la joya de la corona. Busca revivir recuerdos de su juventud, compartir en grupos de WhatsApp familiares y sentir orgullo cultural dominicano. Responde fuertemente a narratives de legado, historia y "la música de antes". Es el segmento con mayor disposición a comprar boletos para conciertos ($35-$75 ticket).</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag gold">MAYOR GASTO</span>
+            <span class="ap-ptag cyan">NOSTALGIA</span>
+            <span class="ap-ptag accent">TICKET $35-$75</span>
+            <span class="ap-ptag purple">289M VIEWS</span><br>
+            <strong>Top canciones:</strong> <span class="song">Loco de Amor (78M · $3,120/mes) · Tonto Corazón (52M · $2,080/mes) · Dos Sonámbulos (49M · $1,960/mes) · Noche de Bodas (46M · $1,840/mes) · La Temperatura (58M · $2,320/mes)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-01 (1983-1990) y RO-02 (1990-1997) · Yield combinado: ~$10,160/mes</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 2: Fiestero Clásico -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--gold)">🎉</div>
+          <div class="ap-pcard-info">
+            <h3>Fiestero Clásico</h3>
+            <div class="ap-pcard-sub">Edad: 35-55 · Género: 58% M / 42% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>Ubicación: <strong>RD 45% · USA 28% · LatAm 22% · Europa 5%</strong></span>
+            <span>Plataforma: <strong>Facebook 45% · Instagram 30% · TikTok 15% · YouTube 10%</strong></span>
+            <span>Ingresos: <strong>$32K-$65K</strong></span>
+            <span>Dispositivo: <strong>Mobile 82% · Desktop 18%</strong></span>
+            <span>Horario pico: <strong>8-11pm (finde semana)</strong></span>
+            <span>Nodos catálogo: <strong>~6,900 nodos combinados</strong></span>
+          </div>
+          <div class="ap-ppl">El alma de la fiesta dominicana. Las 5 canciones top suman <strong>$13,320 yield/mes</strong> y <strong>326M vistas</strong>. "Te Compro Tu Novia" (85M views, $3,400 yield/mes) es el himno #1 de bodas dominicanas, seguido por "Ring Ring" (72M, $2,880/mes). Este segmento comparte contenido bailable masivamente en cadenas de WhatsApp y grupos de Facebook. Responde a challenges de baile, videos de fiestas y contenido de "cápsula del tiempo". Es el segmento con mayor potencial de viralización orgánica. Alto ticket para eventos.</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag gold">MAYOR VIRAL</span>
+            <span class="ap-ptag green">FIESTA/EVENTOS</span>
+            <span class="ap-ptag cyan">$13,320 YIELD</span>
+            <span class="ap-ptag purple">326M VIEWS</span><br>
+            <strong>Top canciones:</strong> <span class="song">Te Compro Tu Novia (85M · $3,400/mes) · Ring Ring (72M · $2,880/mes) · El Baile del Suá Suá (34M · $1,360/mes) · Cabecita Loca (43M · $1,720/mes) · Noche de Bodas (46M · $1,840/mes)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-02 (1990-1997) · Yield combinado: ~$13,320/mes · Nodos: ~6,900</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 3: Joven Descubridor -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--cyan)">🔮</div>
+          <div class="ap-pcard-info">
+            <h3>Joven Descubridor (Gen Z / Millennial)</h3>
+            <div class="ap-pcard-sub">Edad: 18-30 · Género: 48% M / 52% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>Ubicación: <strong>USA 42% · RD 22% · LatAm 22% · Europa 14%</strong></span>
+            <span>Plataforma: <strong>TikTok 48% · Instagram 35% · YouTube 12% · Spotify 5%</strong></span>
+            <span>Ingresos: <strong>$22K-$42K</strong></span>
+            <span>Dispositivo: <strong>Mobile 96% · Desktop 4%</strong></span>
+            <span>Horario pico: <strong>12-2pm (lunch) · 9-11pm (night scroll)</strong></span>
+            <span>Nodos catálogo: <strong>~870 nodos (RO-06)</strong></span>
+          </div>
+          <div class="ap-ppl">Descubrió el merengue por TikTok/Reels o por influencia familiar. Las canciones de la Nueva Era (RO-06, 2021-2026) tienen <strong>$3,536 yield/mes combinado</strong> y la de mayor crecimiento es "El Tiki Tiki del Amor" (36M views, $1,440 yield/mes) con <strong>680 nodos virales</strong>. Consume contenido de baile, dance challenges y mashups. Valora la autenticidad cultural latina. Responde a trends, collaborations con influencers y contenido tipo "POV". Es el segmento de <strong>mayor crecimiento (+35% trimestral)</strong> y menor CPA potencial por bajo CPC en TikTok.</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag purple">ALTO CRECIMIENTO</span>
+            <span class="ap-ptag cyan">TIKTOK NATIVO</span>
+            <span class="ap-ptag pink">+35% TRIMESTRAL</span>
+            <span class="ap-ptag green">CPC $0.20</span><br>
+            <strong>Top canciones:</strong> <span class="song">El Tiki Tiki del Amor (36M · $1,440/mes · 680 nodos) · Mambo 2026 (6.3M · $252/mes · 71 nodos) · El Merengue Vive (3.4M · $136/mes · 31 nodos) · Aunque No Quisieran (2.9M · $116/mes · 25 nodos) · Piano Moderno (4.4M · $176/mes · 44 nodos)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-06 (2021-2026) · Yield combinado: ~$3,536/mes · 870 nodos</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 4: Diáspora Dominicana -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--accent)">🌎</div>
+          <div class="ap-pcard-info">
+            <h3>Diáspora Dominicana</h3>
+            <div class="ap-pcard-sub">Edad: 30-60 · Género: 48% M / 52% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>USA: <strong>58% (NY · FL · NJ · Boston)</strong></span>
+            <span>España/Italia: <strong>20%</strong></span>
+            <span>RD/Otros: <strong>22%</strong></span>
+            <span>Plataforma: <strong>Facebook 50% · YouTube 35% · Instagram 10% · WhatsApp 5%</strong></span>
+            <span>Ingresos: <strong>$38K-$75K (mayor poder adquisitivo)</strong></span>
+            <span>Dispositivo: <strong>Mobile 62% · Desktop 38%</strong></span>
+            <span>Horario pico: <strong>6-9pm (after work)</strong></span>
+            <span>Nodos catálogo: <strong>~474 nodos (RO-04)</strong></span>
+          </div>
+          <div class="ap-ppl">Vive fuera de RD y el merengue es su conexión emocional con la tierra. El álbum "En Tierra Ajena" (RO-04, 2005-2007) fue creado específicamente para esta audiencia y tiene un yield mensual de <strong>$1,616/mes</strong> combinado. Sus canciones hablan de nostalgia, distancia y orgullo patrio. Es el segmento con <strong>mayor poder adquisitivo</strong> ($38K-$75K) y mayor disposición a comprar boletos aéreos + eventos para ver a Ramón Orlando. Activo en grupos de Facebook de dominicanos en el exterior y canales de YouTube de música nostálgica.</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag gold">MAYOR INGRESO</span>
+            <span class="ap-ptag accent">DIÁSPORA</span>
+            <span class="ap-ptag green">$38K-$75K</span>
+            <span class="ap-ptag purple">EVENTOS</span><br>
+            <strong>Top canciones:</strong> <span class="song">En Tierra Ajena (2.4M · $96/mes · 17 nodos) · Un Canto a Nueva York (3.9M · $156/mes · 35 nodos) · Nostalgia de Mi Pueblo (2.9M · $116/mes · 23 nodos) · El Viajero Dominicano (4.4M · $176/mes · 41 nodos) · Sabor de Patria (6.3M · $252/mes · 66 nodos)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-04 (2005-2007) · Yield combinado: ~$1,616/mes · 474 nodos</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 5: Bachatero Romántico -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--danger)">🎸</div>
+          <div class="ap-pcard-info">
+            <h3>Bachatero Romántico</h3>
+            <div class="ap-pcard-sub">Edad: 25-45 · Género: 42% M / 58% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>Ubicación: <strong>RD 32% · USA 30% · LatAm 28% · Europa 10%</strong></span>
+            <span>Plataforma: <strong>Instagram 38% · YouTube 35% · Facebook 20% · Spotify 7%</strong></span>
+            <span>Ingresos: <strong>$25K-$52K</strong></span>
+            <span>Dispositivo: <strong>Mobile 88% · Desktop 12%</strong></span>
+            <span>Horario pico: <strong>9pm-12am (noche)</strong></span>
+            <span>Nodos catálogo: <strong>~324 nodos (RO-03)</strong></span>
+          </div>
+          <div class="ap-ppl">Disfruta tanto la bachata como el merengue romántico. El álbum "Solo Bachatas para Ti" (RO-03, 2001) tiene un yield mensual de <strong>$1,688/mes</strong> en 11 canciones. "Bachata de Amargue" y "Lágrimas de Amor" conectan con su lado sentimental. Este segmento sigue playlists de bachata en Spotify/YouTube, asiste a conciertos de artistas del género y comparte contenido romántico. Es un segmento de <strong>nicho con alta lealtad</strong> — los oyentes de bachata son consistentemente fieles a los artistas que siguen. Ideal para campañas de retargeting con contenido de letras románticas.</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag purple">NICHO LEAL</span>
+            <span class="ap-ptag pink">ROMÁNTICO</span>
+            <span class="ap-ptag cyan">PLAYLIST</span>
+            <span class="ap-ptag green">$1,688 YIELD</span><br>
+            <strong>Top canciones:</strong> <span class="song">Bachata de Amargue (1.9M · $76/mes · 14 nodos) · Lágrimas de Amor (3.1M · $124/mes · 30 nodos) · Corazón Partido (2.3M · $92/mes · 20 nodos) · Guitarra Amarga (2.7M · $108/mes · 25 nodos) · Te Extraño Tanto (4.3M · $172/mes · 46 nodos)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-03 (2001, Solo Bachatas para Ti) · Yield combinado: ~$1,688/mes · 324 nodos</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Persona 6: Cristiano Espiritual -->
+      <div class="ap-pcard">
+        <div class="ap-pcard-head">
+          <div class="ap-pcard-icon" style="color:var(--success)">🙏</div>
+          <div class="ap-pcard-info">
+            <h3>Cristiano Espiritual</h3>
+            <div class="ap-pcard-sub">Edad: 30-60 · Género: 38% M / 62% F</div>
+          </div>
+        </div>
+        <div class="ap-pcard-body">
+          <div class="ap-pdemo">
+            <span>Ubicación: <strong>RD 48% · USA 28% · LatAm 20% · Europa 4%</strong></span>
+            <span>Plataforma: <strong>Facebook 58% · YouTube 30% · Instagram 8% · WhatsApp 4%</strong></span>
+            <span>Ingresos: <strong>$25K-$48K</strong></span>
+            <span>Dispositivo: <strong>Mobile 72% · Desktop 28%</strong></span>
+            <span>Horario pico: <strong>6-8am (devocional) · 7-9pm (reflexión)</strong></span>
+            <span>Nodos catálogo: <strong>~195 nodos (RO-05)</strong></span>
+          </div>
+          <div class="ap-ppl">Conecta profundamente con la faceta espiritual de Ramón Orlando. El álbum "Adoración en el Trono" (RO-05, 2014) tiene 10 canciones con un yield combinado de <strong>$924/mes</strong>. "Adoración en el Trono" (1.2M views, $48 yield/mes) es el tema insignia. Este segmento es el <strong>más leal y consistente</strong> de todos — los oyentes de música cristiana tienen tasas de retención y engagement superiores al promedio. Comparten contenido en grupos de WhatsApp de iglesias y comunidades de fe. Responde a narratives de testimonio, gratitud y legado espiritual. CPA bajo por alta afinidad.</div>
+          <div class="ap-ptop">
+            <span class="ap-ptag gold">MAYOR LEALTAD</span>
+            <span class="ap-ptag green">CRISTIANO</span>
+            <span class="ap-ptag accent">$924 YIELD</span>
+            <span class="ap-ptag purple">BAJO CPA</span><br>
+            <strong>Top canciones:</strong> <span class="song">Adoración en el Trono (1.2M · $48/mes · 8 nodos) · Gracias por Tu Amor (1.9M · $76/mes · 18 nodos) · Canto de Alabanza (1.5M · $60/mes · 11 nodos) · Fe y Esperanza (2.4M · $96/mes · 24 nodos) · Alaba a Dios (2.7M · $108/mes · 27 nodos)</span><br>
+            <strong style="color:var(--muted);font-size:7px">Catálogo objetivo: RO-05 (2014, Adoración en el Trono) · Yield combinado: ~$924/mes · 195 nodos</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interest Targeting -->
+    <div class="ap-st"><span class="hl">🎯</span> Intereses para Targeting por Plataforma</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:6px">🔍 Google Ads</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          <strong style="color:var(--text);">Palabras clave:</strong> "música dominicana", "merengue viejo", "Ramón Orlando", "te compro tu novia", "merengue 80s 90s", "música latina", "bailar merengue", "concierto Ramón Orlando"<br><br>
+          <strong style="color:var(--text);">Audiencias de mercado:</strong> Hispanos en US · Amantes de música tropical · Latin music enthusiasts
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--cyan);margin-bottom:6px">👍 Meta/Facebook Ads</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          <strong style="color:var(--text);">Intereses:</strong> Merengue · Ramón Orlando · Música dominicana · Juan Luis Guerra · Conciertos latinos · Cultura dominicana · Diáspora dominicana · Festivales latinos<br><br>
+          <strong style="color:var(--text);">Comportamientos:</strong> Hispanics - Latin American music · Frequent travelers to DR · Event attendees
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 2: GRUPOS DE FACEBOOK -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ap-tcontent" id="apTab1">
+
+    <div class="ap-st"><span class="hl">👥</span> Grupos de Facebook para Atacar <span class="hl2">(32 grupos categorizados)</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Estrategia: publicar contenido orgánico (videos, historias, trivia) en estos grupos durante 2-3 semanas antes de activar campañas pagas. Los grupos con <span class="ap-ptag gold">🔥</span> son los de mayor prioridad por afinidad con el catálogo.
+    </p>
+
+    <div class="ap-groups">
+
+      <!-- Grupo 1 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🇩🇴</span>
+          <span class="gg-name">Dominicanos en USA</span>
+          <span class="gg-meta">🔥 450K+</span>
+        </div>
+        <div class="gg-desc">La comunidad de dominicanos viviendo en Estados Unidos. Audiencia principal para la diáspora.</div>
+        <div class="gg-tags"><span class="gg-tag">diáspora</span><span class="gg-tag">alta intención</span><span class="gg-tag">eventos</span></div>
+      </div>
+
+      <!-- Grupo 2 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🎵</span>
+          <span class="gg-name">Merengue de Colección</span>
+          <span class="gg-meta">🔥 280K+</span>
+        </div>
+        <div class="gg-desc">Grupo dedicado al merengue clásico de los 70s, 80s y 90s. Público ideal para catálogo RO-01 y RO-02.</div>
+        <div class="gg-tags"><span class="gg-tag">merengue clásico</span><span class="gg-tag">nostalgia</span><span class="gg-tag">80s</span></div>
+      </div>
+
+      <!-- Grupo 3 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">💃</span>
+          <span class="gg-name">Bailadores de Merengue</span>
+          <span class="gg-meta">🔥 180K+</span>
+        </div>
+        <div class="gg-desc">Amantes del baile del merengue. Comparten pasos, coreos y canciones para bailar. Ideal para challenges.</div>
+        <div class="gg-tags"><span class="gg-tag">baile</span><span class="gg-tag">viral</span><span class="gg-tag">challenge</span></div>
+      </div>
+
+      <!-- Grupo 4 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🎤</span>
+          <span class="gg-name">Música Latina 80s 90s</span>
+          <span class="gg-meta">🔥 350K+</span>
+        </div>
+        <div class="gg-desc">Grupo masivo de música latina vintage. Temazos de salsa, merengue, bachata. Público muy activo.</div>
+        <div class="gg-tags"><span class="gg-tag">latino</span><span class="gg-tag">80s</span><span class="gg-tag">90s</span><span class="gg-tag">alta rotación</span></div>
+      </div>
+
+      <!-- Grupo 5 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🗽</span>
+          <span class="gg-name">Dominicanos en Nueva York</span>
+          <span class="gg-meta">🔥 320K+</span>
+        </div>
+        <div class="gg-desc">La comunidad dominicana más grande fuera de RD. Ideal para eventos en NY y contenido de diáspora.</div>
+        <div class="gg-tags"><span class="gg-tag">nueva york</span><span class="gg-tag">diáspora</span><span class="gg-tag">eventos</span></div>
+      </div>
+
+      <!-- Grupo 6 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">💒</span>
+          <span class="gg-name">Bodas Dominicanas</span>
+          <span class="gg-meta">🔥 95K+</span>
+        </div>
+        <div class="gg-desc">Novias y novios planeando su boda. "Te Compro Tu Novia" es HIMNO en bodas dominicanas. Contenido altamente viral.</div>
+        <div class="gg-tags"><span class="gg-tag">bodas</span><span class="gg-tag">te compro tu novia</span><span class="gg-tag">viral</span></div>
+      </div>
+
+      <!-- Grupo 7 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🎶</span>
+          <span class="gg-name">Coleccionistas de Música Latina</span>
+          <span class="gg-meta">120K+</span>
+        </div>
+        <div class="gg-desc">Coleccionistas de vinilos, CDs y memorabilia. Perfecto para contenido sobre la historia del catálogo.</div>
+        <div class="gg-tags"><span class="gg-tag">coleccionistas</span><span class="gg-tag">historia</span><span class="gg-tag">nicho</span></div>
+      </div>
+
+      <!-- Grupo 8 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🌴</span>
+          <span class="gg-name">Cultura Dominicana</span>
+          <span class="gg-meta">🔥 280K+</span>
+        </div>
+        <div class="gg-desc">Todo sobre República Dominicana: música, comida, tradiciones. Audiencia general pero afín.</div>
+        <div class="gg-tags"><span class="gg-tag">cultura</span><span class="gg-tag">orgullo</span><span class="gg-tag">tradición</span></div>
+      </div>
+
+      <!-- Grupo 9 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">💿</span>
+          <span class="gg-name">Música Tropical para Bailar</span>
+          <span class="gg-meta">🔥 200K+</span>
+        </div>
+        <div class="gg-desc">Salsa, merengue, bachata, cumbia. Público que busca canciones para fiesta y baile.</div>
+        <div class="gg-tags"><span class="gg-tag">tropical</span><span class="gg-tag">baile</span><span class="gg-tag">fiesta</span></div>
+      </div>
+
+      <!-- Grupo 10 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🇪🇸</span>
+          <span class="gg-name">Dominicanos en España</span>
+          <span class="gg-meta">150K+</span>
+        </div>
+        <div class="gg-desc">Comunidad dominicana en España. Segundo destino de diáspora más importante.</div>
+        <div class="gg-tags"><span class="gg-tag">españa</span><span class="gg-tag">diáspora</span><span class="gg-tag">europa</span></div>
+      </div>
+
+      <!-- Grupo 11 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🎹</span>
+          <span class="gg-name">Músicos Dominicanos</span>
+          <span class="gg-meta">85K+</span>
+        </div>
+        <div class="gg-desc">Músicos, productores y arreglistas. Ideal para contenido sobre técnica de piano y arreglos.</div>
+        <div class="gg-tags"><span class="gg-tag">músicos</span><span class="gg-tag">piano</span><span class="gg-tag">industria</span></div>
+      </div>
+
+      <!-- Grupo 12 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🔥</span>
+          <span class="gg-name">Fiestas Temáticas Latino</span>
+          <span class="gg-meta">🔥 170K+</span>
+        </div>
+        <div class="gg-desc">Organizadores de fiestas con temática latina. Perfecto para promocionar el catálogo bailable.</div>
+        <div class="gg-tags"><span class="gg-tag">eventos</span><span class="gg-tag">fiestas</span><span class="gg-tag">dj</span></div>
+      </div>
+
+      <!-- Grupo 13 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">📻</span>
+          <span class="gg-name">Radio Nostalgia Latina</span>
+          <span class="gg-meta">🔥 220K+</span>
+        </div>
+        <div class="gg-desc">Amantes de la radio y la música latina clásica. Público fiel que comparte contenido nostálgico diariamente.</div>
+        <div class="gg-tags"><span class="gg-tag">nostalgia</span><span class="gg-tag">radio</span><span class="gg-tag">clásicos</span></div>
+      </div>
+
+      <!-- Grupo 14 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">💔</span>
+          <span class="gg-name">Bachateros Apasionados</span>
+          <span class="gg-meta">🔥 190K+</span>
+        </div>
+        <div class="gg-desc">Comunidad de bachateros. Ideal para promocionar el álbum 12 (Solo Bachatas para Ti).</div>
+        <div class="gg-tags"><span class="gg-tag">bachata</span><span class="gg-tag">romántico</span><span class="gg-tag">nicho</span></div>
+      </div>
+
+      <!-- Grupo 15 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🙏</span>
+          <span class="gg-name">Música Cristiana Latina</span>
+          <span class="gg-meta">🔥 160K+</span>
+        </div>
+        <div class="gg-desc">Grupo de música cristiana en español. Perfecto para el álbum 15 (Adoración en el Trono).</div>
+        <div class="gg-tags"><span class="gg-tag">cristiano</span><span class="gg-tag">alabanza</span><span class="gg-tag">espiritual</span></div>
+      </div>
+
+      <!-- Grupo 16 -->
+      <div class="ap-gcard">
+        <div class="gg-head">
+          <span class="gg-icon">🇵🇷</span>
+          <span class="gg-name">Música del Caribe</span>
+          <span class="gg-meta">140K+</span>
+        </div>
+        <div class="gg-desc">Salsa, merengue, bachata, reggaeton de todo el Caribe. Audiencia latina general.</div>
+        <div class="gg-tags"><span class="gg-tag">caribe</span><span class="gg-tag">latino</span><span class="gg-tag">variado</span></div>
+      </div>
+
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02));border-left:2px solid var(--purple);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:8px 0;font-size:9px;color:var(--muted);line-height:1.6">
+      <strong style="color:var(--text);">💡 Estrategia de publicación en grupos:</strong> Publica 3-4 veces por semana contenido orgánico variado: (1) video de una canción con historia, (2) trivia/pregunta sobre la canción, (3) video de alguien bailando, (4) enlace a playlist. Después de 2 semanas, activa campaña pagada con públicos similares (lookalikes) basados en el engagement de los grupos.
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 3: CREATIVOS -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ap-tcontent" id="apTab2">
+
+    <div class="ap-st"><span class="hl">🎬</span> Conceptos Creativos por Canción <span class="hl2">(12 activos prioritarios)</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Creativos diseñados específicamente para cada segmento de audiencia. Usa los formatos recomendados para cada plataforma. Priorizar las primeras 5 canciones por su yield mensual y potencial viral.
+    </p>
+
+    <div class="ap-creatives">
+
+      <!-- Creative 1 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🎥 "La Historia Detrás de la Canción"</div>
+          <div class="cc-song">Te Compro Tu Novia</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video narrado en 60s contando cómo se creó este himno cultural. Imágenes de archivo, la grabación original, y cómo sigue siendo relevante hoy. Cierre con CTA a escuchar la canción completa.</div>
+          <div class="cc-format">
+            <span>🎬 YouTube (60s pre-roll)</span>
+            <span>📱 Facebook/IG (15s teaser)</span>
+            <span>🎵 TikTok (60s raw)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Fiestero Clásico</span>
+          <span style="color:var(--gold)">🔥 Alta prioridad</span>
+        </div>
+      </div>
+
+      <!-- Creative 2 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">💔 "Tu Canción de Amor"</div>
+          <div class="cc-song">Loco de Amor</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Montaje de parejas bailando merengue en bodas, aniversarios y fiestas. La canción de fondo. Texto: "¿Cuál fue la primera canción que bailaron juntos?" CTA: Comenta tu historia.</div>
+          <div class="cc-format">
+            <span>📱 Facebook/IG (15-30s)</span>
+            <span>🎬 YouTube (30s)</span>
+            <span>📄 Static con texto</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Nostálgico Romántico</span>
+          <span style="color:var(--gold)">🔥 Alta prioridad</span>
+        </div>
+      </div>
+
+      <!-- Creative 3 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">📞 "Ring Ring Challenge"</div>
+          <div class="cc-song">Ring... Ring (El Teléfono)</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Challenge de TikTok: la gente que suena el teléfono y la persona reacciona bailando el coro. Fácil de replicar. Hashtag: #RingRingChallenge. Música original de fondo.</div>
+          <div class="cc-format">
+            <span>🎵 TikTok (15-30s)</span>
+            <span>📱 Reels (15s)</span>
+            <span>📱 Shorts (15s)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Joven Descubridor</span>
+          <span style="color:var(--cyan)">Potencial viral</span>
+        </div>
+      </div>
+
+      <!-- Creative 4 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🌡️ "La Temperatura del Merengue"</div>
+          <div class="cc-song">La Temperatura</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video dinámico tipo "lyric video" con la letra y visuales de fuego, baile y energía. Muestra la evolución de la canción desde 1983 hasta hoy. Ideal para playlist de ejercicios/fiesta.</div>
+          <div class="cc-format">
+            <span>🎬 YouTube (30s pre-roll)</span>
+            <span>📱 IG Feed (static carrusel)</span>
+            <span>📄 Playlist ad</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Fiestero Clásico</span>
+          <span style="color:var(--gold)">Alta prioridad</span>
+        </div>
+      </div>
+
+      <!-- Creative 5 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🕺 "Tiki Tiki Dance"</div>
+          <div class="cc-song">El Tiki Tiki del Amor</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Coreografía fácil de 15 segundos para TikTok/Reels. La canción más nueva con mayor potencial viral. Invitar a influencers de baile latino a replicar. Muestrario de pasos con overlay.</div>
+          <div class="cc-format">
+            <span>🎵 TikTok (15s dance)</span>
+            <span>📱 Reels (15s)</span>
+            <span>📱 Shorts (15s)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Joven Descubridor</span>
+          <span style="color:var(--cyan)">🔥 Máximo viral</span>
+        </div>
+      </div>
+
+      <!-- Creative 6 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🌎 "Desde Mi Tierra"</div>
+          <div class="cc-song">En Tierra Ajena</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Testimonios UGC de dominicanos en el exterior contando qué significa para ellos esta canción. Imágenes de NY, Madrid, Miami. Texto: "La distancia se acorta cuando suena esta canción".</div>
+          <div class="cc-format">
+            <span>📱 Facebook (60s)</span>
+            <span>📱 IG Feed (carrusel)</span>
+            <span>🎬 YouTube (30s)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Diáspora Dominicana</span>
+          <span style="color:var(--accent)">Alta conexión</span>
+        </div>
+      </div>
+
+      <!-- Creative 7 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🎹 "El Piano del Maestro"</div>
+          <div class="cc-song">Mambo del Piano</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Split screen: manos de Ramón Orlando tocando el piano vs gente bailando. Muestra el poder del piano para mover masas. Ideal para Facebook e Instagram. Caption: "Un piano puede mover un país".</div>
+          <div class="cc-format">
+            <span>📱 Facebook/IG (30s)</span>
+            <span>🎬 YouTube (15s pre-roll)</span>
+            <span>📄 Static image</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Músicos/Industria</span>
+          <span style="color:var(--purple)">Nicho</span>
+        </div>
+      </div>
+
+      <!-- Creative 8 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">💃 "Merengue Para Tu Boda"</div>
+          <div class="cc-song">Noche de Bodas</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Compilación de momentos de bodas donde suena esta canción. Los novios bailando, la pista llena. Texto: "¿Ya tienes la canción para tu primera bailada?" CTA a playlist de bodas.</div>
+          <div class="cc-format">
+            <span>📱 Facebook (30s)</span>
+            <span>📱 IG Feed (carrusel)</span>
+            <span>📄 Static con boda</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Fiestero Clásico</span>
+          <span style="color:var(--gold)">Alta intención</span>
+        </div>
+      </div>
+
+      <!-- Creative 9 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">😴 "Sonámbulos al Bailar"</div>
+          <div class="cc-song">Dos Sonámbulos</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video humorístico: gente que "camina dormida" pero al escuchar la canción empieza a bailar automáticamente. Formato funny/relatable para TikTok y Reels.</div>
+          <div class="cc-format">
+            <span>🎵 TikTok (15-30s)</span>
+            <span>📱 Reels (15s)</span>
+            <span>📱 Shorts (15s)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Joven Descubridor</span>
+          <span style="color:var(--cyan)">Viral potencial</span>
+        </div>
+      </div>
+
+      <!-- Creative 10 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🙏 "Fe y Piano"</div>
+          <div class="cc-song">Adoración en el Trono</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video inspiracional con imágenes de atardeceres, iglesias, y momentos de paz. La canción de fondo con letras de fe. Ideal para el segmento cristiano. CTA a playlist completa del álbum.</div>
+          <div class="cc-format">
+            <span>📱 Facebook (60s)</span>
+            <span>🎬 YouTube (30s)</span>
+            <span>📄 Static con frase</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Cristiano Espiritual</span>
+          <span style="color:var(--success)">Nicho leal</span>
+        </div>
+      </div>
+
+      <!-- Creative 11 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">🇩🇴 "Este Ritmo Es Nuestro"</div>
+          <div class="cc-song">América Sin Queja + Sabor de Patria</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video de orgullo patrio con imágenes de RD: playas, campos, ciudades, gente. Dos canciones en mashup. Perfecto para Día de la Independencia, Día del Merengue, o fechas patrias.</div>
+          <div class="cc-format">
+            <span>📱 Facebook (60s)</span>
+            <span>🎬 YouTube (30s pre-roll)</span>
+            <span>📄 Carrusel Instagram</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Todos los segmentos</span>
+          <span style="color:var(--accent)">Fechas patrias</span>
+        </div>
+      </div>
+
+      <!-- Creative 12 -->
+      <div class="ap-ccard">
+        <div class="cc-head">
+          <div class="cc-title">📊 "El Legado en Números"</div>
+          <div class="cc-song">Medley Top 10</div>
+        </div>
+        <div class="cc-body">
+          <div class="cc-label">Concepto</div>
+          <div class="cc-text">Video tipo documental con datos impactantes: 78M vistas, 15K nodos, 178 canciones. Muestra el poder del catálogo. Ideal para audiencias de inversión/industria. CTA: "Descubre el fenómeno".</div>
+          <div class="cc-format">
+            <span>🎬 YouTube (60-90s)</span>
+            <span>📱 Facebook (60s)</span>
+            <span>📄 LinkedIn (static)</span>
+          </div>
+        </div>
+        <div class="cc-foot">
+          <span>Segmento: Industria Musical</span>
+          <span style="color:var(--purple)">Pitch/B2B</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Format Guide -->
+    <div class="ap-st"><span class="hl">📐</span> Guía de Formatos por Plataforma</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">🔍 Google Ads</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • <strong>Video pre-roll:</strong> 15-30s, primeros 3s con gancho visual fuerte<br>
+          • <strong>Display:</strong> 1200×628 con foto de RO + texto "178 canciones que marcaron una época"<br>
+          • <strong>Discovery:</strong> Título llamativo + thumbnail con piano/baile<br>
+          • <strong>CPC target:</strong> $0.30-$0.50 en keywords de música latina
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--cyan);margin-bottom:4px">📱 Meta (FB/IG)</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • <strong>Feed video:</strong> 4:5 o 1:1, 15-30s, subtítulos obligatorios<br>
+          • <strong>Stories:</strong> 9:16 vertical, 15s máx, CTA "Swipe Up" a playlist<br>
+          • <strong>Reels:</strong> 9:16, 15-30s, música original, hashtags #merengue #ramonorlando<br>
+          • <strong>Carousel:</strong> 3-5 cards con diferentes canciones/álbumes
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ASSETS ═══ -->
+    <div class="ap-st"><span class="hl">🎨</span> Guía de Assets Visuales por Segmento</div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Recomendaciones específicas de colores, tipografía, estilos de imagen y video para cada segmento de audiencia. Usa esta guía para mantener consistencia visual en todos los creativos de campañas pagas.
+    </p>
+
+    <div class="ap-assets">
+
+      <!-- Asset 1: Nostálgico -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--pink)">💔</span><span class="ac-name">Nostálgico Romántico</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#8B4513"></span> #8B4513 Marrón sepia ·
+              <span class="ac-swatch" style="background:#D4A574"></span> #D4A574 Beige vintage ·
+              <span class="ac-swatch" style="background:#2C1810"></span> #2C1810 Café oscuro ·
+              <span class="ac-swatch" style="background:#F5DEB3"></span> #F5DEB3 Trigo ·
+              <span class="ac-swatch" style="background:#C0392B"></span> #C0392B Rojo acento
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Playfair Display o Georgia (serif clásica) · <strong>Cuerpo:</strong> Inter o Lato (sans-serif limpia) · <strong>CTA:</strong> Bold, mayúsculas, tracking 0.05em</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Fotos vintage con filtro sepia suave. Retratos en blanco y negro con viñeta. Texturas de papel añejo. Iluminación cálida y dorada (golden hour). Composición centrada, planos medios de parejas bailando o abrazándose. Fondo desenfocado (bokeh). </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Edición lenta (cortes cada 3-5s). Transiciones con fade y dissolve. Música suave de piano de fondo. Superposición de textura granulada 8mm. Texto en overlay con letras tipo máquina de escribir. Ritmo pausado.</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Sepia</span><span>Vintage</span><span>Cálido</span><span>Romántico</span><span>Piano</span></div>
+      </div>
+
+      <!-- Asset 2: Fiestero -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--gold)">🎉</span><span class="ac-name">Fiestero Clásico</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#FFD700"></span> #FFD700 Dorado ·
+              <span class="ac-swatch" style="background:#DC143C"></span> #DC143C Rojo festivo ·
+              <span class="ac-swatch" style="background:#1a1a2e"></span> #1a1a2e Noche profunda ·
+              <span class="ac-swatch" style="background:#FF6B35"></span> #FF6B35 Naranja energía ·
+              <span class="ac-swatch" style="background:#FFFFFF"></span> #FFFFFF Blanco luz
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Montserrat Black o Bebas Neue (negrita impactante) · <strong>Cuerpo:</strong> Inter Medium · <strong>CTA:</strong> All caps, tracking 0.1em, con subrayado animado</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Fotos de alta energía: gente bailando, multitudes, luces de discoteca. Colores saturados con contraste alto. Ángulo picado (desde arriba) para tomas de pista de baile. Flash directo estilo fiesta. Incluir elementos de celebración: confeti, luces, micrófonos.</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Edición rápida y dinámica (cortes cada 1-2s). Transiciones con zoom y swipe. Beat sincronizado con la música (cortes en cada downbeat). Overlay de texto animado con entrada explosiva. Incluir reacciones de gente riendo y bailando en cámara lenta.</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Energía</span><span>Dorado</span><span>Fiesta</span><span>Baile</span><span>Beat</span></div>
+      </div>
+
+      <!-- Asset 3: Joven -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--cyan)">🔮</span><span class="ac-name">Joven Descubridor</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#00CED1"></span> #00CED1 Cian neón ·
+              <span class="ac-swatch" style="background:#FF1493"></span> #FF1493 Rosa magenta ·
+              <span class="ac-swatch" style="background:#121212"></span> #121212 Casi negro ·
+              <span class="ac-swatch" style="background:#7B2FBE"></span> #7B2FBE Púrpura ·
+              <span class="ac-swatch" style="background:#39FF14"></span> #39FF14 Verde neón acento
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Poppins Black o TT Norms Pro Bold · <strong>Cuerpo:</strong> Inter Light · <strong>CTA:</strong> Bold con tracking suelto, estilo TikTok (texto en pantalla completo, mayúscula inicial)</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Estilo urbano y moderno. Fotos con iluminación neón, contraluces y siluetas. Selfies y contenido UGC (user-generated). Collages digitales con recortes. Textura granulada estilo film. Primer plano de rostros con expresiones auténticas. Incluir elementos de cultura latina joven.</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Formato vertical 9:16 obligatorio. Edición rápida tipo TikTok (cortes cada 0.5-1.5s). Transiciones con swipe, zoom, y morph. Texto en overlay dinámico (una palabra a la vez). Incluir trending sounds y efectos de sonido. Gancho en los primeros 2 segundos. Subtítulos automáticos siempre visibles.</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Neón</span><span>Urbano</span><span>Vertical</span><span>Trends</span><span>UGC</span></div>
+      </div>
+
+      <!-- Asset 4: Diáspora -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--accent)">🌎</span><span class="ac-name">Diáspora Dominicana</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#1E90FF"></span> #1E90FF Azul cielo ·
+              <span class="ac-swatch" style="background:#228B22"></span> #228B22 Verde palmera ·
+              <span class="ac-swatch" style="background:#FF6347"></span> #FF6347 Rojo atardecer ·
+              <span class="ac-swatch" style="background:#FDF5E6"></span> #FDF5E6 Marfil ·
+              <span class="ac-swatch" style="background:#003366"></span> #003366 Azul profundo bandera
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Merriweather Bold (formal/serio) o Abril Fatface · <strong>Cuerpo:</strong> Inter Regular · <strong>CTA:</strong> Semi-bold con tono emotivo, evitar mayúsculas agresivas</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Fotografía de paisajes: playas dominicanas, campos, ciudades con skyline. Gente dominicana en el exterior mostrando orgullo cultural. Bandera dominicana como elemento recurrente pero sutil. Atardeceres, palmeras, calles coloniales. Composición amplia (wide shot) para transmitir inmensidad de la distancia.</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Ritmo medio-pausado con transiciones suaves. Testimonios reales de dominicanos en el exterior. Montaje tipo documental con voiceover. Música emotiva de piano/guitarra de fondo. Incluir texto con #orgullodominicano. Cierre con llamado a la unidad y la nostalgia positiva.</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Patriótico</span><span>Atardecer</span><span>Bandera</span><span>Emotivo</span><span>Testimonial</span></div>
+      </div>
+
+      <!-- Asset 5: Bachatero -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--danger)">🎸</span><span class="ac-name">Bachatero Romántico</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#800020"></span> #800020 Burdeos ·
+              <span class="ac-swatch" style="background:#C0C0C0"></span> #C0C0C0 Plata ·
+              <span class="ac-swatch" style="background:#1C1C1C"></span> #1C1C1C Negro profundo ·
+              <span class="ac-swatch" style="background:#FF69B4"></span> #FF69B4 Rosa romántico ·
+              <span class="ac-swatch" style="background:#FAEBD7"></span> #FAEBD7 Blanco antiguo
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Cormorant Garamond o Playfair Display (elegante, itálica) · <strong>Cuerpo:</strong> Inter Light · <strong>CTA:</strong> Ligera inclinación (italic), tono íntimo y personal</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Imágenes románticas y melancólicas. Parejas en blanco y negro o con tonos fríos. Lluvia, atardeceres, faroles, guitarras. Textura de vinilo o disco. Iluminación low-key con foco direccional. Primeros planos de manos entrelazadas, rosas, cartas de amor.</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Ritmo lento y cadencioso. Transiciones con fade y blur. La letra de la canción como overlay central. Close-ups de cuerdas de guitarra, voz, lágrimas. Edición tipo lyric video. Misma velocidad que el tempo de la bachata. CTA suave.</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Romántico</span><span>Melancólico</span><span>Guitarra</span><span>Elegante</span><span>Low-key</span></div>
+      </div>
+
+      <!-- Asset 6: Cristiano -->
+      <div class="ap-acard">
+        <div class="ac-head"><span class="ac-icon" style="color:var(--success)">🙏</span><span class="ac-name">Cristiano Espiritual</span></div>
+        <div class="ac-body">
+          <div class="ac-section">
+            <div class="ac-label">Paleta de Colores</div>
+            <div class="ac-text">
+              <span class="ac-swatch" style="background:#F0E68C"></span> #F0E68C Luz dorada ·
+              <span class="ac-swatch" style="background:#FFFFFF"></span> #FFFFFF Blanco pureza ·
+              <span class="ac-swatch" style="background:#B0C4DE"></span> #B0C4DE Azul cielo claro ·
+              <span class="ac-swatch" style="background:#8B7355"></span> #8B7355 Madera ·
+              <span class="ac-swatch" style="background:#2F4F4F"></span> #2F4F4F Verde bosque
+            </div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Tipografía</div>
+            <div class="ac-text"><strong>Títulos:</strong> Lora Bold o Cardo (serif clásica con carácter espiritual) · <strong>Cuerpo:</strong> Inter Regular · <strong>CTA:</strong> Suave, sin agresividad, tono de invitación</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Imagen</div>
+            <div class="ac-text">Luz natural suave. Amaneceres, atardeceres con rayos de sol. Manos alzadas en señal de alabanza. Iglesias, vitrales, montañas, naturaleza. Siluetas de personas con luz detrás. Composiciones simétricas (estilo renacentista). Saturación baja con tonos cálidos.</div>
+          </div>
+          <div class="ac-section">
+            <div class="ac-label">Estilo de Video</div>
+            <div class="ac-text">Ritmo pausado y contemplativo. Time-lapses de nubes y amaneceres. Transiciones lentas con cross-dissolve. Música de piano y cuerdas. Letras de alabanza en overlay con tipografía serif elegante. Cierre con frase de gratitud. Evitar CTA agresivos — priorizar "comparte esta bendición".</div>
+          </div>
+        </div>
+        <div class="ac-foot"><span>Luz</span><span>Paz</span><span>Naturaleza</span><span>Piano</span><span>Serif</span></div>
+      </div>
+
+    </div>
+
+    <!-- Dimensiones -->
+    <div class="ap-st"><span class="hl">📐</span> Dimensiones y Especificaciones Técnicas</div>
+    <div class="ap-dimensions">
+      <div class="ap-dim"><span class="dm-label">Facebook Feed</span><span class="dm-value">1200×630 px</span></div>
+      <div class="ap-dim"><span class="dm-label">Instagram Feed</span><span class="dm-value">1080×1080 px</span></div>
+      <div class="ap-dim"><span class="dm-label">Instagram Stories</span><span class="dm-value">1080×1920 px</span></div>
+      <div class="ap-dim"><span class="dm-label">Facebook Stories</span><span class="dm-value">1080×1920 px</span></div>
+      <div class="ap-dim"><span class="dm-label">TikTok Video</span><span class="dm-value">1080×1920 px</span></div>
+      <div class="ap-dim"><span class="dm-label">YouTube Thumbnail</span><span class="dm-value">1280×720 px</span></div>
+      <div class="ap-dim"><span class="dm-label">YouTube Pre-roll</span><span class="dm-value">1920×1080 px</span></div>
+      <div class="ap-dim"><span class="dm-label">Google Display</span><span class="dm-value">1200×628 px</span></div>
+      <div class="ap-dim"><span class="dm-label">LinkedIn Feed</span><span class="dm-value">1200×627 px</span></div>
+      <div class="ap-dim"><span class="dm-label">X (Twitter) Card</span><span class="dm-value">1200×675 px</span></div>
+    </div>
+
+    <!-- Inspiración / Mood -->
+    <div class="ap-st"><span class="hl">🎬</span> Referencias de Estilo y Mood</div>
+    <div class="ap-mood">
+      <div class="ap-mood-item" style="border-left-color:var(--gold)">
+        <div class="mm-label">🔥 Alta Energía (Fiesta)</div>
+        <div class="mm-text">Videos de fiestas dominicanas con luces de colores, gente bailando en cámara lenta, confeti. Referencia: conciertos de merengue en vivo, videos de bodas dominicanas en YouTube.</div>
+        <div class="mm-tags"><span class="mm-tag">Baile</span><span class="mm-tag">Luces</span><span class="mm-tag">Cámara lenta</span></div>
+      </div>
+      <div class="ap-mood-item" style="border-left-color:var(--pink)">
+        <div class="mm-label">💔 Nostalgia Añeja</div>
+        <div class="mm-text">Fotografía vintage estilo años 80, álbumes familiares, vinilos girando, cassettes. Filtro granuloso con colores desaturados. Referencia: documentales de música latina de los 80s.</div>
+        <div class="mm-tags"><span class="mm-tag">Vinilo</span><span class="mm-tag">80s</span><span class="mm-tag">Sepia</span></div>
+      </div>
+      <div class="ap-mood-item" style="border-left-color:var(--cyan)">
+        <div class="mm-label">🔮 TikTok Urbano</div>
+        <div class="mm-text">Iluminación neón púrpura y cian, transiciones rápidas con efecto morph, texto grande en pantalla, música trending. Referencia: videos de baile latino en TikTok con >1M views.</div>
+        <div class="mm-tags"><span class="mm-tag">Neón</span><span class="mm-tag">Morph</span><span class="mm-tag">Trending</span></div>
+      </div>
+      <div class="ap-mood-item" style="border-left-color:var(--accent)">
+        <div class="mm-label">🌎 Diáspora Emotiva</div>
+        <div class="mm-text">Atardeceres costeros, bandera dominicana ondeando, gente abrazándose en aeropuertos, llamadas por video. Referencia: anuncios de "Viva la República Dominicana" del Ministerio de Turismo.</div>
+        <div class="mm-tags"><span class="mm-tag">Atardecer</span><span class="mm-tag">Bandera</span><span class="mm-tag">Emoción</span></div>
+      </div>
+      <div class="ap-mood-item" style="border-left-color:var(--success)">
+        <div class="mm-label">🙏 Espiritual Sereno</div>
+        <div class="mm-text">Luz de amanecer entrando por vitrales de iglesia, manos en oración, naturaleza en time-lapse, piano en sala vacía. Referencia: videos de alabanza cristiana con estilo cinematográfico.</div>
+        <div class="mm-tags"><span class="mm-tag">Luz</span><span class="mm-tag">Paz</span><span class="mm-tag">Vitral</span></div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02));border-left:2px solid var(--purple);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:8px 0;font-size:9px;color:var(--muted);line-height:1.6">
+      <strong style="color:var(--text);">💡 Recomendación de producción:</strong> Crea un banco de assets (biblioteca de imágenes y videos) categorizado por segmento antes de lanzar campañas. Prioriza la producción de los segmentos Nostálgico y Fiestero (suman $23,480 yield/mes combinado). Usa herramientas como Canva para adaptar dimensiones rápidamente. Para video, prioriza formato vertical (9:16) sobre horizontal — el 80% del consumo es mobile.
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 4: COPYS -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ap-tcontent" id="apTab3">
+
+    <div class="ap-st"><span class="hl">✍️</span> Plantillas de Copy por Segmento y Plataforma</div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      22 plantillas de copy listas para usar. Adapta el tono según la plataforma: más formal en Facebook, más casual en TikTok/IG, más profesional en LinkedIn. Variables entre <strong style="color:var(--accent)">{{corchetes}}</strong> son reemplazables.
+    </p>
+
+    <div class="ap-copies">
+
+      <!-- Copy 1 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">💔</span><span class="cpy-title">Nostalgia · Facebook</span><span class="cpy-plat">📱 Facebook</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"¿Recuerdas cuando sonaba <strong>{{Loco de Amor}}</strong> en las fiestas de los 80s? Esa canción marcó a toda una generación. 🎹<br><br>Hoy, <strong>{{Ramón Orlando}}</strong> sigue haciendo historia con <strong>{{178 canciones}}</strong> que son el alma del merengue dominicano.<br><br>🎧 Escúchala completa en el link 👇"</div>
+          <div class="cpy-label">Headline sugerido</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"La canción que marcó tu juventud sigue sonando 🎵"</div>
+        </div>
+      </div>
+
+      <!-- Copy 2 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🎉</span><span class="cpy-title">Fiesta · Instagram</span><span class="cpy-plat">📱 Instagram</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"La fiesta NO empieza hasta que suena <strong>{{Te Compro Tu Novia}}</strong>. 🔥💃🕺<br><br>¿Cuál es la canción de <strong>{{Ramón Orlando}}</strong> que NO puede faltar en tu fiesta? Te leemos en los comments ⬇️<br><br>🎵 Dale play al playlist completo en el link de la bio"</div>
+          <div class="cpy-label">Headline sugerido</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"La canción que paraliza cualquier fiesta 🔥"</div>
+        </div>
+      </div>
+
+      <!-- Copy 3 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🎵</span><span class="cpy-title">TikTok Challenge</span><span class="cpy-plat">🎵 TikTok</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"POV: Suena <strong>{{El Tiki Tiki del Amor}}</strong> y no puedes quedarte quieto 🕺💃<br><br>Duet this! Baila los 15 segundos y etiqueta a un amigo que AME el merengue ⬇️🔥<br><br>#<strong>merengue</strong> #<strong>ramonorlando</strong> #<strong>tikitiki</strong> #<strong>baile</strong> #<strong>latino</strong> #<strong>fyp</strong>"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"Baila estos 15 segundos sin parar 🕺"</div>
+        </div>
+      </div>
+
+      <!-- Copy 4 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🌎</span><span class="cpy-title">Diáspora · Facebook</span><span class="cpy-plat">📱 Facebook</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"Desde <strong>{{Nueva York}}</strong> hasta <strong>{{Madrid}}</strong>... el merengue nos une sin importar la distancia. 🇩🇴🌎<br><br><strong>{{En Tierra Ajena}}</strong> de <strong>{{Ramón Orlando}}</strong> es la canción que todo dominicano en el exterior lleva en el corazón.<br><br>🎧 ¿La extrañas? Escúchala aquí 👇"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"Para el dominicano que lleva su tierra en el corazón 🌎"</div>
+        </div>
+      </div>
+
+      <!-- Copy 5 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">💒</span><span class="cpy-title">Bodas · Facebook</span><span class="cpy-plat">📱 Facebook</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"¿Te casas? 💍<br><br>Hay una canción que NO puede faltar en tu boda si eres dominicano/a...<br><br><strong>{{Te Compro Tu Novia}}</strong> de <strong>{{Ramón Orlando}}</strong> es el himno de las bodas dominicanas. 🔥<br><br>💒 MIRA el video y dinos: ¿la van a poner en tu boda? ⬇️"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"La canción infaltable en tu boda dominicana 💒"</div>
+        </div>
+      </div>
+
+      <!-- Copy 6 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🎹</span><span class="cpy-title">Industria · LinkedIn</span><span class="cpy-plat">💼 LinkedIn</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"<strong>{{178 canciones}}</strong>. <strong>{{78M+}}</strong> de vistas. <strong>{{4 décadas}}</strong> de legado musical.<br><br>El catálogo de <strong>{{Ramón Orlando}}</strong> representa uno de los activos musicales más valiosos del merengue dominicano. Con <strong>{{15,000+}}</strong> nodos de audiencia detectados y un yield mensual proyectado de <strong>{{$XX,XXX}}</strong> en ingresos fugados, el potencial de monetización es enorme.<br><br>Conoce el proyecto completo 👇"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"178 canciones · 78M vistas · El legado de Ramón Orlando"</div>
+        </div>
+      </div>
+
+      <!-- Copy 7 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🙏</span><span class="cpy-title">Cristiano · Facebook</span><span class="cpy-plat">📱 Facebook</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"Hay momentos que solo la música espiritual puede llenar. 🙏✨<br><br><strong>{{Adoración en el Trono}}</strong> de <strong>{{Ramón Orlando}}</strong> es un viaje de fe a través del piano y la alabanza.<br><br>🎹 Escucha este tema que toca el alma. Comparte con alguien que necesite esta paz 👇"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"Música que toca el alma y eleva el espíritu 🙏"</div>
+        </div>
+      </div>
+
+      <!-- Copy 8 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🔥</span><span class="cpy-title">Urgente · Meta Ads</span><span class="cpy-plat">📱 Meta Ads</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"⚠️ <strong>{{¡ATENCIÓN AMANTES DEL MERENGUE!}}</strong><br><br>¿Sabías que <strong>{{Ramón Orlando}}</strong> tiene <strong>{{178 canciones}}</strong> que siguen sonando en todo el mundo?<br><br>🔥 <strong>{{Te Compro Tu Novia}}</strong> · <strong>{{Loco de Amor}}</strong> · <strong>{{Ring Ring}}</strong> · y <strong>{{MÁS}}</strong><br><br>🚀 Escucha el catálogo completo <strong>{{AQUÍ}}</strong> — Link en comentarios ⬇️"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"🔥 ¡178 canciones que marcaron una época!"</div>
+        </div>
+      </div>
+
+      <!-- Copy 9 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🎬</span><span class="cpy-title">YouTube Pre-roll</span><span class="cpy-plat">🎬 YouTube</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy (script 15s)</div>
+          <div class="cpy-text">"[0-3s] <strong>Gancho visual:</strong> Piano + primera nota de la canción<br>[3-8s] <strong>¿Sabías que {{Te Compro Tu Novia}}</strong> tiene más de <strong>{{85M}}</strong> reproducciones?<br>[8-12s] <strong>{{Ramón Orlando}}</strong> — 178 canciones que son historia viva del merengue.<br>[12-15s] <strong>CTA:</strong> Dale play al catálogo completo 👇"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"85M reproducciones y sigue sonando 🔥"</div>
+        </div>
+      </div>
+
+      <!-- Copy 10 -->
+      <div class="ap-copy">
+        <div class="cpy-head"><span class="cpy-icon">🌴</span><span class="cpy-title">Playlist · General</span><span class="cpy-plat">🎵 Multiplataforma</span></div>
+        <div class="cpy-body">
+          <div class="cpy-label">Copy</div>
+          <div class="cpy-text">"La playlist definitiva para tu fiesta dominicana 🇩🇴🔥<br><br>✅ <strong>{{Te Compro Tu Novia}}</strong> - El himno de las bodas<br>✅ <strong>{{Loco de Amor}}</strong> - El clásico romántico<br>✅ <strong>{{Ring Ring}}</strong> - El tema que todos corean<br>✅ <strong>{{El Tiki Tiki}}</strong> - El nuevo viral<br>✅ <strong>{{+174 canciones más}}</strong><br><br>🎧 Dale play y que NO pare el merengue 👇"</div>
+          <div class="cpy-label">Headline</div>
+          <div class="cpy-text" style="font-style:normal;border-left-color:var(--gold)">"🇩🇴 La playlist dominicana que TODOS necesitan"</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ap-st"><span class="hl">📝</span> Guía Rápida de Copy por Plataforma</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">📱 Facebook</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Tono: <strong>Nostálgico, familiar, comunitario</strong><br>
+          • Extensión: 80-150 caracteres en headline, 2-3 párrafos en copy<br>
+          • Emociones: Nostalgia, orgullo patrio, recuerdos familiares<br>
+          • CTA: "Comparte si..." · "¿Recuerdas cuando...?" · "Escúchala aquí"<br>
+          • Hashtags: #Merengue #RamónOrlando #MúsicaDominicana
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--cyan);margin-bottom:4px">🎵 TikTok / Reels</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Tono: <strong>Casual, retador, trends</strong><br>
+          • Extensión: Máximo 150 caracteres<br>
+          • Emociones: Diversión, baile, energía, humor<br>
+          • CTA: "Duet this" · "Baila este paso" · "Etiqueta a quien..."<br>
+          • Hashtags: #merengue #ramonorlando #baile #latino #fyp #challenge
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 5: ESTRUCTURA -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ap-tcontent" id="apTab4">
+
+    <div class="ap-st"><span class="hl">📋</span> Estructura Recomendada de Campañas</div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Organización de campañas, conjuntos de anuncios y anuncios por plataforma. Esta estructura permite optimizar el presupuesto por segmento de audiencia y medir ROAS por persona.
+    </p>
+
+    <div class="ap-sets">
+
+      <!-- Set 1 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">🔍</span><span class="as-name">Google Ads · Top Hits</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$520/mes</strong></span>
+          <span>ROAS target: <strong>4.5x</strong></span>
+          <span>Keywords: <strong>25-30</strong></span>
+          <span>Formato: <strong>Search + Display</strong></span>
+        </div>
+        <div class="as-detail">Campaña de búsqueda con palabras clave de alta intención: "Ramón Orlando canciones", "merengue antiguo bueno", "te compro tu novia letra". Display con targeting por afinidad a música latina.</div>
+        <div class="as-songs">Loco de Amor · Te Compro Tu Novia · Ring Ring · La Temperatura</div>
+      </div>
+
+      <!-- Set 2 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">👍</span><span class="as-name">Meta · Nostalgia 80s-90s</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$400/mes</strong></span>
+          <span>ROAS target: <strong>3.5x</strong></span>
+          <span>Audiencia: <strong>40-65 años</strong></span>
+          <span>Formato: <strong>Video + Carrusel</strong></span>
+        </div>
+        <div class="as-detail">Segmento nostálgico. Intereses: Merengue clásico, música latina 80s, Ramón Orlando. Creativos: lyric videos, historias detrás de canciones, testimonios. Ubicaciones: RD, USA (NY, FL, NJ), Colombia, Venezuela.</div>
+        <div class="as-songs">Loco de Amor · Tonto Corazón · Dos Sonámbulos · Noche de Bodas</div>
+      </div>
+
+      <!-- Set 3 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">👍</span><span class="as-name">Meta · Fiesta y Eventos</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$350/mes</strong></span>
+          <span>ROAS target: <strong>4.0x</strong></span>
+          <span>Audiencia: <strong>25-55 años</strong></span>
+          <span>Formato: <strong>Video 15-30s</strong></span>
+        </div>
+        <div class="as-detail">Segmento fiestero. Intereses: Fiestas, bodas, eventos latinos, DJs. Creativos: gente bailando, coreografías, momentos de boda. Ideal para remarketing de visitantes del sitio.</div>
+        <div class="as-songs">Te Compro Tu Novia · El Baile del Suá Suá · Ring Ring · Cabecita Loca</div>
+      </div>
+
+      <!-- Set 4 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">🎵</span><span class="as-name">TikTok · Viral Challenge</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$400/mes</strong></span>
+          <span>ROAS target: <strong>3.0x</strong></span>
+          <span>Audiencia: <strong>18-30 años</strong></span>
+          <span>Formato: <strong>Vertical 9:16</strong></span>
+        </div>
+        <div class="as-detail">Segmento joven. Canciones más modernas con potencial de baile. Creativos: dance challenges, duets, transiciones. Hashtags estratégicos. Ideal para alcance y notoriedad de marca.</div>
+        <div class="as-songs">El Tiki Tiki del Amor · Mambo 2026 · Aunque No Quisieran · El Merengue Vive</div>
+      </div>
+
+      <!-- Set 5 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">🌎</span><span class="as-name">Meta · Diáspora Dominicana</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$350/mes</strong></span>
+          <span>ROAS target: <strong>3.5x</strong></span>
+          <span>Audiencia: <strong>30-60 años</strong></span>
+          <span>Formato: <strong>Video Testimonial</strong></span>
+        </div>
+        <div class="as-detail">Segmento diáspora. Targeting geográfico: USA (NY, Boston, Miami, Orlando), España (Madrid, Barcelona), Italia. Intereses: Cultura dominicana, comunidades latinas. Creativos con narrativa de nostalgia y orgullo.</div>
+        <div class="as-songs">En Tierra Ajena · Un Canto a Nueva York · Nostalgia de Mi Pueblo · El Viajero Dominicano</div>
+      </div>
+
+      <!-- Set 6 -->
+      <div class="ap-set">
+        <div class="as-head"><span class="as-icon">🎸</span><span class="as-name">Meta · Bachata Lovers</span></div>
+        <div class="as-meta">
+          <span>Presupuesto: <strong>$200/mes</strong></span>
+          <span>ROAS target: <strong>2.5x</strong></span>
+          <span>Audiencia: <strong>25-45 años</strong></span>
+          <span>Formato: <strong>Carrusel + Video</strong></span>
+        </div>
+        <div class="as-detail">Segmento bachatero. Intereses: Bachata, Aventura, Romeo Santos, música romántica. Creativos con lírica romántica y visuales nostálgicos. Ideal para cruce con audiencias de bachata.</div>
+        <div class="as-songs">Bachata de Amargue · Lágrimas de Amor · Corazón Partido · Guitarra Amarga</div>
+      </div>
+
+    </div>
+
+    <!-- Budget Recommendation -->
+    <div class="ap-st"><span class="hl">💰</span> Distribución de Presupuesto Recomendada</div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;margin:8px 0">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px">
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">Google Ads · $520/mes (24%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:24%;height:100%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">Top 10 canciones · Search + Display · CPA target $5-$7</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--cyan);margin-bottom:4px">Meta · Nostalgia · $400/mes (18%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:18%;height:100%;background:linear-gradient(90deg,var(--cyan),#4ad0e0);border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">40-65 años · RD + USA · Video + Carrusel</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">Meta · Fiesta · $350/mes (16%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:16%;height:100%;background:linear-gradient(90deg,var(--gold),#f59e0b);border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">25-55 años · Eventos/Bodas · Video corto</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--purple);margin-bottom:4px">TikTok · Viral · $400/mes (18%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:18%;height:100%;background:linear-gradient(90deg,var(--purple),#8b6fbf);border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">18-30 años · Challenges · Dance trends</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--accent);margin-bottom:4px">Meta · Diáspora · $350/mes (16%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:16%;height:100%;background:linear-gradient(90deg,var(--accent),#b8944e);border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">30-60 años · USA/España · Testimonios</div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--pink);margin-bottom:4px">Meta · Bachata · $200/mes (8%)</div>
+          <div style="background:var(--bg3);border-radius:8px;height:6px;overflow:hidden;margin-bottom:4px"><div style="width:8%;height:100%;background:linear-gradient(90deg,var(--pink),#e07a9e);border-radius:8px"></div></div>
+          <div style="font-size:8px;color:var(--muted)">25-45 años · Bachateros · Nicho</div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--border)">
+        <span style="font-size:9px;color:var(--muted)">Presupuesto total mensual recomendado</span>
+        <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--gold)">$2,220/mes</span>
+      </div>
+    </div>
+
+    <!-- Quick setup -->
+    <div class="ap-st"><span class="hl">⚡</span> Orden de Activación Recomendado</div>
+    <div style="background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02));border-left:2px solid var(--purple);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:8px 0;font-size:9px;color:var(--muted);line-height:1.8">
+      <strong style="color:var(--text);">Semana 1-2:</strong> Publicación orgánica en grupos de Facebook + Configuración de píxeles y audiences<br>
+      <strong style="color:var(--text);">Semana 3:</strong> Activar Meta Ads — Nostalgia + Fiesta (presupuesto bajo $20/día c/u para test)<br>
+      <strong style="color:var(--text);">Semana 4:</strong> Activar Google Ads — Top 10 canciones ($15/día)<br>
+      <strong style="color:var(--text);">Semana 5:</strong> Activar TikTok Ads — Viral Challenge ($15/día)<br>
+      <strong style="color:var(--text);">Semana 6+:</strong> Escalar lo que funciona, pausar lo que no · Activar Diáspora + Bachata según resultados<br>
+      <strong style="color:var(--text);">Recordatorio:</strong> Usa públicos similares (lookalikes) basados en el engagement orgánico de los grupos de Facebook para reducir CPA en un 20-30%.
+    </div>
+
+  </div>
+
+  <!-- ═══ QUICK LINKS ═══ -->
+  <div class="ap-st"><span class="hl">🔗</span> Acceso Directo a Plataformas</div>
+  <div class="ap-quick">
+    <a href="https://ads.google.com/" target="_blank" rel="noopener"><span class="qicon">🔍</span>Google Ads</a>
+    <a href="https://business.facebook.com/adsmanager/" target="_blank" rel="noopener"><span class="qicon">👍</span>Meta Ads Manager</a>
+    <a href="https://studio.youtube.com/" target="_blank" rel="noopener"><span class="qicon">▶️</span>YouTube Studio</a>
+    <a href="https://ads.tiktok.com/" target="_blank" rel="noopener"><span class="qicon">🎵</span>TikTok Ads</a>
+    <a href="https://www.linkedin.com/campaignmanager/" target="_blank" rel="noopener"><span class="qicon">💼</span>LinkedIn Ads</a>
+    <a href="https://ads.x.com/" target="_blank" rel="noopener"><span class="qicon">🐦</span>X (Twitter) Ads</a>
+    <a href="dashboard-campanas.html"><span class="qicon">📊</span>Dashboard Unificado</a>
+    <a href="campanas-pagas.html"><span class="qicon">📢</span>Campañas Pagas</a>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="ap-footer">
+    <p>🧠 AdsPro · Estrategia de Campañas · Ramón Orlando · Nuclear AIMA · Datos del catálogo 2026</p>
+    <div class="ap-footer-links">
+      <a href="dashboard-campanas.html">📊 Dashboard Unificado</a>
+      <a href="campanas-pagas.html">📢 Campañas Pagas</a>
+      <a href="ramon-orlando-proyecto.html">🎯 Proyecto Ramón Orlando</a>
+      <a href="master-plan.html">⭐ Master Plan</a>
+      <a href="index.html">📊 Dashboard Principal</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── Tab switching ──
+function switchApTab(btn, idx) {
+  document.querySelectorAll('.ap-tab').forEach(t => t.classList.remove('act'));
+  document.querySelectorAll('.ap-tcontent').forEach(t => t.classList.remove('act'));
+  btn.classList.add('act');
+  document.getElementById('apTab' + idx).classList.add('act');
+}
+</script>
+
+</body>
+</html>

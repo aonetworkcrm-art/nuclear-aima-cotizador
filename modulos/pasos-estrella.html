@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pasos Estrella · Fundación Legal para Sellos Independientes · Nuclear AIMA</title>
+<meta name="description" content="Guía definitiva para fundar un sello independiente en República Dominicana: ONAPI, SAS vs SRL, registro en ONDA y Contrato Matriz. Inversión total ~$1,050 USD · ~30 días.">
+<meta name="keywords" content="sello independiente, República Dominicana, ONAPI, SAS, SRL, ONDA, productor fonográfico, contrato matriz, fundación legal, música, regalías, Nuclear AIMA">
+<meta name="author" content="Nuclear AIMA">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pasos Estrella · Fundación Legal para Sellos Independientes">
+<meta property="og:description" content="El método definitivo para fundar un sello independiente en RD: 4 pasos, ~$1,050 USD, ~30 días. ONAPI → SAS → ONDA → Contrato.">
+<meta property="og:site_name" content="Nuclear AIMA">
+<meta property="og:locale" content="es_DO">
+
+<!-- Open Graph Image (inline SVG) -->
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23c9a96e' stroke-width='2'/%3E%3Ctext x='600' y='240' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='64' font-weight='700' fill='%23f0ede8'%3EPasos Estrella%3C/text%3E%3Ctext x='600' y='320' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='28' fill='%23c9a96e'%3ESello Independiente · Rep%C3%BAblica Dominicana%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EONAPI → SAS → ONDA → Contrato%3C/text%3E%3Ctext x='600' y='450' text-anchor='middle' font-family='monospace' font-size='18' fill='%234cad7c'%3E~%241%2C050 USD · ~30 d%C3%ADas%3C/text%3E%3Ctext x='600' y='520' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:url" content="https://nuclearaima.com/pasos-estrella.html">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pasos Estrella · Fundación Legal para Sellos Independientes">
+<meta name="twitter:description" content="Fundar un sello en RD: ONAPI, SAS, ONDA y Contrato Matriz. ~$1,050 USD · ~30 días.">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23c9a96e' stroke-width='2'/%3E%3Ctext x='600' y='240' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='64' font-weight='700' fill='%23f0ede8'%3EPasos Estrella%3C/text%3E%3Ctext x='600' y='320' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='28' fill='%23c9a96e'%3ESello Independiente · Rep%C3%BAblica Dominicana%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EONAPI → SAS → ONDA → Contrato%3C/text%3E%3Ctext x='600' y='450' text-anchor='middle' font-family='monospace' font-size='18' fill='%234cad7c'%3E~%241%2C050 USD · ~30 d%C3%ADas%3C/text%3E%3Ctext x='600' y='520' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0c; --bg2:#111114; --bg3:#18181c; --bg4:#202024;
+    --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.12);
+    --text:#f0ede8; --muted:#6b6966; --accent:#c9a96e; --accent2:#e8c98a;
+    --danger:#e05c5c; --success:#4cad7c; --cyan:#4ad0e0; --gold:#f59e0b;
+    --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Fira Code',monospace;
+    --r:10px; --r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+    background-image:radial-gradient(ellipse at 0% 0%,rgba(201,169,110,0.04) 0%,transparent 50%),
+                     radial-gradient(ellipse at 100% 100%,rgba(76,173,124,0.03) 0%,transparent 50%);
+  }
+  .mc{max-width:900px;margin:0 auto;padding:20px}
+
+  /* ── Header ── */
+  .pe-header{text-align:center;padding:30px 0 18px;border-bottom:0.5px solid var(--border);margin-bottom:20px}
+  .pe-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .pe-badge{display:inline-flex;align-items:center;gap:4px;font-size:8px;font-weight:600;letter-spacing:0.07em;padding:3px 10px;border-radius:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);text-transform:uppercase}
+  .pe-badge.gold{background:linear-gradient(135deg,rgba(201,169,110,0.15),rgba(201,169,110,0.05));border-color:rgba(201,169,110,0.3);color:var(--accent)}
+  .pe-badge.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04));border-color:rgba(74,208,224,0.25);color:var(--cyan)}
+  .pe-badge.green{background:linear-gradient(135deg,rgba(76,173,124,0.1),rgba(76,173,124,0.03));border-color:rgba(76,173,124,0.2);color:var(--success)}
+  .pe-title{font-size:24px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+  .pe-title span{color:var(--gold)}
+  .pe-sub{font-size:11px;color:var(--muted);max-width:550px;margin:0 auto;line-height:1.6}
+  .pe-version{font-size:9px;color:var(--muted);font-family:var(--mono);margin-top:6px}
+
+  /* ── Flow ── */
+  .pe-flow{display:flex;align-items:center;justify-content:center;gap:0;margin:16px 0 22px;padding:10px 14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);flex-wrap:wrap}
+  .pe-flow-step{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 8px;border-radius:var(--r)}
+  .pe-flow-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:var(--bg4);color:var(--muted);border:0.5px solid var(--border)}
+  .pe-flow-step.active .pe-flow-num{background:var(--accent);color:#0d0d0f;box-shadow:0 0 16px rgba(201,169,110,0.25)}
+  .pe-flow-label{font-size:7px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .pe-flow-step.active .pe-flow-label{color:var(--text)}
+  .pe-flow-arrow{color:var(--muted);font-size:12px;opacity:0.3;margin:0 2px}
+
+  /* ── Steps ── */
+  .pe-step{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);margin-bottom:12px;overflow:hidden;transition:all 0.3s}
+  .pe-step:hover{border-color:rgba(201,169,110,0.2)}
+  .pe-step.open{border-color:rgba(201,169,110,0.4)}
+  .pe-step.open .pe-step-arrow{transform:rotate(180deg)}
+  .pe-step-header{display:flex;align-items:center;gap:12px;padding:16px 18px;cursor:pointer;transition:background 0.15s}
+  .pe-step-header:hover{background:var(--bg3)}
+  .pe-step-icon{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--bg4);border:0.5px solid var(--border)}
+  .pe-step.open .pe-step-icon{background:rgba(201,169,110,0.12);border-color:rgba(201,169,110,0.3)}
+  .pe-step-info{flex:1;min-width:0}
+  .pe-step-num{font-size:8px;font-weight:600;color:var(--accent);letter-spacing:0.08em;margin-bottom:1px}
+  .pe-step-title{font-size:14px;font-weight:600}
+  .pe-step-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .pe-meta{font-size:8px;padding:1px 6px;border-radius:4px;background:var(--bg4);color:var(--muted);border:0.5px solid var(--border)}
+  .pe-step-arrow{font-size:10px;color:var(--muted);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);flex-shrink:0}
+  .pe-step-body{display:none;padding:0 18px 18px}
+  .pe-step.open .pe-step-body{display:block;animation:fadeUp 0.3s ease}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .pe-step-body p{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px}
+
+  /* ── Detail Grid ── */
+  .pe-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+  @media(max-width:600px){.pe-detail-grid{grid-template-columns:1fr}}
+  .pe-detail-item{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r);padding:8px 10px}
+  .pe-detail-label{display:block;font-size:7px;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent);font-weight:600;margin-bottom:2px}
+  .pe-detail-value{display:block;font-size:10px;color:var(--text);line-height:1.4}
+  .pe-tip{background:linear-gradient(135deg,rgba(201,169,110,0.06),rgba(201,169,110,0.02));border-left:2px solid var(--accent);padding:8px 12px;border-radius:0 var(--r) var(--r) 0;margin:10px 0 0;font-size:10px;line-height:1.6;color:var(--muted)}
+  .pe-tip strong{color:var(--text)}
+
+  /* ── Compare ── */
+  .pe-compare-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:18px;margin:16px 0}
+  .pe-compare-section h3{font-size:14px;font-weight:600;margin-bottom:8px}
+  .pe-compare-section > p{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .pe-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:600px){.pe-compare-grid{grid-template-columns:1fr}}
+  .pe-compare-col{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px}
+  .pe-compare-col.loser{border-color:rgba(224,92,92,0.2)}
+  .pe-compare-col.winner{border-color:rgba(76,173,124,0.35);background:linear-gradient(135deg,rgba(76,173,124,0.06),rgba(76,173,124,0.02))}
+  .pe-compare-title{font-size:12px;font-weight:700;margin-bottom:8px;padding-bottom:6px;border-bottom:0.5px solid var(--border)}
+  .pe-compare-col.loser .pe-compare-title{color:var(--danger)}
+  .pe-compare-col.winner .pe-compare-title{color:var(--success)}
+  .pe-compare-col ul{list-style:none;padding:0;margin:0}
+  .pe-compare-col ul li{font-size:10px;color:var(--muted);padding:4px 0 4px 14px;position:relative;line-height:1.5}
+  .pe-compare-col ul li::before{content:'';position:absolute;left:0;top:10px;width:5px;height:5px;border-radius:50%}
+  .pe-compare-col.loser ul li::before{background:var(--danger)}
+  .pe-compare-col.winner ul li::before{background:var(--success)}
+  .pe-compare-col.winner ul li{color:var(--text)}
+  .pe-sas-cta{display:inline-block;margin-top:12px;font-size:10px;font-weight:600;color:var(--success);background:rgba(76,173,124,0.1);border:0.5px solid rgba(76,173,124,0.25);border-radius:var(--r);padding:6px 12px}
+
+  /* ── Bottleneck ── */
+  .pe-bottleneck{background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(224,92,92,0.02));border-left:3px solid var(--danger);border-radius:0 var(--r2) var(--r2) 0;padding:14px 16px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}
+  .pe-bn-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+  .pe-bn-title{font-size:9px;font-weight:700;color:var(--danger);letter-spacing:0.07em;margin-bottom:4px}
+  .pe-bn-content p{font-size:11px;color:var(--muted);line-height:1.6;margin:0}
+  .pe-bn-content strong{color:var(--text)}
+
+  /* ── Summary Table ── */
+  .pe-summary-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-top:16px}
+  .pe-summary-header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:0.5px solid var(--border)}
+  .pe-summary-header .icon{font-size:20px}
+  .pe-summary-header h3{font-size:13px;font-weight:600;flex:1}
+  .pe-summary-header .total-badge{font-size:10px;font-weight:600;padding:3px 12px;border-radius:10px;background:rgba(201,169,110,0.12);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .pe-summary-table{width:100%;border-collapse:collapse;font-size:11px}
+  .pe-summary-table th{text-align:left;padding:8px 12px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)}
+  .pe-summary-table td{padding:7px 12px;border-bottom:0.5px solid rgba(255,255,255,0.03)}
+  .pe-summary-table tr:hover td{background:rgba(201,169,110,0.03)}
+  .pe-summary-table tr.total td{font-weight:700;background:var(--bg3);border-top:0.5px solid var(--border2)}
+  .pe-summary-table td.gold{color:var(--gold)}
+  .pe-summary-table td.success{color:var(--success)}
+
+  /* ── Completion ── */
+  .pe-complete{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:16px;margin-top:12px;display:flex;gap:14px;align-items:flex-start}
+  .pe-complete-icon{font-size:22px;flex-shrink:0;margin-top:1px}
+  .pe-complete-content h4{font-size:12px;font-weight:600;color:var(--success);margin-bottom:6px}
+  .pe-complete-items{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  @media(max-width:600px){.pe-complete-items{grid-template-columns:1fr}}
+  .pe-complete-item{font-size:10px;color:var(--muted);padding:4px 0 4px 16px;position:relative;line-height:1.5}
+  .pe-complete-item::before{content:'✓';position:absolute;left:0;color:var(--success);font-weight:700}
+  .pe-complete-item strong{color:var(--text)}
+
+  /* ── Section Divider ── */
+  .pe-divider{text-align:center;padding:10px 0;position:relative;margin:6px 0}
+  .pe-divider::after{content:'';position:absolute;left:0;right:0;top:50%;height:0.5px;background:var(--border);z-index:0}
+  .pe-divider span{display:inline-block;background:var(--bg);padding:0 12px;font-size:9px;color:var(--muted);font-family:var(--mono);letter-spacing:0.05em;position:relative;z-index:1}
+
+  /* ── Buttons ── */
+  .pe-actions{display:flex;justify-content:center;gap:10px;margin:20px 0 10px;flex-wrap:wrap}
+  .pe-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r);border:none;cursor:pointer;font-size:11px;font-weight:500;font-family:var(--font);transition:all 0.15s;text-decoration:none}
+  .pe-btn-primary{background:var(--accent);color:#0d0d0f}
+  .pe-btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+  .pe-btn-secondary{background:var(--bg3);color:var(--text);border:0.5px solid var(--border)}
+  .pe-btn-secondary:hover{background:var(--bg4);border-color:rgba(201,169,110,0.3)}
+  .pe-btn-exec{background:linear-gradient(135deg,rgba(76,173,124,0.15),rgba(76,173,124,0.05));color:var(--success);border:0.5px solid rgba(76,173,124,0.3)}
+  .pe-btn-exec:hover{background:rgba(76,173,124,0.2);transform:translateY(-1px)}
+  .pe-btn-back{background:var(--bg2);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .pe-btn-back:hover{background:var(--bg3)}
+
+  /* ── Footer ── */
+  .pe-footer{text-align:center;padding:20px 0;border-top:0.5px solid var(--border);margin-top:20px}
+  .pe-footer p{font-size:9px;color:var(--muted);font-family:var(--mono)}
+  .pe-footer .pe-footer-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .pe-footer .pe-footer-links a{color:var(--accent);text-decoration:none;font-size:10px}
+  .pe-footer .pe-footer-links a:hover{text-decoration:underline}
+
+  /* ── Responsive ── */
+  @media(max-width:600px){.mc{padding:12px}.pe-title{font-size:20px}.pe-step-header{padding:12px 14px}.pe-step-body{padding:0 14px 14px}.pe-compare-section{padding:14px}}
+
+  /* ── Print Styles ── */
+  @media print {
+    body{background:#fff;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mc{max-width:100%;padding:10px}
+    .pe-header{border-bottom-color:#ddd;padding:15px 0}
+    .pe-title{font-size:20px}
+    .pe-title span{color:#b8944e}
+    .pe-sub{color:#555}
+    .pe-badge,.pe-meta{background:#f0f0f0!important;color:#333!important;border-color:#ddd!important}
+    .pe-badge.gold{background:#f5e6c8!important;border-color:#b8944e!important;color:#8a6d2b!important}
+    .pe-badge.cyan{background:#d0f0f5!important;border-color:#4ad0e0!important;color:#1a7a8a!important}
+    .pe-badge.green{background:#d0f0e0!important;border-color:#4cad7c!important;color:#2d6b4f!important}
+    .pe-flow,.pe-step,.pe-compare-section,.pe-summary-card,.pe-complete,.pe-bottleneck{background:#f8f8f8!important;border-color:#ddd!important;box-shadow:none!important}
+    .pe-step-header:hover,.pe-step:hover{background:transparent!important}
+    .pe-step-body{display:block!important;animation:none!important}
+    .pe-step.open .pe-step-body{animation:none!important}
+    .pe-step-arrow{display:none!important}
+    .pe-step-header{cursor:default!important}
+    .pe-step-icon,.pe-detail-item,.pe-meta,.pe-compare-col{background:#eee!important;border-color:#ddd!important}
+    .pe-detail-label{color:#b8944e!important}
+    .pe-compare-col.loser{border-color:#e05c5c!important}
+    .pe-compare-col.winner{border-color:#4cad7c!important;background:#e8f5ee!important}
+    .pe-compare-col.loser .pe-compare-title{color:#c0392b!important}
+    .pe-compare-col.winner .pe-compare-title{color:#27ae60!important}
+    .pe-compare-col.loser ul li::before{background:#e74c3c!important}
+    .pe-compare-col.winner ul li::before{background:#2ecc71!important}
+    .pe-tip,.pe-bottleneck,.pe-sas-cta{background:#f5f5f5!important;border-left-color:#b8944e!important}
+    .pe-bottleneck{border-left-color:#e74c3c!important}
+    .pe-bn-title{color:#c0392b!important}
+    .pe-complete-content h4{color:#27ae60!important}
+    .pe-complete-item::before{color:#27ae60!important}
+    .pe-complete-item strong,.pe-detail-value{color:#111!important}
+    .pe-step-body p{color:#333!important}
+    .pe-summary-table th{background:#e8e8e8!important;color:#555!important}
+    .pe-summary-table td{color:#333!important;border-bottom-color:#ddd!important}
+    .pe-summary-table tr.total td{background:#e8e8e8!important}
+    .pe-summary-table td.gold{color:#b8944e!important}
+    .pe-btn,.pe-actions{display:none!important}
+    .pe-footer{border-top-color:#ddd}
+    .pe-footer p{color:#555}
+    .ns-sidebar,.ns-mobile-hamburger,#nuclear-sidebar{display:none!important}
+    body.ns-sidebar-ready{margin-left:0!important}
+    .pe-version{color:#555}
+    .pe-divider span{background:#fff;color:#555}
+    @page{margin:15mm}
+    h3{page-break-after:avoid}
+    .pe-step{page-break-inside:avoid}
+    .pe-compare-section,.pe-summary-card{page-break-inside:avoid}
+    .pe-bottleneck{page-break-inside:avoid}
+    .pe-complete{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="pe-header">
+    <div class="pe-badges">
+      <span class="pe-badge gold">⭐ 4 PASOS</span>
+      <span class="pe-badge">~$1,050 USD</span>
+      <span class="pe-badge">~30 DÍAS</span>
+      <span class="pe-badge cyan">BASE LEGAL</span>
+      <span class="pe-badge green">100% EJECUTABLE</span>
+    </div>
+    <h1 class="pe-title">Pasos <span>Estrella</span></h1>
+    <p class="pe-sub">El método definitivo para fundar un sello independiente en República Dominicana y habilitar reclamos de regalías internacionales.</p>
+    <div class="pe-version">v2.0 · Nuclear AIMA · Basado en start.txt (981 líneas)</div>
+  </div>
+
+  <!-- ═══ FLOW ═══ -->
+  <div class="pe-flow">
+    <div class="pe-flow-step active"><div class="pe-flow-num">1</div><div class="pe-flow-label">ONAPI</div></div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step"><div class="pe-flow-num">2</div><div class="pe-flow-label">SAS</div></div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step"><div class="pe-flow-num">3</div><div class="pe-flow-label">ONDA</div></div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step"><div class="pe-flow-num">4</div><div class="pe-flow-label">Contrato</div></div>
+  </div>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="pe-actions">
+    <a href="pasos-estrella-ejecutivo.pdf" class="pe-btn pe-btn-exec" download>⬇ Descargar PDF Precargado</a>
+    <button class="pe-btn pe-btn-primary" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+    <a href="master-plan.html" class="pe-btn pe-btn-back">← Ver en Master Plan</a>
+  </div>
+
+  <!-- ═══ STEP 1: ONAPI ═══ -->
+  <div class="pe-step open">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">🏛️</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 1 · Semana 1</div>
+        <h3 class="pe-step-title">Registrar Nombre Comercial en ONAPI</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$3,500–RD$6,500</span>
+          <span class="pe-meta">5–10 días</span>
+          <span class="pe-meta">Clase 41 + 35</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>La <strong>Oficina Nacional de la Propiedad Industrial</strong> es donde registras el nombre de tu sello como marca protegida en República Dominicana. El certificado de ONAPI es la primera prueba de que existes como entidad formal ante distribuidoras internacionales. <strong>Sin este papel, no puedes constituir la empresa.</strong></p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📍 Dónde</span>
+          <span class="pe-detail-value"><strong>onapi.gob.do</strong> — Sistema E-SERPI en línea. Físicamente en Av. Los Próceres, Santo Domingo.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Clases Críticas</span>
+          <span class="pe-detail-value"><strong>Clase 41</strong> — Producción musical, edición discográfica, gestión de entretenimiento.<br><strong>Clase 35</strong> — Gestión de negocios comerciales, administración de activos intangibles.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">💰 Costo</span>
+          <span class="pe-detail-value">RD$3,500 a RD$6,500 (~$60–$110 USD) según modalidad. <strong>Registrar ambas clases cuesta lo mismo que una sola.</strong></span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">⏱ Tiempo</span>
+          <span class="pe-detail-value">5 días hábiles para el certificado. Hasta 10 si hay revisión manual.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> Antes de pagar, busca en el portal de ONAPI si el nombre que elegiste ya está registrado. Elige un nombre que suene institucional en español e inglés: ej. <em>Antilles Music Group</em>, <em>Heritage Catalog Assets</em>, <em>Caribe Legacy Records</em>. No confundas Nombre Comercial con Marca — la marca (RD$15,000+) puede esperar.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2: SAS ═══ -->
+  <div class="pe-step">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">🏢</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 2 · Semanas 1–3</div>
+        <h3 class="pe-step-title">Constituir la SAS (Sociedad por Acciones Simplificada)</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">~RD$28,000</span>
+          <span class="pe-meta">15–20 días</span>
+          <span class="pe-meta" style="color:var(--success);border-color:rgba(76,173,124,0.3);background:rgba(76,173,124,0.08)">✔ SAS > SRL</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>La estructura legal que separa tu patrimonio personal del de la empresa. Es el requisito para que distribuidoras internacionales firmen contratos contigo. <strong>En República Dominicana, la SAS es superior a la SRL</strong> para proyectos de gestión de catálogos musicales, contratos internacionales y tokenización Web3.</p>
+      <p><strong>Pasos:</strong> (2A) Redactar estatutos con notario → (2B) Pagar impuesto DGII → (2C) Registrar en Cámara de Comercio → (2D) Solicitar RNC</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📝 Objeto Social</span>
+          <span class="pe-detail-value">Debe decir: <em>"Distribución digital, administración, licenciamiento y explotación comercial de fonogramas, catálogos musicales y derechos conexos, desarrollo de infraestructura tecnológica"</em>. Si es genérico, las distribuidoras cuestionarán tu facultad legal.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">🏦 Cuenta Bancaria</span>
+          <span class="pe-detail-value"><strong>Abrirla inmediatamente después del RNC.</strong> Banreservas y BHD León manejan transferencias internacionales de regalías. Sin cuenta corporativa, no puedes recibir pagos de SoundExchange ni distribuidoras.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> El capital social mínimo legal es RD$100,000. Declara ese monto — pagas 1% de impuesto de constitución = RD$1,000. No declares más de lo necesario en esta etapa. Busca un abogado que haya constituido SAS antes — no es lo mismo que una SRL.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3: ONDA ═══ -->
+  <div class="pe-step">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">📜</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 3 · Semanas 2–4</div>
+        <h3 class="pe-step-title">Registrar la SAS como Productor Fonográfico en ONDA</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$8,000–RD$10,000</span>
+          <span class="pe-meta">10–15 días</span>
+          <span class="pe-meta" style="color:var(--gold);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.08)">⚠️ PODEROSO</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p><strong>Este es el paso que casi todos omiten y es el más poderoso.</strong> La mayoría sabe que la ONDA protege a los autores. Lo que no saben es que también reconoce a los <strong>Productores Fonográficos</strong> — los dueños de las grabaciones (masters). Al registrar tu SAS bajo esta categoría, el Estado dominicano te reconoce formalmente como una entidad con facultad legal para poseer, distribuir y reclamar masters.</p>
+      <p>Cuando YouTube recibe un reclamo de derechos de tu empresa respaldado por una certificación de la ONDA, lo procesa con <strong>prioridad institucional</strong>. No eres un usuario anónimo reclamando — eres una entidad legal reconocida por un Estado soberano.</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📍 Dónde</span>
+          <span class="pe-detail-value">Oficinas físicas de la ONDA en Santo Domingo. <strong>No se hace en línea</strong>.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📄 Documentos</span>
+          <span class="pe-detail-value">RNC de la SAS, Registro Mercantil (Cámara de Comercio), certificado de ONAPI (Paso 1).</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">🎯 Solicitar</span>
+          <span class="pe-detail-value"><strong>Productor Fonográfico</strong> — no como autor individual. Son categorías diferentes.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">💰 Costo</span>
+          <span class="pe-detail-value">RD$8,000 a RD$10,000 (~$135–$170 USD).</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 El truco de la Obra Colectiva:</strong> En la misma visita, pregunta por el registro de <strong>Obra Colectiva</strong>. Registrar las 178 canciones como compilación en lugar de una por una reduce el costo de <strong>RD$300,000 a menos de RD$10,000</strong>. Este ahorro paga todo el proceso legal.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4: CONTRATO ═══ -->
+  <div class="pe-step">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">✍️</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 4 · Semana 3</div>
+        <h3 class="pe-step-title">Contrato Matriz de Administración</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$15,000–RD$18,000</span>
+          <span class="pe-meta">3–5 días</span>
+          <span class="pe-meta" style="color:var(--success);border-color:rgba(76,173,124,0.3);background:rgba(76,173,124,0.08)">✔ Activo legal clave</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>Lo pagas una vez y lo usas con cada artista que incorpores al sello durante años. Es <strong>tu activo legal más valioso</strong>. Bien redactado, te protege ante cualquier disputa y le da al artista la certeza de que no te quedarás con su música. Busca un abogado especializado en entretenimiento y propiedad intelectual, no un corporativo general.</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 1</span>
+          <span class="pe-detail-value"><strong>Mandato de Administración Exclusiva</strong> — Poder para negociar distribución, reclamar derechos, registrar ISRCs y administrar plataformas digitales en nombre del artista.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 2</span>
+          <span class="pe-detail-value"><strong>Claim & Monetize</strong> — No eliminar videos de terceros. Solo reclamar la monetización. Protege el tráfico orgánico histórico y la imagen del artista.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 3</span>
+          <span class="pe-detail-value"><strong>Split de Regalías</strong> — 70% artista / 30% sello. Para catálogos muy valiosos, negociar 75/25.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 4</span>
+          <span class="pe-detail-value"><strong>Duración 10 años</strong> — Con renovación automática. Protege tu inversión en digitalización y gestión del catálogo.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 5</span>
+          <span class="pe-detail-value"><strong>Adelanto Recuperable</strong> — Cualquier adelanto al artista se recupera de las primeras regalías antes del split.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 6</span>
+          <span class="pe-detail-value"><strong>Explotación Web3</strong> — Autorización expresa para tokenización, mercado secundario y activos digitales del catálogo.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> Busca un abogado que haya trabajado con <strong>artistas o sellos discográficos</strong>, no un corporativo general. La diferencia en calidad del contrato es enorme. La ONDA puede orientarte sobre especialistas en derecho de autor en el país.</div>
+    </div>
+  </div>
+
+  <!-- ═══ DIVIDER ═══ -->
+  <div class="pe-divider"><span>ANÁLISIS Y RECURSOS</span></div>
+
+  <!-- ═══ BOTTLENECK ═══ -->
+  <div class="pe-bottleneck">
+    <div class="pe-bn-icon">🚨</div>
+    <div class="pe-bn-content">
+      <div class="pe-bn-title">EL CUELLO DE BOTELLA — ORDEN IRROMPIBLE</div>
+      <p><strong>ONAPI → SAS → RNC → Cuenta Bancaria → ONDA → Contrato → Pitch.</strong> No puedes ir a la ONDA como empresa sin el RNC. No puedes pedir el RNC sin el Registro Mercantil. No puedes hacer el Registro Mercantil sin un nombre de ONAPI registrado. Cada paso depende del anterior. Saltarse uno es perder semanas en devoluciones.</p>
+    </div>
+  </div>
+
+  <!-- ═══ SAS vs SRL ═══ -->
+  <div class="pe-compare-section">
+    <h3>💎 SAS vs SRL: ¿Cuál elegir?</h3>
+    <p>En República Dominicana existen dos figuras jurídicas para empresas privadas: la <strong>SRL</strong> (Sociedad de Responsabilidad Limitada, Ley 479-08) y la <strong>SAS</strong> (Sociedad por Acciones Simplificada, Ley 31-11). Aunque ambas limitan la responsabilidad personal, la SAS fue creada específicamente para emprendimientos modernos, tecnológicos y con proyección internacional.</p>
+    <p><strong>Para un sello independiente que manejará activos digitales, contratos internacionales y tokenización Web3, la SAS es la única opción correcta.</strong> La SRL fue diseñada para negocios tradicionales (tiendas, restaurantes, servicios locales) donde no se espera inversión externa. La SAS fue diseñada para startups, scale-ups y empresas de propiedad intelectual. La diferencia decisiva: en una SRL, transferir las cuotas requiere modificar los estatutos ante la Cámara de Comercio. En una SAS, las acciones se transfieren con un simple endoso. Cuando llegue el momento de la LLC en Wyoming y la tokenización, la estructura de acciones de la SAS facilita la cesión de derechos internacional sin fricción.</p>
+    <div class="pe-compare-grid">
+      <div class="pe-compare-col loser">
+        <div class="pe-compare-title">❌ SRL (Tradicional)</div>
+        <ul>
+          <li>Requiere <strong>mínimo 2 socios</strong> para constituirse</li>
+          <li>Transferencia de cuotas requiere asamblea y modificación de estatutos</li>
+          <li>Estructura de gobierno rígida (Junta Directiva obligatoria)</li>
+          <li>No puede emitir acciones para captar capital</li>
+          <li>Marco legal tradicional sin flexibilidad operativa</li>
+          <li>Requiere asamblea para cambios de administración</li>
+        </ul>
+      </div>
+      <div class="pe-compare-col winner">
+        <div class="pe-compare-title">✔ SAS (Recomendada)</div>
+        <ul>
+          <li><strong>1 solo socio</strong> es suficiente — control total desde el inicio</li>
+          <li>Acciones transferibles libremente sin trámites complejos</li>
+          <li>Flexibilidad total: los estatutos definen el gobierno corporativo</li>
+          <li>Puede emitir acciones para inversionistas y tokenización</li>
+          <li>Marco moderno (Ley 31-11) alineado con estándares internacionales</li>
+          <li>Cambios de administración simples según los estatutos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pe-sas-cta">✔ RECOMENDACIÓN: Constituye una SAS, no una SRL. Tu abogado debe saber la diferencia.</div>
+  </div>
+
+  <!-- ═══ INVESTMENT TABLE ═══ -->
+  <div class="pe-summary-card">
+    <div class="pe-summary-header">
+      <span class="icon">💰</span>
+      <h3>Inversión Total de la Fase 1</h3>
+      <span class="total-badge">~$1,050 USD</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="pe-summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Paso</th>
+            <th>Institución</th>
+            <th>Costo RD$</th>
+            <th>Costo USD</th>
+            <th>Tiempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Nombre Comercial</td>
+            <td>ONAPI</td>
+            <td>RD$3,500–6,500</td>
+            <td class="gold">~$100</td>
+            <td>5–10 días</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Constitución SAS + RNC</td>
+            <td>Cámara Comercio + DGII</td>
+            <td>RD$24,000–30,000</td>
+            <td class="gold">~$500</td>
+            <td>15–20 días</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Productor Fonográfico</td>
+            <td>ONDA</td>
+            <td>RD$8,000–10,000</td>
+            <td class="gold">~$150</td>
+            <td>10–15 días</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Contrato Matriz</td>
+            <td>Abogado Especializado</td>
+            <td>RD$15,000–18,000</td>
+            <td class="gold">~$300</td>
+            <td>3–5 días</td>
+          </tr>
+          <tr class="total">
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td></td>
+            <td><strong>~RD$52,000</strong></td>
+            <td class="gold"><strong>~$1,050</strong></td>
+            <td><strong>~30 días</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ COMPLETION ═══ -->
+  <div class="pe-complete">
+    <div class="pe-complete-icon">🏆</div>
+    <div class="pe-complete-content">
+      <h4>✅ Al completar esta fase tienes en tus manos</h4>
+      <div class="pe-complete-items">
+        <div class="pe-complete-item"><strong>1.</strong> Certificado de ONAPI — Tu nombre comercial protegido en todo RD</div>
+        <div class="pe-complete-item"><strong>2.</strong> RNC y Registro Mercantil — Tu SAS existe legalmente ante el Estado</div>
+        <div class="pe-complete-item"><strong>3.</strong> Certificación ONDA — Facultad legal para administrar masters internacionalmente</div>
+        <div class="pe-complete-item"><strong>4.</strong> Contrato Matriz firmado — Términos claros y justos con cada artista del sello</div>
+        <div class="pe-complete-item"><strong>5.</strong> Cuenta Bancaria Corporativa — Lista para recibir pagos internacionales</div>
+        <div class="pe-complete-item"><strong>6.</strong> Base para el Pitch — Documentación lista para Believe / The Orchard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="pe-footer">
+    <p>Pasos Estrella · Nuclear AIMA · Basado en start.txt (981 líneas) y estrategia Hyperion</p>
+    <div class="pe-footer-links">
+      <a href="master-plan.html">⭐ Master Plan</a>
+      <a href="onapi-onda.html">🏛️ Guía ONAPI/ONDA</a>
+      <a href="ramon-orlando-proyecto.html">🎯 Proyecto Ramón Orlando</a>
+      <a href="index.html">📊 Dashboard</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

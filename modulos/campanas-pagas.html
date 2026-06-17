@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📢 Campañas Pagas · Ramón Orlando · Nuclear AIMA</title>
+<meta name="description" content="Panel de control de campañas pagas para Ramón Orlando: Google Ads, Facebook Ads, YouTube Ads. Métricas de rendimiento, presupuesto, y ROAS en tiempo real.">
+<meta name="keywords" content="campañas pagas, publicidad, Google Ads, Facebook Ads, YouTube Ads, Ramón Orlando, marketing, embudos, conversión, Nuclear AIMA">
+<meta name="author" content="Nuclear AIMA">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Campañas Pagas · Ramón Orlando · Panel de Métricas">
+<meta property="og:description" content="Google Ads, Facebook Ads, YouTube Ads para el catálogo de Ramón Orlando. KPIs, presupuesto y ROAS.">
+<meta property="og:site_name" content="Nuclear AIMA">
+<meta property="og:locale" content="es_DO">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23f59e0b' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='56' font-weight='700' fill='%23f0ede8'%3ECampa%C3%B1as Pagas%3C/text%3E%3Ctext x='600' y='310' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='26' fill='%23f59e0b'%3ERam%C3%B3n Orlando · Google · Facebook · YouTube%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EImpresiones · Clics · Conversiones · ROAS%3C/text%3E%3Ctext x='600' y='490' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:url" content="https://nuclearaima.com/campanas-pagas.html">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Campañas Pagas · Ramón Orlando · Panel de Métricas">
+<meta name="twitter:description" content="Dashboard de campañas pagas: Google Ads, Facebook Ads, YouTube Ads. KPIs y ROAS.">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%23f59e0b' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='56' font-weight='700' fill='%23f0ede8'%3ECampa%C3%B1as Pagas%3C/text%3E%3Ctext x='600' y='310' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='26' fill='%23f59e0b'%3ERam%C3%B3n Orlando · Google · Facebook · YouTube%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='22' fill='%236b6966'%3EImpresiones · Clics · Conversiones · ROAS%3C/text%3E%3Ctext x='600' y='490' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0c; --bg2:#111114; --bg3:#18181c; --bg4:#202024;
+    --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.12);
+    --text:#f0ede8; --muted:#6b6966;
+    --accent:#c9a96e; --accent2:#e8c98a;
+    --danger:#e05c5c; --success:#4cad7c;
+    --cyan:#4ad0e0; --gold:#f59e0b;
+    --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Fira Code',monospace;
+    --r:10px; --r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+    background-image:radial-gradient(ellipse at 0% 0%,rgba(245,158,11,0.04) 0%,transparent 50%),
+                     radial-gradient(ellipse at 100% 100%,rgba(224,92,92,0.03) 0%,transparent 50%);
+  }
+  .mc{max-width:1100px;margin:0 auto;padding:20px}
+
+  /* ── Header ── */
+  .cp-header{text-align:center;padding:30px 0 18px;border-bottom:0.5px solid var(--border);margin-bottom:18px}
+  .cp-badges{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .cp-badge{display:inline-flex;align-items:center;gap:4px;font-size:8px;font-weight:600;letter-spacing:0.07em;padding:3px 10px;border-radius:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);text-transform:uppercase}
+  .cp-badge.gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border-color:rgba(245,158,11,0.3);color:var(--gold)}
+  .cp-badge.red{background:linear-gradient(135deg,rgba(224,92,92,0.1),rgba(224,92,92,0.03));border-color:rgba(224,92,92,0.2);color:var(--danger)}
+  .cp-badge.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04));border-color:rgba(74,208,224,0.25);color:var(--cyan)}
+  .cp-badge.green{background:linear-gradient(135deg,rgba(76,173,124,0.1),rgba(76,173,124,0.03));border-color:rgba(76,173,124,0.2);color:var(--success)}
+  .cp-title{font-size:26px;font-weight:700;letter-spacing:-0.5px;margin-bottom:4px}
+  .cp-title span{color:var(--gold)}
+  .cp-sub{font-size:11px;color:var(--muted);max-width:600px;margin:0 auto;line-height:1.6}
+  .cp-version{font-size:9px;color:var(--muted);font-family:var(--mono);margin-top:6px}
+
+  /* ── Stats Row ── */
+  .cp-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+  @media(max-width:700px){.cp-stats{grid-template-columns:1fr 1fr}}
+  .cp-stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px 12px;text-align:center;transition:all 0.2s;position:relative;overflow:hidden}
+  .cp-stat:hover{border-color:rgba(245,158,11,0.3);transform:translateY(-1px)}
+  .cp-stat .cp-sn{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+  .cp-stat .cp-sv{font-size:20px;font-weight:700;font-family:var(--mono);margin-top:3px}
+  .cp-stat .cp-sv.gold{color:var(--gold)}
+  .cp-stat .cp-sv.success{color:var(--success)}
+  .cp-stat .cp-sv.danger{color:var(--danger)}
+  .cp-stat .cp-sv.cyan{color:var(--cyan)}
+  .cp-stat .cp-sv.accent{color:var(--accent)}
+  .cp-stat .cp-ss{font-size:8px;color:var(--muted);margin-top:2px}
+
+  /* ── Section Title ── */
+  .cp-st{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:22px 0 10px;padding-bottom:6px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+  .cp-st .hl{color:var(--accent)}
+
+  /* ── KPI Grid ── */
+  .cp-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:0 0 14px}
+  .cp-kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center;transition:all 0.15s}
+  .cp-kpi:hover{border-color:rgba(245,158,11,0.2);background:var(--bg3)}
+  .cp-kpi .kn{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .cp-kpi .kv{font-size:16px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .cp-kpi .kv.gold{color:var(--gold)}
+  .cp-kpi .kv.success{color:var(--success)}
+  .cp-kpi .kv.danger{color:var(--danger)}
+  .cp-kpi .kv.cyan{color:var(--cyan)}
+  .cp-kpi .kv.accent{color:var(--accent)}
+  .cp-kpi .ks{font-size:8px;color:var(--muted);margin-top:2px;font-family:var(--mono)}
+
+  /* ── Platform Cards ── */
+  .cp-platforms{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin:0 0 14px}
+  .cp-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all 0.2s}
+  .cp-card:hover{border-color:rgba(245,158,11,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+  .cp-card-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:0.5px solid var(--border)}
+  .cp-card-icon{font-size:24px;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg4);border:0.5px solid var(--border);flex-shrink:0}
+  .cp-card-info{flex:1}
+  .cp-card-info h3{font-size:13px;font-weight:600}
+  .cp-card-info .cp-card-sub{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .cp-card-body{padding:12px 16px}
+  .cp-card-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .cp-card-metric{padding:6px 0;border-bottom:0.5px solid rgba(255,255,255,0.03)}
+  .cp-card-metric:last-child{border-bottom:none}
+  .cp-cm-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .cp-cm-row{display:flex;justify-content:space-between;align-items:center;margin-top:1px}
+  .cp-cm-value{font-size:12px;font-weight:600;font-family:var(--mono)}
+  .cp-cm-value.success{color:var(--success)}
+  .cp-cm-value.danger{color:var(--danger)}
+  .cp-cm-value.cyan{color:var(--cyan)}
+  .cp-cm-value.gold{color:var(--gold)}
+  .cp-cm-value.accent{color:var(--accent)}
+  .cp-cm-change{font-size:8px;font-family:var(--mono)}
+  .cp-cm-change.up{color:var(--success)}
+  .cp-cm-change.down{color:var(--danger)}
+  .cp-card-foot{padding:10px 16px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:8px;color:var(--muted)}
+
+  /* ── Funnel ── */
+  .cp-funnel{display:flex;align-items:center;justify-content:center;gap:0;margin:12px 0;flex-wrap:wrap}
+  .cp-fstep{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;min-width:80px}
+  .cp-fval{font-size:16px;font-weight:700;font-family:var(--mono)}
+  .cp-fval.gold{color:var(--gold)}
+  .cp-fval.success{color:var(--success)}
+  .cp-fval.accent{color:var(--accent)}
+  .cp-fval.cyan{color:var(--cyan)}
+  .cp-fval.danger{color:var(--danger)}
+  .cp-flbl{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;text-align:center}
+  .cp-farrow{color:var(--muted);font-size:14px;opacity:0.3}
+
+  /* ── CTA Button ── */
+  .cp-actions{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap}
+  .cp-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:var(--r2);border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--font);transition:all 0.2s;text-decoration:none}
+  .cp-btn-primary{background:linear-gradient(135deg,rgba(245,158,11,0.2),rgba(245,158,11,0.08));color:var(--gold);border:0.5px solid rgba(245,158,11,0.4)}
+  .cp-btn-primary:hover{background:rgba(245,158,11,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.12)}
+  .cp-btn-back{background:var(--bg2);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .cp-btn-back:hover{background:var(--bg3);transform:translateY(-1px)}
+
+  /* ── Strategy Tips ── */
+  .cp-tips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  @media(max-width:600px){.cp-tips{grid-template-columns:1fr}}
+  .cp-tip{background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(245,158,11,0.02));border-left:2px solid var(--gold);padding:10px 12px;border-radius:0 var(--r) var(--r) 0;font-size:10px;line-height:1.6;color:var(--muted)}
+  .cp-tip strong{color:var(--text)}
+  .cp-tip.cyan{border-left-color:var(--cyan);background:linear-gradient(135deg,rgba(74,208,224,0.06),rgba(74,208,224,0.02))}
+
+  /* ── Quick Links ── */
+  .cp-quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;margin:8px 0 14px}
+  .cp-quick a{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);text-decoration:none;color:var(--muted);font-size:10px;transition:all 0.15s}
+  .cp-quick a:hover{border-color:var(--accent);background:var(--bg3);color:var(--text);transform:translateY(-1px)}
+  .cp-quick a .qicon{font-size:16px;width:22px;text-align:center;flex-shrink:0}
+  .cp-quick a .qlbl{font-weight:500}
+  .cp-quick a .qext{font-size:7px;color:var(--muted);margin-left:auto;opacity:0.5}
+  .cp-quick a:hover .qext{opacity:1}
+  @media(max-width:600px){.cp-quick{grid-template-columns:1fr 1fr}}
+
+  /* ── Footer ── */
+  .cp-footer{text-align:center;padding:20px 0;border-top:0.5px solid var(--border);margin-top:18px}
+  .cp-footer p{font-size:9px;color:var(--muted);font-family:var(--mono)}
+  .cp-footer-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .cp-footer-links a{color:var(--accent);text-decoration:none;font-size:10px}
+  .cp-footer-links a:hover{text-decoration:underline}
+
+  /* ── Responsive ── */
+  @media(max-width:700px){
+    .mc{padding:12px}.cp-title{font-size:20px}.cp-kpis{grid-template-columns:1fr 1fr}
+    .cp-platforms{grid-template-columns:1fr}.cp-funnel{flex-wrap:wrap;gap:4px}
+    .cp-fstep{min-width:0;padding:6px 10px}
+  }
+
+  /* ── Print ── */
+  @media print {
+    body{background:#fff;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mc{max-width:100%;padding:8px}
+    .cp-header{border-bottom-color:#ddd;padding:12px 0}
+    .cp-title{font-size:20px;color:#111}.cp-title span{color:#b8944e}.cp-sub{color:#555}
+    .cp-badge,.cp-badge.gold,.cp-badge.red,.cp-badge.cyan,.cp-badge.green{background:#f0f0f0!important;color:#555!important;border-color:#ddd!important}
+    .cp-stat,.cp-kpi,.cp-card,.cp-card-head,.cp-card-body,.cp-card-foot{background:#f8f8f8!important;border-color:#ddd!important;box-shadow:none!important}
+    .cp-stat:hover,.cp-card:hover{transform:none!important}
+    .cp-btn,.cp-actions,.ns-sidebar,.ns-mobile-hamburger,#nuclear-sidebar,.cp-quick,.cp-quick a{display:none!important}
+    body.ns-sidebar-ready{margin-left:0!important}
+    .cp-footer{border-top-color:#ddd}.cp-footer p,.cp-version,.cp-card-sub,.cp-cm-label,.cp-flbl,.cp-sn{color:#777!important}
+    .cp-sv,.cp-kpi .kv,.cp-cm-value,.cp-fval{color:#333!important}
+    .cp-sv.gold,.cp-kpi .kv.gold,.cp-cm-value.gold,.cp-fval.gold{color:#b8944e!important}
+    .cp-sv.success,.cp-kpi .kv.success{color:#3d8b5e!important}
+    .cp-sv.danger,.cp-kpi .kv.danger{color:#c0392b!important}
+    .cp-cm-change.up{color:#3d8b5e!important}.cp-cm-change.down{color:#c0392b!important}
+    .cp-cm-value.success{color:#3d8b5e!important}.cp-cm-value.danger{color:#c0392b!important}
+    .cp-tip{background:#f5f5f5!important}
+    @page{margin:10mm}
+    .cp-card{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="cp-header">
+    <div class="cp-badges">
+      <span class="cp-badge gold">📢 CAMPAÑAS PAGAS</span>
+      <span class="cp-badge red">GOOGLE ADS</span>
+      <span class="cp-badge cyan">FACEBOOK ADS</span>
+      <span class="cp-badge">YOUTUBE ADS</span>
+      <span class="cp-badge green">EMBUDOS ACTIVOS</span>
+    </div>
+    <h1 class="cp-title">Campañas <span>Pagas</span></h1>
+    <p class="cp-sub">Panel de control de campañas publicitarias para el catálogo de Ramón Orlando. Google Ads, Facebook Ads, YouTube Ads — métricas, presupuesto y optimización.</p>
+    <div class="cp-version">v1.0 · Nuclear AIMA · Datos simulados · Conecta con Netlify para gestión en vivo</div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="cp-stats">
+    <div class="cp-stat">
+      <div class="cp-sn">Presupuesto Mensual</div>
+      <div class="cp-sv gold">$5,200</div>
+      <div class="cp-ss">Distribuido 3 plataformas</div>
+    </div>
+    <div class="cp-stat">
+      <div class="cp-sn">Gastado este mes</div>
+      <div class="cp-sv accent">$3,840</div>
+      <div class="cp-ss">73.8% del presupuesto</div>
+    </div>
+    <div class="cp-stat">
+      <div class="cp-sn">ROAS Global</div>
+      <div class="cp-sv success">3.2x</div>
+      <div class="cp-ss">$12,288 retorno estimado</div>
+    </div>
+    <div class="cp-stat">
+      <div class="cp-sn">Costo por Conversión</div>
+      <div class="cp-sv cyan">$8.42</div>
+      <div class="cp-ss">456 conversiones totales</div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="cp-actions">
+    <a href="dashboard-campanas.html" class="cp-btn cp-btn-primary">📊 Dashboard Unificado</a>
+    <a href="https://wondrous-strudel-b76910.netlify.app/" target="_blank" rel="noopener" class="cp-btn cp-btn-back">🚀 App de Campañas (Netlify)</a>
+    <button class="cp-btn cp-btn-back" onclick="window.print()">🖨 Imprimir Reporte</button>
+    <a href="ramon-orlando-proyecto.html" class="cp-btn cp-btn-back">← Proyecto Ramón Orlando</a>
+  </div>
+
+  <!-- ═══ FUNNEL ═══ -->
+  <div class="cp-st"><span class="hl">🎯</span> Embudo de Conversión</div>
+  <div class="cp-funnel">
+    <div class="cp-fstep"><div class="cp-fval gold">248K</div><div class="cp-flbl">Impresiones</div></div>
+    <div class="cp-farrow">→</div>
+    <div class="cp-fstep"><div class="cp-fval accent">8,420</div><div class="cp-flbl">Clics</div></div>
+    <div class="cp-farrow">→</div>
+    <div class="cp-fstep"><div class="cp-fval cyan">3.4%</div><div class="cp-flbl">CTR</div></div>
+    <div class="cp-farrow">→</div>
+    <div class="cp-fstep"><div class="cp-fval success">456</div><div class="cp-flbl">Conversiones</div></div>
+    <div class="cp-farrow">→</div>
+    <div class="cp-fstep"><div class="cp-fval gold">5.4%</div><div class="cp-flbl">Tasa Conv.</div></div>
+  </div>
+
+  <!-- ═══ KPI GRID ═══ -->
+  <div class="cp-st"><span class="hl">📊</span> Métricas Clave</div>
+  <div class="cp-kpis">
+    <div class="cp-kpi"><div class="kn">CPC Promedio</div><div class="kv gold">$0.46</div><div class="ks">Google $0.38 · FB $0.52</div></div>
+    <div class="cp-kpi"><div class="kn">CPM Promedio</div><div class="kv accent">$15.48</div><div class="ks">Google $12.20 · FB $18.75</div></div>
+    <div class="cp-kpi"><div class="kn">Tasa de Conversión</div><div class="kv success">5.4%</div><div class="ks">Industria: 2-3%</div></div>
+    <div class="cp-kpi"><div class="kn">ROAS por Plataforma</div><div class="kv cyan">3.2x</div><div class="ks">Google 4.1x · FB 2.3x</div></div>
+    <div class="cp-kpi"><div class="kn">Costo por Lead</div><div class="kv success">$8.42</div><div class="ks">↘️ 12% vs mes pasado</div></div>
+    <div class="cp-kpi"><div class="kn">Valor Vida (LTV)</div><div class="kv gold">$42</div><div class="ks">Por conversión est.</div></div>
+    <div class="cp-kpi"><div class="kn">Presupuesto Diario</div><div class="kv accent">$128</div><div class="ks">Google $50 · FB $48 · YT $30</div></div>
+    <div class="cp-kpi"><div class="kn">Días Restantes</div><div class="kv cyan">18</div><div class="ks">Para fin de mes</div></div>
+  </div>
+
+  <!-- ═══ PLATFORM CARDS ═══ -->
+  <div class="cp-st"><span class="hl">📱</span> Rendimiento por Plataforma</div>
+  <div class="cp-platforms">
+
+    <!-- Google Ads -->
+    <div class="cp-card">
+      <div class="cp-card-head">
+        <div class="cp-card-icon" style="color:var(--gold)">🔍</div>
+        <div class="cp-card-info">
+          <h3>Google Ads</h3>
+          <div class="cp-card-sub">Búsqueda · Display · YouTube</div>
+        </div>
+      </div>
+      <div class="cp-card-body">
+        <div class="cp-card-metrics">
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Inversión</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">$1,520</span><span class="cp-cm-change up">↗ 8%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Impresiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">124K</span><span class="cp-cm-change up">↗ 12%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Clics</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">4,010</span><span class="cp-cm-change up">↗ 5%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">CTR</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">3.2%</span><span class="cp-cm-change up">↗ 0.3pp</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Conversiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value success">218</span><span class="cp-cm-change up">↗ 15%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">ROAS</div>
+            <div class="cp-cm-row"><span class="cp-cm-value gold">4.1x</span><span class="cp-cm-change up">↗ 0.5x</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cp-card-foot">
+        <span>CPC: $0.38</span>
+        <span>CPA: $6.97</span>
+        <span style="color:var(--success)">🟢 Óptimo</span>
+      </div>
+    </div>
+
+    <!-- Facebook Ads -->
+    <div class="cp-card">
+      <div class="cp-card-head">
+        <div class="cp-card-icon" style="color:var(--cyan)">👍</div>
+        <div class="cp-card-info">
+          <h3>Facebook Ads</h3>
+          <div class="cp-card-sub">Feed · Stories · Reels</div>
+        </div>
+      </div>
+      <div class="cp-card-body">
+        <div class="cp-card-metrics">
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Inversión</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">$1,440</span><span class="cp-cm-change up">↗ 3%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Impresiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">86K</span><span class="cp-cm-change up">↗ 6%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Clics</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">2,785</span><span class="cp-cm-change down">↘ 2%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">CTR</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">3.2%</span><span class="cp-cm-change up">↗ 0.1pp</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Conversiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value accent">162</span><span class="cp-cm-change down">↘ 4%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">ROAS</div>
+            <div class="cp-cm-row"><span class="cp-cm-value gold">2.3x</span><span class="cp-cm-change down">↘ 0.1x</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cp-card-foot">
+        <span>CPC: $0.52</span>
+        <span>CPA: $8.89</span>
+        <span style="color:var(--gold)">🟡 Optimizar</span>
+      </div>
+    </div>
+
+    <!-- YouTube Ads -->
+    <div class="cp-card">
+      <div class="cp-card-head">
+        <div class="cp-card-icon" style="color:var(--danger)">▶️</div>
+        <div class="cp-card-info">
+          <h3>YouTube Ads</h3>
+          <div class="cp-card-sub">Pre-roll · Discovery · Shorts</div>
+        </div>
+      </div>
+      <div class="cp-card-body">
+        <div class="cp-card-metrics">
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Inversión</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">$880</span><span class="cp-cm-change up">↗ 10%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Impresiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">38K</span><span class="cp-cm-change up">↗ 18%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Vistas</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">1,625</span><span class="cp-cm-change up">↗ 9%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">VTR</div>
+            <div class="cp-cm-row"><span class="cp-cm-value">4.3%</span><span class="cp-cm-change up">↗ 0.5pp</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">Conversiones</div>
+            <div class="cp-cm-row"><span class="cp-cm-value cyan">76</span><span class="cp-cm-change up">↗ 22%</span></div>
+          </div>
+          <div class="cp-card-metric">
+            <div class="cp-cm-label">ROAS</div>
+            <div class="cp-cm-row"><span class="cp-cm-value success">2.8x</span><span class="cp-cm-change up">↗ 0.3x</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cp-card-foot">
+        <span>CPV: $0.54</span>
+        <span>CPA: $11.58</span>
+        <span style="color:var(--success)">🟢 Creciendo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STRATEGY TIPS ═══ -->
+  <div class="cp-st"><span class="hl">🧠</span> Estrategia y Recomendaciones</div>
+  <div class="cp-tips">
+    <div class="cp-tip">
+      <strong>🔥 Prioridad: Google Ads</strong><br>
+      ROAS 4.1x es el más alto de las 3 plataformas. Incrementar presupuesto diario de $50 → $65. Enfocar en palabras clave de alta intención: "merengue", "Ramón Orlando", "música dominicana".
+    </div>
+    <div class="cp-tip cyan">
+      <strong>📱 Facebook: Optimizar Creativos</strong><br>
+      CTR 3.2% es bueno pero ROAS 2.3x está por debajo del objetivo 3.0x. Probar nuevos formatos de video corto y audiencias similares (lookalikes) basadas en conversiones actuales.
+    </div>
+    <div class="cp-tip cyan">
+      <strong>▶️ YouTube: Escalar lo que funciona</strong><br>
+      YouTube muestra el mayor crecimiento (+22% conversiones mes a mes). El contenido musical funciona naturalmente bien aquí. Aumentar presupuesto de $30 → $45 diarios.
+    </div>
+    <div class="cp-tip">
+      <strong>🎯 Embudo de Conversión</strong><br>
+      Tasa de conversión global 5.4% (muy por encima del promedio industrial 2-3%). El catálogo de Ramón Orlando tiene alta intención de compra. Enfocar en retargeting para maximizar LTV.
+    </div>
+  </div>
+
+  <!-- ═══ BUDGET BREAKDOWN ═══ -->
+  <div class="cp-st"><span class="hl">💰</span> Distribución de Presupuesto</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0" class="cp-budget-grid">
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center">
+      <div style="font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Google Ads</div>
+      <div style="margin:6px 0;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span style="font-size:24px;font-weight:700;font-family:var(--mono);color:var(--gold)">$1,520</span>
+        <span style="font-size:9px;color:var(--muted)">39.6%</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;height:8px;overflow:hidden">
+        <div style="height:100%;width:39.6%;background:linear-gradient(90deg,var(--gold),var(--accent));border-radius:10px;transition:width 0.5s"></div>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center">
+      <div style="font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Facebook Ads</div>
+      <div style="margin:6px 0;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span style="font-size:24px;font-weight:700;font-family:var(--mono);color:var(--cyan)">$1,440</span>
+        <span style="font-size:9px;color:var(--muted)">37.5%</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;height:8px;overflow:hidden">
+        <div style="height:100%;width:37.5%;background:linear-gradient(90deg,var(--cyan),#4ad0e0);border-radius:10px;transition:width 0.5s"></div>
+      </div>
+    </div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center;grid-column:1/-1">
+      <div style="font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">YouTube Ads</div>
+      <div style="margin:6px 0;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span style="font-size:24px;font-weight:700;font-family:var(--mono);color:var(--success)">$880</span>
+        <span style="font-size:9px;color:var(--muted)">22.9%</span>
+      </div>
+      <div style="background:var(--bg3);border-radius:10px;height:8px;overflow:hidden">
+        <div style="height:100%;width:22.9%;background:linear-gradient(90deg,var(--success),#4cad7c);border-radius:10px;transition:width 0.5s"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ QUICK LINKS ═══ -->
+  <div class="cp-st"><span class="hl">🔗</span> Acceso Directo a Plataformas</div>
+  <div class="cp-quick">
+    <a href="https://ads.google.com/" target="_blank" rel="noopener"><span class="qicon">🔍</span><span class="qlbl">Google Ads</span><span class="qext">↗</span></a>
+    <a href="https://business.facebook.com/adsmanager/" target="_blank" rel="noopener"><span class="qicon">👍</span><span class="qlbl">Meta Ads Manager</span><span class="qext">↗</span></a>
+    <a href="https://studio.youtube.com/" target="_blank" rel="noopener"><span class="qicon">▶️</span><span class="qlbl">YouTube Studio</span><span class="qext">↗</span></a>
+    <a href="https://ads.tiktok.com/" target="_blank" rel="noopener"><span class="qicon">🎵</span><span class="qlbl">TikTok Ads</span><span class="qext">↗</span></a>
+    <a href="https://www.linkedin.com/campaignmanager/" target="_blank" rel="noopener"><span class="qicon">💼</span><span class="qlbl">LinkedIn Ads</span><span class="qext">↗</span></a>
+    <a href="https://ads.x.com/" target="_blank" rel="noopener"><span class="qicon">🐦</span><span class="qlbl">X (Twitter) Ads</span><span class="qext">↗</span></a>
+    <a href="https://wondrous-strudel-b76910.netlify.app/" target="_blank" rel="noopener" style="grid-column:1/-1;justify-content:center;border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.08),rgba(245,158,11,0.02));color:var(--gold)"><span class="qicon">🚀</span><span class="qlbl">App de Campañas (Netlify)</span><span class="qext">↗</span></a>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="cp-footer">
+    <p>📢 Campañas Pagas · Ramón Orlando · Nuclear AIMA · Datos actualizados periódicamente</p>
+    <div class="cp-footer-links">
+      <a href="https://wondrous-strudel-b76910.netlify.app/" target="_blank">🚀 App de Campañas (Netlify)</a>
+      <a href="ramon-orlando-proyecto.html">🎯 Proyecto Ramón Orlando</a>
+      <a href="master-plan.html">⭐ Master Plan</a>
+      <a href="index.html">📊 Dashboard</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

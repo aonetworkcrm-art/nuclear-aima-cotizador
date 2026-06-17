@@ -3,1709 +3,502 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-<title>☢️ Nuclear AIMA · Centro de Comando</title>
-
-<script defer src="sidebar.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<title>Nuclear AIMA · Propuesta Ramón Orlando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0d0d0f;
-    --bg2: #141416;
-    --bg3: #1c1c1f;
-    --border: rgba(255,255,255,0.08);
-    --border2: rgba(255,255,255,0.14);
-    --text: #f0ede8;
-    --muted: #7a7875;
-    --accent: #c9a96e;
-    --accent2: #e8c98a;
-    --danger: #e05c5c;
-    --success: #4cad7c;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0c;
+  --bg2: #111114;
+  --bg3: #18181d;
+  --surface: #1e1e24;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0ede8;
+  --text2: #c8c4bc;
+  --muted: #7a7875;
+  --gold: #C9A84C;
+  --gold2: #e8c98a;
+  --gold3: #8b6c3a;
+  --gold-dim: rgba(201,169,76,0.12);
+  --gold-border: rgba(201,169,76,0.25);
+  --danger: #e05c5c;
+  --success: #4cad7c;
+  --cyan: #4ad0e0;
+  --purple: #9e7de8;
+  --blue: #7db8e8;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --display: 'Playfair Display', serif;
+  --r: 12px;
+  --r2: 20px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.02) 0%, transparent 50%);
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
+/* ── HEADER / HERO ── */
+.hero {
+  text-align: center;
+  padding: 80px 20px 50px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.logo-mark {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0a0a0c;
+  box-shadow: 0 0 40px rgba(201,169,76,0.15);
+}
+.badge-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-dim);
+  border: 0.5px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.hero .subtitle {
+  font-family: var(--display);
+  font-size: 16px;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero p {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.hero .version {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+}
 
-    --gold: #C9A84C;
-    --cyan: #4ad0e0;
+/* ── STATS ROW ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 40px auto;
+  max-width: 800px;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
 
-    --font: 'Inter', system-ui, sans-serif;
-    --mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --r: 10px;
-    --r2: 16px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── SECTION TITLE ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 40px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid var(--border);
+}
+.section-title .line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--border);
+}
 
-  body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/* ── CARDS GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  border-color: var(--gold-border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+.card-icon { font-size: 28px; margin-bottom: 10px; }
+.card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+}
+.card .meta {
+  font-size: 10px;
+  color: var(--gold);
+  font-family: var(--mono);
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+}
+.card .tag {
+  display: inline-block;
+  font-size: 9px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+.card-arrow {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-size: 18px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s;
+  color: var(--gold);
+}
+.card-highlight {
+  background: linear-gradient(135deg, rgba(201,169,76,0.06), rgba(201,169,76,0.02));
+  border-color: var(--gold-border);
+}
 
-  /* ── SCREEN SYSTEM ── */
-  .screen { display: none; min-height: 100vh; }
-  .screen.active { display: flex; flex-direction: column; }
+/* ── HERO CARD (main CTA) ── */
+.hero-card {
+  text-align: center;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, rgba(201,169,76,0.08), rgba(201,169,76,0.02));
+  border: 0.5px solid var(--gold-border);
+  border-radius: var(--r2);
+  margin: 30px 0;
+}
+.hero-card .big-icon { font-size: 48px; margin-bottom: 12px; }
+.hero-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.hero-card p { font-size: 13px; color: var(--muted); max-width: 500px; margin: 0 auto 20px; line-height: 1.6; }
+.btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: var(--gold);
+  color: #0a0a0c;
+}
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 0.5px solid var(--border2);
+}
+.btn-ghost:hover {
+  background: var(--bg3);
+  border-color: var(--gold-border);
+  color: var(--gold);
+}
+.btn-download {
+  background: rgba(76,173,124,0.12);
+  color: var(--success);
+  border: 0.5px solid rgba(76,173,124,0.3);
+}
+.btn-download:hover {
+  background: rgba(76,173,124,0.2);
+}
 
-  /* ── LANDING ── */
-  #screen-landing {
-    align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.07) 0%, transparent 70%), var(--bg);
-  }
-  .landing-wrap { text-align: center; padding: 2rem; max-width: 440px; width: 100%; }
-  .logo-mark { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #c9a96e, #8b6c3a); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 24px; font-weight: 700; color: #0d0d0f; letter-spacing: -1px; }
-  .landing-title { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 6px; }
-  .vip-badge { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05)); border: 0.5px solid rgba(201,169,110,0.3); border-radius: 20px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--accent); margin-bottom: 1.25rem; letter-spacing: 0.02em; }
-  .landing-sub { font-size: 14px; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.6; }
-  .btn-group { display: flex; flex-direction: column; gap: 10px; }
-  .btn { padding: 13px 24px; border-radius: var(--r); border: none; cursor: pointer; font-size: 14px; font-weight: 500; font-family: var(--font); transition: all 0.15s; }
-  .btn-primary { background: var(--accent); color: #0d0d0f; }
-  .btn-primary:hover { background: var(--accent2); }
-  .btn-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border2); }
-  .btn-ghost:hover { background: var(--bg3); border-color: rgba(255,255,255,0.25); }
-  .btn-sm { padding: 8px 16px; font-size: 13px; }
-  .btn-danger { background: rgba(224,92,92,0.15); color: var(--danger); border: 0.5px solid rgba(224,92,92,0.3); }
-  .btn-danger:hover { background: rgba(224,92,92,0.25); }
-  .btn-success { background: var(--success); color: #fff; }
-  .btn-success:hover { opacity: 0.9; }
+/* ── LINKS LIST ── */
+.links-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+}
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text2);
+  font-size: 12px;
+  transition: all 0.15s;
+}
+.link-item:hover {
+  background: var(--bg3);
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+.link-item .li-icon { font-size: 16px; width: 24px; text-align: center; }
+.link-item .li-label { flex: 1; }
+.link-item .li-meta {
+  font-size: 9px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
 
-  /* ── ADMIN LOGIN ── */
-  #screen-admin-login {
-    align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 60%), var(--bg);
-  }
-  .login-wrap { width: 100%; max-width: 400px; padding: 2rem; }
-  .login-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 2rem; }
-  .login-head { margin-bottom: 1.5rem; }
-  .login-head h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .login-head p { font-size: 13px; color: var(--muted); }
-  .field { margin-bottom: 1rem; }
-  .field label { display: block; font-size: 12px; font-weight: 500; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase; }
-  .field input { width: 100%; background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r); padding: 10px 14px; color: var(--text); font-size: 14px; font-family: var(--font); outline: none; transition: border 0.15s; }
-  .field input:focus { border-color: var(--accent); }
-  .error-msg { font-size: 12px; color: var(--danger); margin-top: 8px; display: none; }
-  .back-link { display: block; text-align: center; margin-top: 1rem; font-size: 13px; color: var(--muted); cursor: pointer; }
-  .back-link:hover { color: var(--text); }
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 0.5px solid var(--border);
+  margin-top: 40px;
+}
+.footer p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.footer .gold { color: var(--gold); }
 
-  /* ── KEY SETUP ── */
-  #screen-key-setup {
-    align-items: center; justify-content: center;
-    background: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.08) 0%, transparent 60%), var(--bg);
-  }
-  .key-setup-wrap { width: 100%; max-width: 520px; padding: 2rem; }
-  .key-setup-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 2rem; }
-  .key-setup-head { text-align: center; margin-bottom: 1.5rem; }
-  .key-setup-head h2 { font-size: 20px; font-weight: 600; margin-bottom: 6px; }
-  .key-setup-head p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-  .key-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.5rem; }
-  .key-item { display: flex; align-items: center; justify-content: space-between; background: var(--bg3); border: 0.5px solid var(--border); border-radius: var(--r); padding: 10px 14px; }
-  .key-item-code { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: 0.5px; user-select: all; }
-  .key-item-label { font-size: 11px; color: var(--muted); }
-  .key-setup-footer { text-align: center; }
-  .key-setup-footer p { font-size: 12px; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+  .hero { padding: 40px 16px 30px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: 1fr; }
+  .links-list { grid-template-columns: 1fr; }
+  .btn-group { flex-direction: column; align-items: center; }
+}
 
-  /* ── KEY MANAGEMENT (ADMIN) ── */
-  .key-mgmt { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); padding: 1.25rem; margin-bottom: 1.5rem; }
-  .key-mgmt h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 12px; }
-  .key-mgmt-item { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 0.5px solid rgba(255,255,255,0.04); }
-  .key-mgmt-item:last-child { border-bottom: none; }
-  .key-mgmt-code { font-family: var(--mono); font-size: 12px; color: var(--text); user-select: all; word-break: break-all; }
-  .key-mgmt-actions { display: flex; gap: 6px; }
-
-  /* ── APP SHELL (admin + client) ── */
-  .app-shell { display: flex; flex-direction: column; min-height: 100vh; }
-  .topbar { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 0 1.5rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-  .topbar-left { display: flex; align-items: center; gap: 12px; }
-  .topbar-logo { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
-  .topbar-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
-  .badge-admin { background: rgba(201,169,110,0.15); color: var(--accent); border: 0.5px solid rgba(201,169,110,0.3); }
-  .badge-client { background: rgba(76,173,124,0.12); color: var(--success); border: 0.5px solid rgba(76,173,124,0.3); }
-  .topbar-right { display: flex; align-items: center; gap: 8px; }
-  .app-body { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 2rem 1.5rem; }
-
-  /* ── FILTERS ── */
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
-  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 0.5px solid var(--border); background: transparent; color: var(--muted); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: var(--font); }
-  .filter-btn:hover { border-color: var(--border2); color: var(--text); }
-  .filter-btn.active { background: var(--accent); color: #0d0d0f; border-color: var(--accent); }
-
-  /* ── SERVICE TABLE ── */
-  .section-block { margin-bottom: 2rem; }
-  .section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem; }
-  .section-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-  .section-title { font-size: 13px; font-weight: 500; }
-  .section-count { font-size: 11px; color: var(--muted); background: var(--bg3); padding: 2px 8px; border-radius: 10px; }
-
-  .service-table { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); overflow: hidden; }
-  .service-table table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
-  .service-table thead tr { border-bottom: 0.5px solid var(--border); }
-  .service-table thead th { padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
-  .service-table thead th.r { text-align: right; }
-  .service-table tbody tr { border-bottom: 0.5px solid var(--border); transition: background 0.1s; cursor: pointer; }
-  .service-table tbody tr:last-child { border-bottom: none; }
-  .service-table tbody tr:hover { background: var(--bg3); }
-  .service-table tbody tr.selected { background: rgba(201,169,110,0.06); border-color: rgba(201,169,110,0.15); }
-  .service-table td { padding: 10px 14px; vertical-align: middle; }
-  .service-table td.r { text-align: right; }
-  td.id { font-family: var(--mono); font-size: 11px; color: var(--muted); width: 64px; }
-  td.desc-main { font-size: 13px; color: var(--text); }
-  td.desc-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  td.price { font-family: var(--mono); font-size: 13px; font-weight: 500; width: 80px; }
-  td.num-col { font-family: var(--mono); font-size: 12px; color: var(--muted); width: 70px; }
-  .price-tier-high { color: #7db8e8; }
-  .price-tier-mid { color: #6ecfa5; }
-  .price-tier-low { color: var(--muted); }
-
-  /* ── QTY INPUT ── */
-  .qty-input { width: 80px; background: var(--bg3); border: 0.5px solid var(--border); border-radius: 6px; padding: 5px 8px; color: var(--text); font-size: 12px; font-family: var(--mono); text-align: right; outline: none; }
-  .qty-input:focus { border-color: var(--accent); }
-  .qty-total { font-family: var(--mono); font-size: 12px; color: var(--accent); font-weight: 500; }
-
-  /* ── CART ── */
-  .cart-bar { position: sticky; bottom: 0; background: var(--bg2); border-top: 0.5px solid var(--border); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .cart-summary { display: flex; align-items: center; gap: 16px; }
-  .cart-count { font-size: 13px; color: var(--muted); }
-  .cart-count span { color: var(--accent); font-weight: 600; }
-  .cart-total-label { font-size: 13px; color: var(--muted); }
-  .cart-total-val { font-size: 18px; font-weight: 600; font-family: var(--mono); color: var(--text); }
-  .cart-actions { display: flex; gap: 8px; }
-  .cart-empty-msg { font-size: 12px; color: var(--muted); font-style: italic; }
-
-  /* ── MODAL ── */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
-  .modal-overlay.open { display: flex; }
-  .modal { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2); width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
-  .modal-head { padding: 1.25rem 1.5rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .modal-head h3 { font-size: 16px; font-weight: 600; }
-  .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; cursor: pointer; line-height: 1; padding: 2px 6px; }
-  .modal-close:hover { color: var(--text); }
-  .modal-body { padding: 1.5rem; }
-  .modal-footer { padding: 1rem 1.5rem; border-top: 0.5px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
-
-  /* ── QUOTE TABLE ── */
-  .quote-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 1rem; }
-  .quote-table th { text-align: left; padding: 6px 8px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--border); }
-  .quote-table th.r { text-align: right; }
-  .quote-table td { padding: 8px 8px; border-bottom: 0.5px solid rgba(255,255,255,0.04); vertical-align: top; }
-  .quote-table td.r { text-align: right; font-family: var(--mono); }
-  .quote-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 0.5px solid var(--border); }
-  .quote-total-label { font-size: 13px; color: var(--muted); }
-  .quote-total-val { font-size: 22px; font-weight: 600; font-family: var(--mono); color: var(--accent); }
-  .remove-item { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 16px; padding: 0 4px; }
-  .remove-item:hover { color: var(--danger); }
-
-  /* ── ADMIN SETTINGS ── */
-  .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-  .setting-card { background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r); padding: 1.25rem; }
-  .setting-card h4 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 8px; }
-  .setting-val { font-size: 24px; font-weight: 600; font-family: var(--mono); color: var(--text); }
-  .setting-val span { font-size: 14px; color: var(--accent); }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 640px) {
-    .settings-grid { grid-template-columns: 1fr; }
-    .service-table thead { display: none; }
-    .service-table td.r { text-align: left; }
-    td.num-col { display: none; }
-    .cart-bar { flex-direction: column; align-items: flex-start; }
-  }
-
-  /* ── ADMIN CHANGE PWD ── */
-  .inline-form { display: flex; gap: 8px; align-items: flex-end; }
-  .inline-form .field { margin: 0; flex: 1; }
-
-  /* column widths */
-  .col-id { width: 64px; }
-  .col-desc { }
-  .col-price { width: 90px; }
-  .col-min { width: 65px; }
-  .col-max { width: 65px; }
-  .col-qty { width: 90px; }
-  .col-total { width: 90px; }
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate { animation: fadeUp 0.6s ease-out both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
 </style>
 </head>
 <body>
 
-<!-- ═══ LANDING ═══ -->
-<div id="screen-landing" class="screen active">
-  <div class="landing-wrap">
-    <div class="vip-badge">🔒 Panel Oficial Del Profesor · Acceso Privado VIP</div>
-    <div class="logo-mark">NA</div>
-    <h1 class="landing-title">Nuclear AIMA</h1>
-    <p class="landing-sub">Cotizador de servicios de Instagram Scaling Flow IA.<br>Selecciona tu tipo de acceso para continuar.</p>
-    <div class="btn-group">
-      <button class="btn btn-primary" onclick="goTo('screen-client')">Ver precios y cotizar</button>
-      <button class="btn btn-ghost" onclick="goTo('screen-admin-login')">Acceso interno</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ KEY SETUP (first time) ═══ -->
-<div id="screen-key-setup" class="screen">
-  <div class="key-setup-wrap">
-    <div class="key-setup-card">
-      <div class="key-setup-head">
-        <div style="font-size:32px;margin-bottom:8px;">🔑</div>
-        <h2>Configuración inicial</h2>
-        <p>Genera tus 4 llaves de acceso únicas.<br>Guárdalas en un lugar seguro — sin ellas no podrás entrar al panel interno.</p>
-      </div>
-      <div class="key-list" id="key-setup-list"></div>
-      <div class="key-setup-footer">
-        <p>⚠️ Estas llaves solo se muestran una vez. Copia cada una antes de continuar.</p>
-        <button class="btn btn-primary" onclick="confirmKeys()" style="width:100%;">✓ Ya guardé mis llaves — Continuar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ ADMIN LOGIN ═══ -->
-<div id="screen-admin-login" class="screen">
-  <div class="login-wrap">
-    <div class="login-card">
-      <div class="login-head">
-        <h2>Acceso interno</h2>
-        <p>Ingresa una de tus llaves de acceso para continuar</p>
-      </div>
-      <div class="field">
-        <label>Llave de acceso</label>
-        <input type="password" id="admin-pwd-input" placeholder="••••••••••••••••" onkeydown="if(event.key==='Enter')adminLogin()" autocomplete="off" />
-        <div class="error-msg" id="pwd-error">Llave incorrecta</div>
-      </div>
-      <button class="btn btn-primary" style="width:100%" onclick="adminLogin()">Entrar</button>
-    </div>
-    <span class="back-link" onclick="goTo('screen-landing')">← Volver</span>
-  </div>
-</div>
-
-<!-- ═══ ADMIN APP ═══ -->
-<div id="screen-admin" class="screen">
-  <div class="app-shell">
-    <div class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-logo">Nuclear AIMA</span>
-        <span class="topbar-badge badge-admin">Interno</span>
-      </div>
-      <div class="topbar-right">
-        <button class="btn btn-sm btn-ghost" onclick="openKeyModal()">🔑 Llaves</button>
-        <button class="btn btn-sm btn-danger" onclick="logout()">Salir</button>
-      </div>
-    </div>
-    <div class="app-body">
-      <div class="settings-grid">
-        <div class="setting-card">
-          <h4>Vista actual</h4>
-          <div class="setting-val">Precios <span>netos</span></div>
-        </div>
-        <div class="setting-card">
-          <h4>Markup clientes</h4>
-          <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
-            <div class="setting-val" id="markup-display">1000<span>%</span></div>
-            <div style="display:flex;gap:6px;margin-left:auto;">
-              <button class="btn btn-sm btn-ghost" onclick="setMarkup(500)">500%</button>
-              <button class="btn btn-sm btn-ghost" onclick="setMarkup(800)">800%</button>
-              <button class="btn btn-sm btn-ghost" onclick="setMarkup(1000)">1000%</button>
-              <button class="btn btn-sm btn-ghost" onclick="setMarkup(1500)">1500%</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="key-mgmt" id="admin-key-mgmt"></div>
-      <div id="admin-filters" class="filters"></div>
-      <div id="admin-services"></div>
-    </div>
-    <div class="cart-bar" id="admin-cart-bar">
-      <div class="cart-summary">
-        <div class="cart-count">Ítems seleccionados: <span id="admin-cart-count">0</span></div>
-        <div>
-          <div class="cart-total-label">Total neto</div>
-          <div class="cart-total-val" id="admin-cart-total">$0.00</div>
-        </div>
-      </div>
-      <div class="cart-actions">
-        <button class="btn btn-sm btn-ghost" onclick="clearCart('admin')">Limpiar</button>
-        <button class="btn btn-sm btn-ghost" onclick="openQuote('admin')">Ver cotización</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ CLIENT APP ═══ -->
-<div id="screen-client" class="screen">
-  <div class="app-shell">
-    <div class="topbar">
-      <div class="topbar-left">
-        <span class="topbar-logo">Nuclear AIMA</span>
-        <span class="topbar-badge badge-client">Cotizador</span>
-      </div>
-      <div class="topbar-right">
-        <button class="btn btn-sm btn-ghost" onclick="goTo('screen-landing')">← Inicio</button>
-      </div>
-    </div>
-    <div class="app-body">
-      <div id="client-filters" class="filters"></div>
-      <div id="client-services"></div>
-    </div>
-    <div class="cart-bar" id="client-cart-bar">
-      <div class="cart-summary">
-        <div class="cart-count">Ítems seleccionados: <span id="client-cart-count">0</span></div>
-        <div>
-          <div class="cart-total-label">Total estimado</div>
-          <div class="cart-total-val" id="client-cart-total">$0.00</div>
-        </div>
-      </div>
-      <div class="cart-actions">
-        <button class="btn btn-sm btn-ghost" onclick="clearCart('client')">Limpiar</button>
-        <button class="btn btn-sm btn-ghost" onclick="openQuote('client')">Ver cotización</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ QUOTE MODAL ═══ -->
-<div class="modal-overlay" id="quote-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <h3 id="quote-modal-title">Cotización</h3>
-      <button class="modal-close" onclick="closeModal('quote-modal')">×</button>
-    </div>
-    <div class="modal-body" id="quote-modal-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-sm btn-ghost" onclick="closeModal('quote-modal')">Cerrar</button>
-      <button class="btn btn-sm btn-ghost" onclick="downloadCSV()">Descargar CSV</button>
-      <button class="btn btn-sm btn-success" onclick="downloadPDF()">Descargar PDF</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ KEY MODAL ═══ -->
-<div class="modal-overlay" id="key-modal">
-  <div class="modal" style="max-width:580px;">
-    <div class="modal-head">
-      <h3>🔑 Llaves de acceso</h3>
-      <button class="modal-close" onclick="closeModal('key-modal')">×</button>
-    </div>
-    <div class="modal-body" id="key-modal-body"></div>
-    <div class="modal-footer">
-      <button class="btn btn-sm btn-ghost" onclick="closeModal('key-modal')">Cerrar</button>
-    </div>
-  </div>
-</div>
-
-<script>
-// ═══════════════════════════════
-// DATA
-// ═══════════════════════════════
-const SERVICES = [
-  // Seguidores Global
-  { id: '8573', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento 30 días · 50K/día', price: 0.38, min: 50, max: 100000 },
-  { id: '8574', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento 1 año · 50K/día', price: 0.44, min: 50, max: 100000 },
-  { id: '8575', cat: 'Seguidores', subcat: 'Global', name: 'Seguidores Instagram', detail: 'Calidad Global · Reabastecimiento de por vida · 50K/día', price: 0.53, min: 50, max: 100000 },
-  // Seguidores LATAM
-  { id: '8722', cat: 'Seguidores', subcat: 'Latinoamérica', name: 'Seguidores Instagram Latinoamérica', detail: 'Reabastecimiento 30 días · 30K/día', price: 4.72, min: 20, max: 250000 },
-  { id: '8723', cat: 'Seguidores', subcat: 'Latinoamérica', name: 'Seguidores Instagram Brasil', detail: 'Reabastecimiento 30 días · 30K/día', price: 4.72, min: 20, max: 150000 },
-  // Seguidores Premium
-  { id: '8497', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Instagram EE.UU.', detail: '100% Real Alta Calidad · 2K/día', price: 16.00, min: 10, max: 40000 },
-  { id: '8584', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Instagram Premium', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
-  { id: '8718', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Latinoamérica Premium', detail: 'Reabastecimiento 30 días · Máx 5K · 1K/día', price: 5.74, min: 10, max: 5000 },
-  { id: '8719', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Latinoamérica 100% Real', detail: 'Cancelación permitida · Caída 5–10% · 10K/día', price: 5.32, min: 10, max: 10000 },
-  { id: '8585', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Premium — Mujeres', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
-  { id: '8586', cat: 'Seguidores', subcat: 'Premium', name: 'Seguidores Premium — Hombres', detail: 'Reabastecimiento 30 días · 20K/día', price: 8.45, min: 20, max: 2000000 },
-  // Me Gusta
-  { id: '8576', cat: 'Me Gusta', subcat: 'Global', name: 'Me Gusta Instagram Global', detail: 'Reabastecimiento 30 días · 50K/día', price: 0.07, min: 100, max: 500000 },
-  { id: '8577', cat: 'Me Gusta', subcat: 'Global', name: 'Me Gusta Instagram Global', detail: 'Reabastecimiento de por vida · 50K/día', price: 0.09, min: 100, max: 500000 },
-  { id: '8571', cat: 'Me Gusta', subcat: 'Premium', name: 'Me Gusta Latinoamérica — Cuentas reales', detail: 'Con foto de perfil · Sin caída · Reposición 30 días', price: 0.40, min: 20, max: 50000 },
-  // Comentarios
-  { id: '8721', cat: 'Comentarios', subcat: 'Orgánico', name: 'Me Gusta + Comentarios · Descubrimiento', detail: '100% Orgánico · Máximo 500', price: 55.11, min: 5, max: 500 },
-  // Compartidos
-  { id: '8181', cat: 'Compartidos', subcat: 'Premium', name: 'Publicaciones Compartidas por Seguidores', detail: 'Cuentas reales 10K–100K · 1 pieza = $0.75', price: 750.00, min: 1, max: 50 },
-  // Visualizaciones
-  { id: '8039', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones IGTV + Reels', detail: 'Máx 20M · 5K/hora', price: 0.01, min: 100, max: 20000000 },
-  { id: '8390', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones Vídeo — Económico', detail: 'Todos los enlaces', price: 0.00, min: 250, max: 2000 },
-  { id: '8391', cat: 'Visualizaciones', subcat: 'Vídeo', name: 'Visualizaciones Vídeo + Reel + IGTV', detail: 'Rápido y estable · Todos los enlaces', price: 0.02, min: 100, max: 2000 },
-  // Historias
-  { id: '8587', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Global', detail: '100% Usuarios Globales', price: 0.39, min: 10, max: 1000 },
-  { id: '8588', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Latinoamérica', detail: '100% Usuarios Latinos', price: 0.39, min: 20, max: 50000 },
-  { id: '8589', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — España', detail: '100% Usuarios Españoles', price: 0.39, min: 10, max: 50000 },
-  { id: '8590', cat: 'Visualizaciones', subcat: 'Historias', name: 'Visualizaciones Historias — Italia', detail: '100% Usuarios Italianos', price: 0.39, min: 20, max: 50000 },
-  // Impresiones
-  { id: '8393', cat: 'Impresiones', subcat: 'Alcance', name: 'Visitas al Perfil desde Publicaciones', detail: '50K/día', price: 0.14, min: 100, max: 100000 },
-  { id: '8392', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones + Alcance — Brasileños', detail: '50K/día', price: 0.09, min: 100, max: 100000 },
-  { id: '8394', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones [Inicio + Explorar + Ubicación + Perfil]', detail: '10K/día', price: 0.07, min: 10, max: 1000 },
-  { id: '8395', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones de Publicación — Todos los enlaces', detail: '50K/día', price: 0.04, min: 100, max: 10000 },
-  { id: '8397', cat: 'Impresiones', subcat: 'Alcance', name: 'Impresiones + Elementos Compartidos', detail: 'Máx 5M · 100K/día', price: 0.55, min: 100, max: 5000000 },
-  // Automatizaciones
-  { id: '6899', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — IGTV + Reels', detail: 'Máx 100M · Rápido', price: 0.12, min: 100, max: 100000 },
-  { id: '6900', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — Rápido', detail: 'Máx 10M', price: 0.33, min: 100, max: 20000 },
-  { id: '6901', cat: 'Automatizaciones', subcat: 'Vídeo Auto', name: 'Visualizaciones Auto — Instantáneo', detail: 'Máx 20M', price: 0.02, min: 100, max: 100000 },
-  { id: '6902', cat: 'Automatizaciones', subcat: 'Impresiones Auto', name: 'Auto Impresiones + Alcance + Visitas + Visualización', detail: 'Alta Calidad · Máx 5M · Rápido', price: 0.29, min: 100, max: 5000 },
-  // Guardados
-  { id: '8398', cat: 'Guardados', subcat: 'Estándar', name: 'Publicaciones Guardadas', detail: 'Máx 30K · 10K/día', price: 0.01, min: 5, max: 30000 },
-  { id: '8399', cat: 'Guardados', subcat: 'Estándar', name: 'Guardados Reales — Estable', detail: 'Todos los enlaces', price: 0.12, min: 10, max: 50000 },
-  { id: '6904', cat: 'Guardados', subcat: 'Auto', name: 'Guardados Auto — Alta calidad', detail: 'Máx 30K · Instantáneo · Siempre estable', price: 0.12, min: 10, max: 30000 },
-  { id: '6905', cat: 'Guardados', subcat: 'Auto', name: 'Guardados Auto — Instantáneo', detail: 'Máx 50K', price: 0.12, min: 10, max: 50000 },
-  // Contenido Compartido
-  { id: '8388', cat: 'Contenido Compartido', subcat: 'Estándar', name: 'Contenido Compartido — Súper rápido', detail: 'Garantía 1 año · 100K/día', price: 0.24, min: 100, max: 1000000 },
-  { id: '8389', cat: 'Contenido Compartido', subcat: 'Estándar', name: 'Compartido + Interacción + Alcance', detail: 'Máx 1M · 10K/día', price: 0.17, min: 10, max: 1000000 },
-];
-
-const CAT_ICONS = {
-  'Seguidores': { icon: '👤', bg: '#1a2535', color: '#7db8e8' },
-  'Me Gusta': { icon: '❤', bg: '#2a1a25', color: '#e87d9e' },
-  'Comentarios': { icon: '💬', bg: '#1a1a35', color: '#9e7de8' },
-  'Compartidos': { icon: '↗', bg: '#1a2a1a', color: '#6ecfa5' },
-  'Visualizaciones': { icon: '▶', bg: '#1a2535', color: '#7db8e8' },
-  'Impresiones': { icon: '📊', bg: '#2a251a', color: '#e8c96e' },
-  'Automatizaciones': { icon: '⚡', bg: '#252a1a', color: '#b8e87d' },
-  'Guardados': { icon: '🔖', bg: '#251a2a', color: '#c96ee8' },
-  'Contenido Compartido': { icon: '🔄', bg: '#1a2a25', color: '#6ecfa5' },
-};
-
-// ═══════════════════════════════
-// STATE
-// ═══════════════════════════════
-let accessKeys = JSON.parse(localStorage.getItem('smm_access_keys') || '[]');
-let MARKUP = parseFloat(localStorage.getItem('smm_markup') || '11'); // 11 = 1000%
-let adminCart = {};
-let clientCart = {};
-let currentQuoteMode = null;
-
-// ═══════════════════════════════
-// KEY GENERATION
-// ═══════════════════════════════
-function generateKey() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-  let key = '';
-  for (let i = 0; i < 20; i++) {
-    key += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  // Format as xxxx-xxxx-xxxx-xxxx-xxxx
-  return key.match(/.{1,4}/g).join('-');
-}
-
-function setupKeys() {
-  const keys = [];
-  for (let i = 0; i < 4; i++) {
-    keys.push(generateKey());
-  }
-  accessKeys = keys;
-  localStorage.setItem('smm_access_keys', JSON.stringify(keys));
-  return keys;
-}
-
-function renderKeySetup() {
-  const keys = setupKeys();
-  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
-  document.getElementById('key-setup-list').innerHTML = keys.map((k, i) => `
-    <div class="key-item">
-      <div>
-        <div class="key-item-label">${labels[i]}</div>
-        <div class="key-item-code">${k}</div>
-      </div>
-      <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:11px;">📋 Copiar</button>
-    </div>
-  `).join('');
-}
-
-function copyKey(key, btn) {
-  navigator.clipboard.writeText(key).then(() => {
-    btn.textContent = '✓ Copiado';
-    setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
-  });
-}
-
-function confirmKeys() {
-  goTo('screen-landing');
-}
-
-function renderKeyManagement() {
-  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
-  document.getElementById('admin-key-mgmt').innerHTML = `
-    <h4>🔑 Llaves de acceso</h4>
-    ${accessKeys.map((k, i) => `
-      <div class="key-mgmt-item">
-        <div>
-          <div style="font-size:11px;color:var(--muted);">${labels[i]}</div>
-          <div class="key-mgmt-code">${k}</div>
-        </div>
-        <div class="key-mgmt-actions">
-          <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:10px;padding:4px 10px;">📋</button>
-          <button class="btn btn-sm btn-ghost" onclick="regenerateKey(${i})" style="font-size:10px;padding:4px 10px;color:var(--accent);">🔄</button>
-        </div>
-      </div>
-    `).join('')}
-    <div style="margin-top:10px;">
-      <button class="btn btn-sm btn-danger" onclick="resetAllKeys()" style="font-size:10px;">🔄 Regenerar todas las llaves</button>
-    </div>
-  `;
-}
-
-function regenerateKey(index) {
-  const newKey = generateKey();
-  accessKeys[index] = newKey;
-  localStorage.setItem('smm_access_keys', JSON.stringify(accessKeys));
-  renderKeyManagement();
-}
-
-function resetAllKeys() {
-  if (!confirm('¿Seguro? Las llaves actuales dejarán de funcionar inmediatamente.')) return;
-  setupKeys();
-  renderKeyManagement();
-}
-
-// ═══════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════
-function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if (id === 'screen-admin') {
-    renderKeyManagement();
-    renderApp('admin');
-  }
-  if (id === 'screen-client') renderApp('client');
-}
-
-function logout() {
-  adminCart = {};
-  goTo('screen-landing');
-}
-
-// ═══════════════════════════════
-// AUTH
-// ═══════════════════════════════
-function adminLogin() {
-  const val = document.getElementById('admin-pwd-input').value.trim();
-  const err = document.getElementById('pwd-error');
-  if (accessKeys.includes(val)) {
-    err.style.display = 'none';
-    document.getElementById('admin-pwd-input').value = '';
-    goTo('screen-admin');
-  } else {
-    err.style.display = 'block';
-  }
-}
-
-function openKeyModal() {
-  const labels = ['Llave #1', 'Llave #2', 'Llave #3', 'Llave #4'];
-  document.getElementById('key-modal-body').innerHTML = `
-    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;">Estas son tus 4 llaves de acceso. Puedes regenerar cualquier llave individual o todas a la vez.</p>
-    ${accessKeys.map((k, i) => `
-      <div class="key-mgmt-item">
-        <div style="flex:1;">
-          <div style="font-size:11px;color:var(--muted);">${labels[i]}</div>
-          <div class="key-mgmt-code" style="font-size:13px;">${k}</div>
-        </div>
-        <div class="key-mgmt-actions">
-          <button class="btn btn-sm btn-ghost" onclick="copyKey('${k}', this)" style="font-size:10px;padding:4px 10px;">📋</button>
-          <button class="btn btn-sm btn-ghost" onclick="regenerateKey(${i})" style="font-size:10px;padding:4px 10px;color:var(--accent);">🔄 Regenerar</button>
-        </div>
-      </div>
-    `).join('')}
-    <div style="margin-top:1rem;padding-top:1rem;border-top:0.5px solid var(--border);">
-      <button class="btn btn-sm btn-danger" onclick="if(confirm('¿Seguro? Las llaves actuales dejarán de funcionar.')){resetAllKeys();openKeyModal();}">🔄 Regenerar todas las llaves</button>
-    </div>
-  `;
-  openModal('key-modal');
-}
-
-function setMarkup(pct) {
-  MARKUP = 1 + (pct / 100);
-  localStorage.setItem('smm_markup', MARKUP);
-  const el = document.getElementById('markup-display');
-  if (el) el.innerHTML = pct + '<span>%</span>';
-  clientCart = {};
-}
-
-
-function getPrice(s, mode) {
-  return mode === 'client' ? s.price * MARKUP : s.price;
-}
-
-function getPriceTier(p) {
-  if (p >= 5) return 'price-tier-high';
-  if (p >= 0.5) return 'price-tier-mid';
-  return 'price-tier-low';
-}
-
-function fmtPrice(p) {
-  return p < 0.01 ? '$0.00' : '$' + p.toFixed(p >= 10 ? 2 : p >= 1 ? 2 : 4);
-}
-
-function fmtNum(n) {
-  return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(0)+'K' : n;
-}
-
-function getCategories() {
-  return [...new Set(SERVICES.map(s => s.cat))];
-}
-
-let activeFilter = {};
-
-function renderApp(mode) {
-  const cats = getCategories();
-  const filtersEl = document.getElementById(mode + '-filters');
-  const servicesEl = document.getElementById(mode + '-services');
-  const cart = mode === 'admin' ? adminCart : clientCart;
-
-  if (!activeFilter[mode]) activeFilter[mode] = 'all';
-
-  // Filters
-  filtersEl.innerHTML = `<button class="filter-btn ${activeFilter[mode]==='all'?'active':''}" onclick="setFilter('${mode}','all')">Todos</button>` +
-    cats.map(c => `<button class="filter-btn ${activeFilter[mode]===c?'active':''}" onclick="setFilter('${mode}','${c}')">${c}</button>`).join('');
-
-  // Services grouped by category
-  const filteredCats = activeFilter[mode] === 'all' ? cats : [activeFilter[mode]];
-  servicesEl.innerHTML = filteredCats.map(cat => {
-    const items = SERVICES.filter(s => s.cat === cat);
-    const meta = CAT_ICONS[cat] || { icon: '•', bg: '#1a1a1a', color: '#aaa' };
-    return `
-    <div class="section-block">
-      <div class="section-head">
-        <div class="section-icon" style="background:${meta.bg}; color:${meta.color}; font-size:13px;">${meta.icon}</div>
-        <span class="section-title">${cat}</span>
-        <span class="section-count">${items.length}</span>
-      </div>
-      <div class="service-table">
-        <table>
-          <thead><tr>
-            <th class="col-id">ID</th>
-            <th class="col-desc">Servicio</th>
-            <th class="col-price r">$/1K</th>
-            <th class="col-min r">Mín</th>
-            <th class="col-max r">Máx</th>
-            <th class="col-qty r">Cantidad</th>
-            <th class="col-total r">Total</th>
-          </tr></thead>
-          <tbody>
-            ${items.map(s => renderRow(s, mode, cart)).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
-  }).join('');
-
-  updateCartBar(mode);
-}
-
-function renderRow(s, mode, cart) {
-  const p = getPrice(s, mode);
-  const qty = cart[s.id] || 0;
-  const total = qty > 0 ? (qty / 1000 * p) : 0;
-  const sel = qty > 0 ? 'selected' : '';
-  return `<tr class="${sel}" id="row-${mode}-${s.id}">
-    <td class="id">${s.id}</td>
-    <td>
-      <div class="desc-main">${s.name}</div>
-      <div class="desc-sub">${s.detail}</div>
-    </td>
-    <td class="r"><span class="price ${getPriceTier(p)}">${fmtPrice(p)}</span></td>
-    <td class="r num-col">${fmtNum(s.min)}</td>
-    <td class="r num-col">${fmtNum(s.max)}</td>
-    <td class="r">
-      <input class="qty-input" type="number" min="${s.min}" max="${s.max}" step="${s.min}" 
-        value="${qty || ''}" placeholder="${fmtNum(s.min)}"
-        onchange="setQty('${mode}','${s.id}',this.value,'${s.min}','${s.max}')"
-        onclick="event.stopPropagation()" />
-    </td>
-    <td class="r"><span class="qty-total">${qty > 0 ? '$'+total.toFixed(2) : '—'}</span></td>
-  </tr>`;
-}
-
-function setFilter(mode, cat) {
-  activeFilter[mode] = cat;
-  renderApp(mode);
-}
-
-function setQty(mode, id, rawVal, min, max) {
-  min = parseInt(min); max = parseInt(max);
-  let val = parseInt(rawVal) || 0;
-  if (val > 0 && val < min) val = min;
-  if (val > max) val = max;
-  const cart = mode === 'admin' ? adminCart : clientCart;
-  if (val <= 0) { delete cart[id]; } else { cart[id] = val; }
-
-  // Update just this row without full re-render
-  const s = SERVICES.find(x => x.id === id);
-  const p = getPrice(s, mode);
-  const total = val > 0 ? (val / 1000 * p) : 0;
-  const row = document.getElementById(`row-${mode}-${id}`);
-  if (row) {
-    row.className = val > 0 ? 'selected' : '';
-    row.querySelector('.qty-total').textContent = val > 0 ? '$' + total.toFixed(2) : '—';
-    row.querySelector('.qty-input').value = val > 0 ? val : '';
-  }
-  updateCartBar(mode);
-}
-
-function updateCartBar(mode) {
-  const cart = mode === 'admin' ? adminCart : clientCart;
-  const ids = Object.keys(cart).filter(id => cart[id] > 0);
-  const total = ids.reduce((sum, id) => {
-    const s = SERVICES.find(x => x.id === id);
-    return s ? sum + (cart[id] / 1000 * getPrice(s, mode)) : sum;
-  }, 0);
-  document.getElementById(mode + '-cart-count').textContent = ids.length;
-  document.getElementById(mode + '-cart-total').textContent = '$' + total.toFixed(2);
-}
-
-function clearCart(mode) {
-  if (mode === 'admin') adminCart = {};
-  else clientCart = {};
-  renderApp(mode);
-}
-
-// ═══════════════════════════════
-// QUOTE MODAL
-// ═══════════════════════════════
-function openQuote(mode) {
-  currentQuoteMode = mode;
-  const cart = mode === 'admin' ? adminCart : clientCart;
-  const ids = Object.keys(cart).filter(id => cart[id] > 0);
-
-  document.getElementById('quote-modal-title').textContent =
-    mode === 'admin' ? 'Cotización interna (precios netos)' : 'Cotización de servicios';
-
-  if (ids.length === 0) {
-    document.getElementById('quote-modal-body').innerHTML =
-      '<p style="color:var(--muted);font-size:13px;">No hay servicios seleccionados. Ingresa cantidades en la tabla para cotizar.</p>';
-    openModal('quote-modal');
-    return;
-  }
-
-  const rows = ids.map(id => {
-    const s = SERVICES.find(x => x.id === id);
-    const p = getPrice(s, mode);
-    const qty = cart[id];
-    const total = qty / 1000 * p;
-    return { s, p, qty, total };
-  });
-
-  const grandTotal = rows.reduce((sum, r) => sum + r.total, 0);
-  const date = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
-
-  document.getElementById('quote-modal-body').innerHTML = `
-    <p style="font-size:12px;color:var(--muted);margin-bottom:1rem;">Fecha: ${date}</p>
-    <table class="quote-table">
-      <thead><tr>
-        <th>Servicio</th>
-        <th class="r">Cantidad</th>
-        <th class="r">$/1K</th>
-        <th class="r">Total</th>
-        <th></th>
-      </tr></thead>
-      <tbody>
-        ${rows.map(r => `<tr>
-          <td>
-            <div style="font-size:13px;font-weight:500;">${r.s.name}</div>
-            <div style="font-size:11px;color:var(--muted);">ID ${r.s.id} · ${r.s.detail}</div>
-          </td>
-          <td class="r">${r.qty.toLocaleString()}</td>
-          <td class="r">${fmtPrice(r.p)}</td>
-          <td class="r" style="color:var(--accent);font-weight:500;">$${r.total.toFixed(2)}</td>
-          <td style="text-align:center"><button class="remove-item" onclick="removeFromQuote('${mode}','${r.s.id}')">×</button></td>
-        </tr>`).join('')}
-      </tbody>
-    </table>
-    <div class="quote-total-row">
-      <span class="quote-total-label">Total estimado</span>
-      <span class="quote-total-val" id="quote-grand-total">$${grandTotal.toFixed(2)}</span>
-    </div>
-    ${mode === 'client' ? '<p style="font-size:11px;color:var(--muted);margin-top:1rem;">Precios en USD. Sujeto a confirmación.</p>' : ''}
-  `;
-
-  openModal('quote-modal');
-}
-
-function removeFromQuote(mode, id) {
-  const cart = mode === 'admin' ? adminCart : clientCart;
-  delete cart[id];
-  updateCartBar(mode);
-  openQuote(mode);
-  // Also update row in table
-  const s = SERVICES.find(x => x.id === id);
-  const row = document.getElementById(`row-${mode}-${id}`);
-  if (row) {
-    row.className = '';
-    row.querySelector('.qty-total').textContent = '—';
-    row.querySelector('.qty-input').value = '';
-  }
-}
-
-// ═══════════════════════════════
-// DOWNLOADS
-// ═══════════════════════════════
-function getCartRows(mode) {
-  const cart = mode === 'admin' ? adminCart : clientCart;
-  return Object.keys(cart).filter(id => cart[id] > 0).map(id => {
-    const s = SERVICES.find(x => x.id === id);
-    const p = getPrice(s, mode);
-    const qty = cart[id];
-    return { s, p, qty, total: qty / 1000 * p };
-  });
-}
-
-function downloadCSV() {
-  const mode = currentQuoteMode;
-  const rows = getCartRows(mode);
-  if (!rows.length) return;
-
-  const date = new Date().toLocaleDateString('es-DO');
-  const header = ['ID', 'Servicio', 'Detalle', 'Cantidad', 'Precio/1K (USD)', 'Total (USD)'];
-  const lines = [
-    `Nuclear AIMA · Scaling Flow IA`,
-    `Cotización ${mode === 'admin' ? 'Interna' : 'Cliente'} — ${date}`,
-    '',
-    header.join(','),
-    ...rows.map(r => [
-      r.s.id, `"${r.s.name}"`, `"${r.s.detail}"`,
-      r.qty, r.p.toFixed(4), r.total.toFixed(2)
-    ].join(',')),
-    '',
-    `Total,,,,,"$${rows.reduce((s,r)=>s+r.total,0).toFixed(2)}"`,
-  ];
-
-  const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `cotizacion_nuclear_aima_${Date.now()}.csv`;
-  a.click();
-}
-
-function downloadPDF() {
-  const mode = currentQuoteMode;
-  const rows = getCartRows(mode);
-  if (!rows.length) return;
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const W = 210, margin = 18;
-  const date = new Date().toLocaleDateString('es-DO', { year: 'numeric', month: 'long', day: 'numeric' });
-
-  // Header background
-  doc.setFillColor(20, 20, 22);
-  doc.rect(0, 0, W, 40, 'F');
-
-  // Logo area
-  doc.setFillColor(201, 169, 110);
-  doc.roundedRect(margin, 10, 20, 20, 3, 3, 'F');
-  doc.setTextColor(20, 20, 22);
-  doc.setFontSize(12); doc.setFont('helvetica', 'bold');
-  doc.text('NA', margin + 4, 23);
-
-  // Title
-  doc.setTextColor(240, 237, 232);
-  doc.setFontSize(16); doc.setFont('helvetica', 'bold');
-  doc.text('Nuclear AIMA', margin + 26, 19);
-  doc.setFontSize(9); doc.setFont('helvetica', 'normal');
-  doc.setTextColor(150, 145, 140);
-  doc.text('Scaling Flow IA · Cotizador de Servicios Instagram', margin + 26, 26);
-  doc.text('Fecha: ' + date, margin + 26, 32);
-
-  // Label
-  doc.setFillColor(mode === 'admin' ? 201 : 76, mode === 'admin' ? 169 : 173, mode === 'admin' ? 110 : 124);
-  const labelText = mode === 'admin' ? 'PRECIOS NETOS — CONFIDENCIAL' : 'COTIZACIÓN CLIENTE';
-  doc.setFontSize(8); doc.setFont('helvetica', 'bold');
-  doc.setTextColor(mode === 'admin' ? 20 : 255, 20, 20);
-  const lw = doc.getTextWidth(labelText) + 8;
-  doc.roundedRect(W - margin - lw, 14, lw, 7, 1.5, 1.5, 'F');
-  doc.setTextColor(mode === 'admin' ? 20 : 255, mode === 'admin' ? 20 : 255, mode === 'admin' ? 22 : 255);
-  doc.text(labelText, W - margin - lw/2, 19, { align: 'center' });
-
-  let y = 50;
-
-  // Table header
-  doc.setFillColor(28, 28, 32);
-  doc.rect(margin, y, W - margin*2, 8, 'F');
-  doc.setFontSize(8); doc.setFont('helvetica', 'bold');
-  doc.setTextColor(120, 120, 115);
-  doc.text('SERVICIO', margin + 3, y + 5.5);
-  doc.text('CANTIDAD', W - 90, y + 5.5);
-  doc.text('$/1K', W - 65, y + 5.5);
-  doc.text('TOTAL USD', W - margin - 3, y + 5.5, { align: 'right' });
-  y += 8;
-
-  let grandTotal = 0;
-  rows.forEach((r, i) => {
-    const rowH = 14;
-    if (i % 2 === 1) {
-      doc.setFillColor(22, 22, 24);
-      doc.rect(margin, y, W - margin*2, rowH, 'F');
-    }
-    doc.setFontSize(9); doc.setFont('helvetica', 'bold');
-    doc.setTextColor(240, 237, 232);
-    doc.text(r.s.name.substring(0, 52), margin + 3, y + 6);
-    doc.setFontSize(7.5); doc.setFont('helvetica', 'normal');
-    doc.setTextColor(120, 115, 110);
-    doc.text(`ID ${r.s.id} · ${r.s.detail.substring(0, 58)}`, margin + 3, y + 11);
-
-    doc.setFontSize(9); doc.setFont('helvetica', 'normal');
-    doc.setTextColor(180, 175, 170);
-    doc.text(r.qty.toLocaleString(), W - 90, y + 7.5);
-    doc.text('$' + r.p.toFixed(r.p < 0.01 ? 4 : 2), W - 65, y + 7.5);
-
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(201, 169, 110);
-    doc.text('$' + r.total.toFixed(2), W - margin - 3, y + 7.5, { align: 'right' });
-
-    grandTotal += r.total;
-    y += rowH;
-
-    if (y > 265) {
-      doc.addPage();
-      doc.setFillColor(20, 20, 22);
-      doc.rect(0, 0, W, 12, 'F');
-      y = 18;
-    }
-  });
-
-  // Total row
-  y += 4;
-  doc.setFillColor(201, 169, 110);
-  doc.rect(margin, y, W - margin*2, 12, 'F');
-  doc.setFontSize(11); doc.setFont('helvetica', 'bold');
-  doc.setTextColor(20, 20, 22);
-  doc.text('TOTAL ESTIMADO', margin + 3, y + 8);
-  doc.text('$' + grandTotal.toFixed(2), W - margin - 3, y + 8, { align: 'right' });
-
-  y += 22;
-  doc.setFontSize(8); doc.setFont('helvetica', 'normal');
-  doc.setTextColor(100, 95, 90);
-  if (mode === 'client') {
-    doc.text('Precios en dólares estadounidenses (USD). Cotización sujeta a confirmación.', margin, y);
-    doc.text('Nuclear AIMA · Scaling Flow IA · nuclearaima.com', margin, y + 5);
-  } else {
-    doc.text('DOCUMENTO CONFIDENCIAL — Solo uso interno Nuclear AIMA y Scaling Flow IA', margin, y);
-    doc.text(`Precios netos. Markup cliente activo: ${Math.round((MARKUP-1)*100)}%. No distribuir.`, margin, y + 5);
-  }
-
-  doc.save(`cotizacion_nuclear_aima_${Date.now()}.pdf`);
-}
-
-// ═══════════════════════════════
-// MODALS
-// ═══════════════════════════════
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
-});
-
-// Enter key on login
-document.getElementById('admin-pwd-input').addEventListener('keydown', e => {
-  if (e.key === 'Enter') adminLogin();
-});
-
-// ═══════════════════════════════
-// INIT — Check if keys exist
-// ═══════════════════════════════
-(function init() {
-  if (accessKeys.length === 0) {
-    // First visit — show key setup
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-key-setup').classList.add('active');
-    renderKeySetup();
-  }
-})();
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    min-height: 100vh;
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.05) 0%, transparent 70%);
-  }
-  .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px 60px; }
-
-  /* HEADER */
-  .header {
-    text-align: center;
-    padding: 40px 0 30px;
-    border-bottom: 0.5px solid var(--border);
-    margin-bottom: 30px;
-  }
-  .logo {
-    width: 64px; height: 64px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #c9a96e, #8b6c3a);
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 28px; font-weight: 700; color: #0d0d0f;
-  }
-  .header h1 {
-    font-size: 32px; font-weight: 600;
-    letter-spacing: -0.5px;
-    margin-bottom: 6px;
-  }
-  .header .badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: linear-gradient(135deg, rgba(201,169,110,0.15), rgba(201,169,110,0.05));
-    border: 0.5px solid rgba(201,169,110,0.3);
-    border-radius: 20px; padding: 6px 14px;
-    font-size: 11px; font-weight: 500; color: var(--accent);
-    margin-bottom: 12px; letter-spacing: 0.02em;
-  }
-  .header p {
-    font-size: 14px; color: var(--muted);
-    max-width: 600px; margin: 0 auto; line-height: 1.6;
-  }
-  .header .version {
-    font-size: 11px; color: var(--muted); margin-top: 8px;
-    font-family: var(--mono);
-  }
-
-  /* GRID SECTIONS */
-  .section-title {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    margin: 30px 0 14px;
-    padding-bottom: 8px;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
-    margin-bottom: 10px;
-  }
-  .card {
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--r2);
-    padding: 20px;
-    transition: all 0.2s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .card:hover {
-    border-color: rgba(201,169,110,0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  }
-  .card .icon { font-size: 28px; margin-bottom: 10px; }
-  .card h3 {
-    font-size: 14px; font-weight: 600;
-    margin-bottom: 6px;
-  }
-  .card p {
-    font-size: 12px; color: var(--muted);
-    line-height: 1.5;
-  }
-  .card .meta {
-    font-size: 10px;
-    color: var(--accent);
-    margin-top: 10px;
-    font-family: var(--mono);
-    letter-spacing: 0.03em;
-  }
-  .card .tag {
-    display: inline-block;
-    font-size: 9px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    background: rgba(201,169,110,0.1);
-    color: var(--accent);
-    margin-top: 8px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  /* STATS BAR */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--r);
-    padding: 16px;
-    text-align: center;
-  }
-  .stat-card .num {
-    font-size: 24px; font-weight: 600;
-    color: var(--accent);
-    font-family: var(--mono);
-  }
-  .stat-card .lbl {
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-top: 4px;
-  }
-
-  /* DATA TABLE */
-  .data-section {
-    background: var(--bg2);
-    border: 0.5px solid var(--border);
-    border-radius: var(--r2);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  .data-section h3 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--accent);
-    margin-bottom: 12px;
-  }
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-  }
-  .data-table th {
-    text-align: left;
-    padding: 8px 6px;
-    color: var(--muted);
-    font-weight: 500;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 0.5px solid var(--border);
-  }
-  .data-table td {
-    padding: 6px;
-    border-bottom: 0.5px solid rgba(255,255,255,0.03);
-    color: var(--text);
-    font-size: 11px;
-  }
-  .data-table tr:hover td {
-    background: rgba(201,169,110,0.03);
-  }
-  .yield-high { color: var(--success); }
-  .yield-mid { color: var(--accent); }
-  .yield-low { color: var(--muted); }
-
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .container { padding: 16px 12px; }
-    .header h1 { font-size: 24px; }
-    .grid { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .data-table { font-size: 10px; }
-    .data-table th, .data-table td { padding: 4px; }
-  }
-</style>
-</head>
-<body>
 <div class="container">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="logo">☢️</div>
-    <div class="badge">🟢 SISTEMA OPERATIVO</div>
-    <h1>Nuclear AIMA</h1>
-    <p>Infraestructura Digital · IA + SEO · Catálogo Ramón Orlando · Scaling Flow</p>
-    <div class="version">v2.0 — Junio 2026 — Restaurado por Buffy</div>
+  <!-- ═══ HERO ═══ -->
+  <div class="hero animate">
+    <div class="logo-mark">NA</div>
+    <div class="badge-hero">🔒 Documento Confidencial · Acceso Privado</div>
+    <h1>Operación <span class="gold">"50 Años de Infinito<br>para Ramón Orlando"</span></h1>
+    <div class="subtitle">Estructura Perpetua y Crecimiento Infinito</div>
+    <p>Arquitectura de Ecosistema, Marketing de Guerrilla y Capitalización de Activos para el Maestro Ramón Orlando</p>
+    <div class="version">Nuclear AIMA · v2.0 · Junio 2026</div>
   </div>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat-card">
-      <div class="num">190</div>
-      <div class="lbl">Canciones Auditadas</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">17</div>
-      <div class="lbl">Álbumes</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">236</div>
-      <div class="lbl">Nodos Virales</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">29</div>
-      <div class="lbl">Documentos Estratégicos</div>
-    </div>
+  <!-- ═══ STATS ═══ -->
+  <div class="stats animate delay-1">
+    <div class="stat-card"><div class="stat-num">190</div><div class="stat-label">Canciones Auditadas</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger);">15K+</div><div class="stat-label">Nodos sin Content ID</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger);">$66.8K</div><div class="stat-label">Fuga / mes</div></div>
+    <div class="stat-card"><div class="stat-num">$500K</div><div class="stat-label">Adelanto Est.</div></div>
   </div>
 
-  <!-- APPS / HERRAMIENTAS -->
-  <div class="section-title">⚡ Apps & Herramientas</div>
-  <div class="grid">
-    <a href="cotizador.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Cotizador Nuclear</h3>
-        <p>Sistema de cotización multi-key con panel admin, acceso VIP y generación de presupuestos para servicios Instagram + infraestructura.</p>
-        <span class="tag">Web App</span>
-        <div class="meta">index.html · 50KB · GitHub</div>
-      </div>
-    </a>
-    <a href="live-search.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🔍</div>
-        <h3>Live Search · Nodos Virales</h3>
-        <p>Sistema de detección de fugas. Busca nodos de YouTube, calcula ingresos fugados por Content ID, genera reportes ejecutivos para negociar adelantos con distribuidoras.</p>
-        <span class="tag">🔥 Live</span>
-        <div class="meta">236 nodos · $34.7K fugados/mes</div>
-      </div>
-    </a>
-    <a href="short-tracker.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🎬</div>
-        <h3>Short Tracker · Réplicas Virales</h3>
-        <p>Detección de YouTube Shorts que usan el audio de las 12 canciones principales. Réplicas, virality score, fugas en Shorts y búsqueda directa en YouTube.</p>
-        <span class="tag">🎬 Nuevo</span>
-        <div class="meta">Top 12 · Réplicas · Virality · Shorts/mes</div>
-      </div>
-    </a>
-    <a href="master-plan.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">⭐</div>
-        <h3>Master Plan · Hoja de Ruta</h3>
-        <p>Las 8 fases del plan estratégico: desde la fundación legal y auditoría técnica hasta la distribución global, tokenización Web3 y el evento del 50 Aniversario. Checklists interactivas con progreso guardado.</p>
-        <span class="tag">⭐ Nuevo</span>
-        <div class="meta">8 fases · 64 tareas · Plantillas · Timeline interactivo</div>
-      </div>
-    </a>
-    <a href="adelantos.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">💰</div>
-        <h3>Adelantos · Financiamiento</h3>
-        <p>Guía completa para conseguir adelantos: SoundExchange (retroactivo), beatBread (flexible), Believe/The Orchard ($150K-$500K), SonoSuite. Calculadora de adelanto + Pitch Deck.</p>
-        <span class="tag">💰</span>
-        <div class="meta">SoundExchange · beatBread · Believe · The Orchard</div>
-      </div>
-    </a>
-    <a href="osint-center.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🕵️</div>
-        <h3>OSINT Command Center</h3>
-        <p>Google Dork Builder, Keyword Planner con CPC, Domain Analyzer (SimilarWeb Lite), Google News & Discovery, Trends y más herramientas OSINT.</p>
-        <span class="tag">🔍 Nuevo</span>
-        <div class="meta">Dorks · Keywords · Dominios · News · Trends</div>
-      </div>
-    </a>
-    <a href="streaming.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📡</div>
-        <h3>Streaming 24/7</h3>
-        <p>Landing page profesional para transmisión multiplataforma. YouTube, Twitch, Facebook desde un solo lugar.</p>
-        <span class="tag">Landing</span>
-        <div class="meta">streaming.html</div>
-      </div>
-    </a>
-    <a href="landing-page.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🌐</div>
-        <h3>Landing Page</h3>
-        <p>Página de aterrizaje profesional para captación de leads y presentación de servicios.</p>
-        <span class="tag">Landing</span>
-        <div class="meta">landing-page.html</div>
-      </div>
-    </a>
-    <a href="lead-magnet.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🧲</div>
-        <h3>Lead Magnet</h3>
-        <p>Página de captación de leads con imán de prospectos y formulario de conversión.</p>
-        <span class="tag">Landing</span>
-        <div class="meta">lead-magnet.html</div>
-      </div>
-    </a>
-  </div>
-
-  <!-- RAMÓN ORLANDO -->
-  <div class="section-title">🎵 Ramón Orlando · Ecosistema Completo</div>
-  <div class="grid">
-    <a href="ramon-orlando/evento-50/ramon-orlando-50.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🏟️</div>
-        <h3>50 Aniversario</h3>
-        <p>Página del evento del 50 Aniversario en el Estadio Olímpico Félix Sánchez. Diseño premium con galería.</p>
-        <span class="tag">Evento</span>
-        <div class="meta">23 Sept 2026</div>
-      </div>
-    </a>
-    <a href="onapi-onda.html" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🏛️</div>
-        <h3>ONAPI · ONDA · Fundación Legal</h3>
-        <p>Guía completa paso a paso para registrar tu sello en ONAPI, constituir la SRL, registrarte como Productor Fonográfico en la ONDA y redactar el Contrato Matriz. Incluye costos, tiempos y checklist.</p>
-        <span class="tag">Legal</span>
-        <div class="meta">4 pasos · ~$1,000 USD · 30 días</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📜</div>
-        <h3>Contrato de Asesoramiento</h3>
-        <p>Contrato legal completo entre Nuclear AIMA / Scaling Flow IA y Ramón Orlando Music Records SAS.</p>
-        <span class="tag">Legal</span>
-        <div class="meta">11KB · 12 Cláusulas</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/github.comaonetworkcrm-artnuclear-a.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🔑</div>
-        <h3>Tarifario & Keys</h3>
-        <p>Documento de control interno con tarifario base de infraestructura, keys de acceso y costos por millar.</p>
-        <span class="tag">Confidencial</span>
-        <div class="meta">Interno</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/start.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">⭐</div>
-        <h3>Pasos Estrella</h3>
-        <p>Guía completa para sello independiente, director y agregador de catálogos históricos. 132KB de estrategia.</p>
-        <span class="tag">Estrategia</span>
-        <div class="meta">132KB</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/LA%20CLAVE%20PARA%20REGISTRAR%20Y%20SER%20INMUN.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🛡️</div>
-        <h3>La Clave para Registrar</h3>
-        <p>Guía de registro y protección legal para catálogos musicales. 87KB de documentación crítica.</p>
-        <span class="tag">Legal</span>
-        <div class="meta">87KB</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/boveda%20de%20seguridad/canciones%20y%20albums%20etc/albums%20con%20canciones/albumes%20con%20canciones.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">💿</div>
-        <h3>Catálogo: Álbumes + Canciones</h3>
-        <p>Catálogo expandido con 17 álbumes y 178 canciones. Incluye nivel de popularidad y yield aproximado por tema.</p>
-        <span class="tag">Catálogo</span>
-        <div class="meta">17 Álbumes · 178 Canciones</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/boveda%20de%20seguridad/canciones%20y%20albums%20etc/canciones%20solas/canciones%20solas.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🎶</div>
-        <h3>Canciones (Listado)</h3>
-        <p>Listado limpio de todas las canciones organizadas por álbum. Nombres únicamente para referencia rápida.</p>
-        <span class="tag">Catálogo</span>
-        <div class="meta">178 Canciones</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/boveda%20de%20seguridad/canciones%20y%20albums%20etc/canciones%20solas/organizadas.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📋</div>
-        <h3>Canciones Organizadas</h3>
-        <p>Canciones organizadas por álbum, período y categoría. Versión optimizada para consulta rápida.</p>
-        <span class="tag">Catálogo</span>
-        <div class="meta">Organizado</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/boveda%20de%20seguridad/canciones%20y%20albums%20etc/albums%20solo/albumes%20solos.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📀</div>
-        <h3>Álbumes (Solo)</h3>
-        <p>Listado de álbumes con años de publicación. Versión reducida para referencia de producción discográfica.</p>
-        <span class="tag">Catálogo</span>
-        <div class="meta">17 Álbumes</div>
-      </div>
-    </a>
-    <a href="ramon-orlando/boveda%20de%20seguridad/financiadoras%20principales/financiadoras%20principales.txt" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">💰</div>
-        <h3>Financiadoras</h3>
-        <p>Plataformas de financiamiento musical: beatBread, adelantos flexibles sobre masters y publishing. Desde $1K hasta $10M+.</p>
-        <span class="tag">Finanzas</span>
-        <div class="meta">Fuentes de Capital</div>
-      </div>
-    </a>
-  </div>
-
-  <!-- DATA / ORÁCULO -->
-  <div class="section-title">🔮 Oráculo · Datos en Vivo</div>
-  <div class="grid">
-    <a href="data/catalogo-completo-ramon-orlando.csv" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Catálogo Completo (CSV)</h3>
-        <p>Base de datos completa del catálogo con Canción, Catálogo, Período, Nodos, Vistas, Yield/mes y Auditada.</p>
-        <span class="tag">CSV</span>
-        <div class="meta">190 registros · 10KB</div>
-      </div>
-    </a>
-    <a href="data/no_hay_nadie_mas_-_ramon_orlando_20260509_1909.csv" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🔍</div>
-        <h3>Live Search: No Hay Nadie Más</h3>
-        <p>Resultados de búsqueda en vivo con 236 nodos virales. Datos: canal, vistas, VPH, USD. Análisis de rendimiento.</p>
-        <span class="tag">Live Data</span>
-        <div class="meta">236 nodos · 53KB</div>
-      </div>
-    </a>
-  </div>
-
-  <!-- DATA TABLE - TOP YIELD -->
-  <div class="data-section">
-    <h3>🏆 Top Canciones por Yield Mensual</h3>
-    <div style="overflow-x:auto">
-      <table class="data-table" id="yieldTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Canción</th>
-            <th>Catálogo</th>
-            <th>Nodos</th>
-            <th>Vistas</th>
-            <th>Yield/mes</th>
-            <th>Auditada</th>
-          </tr>
-        </thead>
-        <tbody id="yieldBody">
-          <tr><td colspan="7" style="text-align:center;color:var(--muted)">Cargando datos del oráculo...</td></tr>
-        </tbody>
-      </table>
+  <!-- ═══ MAIN CTA ═══ -->
+  <div class="hero-card animate delay-2">
+    <div class="big-icon">🎬</div>
+    <h2>Presentación <span class="gold">Interactiva</span></h2>
+    <p>Deck de 18 slides con la propuesta completa. Navegue con ESPACIO o las flechas del teclado.</p>
+    <div class="btn-group">
+      <a href="presentacion-deck.html" class="btn btn-primary">▶ Abrir presentación</a>
+      <a href="pdf/propuesta-completa.pdf" class="btn btn-download" download>📄 Descargar PDF (1.7 MB)</a>
+      <a href="pdf/resumen-ejecutivo.pdf" class="btn btn-download" download>📄 Resumen (1.1 MB)</a>
     </div>
   </div>
 
-  <!-- PDFs / DOCUMENTOS -->
-  <div class="section-title">📄 Biblioteca de Documentos</div>
-  <div class="grid">
-    <a href="pdf/PROPUESTA-MAESTRA-NUCLEAR-AIMAtm.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📋</div>
-        <h3>Propuesta Maestra Nuclear AIMA</h3>
-        <p>Documento fundacional del proyecto. 1.2MB de propuesta completa de infraestructura digital.</p>
-        <span class="tag">PDF · 1.2MB</span>
-      </div>
+  <!-- ═══ PAQUETE DE ENTREGA ═══ -->
+  <div class="section-title animate delay-2">
+    📦 Paquete de Entrega
+    <span class="line"></span>
+  </div>
+  <div class="grid animate delay-3">
+    <a href="pdf/propuesta-completa.pdf" class="card card-highlight" download>
+      <div class="card-icon">📋</div>
+      <h3>Propuesta Completa <span class="tag">PDF 1.7 MB</span></h3>
+      <p>Documento maestro con plan detallado, estructura financiera, ROI y cronograma. 18 secciones.</p>
+      <div class="meta">Descargar →</div>
+      <span class="card-arrow">→</span>
     </a>
-    <a href="pdf/Proyecto%20Ram%C3%B3n%20Orlando.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📘</div>
-        <h3>Proyecto Ramón Orlando</h3>
-        <p>Plan completo del proyecto Ramón Orlando: estrategia, catálogo, eventos y tokenización.</p>
-        <span class="tag">PDF · 1.9MB</span>
-      </div>
+    <a href="pdf/resumen-ejecutivo.pdf" class="card card-highlight" download>
+      <div class="card-icon">📄</div>
+      <h3>Resumen Ejecutivo <span class="tag">PDF 1.1 MB</span></h3>
+      <p>Visión general condensada con puntos clave de la propuesta. Ideal para lectura rápida.</p>
+      <div class="meta">Descargar →</div>
+      <span class="card-arrow">→</span>
     </a>
-    <a href="pdf/Hyperion%20Systems%20-%20El%20Plan%20Maestro.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🚀</div>
-        <h3>Hyperion · Plan Maestro</h3>
-        <p>El plan maestro de Hyperion Systems: blockchain, DEPIN y expansión tecnológica.</p>
-        <span class="tag">PDF · 2.4MB</span>
-      </div>
+    <a href="presentacion-deck.html" class="card card-highlight">
+      <div class="card-icon">🎬</div>
+      <h3>Deck Interactivo <span class="tag">18 Slides</span></h3>
+      <p>Presentación visual navegable con animaciones. Compatible con teclado y touch.</p>
+      <div class="meta">Abrir en navegador →</div>
+      <span class="card-arrow">→</span>
     </a>
-    <a href="pdf/Plan%20Maestro%20Libertad%20y%20Legado.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🏛️</div>
-        <h3>Plan Maestro Libertad y Legado</h3>
-        <p>Estrategia integral de libertad financiera, tokenización de legado y construcción de imperio.</p>
-        <span class="tag">PDF · 2.9MB</span>
-      </div>
+    <a href="entrega-final/" class="card">
+      <div class="card-icon">📁</div>
+      <h3>Carpeta de Entrega</h3>
+      <p>Archivos fuente organizados: .md, HTML, PDFs, scripts y más. Para descarga masiva.</p>
+      <div class="meta">Ver contenido →</div>
+      <span class="card-arrow">→</span>
     </a>
-    <a href="pdf/Estrategia%20de%20Repago%20y%20Colateral%20-%20Ram%C3%B3n%20Orlando.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">💵</div>
-        <h3>Estrategia de Repago</h3>
-        <p>Estructura de repago y colateral para financiamiento del catálogo de Ramón Orlando.</p>
-        <span class="tag">PDF · 1.9MB</span>
-      </div>
-    </a>
-    <a href="pdf/Dise%C3%B1o%20Web%20-%20El%20Maestro%20Ram%C3%B3n%20Orlando.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🎨</div>
-        <h3>Diseño Web · Ramón Orlando</h3>
-        <p>Diseño y arquitectura web para la presencia digital del Maestro Ramón Orlando.</p>
-        <span class="tag">PDF · 1.4MB</span>
-      </div>
-    </a>
-    <a href="pdf/Proyecto%20Maestro%2050%20Aniversario.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🏟️</div>
-        <h3>Proyecto Maestro 50 Aniversario</h3>
-        <p>Plan completo del evento del 50 Aniversario en el Estadio Olímpico. Estrategia, producción y monetización.</p>
-        <span class="tag">PDF · 2.6MB</span>
-      </div>
-    </a>
-    <a href="pdf/Propuesta-Estrategica-Oficial-para-GOYO.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🤝</div>
-        <h3>Propuesta GOYO</h3>
-        <p>Propuesta estratégica oficial para GOYO. Asociación comercial y plan de acción.</p>
-        <span class="tag">PDF · 898KB</span>
-      </div>
-    </a>
-    <a href="pdf/Manual_Maestro_Infraestructura_Digital_2026_GoldEdition.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📖</div>
-        <h3>Manual Maestro Infraestructura</h3>
-        <p>Gold Edition del manual de infraestructura digital. Guía completa de operaciones técnicas.</p>
-        <span class="tag">PDF · 119KB</span>
-      </div>
-    </a>
-    <a href="pdf/F%C3%B3rmula%20Viral%2021.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🔥</div>
-        <h3>Fórmula Viral 21</h3>
-        <p>Metodología comprobada para escalar canales y crear contenido viral. Sistema híbrido de crecimiento.</p>
-        <span class="tag">PDF · 1MB</span>
-      </div>
-    </a>
-    <a href="pdf/Sistema-Hibrido-de-Crecimiento-YouTube.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📈</div>
-        <h3>Sistema Híbrido YouTube</h3>
-        <p>Sistema completo de crecimiento para YouTube. Estrategia de contenido, SEO y monetización.</p>
-        <span class="tag">PDF · 2MB</span>
-      </div>
-    </a>
-    <a href="pdf/REVELO-el-secreto-para-escalar-canales-a-100k.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">💡</div>
-        <h3>Secreto: Escalar a 100K</h3>
-        <p>Método revelado para escalar canales de YouTube a 100,000 suscriptores. Estrategia probada.</p>
-        <span class="tag">PDF · 2MB</span>
-      </div>
-    </a>
-    <a href="pdf/PLAN%20DE%20CONTENIDO%20(6).pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📅</div>
-        <h3>Plan de Contenido</h3>
-        <p>Calendario y estrategia de contenido profesional para videos de YouTube. Estructura 8-10 min.</p>
-        <span class="tag">PDF · 52KB</span>
-      </div>
-    </a>
-    <a href="pdf/Nuevo%20canal.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">🆕</div>
-        <h3>Nuevo Canal</h3>
-        <p>Guía para la creación y lanzamiento de nuevo canal de contenido. Estrategia de crecimiento inicial.</p>
-        <span class="tag">PDF · 154KB</span>
-      </div>
-    </a>
-    <a href="pdf/documento_interno_tarifario.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Documento Interno Tarifario</h3>
-        <p>Tarifario interno de servicios de infraestructura digital. Costos base y márgenes operativos.</p>
-        <span class="tag">PDF · 101KB</span>
-      </div>
+    <a href="PROPUESTA_COMERCIAL_MAESTRA_RAMON_ORLANDO.md" class="card">
+      <div class="card-icon">📝</div>
+      <h3>Documento Fuente (.md)</h3>
+      <p>Propuesta completa en Markdown. Editable y versionable. Ideal para modificaciones.</p>
+      <div class="meta">Ver archivo →</div>
+      <span class="card-arrow">→</span>
     </a>
   </div>
 
-  <!-- COTIZACIONES -->
-  <div class="section-title">📋 Cotizaciones Generadas</div>
-  <div class="grid">
-    <a href="docs/cotizacion_nuclear_aima_1780471011688.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📄</div>
-        <h3>Cotización #1</h3>
-        <p>Cotización generada el 3 de Junio 2026. Incluye desglose de servicios y presupuesto.</p>
-        <span class="tag">PDF · 7.1KB</span>
-      </div>
-    </a>
-    <a href="docs/cotizacion_nuclear_aima_1780640432420.pdf" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📄</div>
-        <h3>Cotización #2</h3>
-        <p>Cotización generada el 5 de Junio 2026. Presupuesto detallado de servicios.</p>
-        <span class="tag">PDF · 7.9KB</span>
-      </div>
-    </a>
-    <a href="data/cotizacion_nuclear_aima_1780471014071.csv" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Cotización CSV #1</h3>
-        <p>Datos de cotización en formato CSV para análisis y procesamiento.</p>
-        <span class="tag">CSV</span>
-      </div>
-    </a>
-    <a href="data/cotizacion_nuclear_aima_1780640289871.csv" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Cotización CSV #2</h3>
-        <p>Datos de cotización en formato CSV para análisis y procesamiento.</p>
-        <span class="tag">CSV</span>
-      </div>
-    </a>
-    <a href="data/cotizacion_nuclear_aima_1780640364148.csv" style="text-decoration:none;color:inherit">
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3>Cotización CSV #3</h3>
-        <p>Datos de cotización en formato CSV para análisis y procesamiento.</p>
-        <span class="tag">CSV</span>
-      </div>
-    </a>
+  <!-- ═══ MÓDULOS DE INFRAESTRUCTURA ═══ -->
+  <div class="section-title animate delay-3">
+    ⚡ Módulos del Ecosistema
+    <span class="line"></span>
+  </div>
+  <div class="links-list animate delay-4">
+    <a href="modulos/cotizador.html" class="link-item"><span class="li-icon">📊</span><span class="li-label">Cotizador de Tráfico</span><span class="li-meta">Web App</span></a>
+    <a href="modulos/live-search.html" class="link-item"><span class="li-icon">🔍</span><span class="li-label">Live Search · Nodos Virales</span><span class="li-meta">Herramienta</span></a>
+    <a href="modulos/short-tracker.html" class="link-item"><span class="li-icon">🎬</span><span class="li-label">Short Tracker · Réplicas</span><span class="li-meta">Herramienta</span></a>
+    <a href="modulos/oraculo.html" class="link-item"><span class="li-icon">🔮</span><span class="li-label">Oráculo de Yield en Vivo</span><span class="li-meta">Dashboard</span></a>
+    <a href="modulos/master-plan.html" class="link-item"><span class="li-icon">⭐</span><span class="li-label">Master Plan · 8 Fases</span><span class="li-meta">Plan</span></a>
+    <a href="modulos/streaming.html" class="link-item"><span class="li-icon">📡</span><span class="li-label">Streaming 24/7</span><span class="li-meta">Landing</span></a>
+    <a href="modulos/osint-center.html" class="link-item"><span class="li-icon">🕵️</span><span class="li-label">OSINT Command Center</span><span class="li-meta">Toolkit</span></a>
+    <a href="modulos/adelantos.html" class="link-item"><span class="li-icon">💰</span><span class="li-label">Adelantos y Financiamiento</span><span class="li-meta">Guía</span></a>
+    <a href="modulos/adspro-estrategia.html" class="link-item"><span class="li-icon">📢</span><span class="li-label">AdsPro · Estrategia</span><span class="li-meta">Plan</span></a>
+    <a href="modulos/campanas-pagas.html" class="link-item"><span class="li-icon">📈</span><span class="li-label">Campañas Pagas</span><span class="li-meta">Dashboard</span></a>
+    <a href="modulos/dashboard-campanas.html" class="link-item"><span class="li-icon">📊</span><span class="li-label">Dashboard Unificado</span><span class="li-meta">Métricas</span></a>
+    <a href="modulos/plan-semanal-grupos.html" class="link-item"><span class="li-icon">👥</span><span class="li-label">Plan Grupos Facebook</span><span class="li-meta">Calendario</span></a>
   </div>
 
-  <!-- BACKEND -->
-  <div class="section-title">⚙️ Backend</div>
-  <div class="grid">
-    <div class="card" style="cursor:default">
-      <div class="icon">🗄️</div>
-      <h3>Backend</h3>
-      <p>Directorio backend del proyecto. Preparado para implementación de lógica del servidor.</p>
-      <span class="tag">Directorio</span>
-      <div class="meta">./backend/</div>
-    </div>
-    <div class="card" style="cursor:default">
-      <div class="icon">📁</div>
-      <h3>Data</h3>
-      <p>Base de datos del oráculo en CSV y JSON. Catálogo completo y datos de live search.</p>
-      <span class="tag">Datos</span>
-      <div class="meta">./data/ · 8 archivos</div>
-    </div>
+  <!-- ═══ LEGAL & DOCS ═══ -->
+  <div class="section-title animate delay-4">
+    🏛️ Legal y Documentación
+    <span class="line"></span>
+  </div>
+  <div class="links-list animate delay-4">
+    <a href="modulos/onapi-onda.html" class="link-item"><span class="li-icon">🏛️</span><span class="li-label">ONAPI · ONDA · Fundación Legal</span><span class="li-meta">Guía</span></a>
+    <a href="modulos/pasos-estrella.html" class="link-item"><span class="li-icon">⭐</span><span class="li-label">Pasos Estrella · Sello</span><span class="li-meta">Guía</span></a>
+    <a href="ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt" class="link-item"><span class="li-icon">📜</span><span class="li-label">Contrato de Asesoramiento</span><span class="li-meta">Legal</span></a>
+    <a href="data/catalogo-completo-ramon-orlando.csv" class="link-item"><span class="li-icon">💿</span><span class="li-label">Catálogo Completo (CSV)</span><span class="li-meta">Datos</span></a>
   </div>
 
-  <!-- FOOTER -->
-  <div style="text-align:center;padding:30px 0 10px;border-top:0.5px solid var(--border);margin-top:30px">
-    <p style="font-size:11px;color:var(--muted);letter-spacing:0.05em">
-      ☢️ Nuclear AIMA · v2.0 · Junio 2026 · Restaurado por Buffy · 
-      <a href="https://github.com/aonetworkcrm-art/nuclear-aima-cotizador" style="color:var(--accent);text-decoration:none">GitHub</a>
-    </p>
-    <p style="font-size:9px;color:var(--muted);margin-top:6px">
-      🧬 ADN · 💰 Dinecap · 🏢 Imperio · 📈 SEO · 🛡️ Hacking · 🔗 Web3 · ❤️ Salud · 🎵 Música · 🧠 IA
+  <!-- ═══ PANEL INTERNO ═══ -->
+  <div class="section-title animate delay-4">
+    🔒 Panel Interno
+    <span class="line"></span>
+  </div>
+  <div style="text-align:center;margin-bottom:30px;" class="animate delay-4">
+    <a href="app/index.html" class="btn btn-ghost">☢️ Acceder al Panel de Administración</a>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Requiere llave de acceso privada · Solo personal autorizado</p>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    <p>
+      <strong>Nuclear AIMA</strong> · Scaling Flow IA · Nuclear Music Networks<br>
+      <span class="gold">Romny Regalado</span> · CEO &amp; Arquitecto de Sistemas<br>
+      Documento CONFIDENCIAL — Prohibida su divulgación externa<br>
+      <span style="font-size:10px;">© 2026 Nuclear AIMA · Todos los derechos reservados · v2.0</span>
     </p>
   </div>
 
 </div>
 
-<script>
-// ── Load CSV and render top yield table ──
-fetch('data/catalogo-completo-ramon-orlando.csv')
-  .then(r => r.text())
-  .then(csv => {
-    const lines = csv.split('\n').filter(l => l.trim());
-    if (lines.length < 2) return;
-    const header = lines[0].split(',');
-    const data = lines.slice(1).map(line => {
-      const vals = [];
-      let current = '', inQuotes = false;
-      for (const ch of line) {
-        if (ch === '"') { inQuotes = !inQuotes; continue; }
-        if (ch === ',' && !inQuotes) { vals.push(current.trim()); current = ''; }
-        else current += ch;
-      }
-      vals.push(current.trim());
-      return vals;
-    }).filter(d => d.length >= 7);
-
-    // Sort by yield descending
-    data.sort((a, b) => {
-      const yieldA = parseInt(a[5]?.replace(/[^0-9]/g,'') || '0');
-      const yieldB = parseInt(b[5]?.replace(/[^0-9]/g,'') || '0');
-      return yieldB - yieldA;
-    });
-
-    const tbody = document.getElementById('yieldBody');
-    tbody.innerHTML = data.slice(0, 30).map((row, i) => {
-      const yieldVal = parseInt(row[5]?.replace(/[^0-9]/g,'') || '0');
-      const yieldClass = yieldVal > 1000 ? 'yield-high' : yieldVal > 500 ? 'yield-mid' : 'yield-low';
-      return `<tr>
-        <td>${i + 1}</td>
-        <td>${row[0] || ''}</td>
-        <td>${row[1] || ''}</td>
-        <td>${row[3] || ''}</td>
-        <td>${parseInt(row[4]?.replace(/[^0-9]/g,'') || '0').toLocaleString()}</td>
-        <td class="${yieldClass}">$${yieldVal.toLocaleString()}</td>
-        <td>${(row[6] || '').trim() === 'Sí' ? '✅' : '⏳'}</td>
-      </tr>`;
-    }).join('');
-  })
-  .catch(() => {
-    document.getElementById('yieldBody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted)">Esperando datos del oráculo...</td></tr>';
-  });
-
-</script>
 </body>
 </html>

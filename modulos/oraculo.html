@@ -45,7 +45,35 @@
     width: 5px; height: 5px; background: var(--danger); border-radius: 50%;
     animation: pulse-dot 1.2s ease-in-out infinite;
   }
+  .oracle-header .badge.offline {
+    background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.3); color: var(--gold);
+  }
+  .oracle-header .badge.online {
+    background: rgba(76,173,124,0.12); border-color: rgba(76,173,124,0.3); color: var(--success);
+  }
+  .oracle-header .badge.warn {
+    background: rgba(224,92,92,0.08); border-color: rgba(224,92,92,0.2); color: var(--danger);
+  }
   @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+
+  /* ── FADE IN ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes countPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
   .oracle-header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
   .oracle-header h1 span.live-text { color: var(--danger); }
   .oracle-header h1 span.accent-text { color: var(--accent); }
@@ -69,7 +97,11 @@
   .live-ticker .ticker-label .elapsed { color: var(--cyan); }
   .live-ticker .ticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
   .ticker-item { text-align: center; }
-  .ticker-item .tnum { font-size: 28px; font-weight: 700; font-family: var(--mono); letter-spacing: -0.5px; }
+  .ticker-item .tnum {
+    font-size: 28px; font-weight: 700; font-family: var(--mono); letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+  }
+  .ticker-item .tnum.pop { animation: countPop 0.3s ease; }
   .ticker-item .tlbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
   .ticker-item.danger .tnum { color: var(--danger); }
   .ticker-item.accent .tnum { color: var(--accent); }
@@ -136,8 +168,30 @@
   .top12-header .live-indicator .p { width: 4px; height: 4px; background: var(--danger); border-radius: 50%; animation: pulse-dot 1s infinite; }
   .top12-header .count { font-size: 10px; color: var(--muted); font-family: var(--mono); }
   .top12-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); }
-  .top12-card { background: var(--bg2); padding: 12px; position: relative; transition: all 0.2s; }
-  .top12-card:hover { background: var(--bg3); }
+  .top12-card {
+    background: var(--bg2); padding: 12px; position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.5s ease both;
+    border-left: 2px solid transparent;
+  }
+  .top12-card:nth-child(1) { animation-delay: 0.05s; }
+  .top12-card:nth-child(2) { animation-delay: 0.1s; }
+  .top12-card:nth-child(3) { animation-delay: 0.15s; }
+  .top12-card:nth-child(4) { animation-delay: 0.2s; }
+  .top12-card:nth-child(5) { animation-delay: 0.25s; }
+  .top12-card:nth-child(6) { animation-delay: 0.3s; }
+  .top12-card:nth-child(7) { animation-delay: 0.35s; }
+  .top12-card:nth-child(8) { animation-delay: 0.4s; }
+  .top12-card:nth-child(9) { animation-delay: 0.45s; }
+  .top12-card:nth-child(10) { animation-delay: 0.5s; }
+  .top12-card:nth-child(11) { animation-delay: 0.55s; }
+  .top12-card:nth-child(12) { animation-delay: 0.6s; }
+  .top12-card:hover {
+    background: var(--bg3);
+    border-left-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
   .top12-card .rank { font-size: 9px; color: var(--muted); font-family: var(--mono); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
   .top12-card .rank .medal {
     display: inline-flex; align-items: center; justify-content: center;
@@ -273,8 +327,8 @@
   <!-- ── HEADER ── -->
   <div class="oracle-header">
     <div class="badges">
-      <span class="badge live"><span class="pulse-dot"></span> TIEMPO REAL · SEGUNDO A SEGUNDO</span>
-      <span class="badge">⚡ 100ms TICK RATE</span>
+      <span class="badge live" id="liveBadge"><span class="pulse-dot"></span> TIEMPO REAL · SEGUNDO A SEGUNDO</span>
+      <span class="badge" id="modeBadge">⚡ 100ms TICK RATE</span>
       <span class="badge">💾 localStorage · HISTÓRICO</span>
     </div>
     <h1>🔮 Oráculo de <span class="accent-text">Yield</span> <span class="live-text">en Vivo</span></h1>
@@ -376,6 +430,53 @@
     </div>
   </div>
 
+
+  <!-- -- MULTI-PLATFORM SEARCH -- -->
+  <div class="full-table-section">
+    <div class="full-table-header">
+      <h3>🎧 Buscar en Plataformas · Catálogo Completo</h3>
+      <div class="count">Busca cada cancion en Spotify, Apple Music, Deezer, Amazon Music y YouTube</div>
+    </div>
+    <div style="padding:12px 16px">
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+        <input type="text" id="spotifySearch" placeholder="Buscar cancion en todas las plataformas..." oninput="filterSpotifyTable()" style="flex:1;min-width:200px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:8px 12px;color:var(--text);font-size:12px;font-family:var(--font);outline:none">
+        <button class="btn-sm-primary" onclick="searchSpotifyAll()" style="padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;background:#1DB954;color:#fff;font-family:var(--font)">🎵 Spotify</button>
+        <button class="btn-sm-primary" onclick="searchAppleMusicAll()" style="padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;background:#FA243C;color:#fff;font-family:var(--font)">🍎 Apple Music</button>
+        <button class="btn-sm-primary" onclick="searchDeezerAll()" style="padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;background:#FEAA2D;color:#0d0d0f;font-family:var(--font)">🔵 Deezer</button>
+        <button class="btn-sm-primary" onclick="searchAmazonMusicAll()" style="padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;background:#FF9900;color:#0d0d0f;font-family:var(--font)">📦 Amazon Music</button>
+        <button class="btn-sm-primary" onclick="searchYTAll()" style="padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;background:#FF0000;color:#fff;font-family:var(--font)">▶ YouTube</button>
+      </div>
+      <div class="table-wrap" style="max-height:400px;overflow-y:auto">
+        <table class="dt" style="width:100%;border-collapse:collapse;font-size:10px">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">#</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">Cancion</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">Nodos</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">Yield</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">🎵 Spotify</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">🍎 Apple</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">🔵 Deezer</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">📦 Amazon</th>
+              <th style="text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)">▶ YouTube</th>
+            </tr>
+          </thead>
+          <tbody id="spotifyTableBody">
+            <tr><td colspan="9" style="text-align:center;color:var(--muted);padding:20px">Cargando catalogo...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap" id="spotifyTopLinks">
+        <span style="font-size:9px;color:var(--muted)">Buscar artista completo:</span>
+        <a href="https://open.spotify.com/search/Ram%C3%B3n%20Orlando" target="_blank" style="font-size:9px;color:#1DB954;text-decoration:none">🎵 Spotify: Ramon Orlando</a>
+        <a href="https://music.apple.com/search?term=Ram%C3%B3n+Orlando" target="_blank" style="font-size:9px;color:#FA243C;text-decoration:none">🍎 Apple Music</a>
+        <a href="https://www.deezer.com/search/Ram%C3%B3n%20Orlando" target="_blank" style="font-size:9px;color:#FEAA2D;text-decoration:none">🔵 Deezer</a>
+        <a href="https://music.amazon.com/search/Ram%C3%B3n+Orlando" target="_blank" style="font-size:9px;color:#FF9900;text-decoration:none">📦 Amazon Music</a>
+        <a href="https://www.youtube.com/results?search_query=Ram%C3%B3n+Orlando" target="_blank" style="font-size:9px;color:#FF0000;text-decoration:none">▶ YouTube</a>
+        <a href="https://soundcloud.com/search?q=Ram%C3%B3n%20Orlando" target="_blank" style="font-size:9px;color:#FF7700;text-decoration:none">☁️ SoundCloud</a>
+      </div>
+    </div>
+  </div>
   <!-- ── TOP 12 ── -->
   <div class="top12-section">
     <div class="top12-header">
@@ -516,59 +617,262 @@ function parseIntVal(str) {
 }
 
 // ═══════════════════════════════════════════
-//  DATA LOADING
+//  EMBEDDED CATALOG DATA (works with file:// protocol)
 // ═══════════════════════════════════════════
 
-async function loadData() {
-  try {
-    const [catResp, liveResp] = await Promise.all([
-      fetch('data/catalogo-completo-ramon-orlando.csv?t=' + Date.now()),
-      fetch('data/no_hay_nadie_mas_-_ramon_orlando_20260509_1909.csv?t=' + Date.now())
-    ]);
+const EMBEDDED_CATALOG_CSV = `Canción,Catálogo,Período,Nodos,Vistas,Yield/mes,Auditada
+"Loco de Amor",RO-01,1983-1990,1850,78000000,3120,Sí
+"La Temperatura",RO-01,1983-1990,1200,58000000,2320,Sí
+"Tonto Corazón",RO-01,1983-1990,950,52000000,2080,Sí
+"Dos Sonámbulos",RO-01,1983-1990,880,49000000,1960,Sí
+"El Baile del Suá Suá",RO-01,1983-1990,640,34000000,1360,Sí
+"El Juicio",RO-01,1983-1990,22,2900000,116,No
+"No Matarás",RO-01,1983-1990,30,3500000,140,No
+"Pagando Mi Ley",RO-01,1983-1990,37,4100000,164,No
+"Te Invito a Bailar",RO-01,1983-1990,45,4700000,188,No
+"Micharén",RO-01,1983-1990,53,5200000,208,No
+"Sisi y Ricardo",RO-01,1983-1990,61,5800000,232,No
+"Mentirosa",RO-01,1983-1990,69,6400000,256,No
+"Un Rincón del Alma",RO-01,1983-1990,85,7600000,304,No
+"Sinfonía en Merengue (Instrumental)",RO-01,1983-1990,21,8200000,328,No
+"Weo",RO-01,1983-1990,33,4100000,164,No
+"Fiebre",RO-01,1983-1990,42,4700000,188,No
+"Tú Posesión",RO-01,1983-1990,50,5400000,216,No
+"Al Son de los Tambores",RO-01,1983-1990,59,6100000,244,No
+"Bailando Contigo",RO-01,1983-1990,68,6800000,272,No
+"La Orquesta de Moda",RO-01,1983-1990,77,7500000,300,No
+"Por un Pedazo de Tu Amor",RO-01,1983-1990,86,8200000,328,No
+"A Ritmo de Piano",RO-01,1983-1990,94,8900000,356,No
+"Vuelve",RO-01,1983-1990,23,9500000,380,No
+"Mar de Amores",RO-01,1983-1990,31,3800000,152,No
+"Qué Ironía",RO-01,1983-1990,40,4400000,176,No
+"Gotas de Fuego",RO-01,1983-1990,48,5000000,200,No
+"Me Enamoré",RO-01,1983-1990,56,5700000,228,No
+"El Piano Mágico",RO-01,1983-1990,65,6300000,252,No
+"Noche de Luna",RO-01,1983-1990,73,7000000,280,No
+"No Puedo Olvidarte",RO-01,1983-1990,81,7600000,304,No
+"Baila Mi Merengue",RO-01,1983-1990,90,8200000,328,No
+"Es Tarde Ya",RO-01,1983-1990,22,8900000,356,No
+"Amor de Conuco",RO-01,1983-1990,28,3200000,128,No
+"Cariño Lindo",RO-01,1983-1990,43,4300000,172,No
+"El Ritmo de la Noche",RO-01,1983-1990,50,4800000,192,No
+"Te Quiero Te Quiero",RO-01,1983-1990,58,5300000,212,No
+"Esencia Dominicana",RO-01,1983-1990,65,5900000,236,No
+"Juntos de Nuevo",RO-01,1983-1990,73,6400000,256,No
+"Piano Sincopado",RO-01,1983-1990,80,7000000,280,No
+"Unión Eterna",RO-01,1983-1990,20,7500000,300,No
+"El Hijo de la Mazurca",RO-01,1983-1990,19,2400000,96,No
+"Raza Latina",RO-01,1983-1990,26,2900000,116,No
+"Herencia de Sangre",RO-01,1983-1990,33,3400000,136,No
+"El Merengazo",RO-01,1983-1990,40,3900000,156,No
+"Nostalgia de Cuco",RO-01,1983-1990,47,4400000,176,No
+"Baila Mi Pueblo",RO-01,1983-1990,54,4900000,196,No
+"Sabor Antillano",RO-01,1983-1990,61,5400000,216,No
+"Te Extraño",RO-01,1983-1990,68,5800000,232,No
+"El Son del Piano",RO-01,1983-1990,76,6300000,252,No
+"Tambores y Güira",RO-01,1983-1990,19,6800000,272,No
+"Un Canto al Caribe",RO-01,1983-1990,26,7300000,292,No
+"Te Compro Tu Novia",RO-02,1990-1997,2100,85000000,3400,Sí
+"Ring... Ring (El Teléfono)",RO-02,1990-1997,1700,72000000,2880,Sí
+"Noche de Bodas",RO-02,1990-1997,820,46000000,1840,Sí
+"Cabecita Loca",RO-02,1990-1997,780,43000000,1720,Sí
+"Esa Muchacha",RO-02,1990-1997,720,39000000,1560,Sí
+"América Sin Queja",RO-02,1990-1997,600,32000000,1280,Sí
+"Solo Ganar",RO-02,1990-1997,39,4600000,184,No
+"El Rompecorazones",RO-02,1990-1997,50,5400000,216,No
+"Dime Que Sí",RO-02,1990-1997,60,6200000,248,No
+"A Fuego Lento",RO-02,1990-1997,71,7000000,280,No
+"La Dueña de Mi Piano",RO-02,1990-1997,82,7800000,312,No
+"Merengue Caliente",RO-02,1990-1997,92,8600000,344,No
+"Falso Amor",RO-02,1990-1997,103,9300000,372,No
+"Para Siempre",RO-02,1990-1997,113,10100000,404,No
+"Ritmo Violento",RO-02,1990-1997,28,10900000,436,No
+"Doy",RO-02,1990-1997,75,8100000,324,No
+"Que Vuelva el Amor",RO-02,1990-1997,91,9300000,372,No
+"La Chica de la Foto",RO-02,1990-1997,107,10500000,420,No
+"Te Vas Conmigo",RO-02,1990-1997,122,11700000,468,No
+"Un Toque de Piano",RO-02,1990-1997,138,12800000,512,No
+"Corazón de Piedra",RO-02,1990-1997,154,14000000,560,No
+"Ritmo de la Calle",RO-02,1990-1997,170,15200000,608,No
+"Llamada Perdida",RO-02,1990-1997,42,16400000,656,No
+"El Hombre de la Noche",RO-02,1990-1997,31,4300000,172,No
+"Todos a Bailar",RO-02,1990-1997,43,5200000,208,No
+"Amor de Juventud",RO-02,1990-1997,54,6100000,244,No
+"Piano y Corazón",RO-02,1990-1997,66,7000000,280,No
+"No Me Dejes Solo",RO-02,1990-1997,77,7900000,316,No
+"Fuerza Latina",RO-02,1990-1997,88,8700000,348,No
+"El Ritmo Nos Une",RO-02,1990-1997,100,9600000,384,No
+"Dulce Amada",RO-02,1990-1997,111,10500000,420,No
+"A Todo Tren",RO-02,1990-1997,123,11400000,456,No
+"Fiesta Dominicana",RO-02,1990-1997,30,12300000,492,No
+"Pedacito de Patria",RO-02,1990-1997,62,6800000,272,No
+"Ganas de Amarte",RO-02,1990-1997,76,7800000,312,No
+"El Profesor de Baile",RO-02,1990-1997,89,8700000,348,No
+"Mi Piano Romántico",RO-02,1990-1997,102,9700000,388,No
+"Bailando el Ritmo",RO-02,1990-1997,115,10700000,428,No
+"No Llores Más",RO-02,1990-1997,128,11700000,468,No
+"Esclavo de Tu Amor",RO-02,1990-1997,142,12700000,508,No
+"Gente Alegre",RO-02,1990-1997,35,13600000,544,No
+"Unión de Naciones",RO-02,1990-1997,48,14600000,584,No
+"El Maestro del Ritmo",RO-02,1990-1997,33,4100000,164,No
+"Gotas de Nostalgia",RO-02,1990-1997,42,4700000,188,No
+"Por Ti Respiro",RO-02,1990-1997,50,5400000,216,No
+"Piano Virtuoso",RO-02,1990-1997,59,6100000,244,No
+"Amor Oculto",RO-02,1990-1997,68,6800000,272,No
+"El Baile de la Noche",RO-02,1990-1997,77,7500000,300,No
+"Sentimiento Puro",RO-02,1990-1997,86,8200000,328,No
+"Vuelve a Mí",RO-02,1990-1997,94,8900000,356,No
+"Fin de Fiesta",RO-02,1990-1997,23,9500000,380,No
+"Balada de Amor",RO-02,1990-1997,22,2900000,116,No
+"Evolución de Merengue",RO-02,1990-1997,30,3500000,140,No
+"El Siglo Termina",RO-02,1990-1997,37,4100000,164,No
+"La Chica del Siglo",RO-02,1990-1997,45,4700000,188,No
+"Te Dedico Mi Piano",RO-02,1990-1997,53,5200000,208,No
+"Amor de Fin de Año",RO-02,1990-1997,61,5800000,232,No
+"Ritmo de Fin de Siglo",RO-02,1990-1997,69,6400000,256,No
+"Corazón Herido",RO-02,1990-1997,77,7000000,280,No
+"Vuelve Mi Amor",RO-02,1990-1997,85,7600000,304,No
+"Baila el Nuevo Ritmo",RO-02,1990-1997,21,8200000,328,No
+"Camino al Futuro",RO-02,1990-1997,29,8800000,352,No
+"Bachata de Amargue",RO-03,2001,14,1900000,76,No
+"Corazón Partido",RO-03,2001,20,2300000,92,No
+"Guitarra Amarga",RO-03,2001,25,2700000,108,No
+"Lágrimas de Amor",RO-03,2001,30,3100000,124,No
+"Mi Niña Consentida",RO-03,2001,36,3500000,140,No
+"Por un Te Quiero",RO-03,2001,39,3900000,156,No
+"Te Extraño Tanto",RO-03,2001,41,4300000,172,No
+"Amor de Cuerdas",RO-03,2001,46,4700000,188,No
+"Falso Juramento",RO-03,2001,51,5100000,204,No
+"Baila Mi Bachata",RO-03,2001,57,5500000,220,No
+"Despedida de Amor",RO-03,2001,14,5800000,232,No
+"En Tierra Ajena",RO-04,2005-2007,17,2400000,96,No
+"Nostalgia de Mi Pueblo",RO-04,2005-2007,23,2900000,116,No
+"Lejos de Casa",RO-04,2005-2007,29,3400000,136,No
+"Un Canto a Nueva York",RO-04,2005-2007,35,3900000,156,No
+"El Viajero Dominicano",RO-04,2005-2007,41,4400000,176,No
+"Recuerdos de Quisqueya",RO-04,2005-2007,48,4900000,196,No
+"Mi Piano en la Distancia",RO-04,2005-2007,54,5400000,216,No
+"Cartas de Amor",RO-04,2005-2007,60,5800000,232,No
+"Sabor de Patria",RO-04,2005-2007,66,6300000,252,No
+"El Regreso",RO-04,2005-2007,16,6800000,272,No
+"El Duro",RO-04,2005-2007,16,2200000,88,No
+"Mambo del Piano",RO-04,2005-2007,21,2600000,104,No
+"Merengue de la Calle",RO-04,2005-2007,27,3100000,124,No
+"La Fuerza del Ritmo",RO-04,2005-2007,33,3500000,140,No
+"Con el Piano Encendido",RO-04,2005-2007,38,3900000,156,No
+"Gozadera Total",RO-04,2005-2007,44,4400000,176,No
+"El Ritmo No Muere",RO-04,2005-2007,50,4800000,192,No
+"A Corazón Abierto",RO-04,2005-2007,56,5300000,212,No
+"Baila Sin Parar",RO-04,2005-2007,61,5700000,228,No
+"Sabor Callejero",RO-04,2005-2007,15,6100000,244,No
+"Fin del Mambo",RO-04,2005-2007,21,6600000,264,No
+"Adoración en el Trono",RO-05,2014,8,1200000,48,No
+"Canto de Alabanza",RO-05,2014,11,1500000,60,No
+"Ante Ti Señor",RO-05,2014,15,1700000,68,No
+"Gracias por Tu Amor",RO-05,2014,18,1900000,76,No
+"Piano Celestial",RO-05,2014,21,2200000,88,No
+"Fe y Esperanza",RO-05,2014,24,2400000,96,No
+"Alaba a Dios",RO-05,2014,27,2700000,108,No
+"En Tu Presencia",RO-05,2014,30,2900000,116,No
+"Canto de Victoria",RO-05,2014,33,3200000,128,No
+"Oración Final",RO-05,2014,8,3400000,136,No
+"El Tiki Tiki del Amor",RO-06,2021-2026,680,36000000,1440,Sí
+"Crónicas del Día a Día",RO-06,2021-2026,12,1700000,68,No
+"El Baile de la Vida",RO-06,2021-2026,16,2000000,80,No
+"Volver a Empezar",RO-06,2021-2026,21,2400000,96,No
+"Abrazo Virtual",RO-06,2021-2026,25,2700000,108,No
+"Piano de la Esperanza",RO-06,2021-2026,30,3100000,124,No
+"Historias del Pueblo",RO-06,2021-2026,34,3400000,136,No
+"Canto de Fe",RO-06,2021-2026,38,3700000,148,No
+"Un Nuevo Despertar",RO-06,2021-2026,43,4100000,164,No
+"Ritmo Sanador",RO-06,2021-2026,47,4400000,176,No
+"Unidos por el Ritmo",RO-06,2021-2026,12,4800000,192,No
+"Cierre de Crónicas",RO-06,2021-2026,16,5100000,204,No
+"Aunque No Quisieran",RO-06,2021-2026,25,2900000,116,No
+"El Merengue Vive",RO-06,2021-2026,31,3400000,136,No
+"Colaboración de Oro",RO-06,2021-2026,38,3900000,156,No
+"Piano Moderno",RO-06,2021-2026,44,4400000,176,No
+"Ritmo de la Nueva Ola",RO-06,2021-2026,51,4900000,196,No
+"Sencillo de Corazón",RO-06,2021-2026,58,5400000,216,No
+"Amor Digital",RO-06,2021-2026,64,5800000,232,No
+"Mambo 2026",RO-06,2021-2026,71,6300000,252,No
+"Raíces y Futuro",RO-06,2021-2026,17,6800000,272,No
+"El Legado Sigue",RO-06,2021-2026,24,7300000,292,No
+"Canto de Oro (Final de Antología)",RO-06,2021-2026,31,7800000,312,No`;
 
-    // ── Catalog CSV ──
-    const catCsv = await catResp.text();
-    const catLines = catCsv.split('\n').filter(l => l.trim());
-    if (catLines.length < 2) throw new Error('No catalog data');
-    const catHeader = parseCSVLine(catLines[0]);
-    catalogData = catLines.slice(1).map(line => {
-      const vals = parseCSVLine(line);
-      const obj = {};
-      catHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
-      return obj;
-    }).filter(d => d.Canción);
+// ═══════════════════════════════════════════
+//  DATA LOADING (embedded + fetch fallback)
+// ═══════════════════════════════════════════
 
-    // ── Live Search CSV (for VPH data) ──
-    const liveCsv = await liveResp.text();
-    const liveLines = liveCsv.split('\n').filter(l => l.trim());
-    if (liveLines.length > 1) {
-      const liveHeader = parseCSVLine(liveLines[0]);
-      liveSearchData = liveLines.slice(1).map(line => {
-        const vals = parseCSVLine(line);
-        const obj = {};
-        liveHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
-        return obj;
-      }).filter(d => d.canal);
-    }
-
-    // ── Calculate global rates ──
-    calculateRates();
-    renderAll();
-    restoreHistory();
-
-    document.getElementById('lastUpdate').textContent =
-      '🟢 En vivo · ' + new Date().toLocaleString('es-DO') +
-      ' · ' + catalogData.length + ' canciones · ' +
-      liveSearchData.length + ' nodos monitoreados';
-
-  } catch (e) {
-    document.getElementById('top12Loading').innerHTML = `
-      <div style="text-align:center;padding:30px;color:var(--muted)">
-        <div style="font-size:28px;margin-bottom:8px">⚠️</div>
-        <p>Error: ${e.message}</p>
-      </div>`;
-  }
+function parseCatalogCSV(csvText) {
+  const lines = csvText.split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const header = parseCSVLine(lines[0]);
+  return lines.slice(1).map((line, idx) => {
+    const vals = parseCSVLine(line);
+    const obj = {};
+    header.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+    obj._key = idx;
+    return obj;
+  }).filter(d => d.Canción);
 }
+
+function boot() {
+  // Detect data source mode
+  const isEmbedded = (location.protocol === 'file:');
+  const modeBadge = document.getElementById('modeBadge');
+  
+  if (isEmbedded) {
+    modeBadge.className = 'badge offline';
+    modeBadge.textContent = '📦 Datos incrustados · offline';
+  } else {
+    modeBadge.className = 'badge online';
+    modeBadge.textContent = '🖥️ Servidor en vivo';
+  }
+
+  // Load embedded catalog data (always works, no fetch needed)
+  catalogData = parseCatalogCSV(EMBEDDED_CATALOG_CSV);
+
+  // Try to fetch live search data (may fail with file://, that's ok)
+  let liveSearchFailed = false;
+  try {
+    fetch('data/no_hay_nadie_mas_-_ramon_orlando_20260509_1909.csv?t=' + Date.now())
+      .then(r => r.text())
+      .then(text => {
+        if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+        const lines = text.split('\n').filter(l => l.trim());
+        if (lines.length > 1) {
+          const liveHeader = parseCSVLine(lines[0]);
+          liveSearchData = lines.slice(1).map(line => {
+            const vals = parseCSVLine(line);
+            const obj = {};
+            liveHeader.forEach((h, i) => obj[h.trim()] = (vals[i] || '').trim());
+            return obj;
+          }).filter(d => d.canal);
+          renderSpotifyTable();
+          // Show live search available
+          const liveBadge = document.getElementById('liveBadge');
+          if (liveBadge) {
+            liveBadge.innerHTML = '<span class="pulse-dot"></span> LIVE SEARCH: ACTIVO';
+          }
+        }
+      })
+      .catch(() => { liveSearchFailed = true; });
+  } catch(e) { liveSearchFailed = true; }
+
+  calculateRates();
+  renderAll();
+  renderSpotifyTable();
+  restoreHistory();
+
+  // Show status in last update line (use sync protocol check, not async fetch result)
+  document.getElementById('lastUpdate').innerHTML =
+    '🟢 En vivo \u00b7 ' + new Date().toLocaleString('es-DO') +
+    ' \u00b7 ' + catalogData.length + ' canciones' +
+    (location.protocol === 'file:' ? ' \u00b7 <span style="color:var(--gold)">📦 Catálogo incrustado</span>' : '');
+}
+
+    
 
 // ═══════════════════════════════════════════
 //  RATE CALCULATIONS
@@ -598,12 +902,13 @@ function calculateRates() {
   viewsPerSec = totalMonthlyViews / secsPerMonth;
   dollarsPerSec = totalMonthlyYield / secsPerMonth;
 
-  // Per-song live data
+  // Per-song live data (use _key to handle duplicate song names)
   songLiveData = {};
   catalogData.forEach(d => {
     const y = parseYield(d['Yield/mes']);
     const songViewsPerMonth = y > 0 ? (y * 1000) / ECPM : 0;
-    songLiveData[d.Canción] = {
+    songLiveData[d._key] = {
+      _key: d._key,
       name: d.Canción,
       catalog: d.Catálogo,
       period: d.Período,
@@ -635,9 +940,9 @@ function tick() {
   sessionViews += viewsDelta;
   sessionDollars += dollarsDelta;
 
-  // Per-song accumulation
-  Object.keys(songLiveData).forEach(name => {
-    const song = songLiveData[name];
+  // Per-song accumulation (iterate by _key)
+  Object.keys(songLiveData).forEach(k => {
+    const song = songLiveData[k];
     song.sessionViews += song.viewsPerSec * delta;
     song.sessionDollars += song.dollarsPerSec * delta;
   });
@@ -646,9 +951,16 @@ function tick() {
   const elapsed = now - sessionStartTime;
   document.getElementById('elapsedTime').textContent = fmtTime(elapsed);
 
-  // Session accumulators
-  document.getElementById('liveLostMoney').textContent = '$' + sessionDollars.toFixed(2);
-  document.getElementById('liveViews').textContent = fmtNum(sessionViews);
+  // Session accumulators with pop animation
+  const lostEl = document.getElementById('liveLostMoney');
+  const oldLost = lostEl.textContent;
+  const newLost = '$' + sessionDollars.toFixed(2);
+  if (oldLost !== newLost) { lostEl.textContent = newLost; lostEl.classList.remove('pop'); void lostEl.offsetWidth; lostEl.classList.add('pop'); }
+  
+  const viewsEl = document.getElementById('liveViews');
+  const oldViews = viewsEl.textContent;
+  const newViews = fmtNum(sessionViews);
+  if (oldViews !== newViews) { viewsEl.textContent = newViews; viewsEl.classList.remove('pop'); void viewsEl.offsetWidth; viewsEl.classList.add('pop'); }
 
   // Today estimates (hours since midnight * rates)
   const nowDate = new Date();
@@ -683,9 +995,9 @@ function tick() {
 function updateTop12Live() {
   const cards = document.querySelectorAll('.top12-card');
   cards.forEach((card, i) => {
-    const name = card.dataset.songName;
-    if (!name || !songLiveData[name]) return;
-    const song = songLiveData[name];
+    const key = card.dataset.songKey;
+    if (key === undefined || !songLiveData[key]) return;
+    const song = songLiveData[key];
     const viewsEl = card.querySelector('.live-views-count');
     const dollarEl = card.querySelector('.live-dollars-count');
     if (viewsEl) {
@@ -742,7 +1054,7 @@ function renderAll() {
     const views = parseIntVal(d.Vistas);
 
     return `
-      <div class="top12-card" data-song-name="${d.Canción}">
+      <div class="top12-card" data-song-key="${d._key}" data-song-name="${d.Canción}">
         <div class="rank">
           ${medal ? `<span class="medal ${medal}">${i + 1}</span>` : '#' + (i + 1)}
           ${d.Catálogo || ''}
@@ -933,15 +1245,85 @@ function renderChart() {
 setInterval(saveSnapshot, 3600000);
 
 // ═══════════════════════════════════════════
+
+// -- MULTI-PLATFORM SEARCH --
+function searchSpotify(songName) {
+  const q = encodeURIComponent(songName + ' Ramon Orlando');
+  window.open('https://open.spotify.com/search/' + q, '_blank');
+}
+function searchAppleMusic(songName) {
+  const q = encodeURIComponent(songName + ' Ramon Orlando');
+  window.open('https://music.apple.com/search?term=' + q, '_blank');
+}
+function searchDeezer(songName) {
+  const q = encodeURIComponent(songName + ' Ramon Orlando');
+  window.open('https://www.deezer.com/search/' + q, '_blank');
+}
+function searchAmazonMusic(songName) {
+  const q = encodeURIComponent(songName + ' Ramon Orlando');
+  window.open('https://music.amazon.com/search/' + q, '_blank');
+}
+function searchYT(songName) {
+  const q = encodeURIComponent(songName + ' Ramon Orlando');
+  window.open('https://www.youtube.com/results?search_query=' + q, '_blank');
+}
+function searchSpotifyAll() {
+  window.open('https://open.spotify.com/search/Ram%C3%B3n%20Orlando', '_blank');
+}
+function searchAppleMusicAll() {
+  window.open('https://music.apple.com/search?term=Ram%C3%B3n+Orlando', '_blank');
+}
+function searchDeezerAll() {
+  window.open('https://www.deezer.com/search/Ram%C3%B3n%20Orlando', '_blank');
+}
+function searchAmazonMusicAll() {
+  window.open('https://music.amazon.com/search/Ram%C3%B3n+Orlando', '_blank');
+}
+function searchYTAll() {
+  window.open('https://www.youtube.com/results?search_query=Ram%C3%B3n+Orlando', '_blank');
+}
+function filterSpotifyTable() {
+  const q = document.getElementById('spotifySearch').value.toLowerCase();
+  document.querySelectorAll('#spotifyTableBody tr').forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+function renderSpotifyTable() {
+  if (!catalogData || !catalogData.length) return;
+  const sorted = [...catalogData].sort((a,b) => parseYield(b['Yield/mes']) - parseYield(a['Yield/mes']));
+  const tbody = document.getElementById('spotifyTableBody');
+  if (!tbody) return;
+  tbody.innerHTML = sorted.map((d,i) => {
+    const y = parseYield(d['Yield/mes']);
+    const name = d['Canción'] || d['Cancion'] || '';
+    const encName = encodeURIComponent(name);
+    return '<tr>' +
+      '<td>' + (i+1) + '</td>' +
+      '<td>' + name + '</td>' +
+      '<td>' + fmtNum(parseIntVal(d.Nodos)) + '</td>' +
+      '<td style="color:var(--success)">' + fmtUsd(y) + '</td>' +
+      '<td><a href="https://open.spotify.com/search/' + encName + '%20Ramon%20Orlando" target="_blank" style="color:#1DB954;text-decoration:none;font-size:10px">🎵 Ir</a></td>' +
+      '<td><a href="https://music.apple.com/search?term=' + encName + '+Ramon+Orlando" target="_blank" style="color:#FA243C;text-decoration:none;font-size:10px">🍎 Ir</a></td>' +
+      '<td><a href="https://www.deezer.com/search/' + encName + '%20Ramon%20Orlando" target="_blank" style="color:#FEAA2D;text-decoration:none;font-size:10px">🔵 Ir</a></td>' +
+      '<td><a href="https://music.amazon.com/search/' + encName + '+Ramon+Orlando" target="_blank" style="color:#FF9900;text-decoration:none;font-size:10px">📦 Ir</a></td>' +
+      '<td><a href="https://www.youtube.com/results?search_query=' + encName + '+Ramon+Orlando" target="_blank" style="color:#FF0000;text-decoration:none;font-size:10px">▶ Ir</a></td>' +
+      '</tr>';
+  }).join('');
+}
+// Patch renderAll to also render Spotify table
+const origRender = renderAll;
+renderAll = function() { origRender(); renderSpotifyTable(); };
+
 //  ENGINE START
 // ═══════════════════════════════════════════
+
+// Boot (loads embedded catalog data + starts ticker)
+boot();
 
 // Start live ticker (100ms for smooth counter)
 lastTickTime = Date.now();
 setInterval(tick, 100);
-
-// Load data
-loadData();
 </script>
 </body>
 </html>

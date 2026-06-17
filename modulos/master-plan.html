@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Master Plan · Nuclear AIMA · Hoja de Ruta Estratégica</title>
+<script defer src="sidebar.js"></script>
+<style>
+  :root{--bg:#0a0a0c;--bg2:#111114;--bg3:#18181c;--bg4:#202024;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--text:#f0ede8;--muted:#6b6966;--accent:#c9a96e;--accent2:#e8c98a;--danger:#e05c5c;--success:#4cad7c;--cyan:#4ad0e0;--gold:#f59e0b;--font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono','Fira Code',monospace;--r:10px;--r2:16px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;background-image:radial-gradient(ellipse at 0% 0%,rgba(201,169,110,0.04) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(76,173,124,0.03) 0%,transparent 50%)}
+  .mc{max-width:1300px;margin:0 auto;padding:20px}
+  .mh{text-align:center;padding:20px 0 14px;border-bottom:0.5px solid var(--border);margin-bottom:16px}
+  .mh .bad{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .mh .bad span{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(201,169,110,0.12),rgba(201,169,110,0.04));border:0.5px solid rgba(201,169,110,0.25);border-radius:20px;padding:3px 10px;font-size:9px;font-weight:500;color:var(--accent);letter-spacing:0.02em}
+  .mh .bad .live{background:rgba(224,92,92,0.1);border-color:rgba(224,92,92,0.25);color:var(--danger)}
+  .mh h1{font-size:28px;font-weight:600;letter-spacing:-0.5px}
+  .mh h1 .gd{color:var(--gold)}
+  .mh .sub{font-size:12px;color:var(--muted);margin-top:4px;max-width:700px;margin-left:auto;margin-right:auto;line-height:1.5}
+  .ps{margin-bottom:16px}
+  .ps .pb{background:var(--bg3);border:0.5px solid var(--border);border-radius:20px;height:24px;overflow:hidden;position:relative}
+  .ps .pf{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--success),var(--accent),var(--gold));transition:width 0.8s ease;position:relative}
+  .ps .pf::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);animation:shim 2s infinite}
+  @keyframes shim{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+  .ps .pt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;font-weight:600;color:#0d0d0f;font-family:var(--mono)}
+  .ps .ps2{display:flex;gap:16px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+  .ps .ps2 .pi{text-align:center}
+  .ps .ps2 .pi .pn{font-size:16px;font-weight:600;font-family:var(--mono)}
+  .ps .ps2 .pi .pn.dn{color:var(--success)}
+  .ps .ps2 .pi .pn.pd{color:var(--muted)}
+  .ps .ps2 .pi .pn.ac{color:var(--accent)}
+  .ps .ps2 .pi .pl{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .tn{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:4px}
+  .tn button{padding:7px 12px;border-radius:var(--r);border:none;cursor:pointer;font-size:10px;font-weight:500;font-family:var(--font);background:transparent;color:var(--muted);transition:all 0.15s;display:flex;align-items:center;gap:4px}
+  .tn button:hover{color:var(--text);background:var(--bg3)}
+  .tn button.act{background:var(--accent);color:#0d0d0f}
+  .tc{display:none}
+  .tc.act{display:block}
+  .pc{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);margin-bottom:14px;overflow:hidden}
+  .pc .ph{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:0.5px solid var(--border);cursor:pointer;transition:background 0.15s}
+  .pc .ph:hover{background:var(--bg3)}
+  .pc .ph .pn2{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;background:var(--bg4);color:var(--muted);border:1px solid var(--border)}
+  .pc .ph .pn2.dn{background:var(--success);color:#0d0d0f;border-color:var(--success)}
+  .pc .ph .pn2.an{background:var(--accent);color:#0d0d0f;border-color:var(--accent)}
+  .pc .ph .pi2{flex:1}
+  .pc .ph .pi2 h3{font-size:13px;font-weight:600}
+  .pc .ph .pi2 .psb{font-size:10px;color:var(--muted);margin-top:1px}
+  .pc .ph .ps3{font-size:9px;padding:2px 8px;border-radius:4px;font-weight:500}
+  .pc .ph .ps3.dn{background:rgba(76,173,124,0.12);color:var(--success)}
+  .pc .ph .ps3.pd{background:rgba(107,105,102,0.12);color:var(--muted)}
+  .pc .ph .ps3.an{background:rgba(201,169,110,0.12);color:var(--accent)}
+  .pc .ph .ar{font-size:12px;color:var(--muted);transition:transform 0.2s}
+  .pc .ph .ar.op{transform:rotate(180deg)}
+  .pc .pb2{display:none;padding:14px 18px}
+  .pc .pb2.op{display:block}
+  .pc .pb2 .pd2{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  .cl{margin:10px 0}
+  .cl .cl2{display:flex;align-items:flex-start;gap:8px;padding:6px 0;cursor:pointer;font-size:11px;line-height:1.5;border-bottom:0.5px solid rgba(255,255,255,0.03)}
+  .cl .cl2 .cb{width:14px;height:14px;border-radius:3px;flex-shrink:0;border:1.5px solid var(--border2);margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:8px;transition:all 0.15s}
+  .cl .cl2 .cb.ch{background:var(--success);border-color:var(--success);color:#0d0d0f}
+  .cl .cl2 .ct{flex:1}
+  .cl .cl2 .ct.do{text-decoration:line-through;color:var(--muted);opacity:0.6}
+  .pc .pb2 .mr{display:flex;gap:12px;flex-wrap:wrap;margin:8px 0 12px}
+  .pc .pb2 .mc2{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px;font-size:9px;background:var(--bg4);color:var(--muted);border:0.5px solid var(--border)}
+  .tl{padding:16px 0 16px 28px;position:relative;margin:14px 0}
+  .tl::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--accent),var(--success),var(--gold),var(--cyan),var(--danger))}
+  .tl .tli{position:relative;margin-bottom:20px}
+  .tl .tli .dot{position:absolute;left:-24px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid var(--bg)}
+  .tl .tli .dot.dn{background:var(--success)}
+  .tl .tli h4{font-size:12px;font-weight:600}
+  .tl .tli .ti{font-size:9px;color:var(--muted);font-family:var(--mono);margin-top:1px}
+  .tl .tli .td2{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.5}
+  .tb{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r);padding:12px;margin:8px 0;font-size:11px;line-height:1.7;white-space:pre-wrap;position:relative}
+  .tb .cpy{position:absolute;top:6px;right:6px;padding:2px 8px;border-radius:4px;border:none;cursor:pointer;font-size:8px;font-weight:500;font-family:var(--font);background:var(--bg4);color:var(--muted);transition:all 0.15s}
+  .tb .cpy:hover{background:var(--accent);color:#0d0d0f}
+  .mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:14px}
+  .mg .mc3{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
+  .mg .mc3 .ml{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+  .mg .mc3 .mv{font-size:18px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:10px 0}
+  .rg a{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--r);text-decoration:none;color:var(--text);font-size:10px;transition:all 0.15s}
+  .rg a:hover{border-color:var(--accent);background:var(--bg4)}
+  .hb{background:linear-gradient(135deg,rgba(201,169,110,0.06),rgba(201,169,110,0.02));border-left:2px solid var(--accent);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:10px 0;font-size:11px;line-height:1.6}
+  .hb .hl{font-size:9px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600;color:var(--accent);margin-bottom:4px}
+  .hb.ng{border-left-color:var(--danger);background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(224,92,92,0.02))}
+  .hb.ng .hl{color:var(--danger)}
+  .hb.sc{border-left-color:var(--success);background:linear-gradient(135deg,rgba(76,173,124,0.06),rgba(76,173,124,0.02))}
+  .hb.sc .hl{color:var(--success)}
+  .dt{width:100%;border-collapse:collapse;font-size:10px;margin:10px 0}
+  .dt th{text-align:left;padding:6px 8px;color:var(--muted);font-weight:500;font-size:8px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3)}
+  .dt td{padding:5px 8px;border-bottom:0.5px solid rgba(255,255,255,0.03)}
+  .dt tr:hover td{background:rgba(201,169,110,0.03)}
+  .sb{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+  .sb input{flex:1;min-width:200px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:8px 12px;color:var(--text);font-size:12px;font-family:var(--font);outline:none;transition:border 0.15s}
+  .sb input:focus{border-color:var(--accent)}
+  .sb input::placeholder{color:var(--muted)}
+  @media(max-width:768px){.mc{padding:10px}.mh h1{font-size:22px}.tn button{font-size:9px;padding:5px 8px}.pc .ph{padding:10px 14px}.pc .pb2{padding:10px 14px}.mg{grid-template-columns:1fr 1fr}}
+
+  /* ── Pasos Estrella Premium ── */
+  .pe-hero { text-align:center; padding:10px 0 18px; }
+  .pe-badges { display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .pe-badge { display:inline-flex; align-items:center; gap:4px; font-size:8px; font-weight:600; letter-spacing:0.07em; padding:3px 10px; border-radius:12px; background:var(--bg3); color:var(--muted); border:0.5px solid var(--border); text-transform:uppercase; }
+  .pe-badge.gold { background:linear-gradient(135deg,rgba(201,169,110,0.15),rgba(201,169,110,0.05)); border-color:rgba(201,169,110,0.3); color:var(--accent); }
+  .pe-badge.cyan { background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04)); border-color:rgba(74,208,224,0.25); color:var(--cyan); }
+  .pe-title { font-size:22px; font-weight:700; letter-spacing:-0.3px; }
+  .pe-title span { color:var(--gold); }
+  .pe-sub { font-size:10px; color:var(--muted); max-width:600px; margin:6px auto 0; line-height:1.6; }
+
+  .pe-flow { display:flex; align-items:center; justify-content:center; gap:0; margin:16px 0 20px; padding:10px 14px; background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); flex-wrap:wrap; }
+  .pe-flow-step { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:4px 10px; border-radius:var(--r); transition:all 0.2s; }
+  .pe-flow-step:hover { background:var(--bg3); }
+  .pe-flow-step.active .pe-flow-num { background:var(--accent); color:#0d0d0f; box-shadow:0 0 20px rgba(201,169,110,0.3); }
+  .pe-flow-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; background:var(--bg4); color:var(--muted); border:0.5px solid var(--border); transition:all 0.3s; }
+  .pe-flow-label { font-size:8px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+  .pe-flow-step.active .pe-flow-label { color:var(--text); }
+  .pe-flow-arrow { color:var(--muted); font-size:14px; margin:0 2px; opacity:0.4; }
+
+  .pe-step { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); margin-bottom:10px; overflow:hidden; transition:all 0.3s; }
+  .pe-step:hover { border-color:rgba(201,169,110,0.2); }
+  .pe-step.open { border-color:rgba(201,169,110,0.4); }
+  .pe-step.open .pe-step-arrow { transform:rotate(180deg); }
+  .pe-step-header { display:flex; align-items:center; gap:12px; padding:14px 16px; cursor:pointer; transition:background 0.15s; }
+  .pe-step-header:hover { background:var(--bg3); }
+  .pe-step-icon { width:36px; height:36px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:16px; background:var(--bg4); border:0.5px solid var(--border); }
+  .pe-step.open .pe-step-icon { background:rgba(201,169,110,0.12); border-color:rgba(201,169,110,0.3); }
+  .pe-step-info { flex:1; min-width:0; }
+  .pe-step-num { font-size:8px; font-weight:600; color:var(--accent); letter-spacing:0.08em; margin-bottom:1px; }
+  .pe-step-title { font-size:13px; font-weight:600; }
+  .pe-step-meta { display:flex; gap:8px; flex-wrap:wrap; margin-top:3px; }
+  .pe-meta { font-size:8px; padding:1px 6px; border-radius:4px; background:var(--bg4); color:var(--muted); border:0.5px solid var(--border); }
+  .pe-step-arrow { font-size:10px; color:var(--muted); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); flex-shrink:0; }
+  .pe-step-body { display:none; padding:0 16px 16px; }
+  .pe-step.open .pe-step-body { display:block; animation:fadeUp 0.3s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .pe-step-body p { font-size:11px; color:var(--muted); line-height:1.7; margin-bottom:10px; }
+  .pe-detail-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:8px 0; }
+  @media(max-width:600px){.pe-detail-grid{grid-template-columns:1fr}}
+  .pe-detail-item { background:var(--bg3); border:0.5px solid var(--border); border-radius:var(--r); padding:8px 10px; }
+  .pe-detail-label { display:block; font-size:7px; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent); font-weight:600; margin-bottom:2px; }
+  .pe-detail-value { display:block; font-size:10px; color:var(--text); line-height:1.4; }
+  .pe-detail-value .hl { color:var(--gold); }
+  .pe-tip { background:linear-gradient(135deg,rgba(201,169,110,0.06),rgba(201,169,110,0.02)); border-left:2px solid var(--accent); padding:8px 12px; border-radius:0 var(--r) var(--r) 0; margin:10px 0 0; font-size:10px; line-height:1.6; color:var(--muted); }
+  .pe-tip strong { color:var(--text); }
+
+  .pe-compare-section { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); padding:16px; margin:14px 0; }
+  .pe-compare-section h3 { font-size:13px; font-weight:600; margin-bottom:6px; }
+  .pe-compare-section h3 .ico { margin-right:4px; }
+  .pe-compare-section > p { font-size:10px; color:var(--muted); line-height:1.6; margin-bottom:12px; }
+  .pe-compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  @media(max-width:600px){.pe-compare-grid{grid-template-columns:1fr}}
+  .pe-compare-col { background:var(--bg3); border:0.5px solid var(--border); border-radius:var(--r2); padding:12px 14px; }
+  .pe-compare-col.loser { border-color:rgba(224,92,92,0.2); }
+  .pe-compare-col.winner { border-color:rgba(76,173,124,0.35); background:linear-gradient(135deg,rgba(76,173,124,0.06),rgba(76,173,124,0.02)); }
+  .pe-compare-title { font-size:11px; font-weight:700; margin-bottom:8px; padding-bottom:6px; border-bottom:0.5px solid var(--border); }
+  .pe-compare-col.loser .pe-compare-title { color:var(--danger); }
+  .pe-compare-col.winner .pe-compare-title { color:var(--success); }
+  .pe-compare-col ul { list-style:none; padding:0; margin:0; }
+  .pe-compare-col ul li { font-size:10px; color:var(--muted); padding:3px 0; padding-left:12px; position:relative; line-height:1.5; }
+  .pe-compare-col ul li::before { content:''; position:absolute; left:0; top:8px; width:4px; height:4px; border-radius:50%; }
+  .pe-compare-col.loser ul li::before { background:var(--danger); }
+  .pe-compare-col.winner ul li::before { background:var(--success); }
+  .pe-compare-col.winner ul li { color:var(--text); }
+  .pe-sas-cta { display:inline-block; margin-top:10px; font-size:10px; font-weight:600; color:var(--success); background:rgba(76,173,124,0.1); border:0.5px solid rgba(76,173,124,0.25); border-radius:var(--r); padding:5px 10px; }
+
+  .pe-bottleneck { background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(224,92,92,0.02)); border-left:3px solid var(--danger); border-radius:0 var(--r2) var(--r2) 0; padding:12px 14px; margin:14px 0; display:flex; gap:10px; align-items:flex-start; }
+  .pe-bn-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+  .pe-bn-title { font-size:9px; font-weight:700; color:var(--danger); letter-spacing:0.07em; margin-bottom:3px; }
+  .pe-bn-content p { font-size:10px; color:var(--muted); line-height:1.6; margin:0; }
+  .pe-bn-content strong { color:var(--text); }
+
+  .pe-summary-card { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); overflow:hidden; margin-top:14px; }
+  .pe-summary-header { display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:0.5px solid var(--border); }
+  .pe-summary-header .icon { font-size:18px; }
+  .pe-summary-header h3 { font-size:12px; font-weight:600; flex:1; }
+  .pe-summary-header .total-badge { font-size:9px; font-weight:600; padding:3px 10px; border-radius:8px; background:rgba(201,169,110,0.12); color:var(--accent); border:0.5px solid rgba(201,169,110,0.2); }
+  .pe-summary-table { width:100%; border-collapse:collapse; font-size:10px; }
+  .pe-summary-table th { text-align:left; padding:7px 10px; color:var(--muted); font-weight:500; font-size:8px; text-transform:uppercase; letter-spacing:0.06em; border-bottom:0.5px solid var(--border); background:var(--bg3); }
+  .pe-summary-table td { padding:6px 10px; border-bottom:0.5px solid rgba(255,255,255,0.03); }
+  .pe-summary-table tr:hover td { background:rgba(201,169,110,0.03); }
+  .pe-summary-table tr.total td { font-weight:700; background:var(--bg3); border-top:0.5px solid var(--border2); }
+  .pe-summary-table td.gold { color:var(--gold); }
+  .pe-summary-table td.success { color:var(--success); }
+
+  .pe-complete { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); padding:14px; margin-top:10px; display:flex; gap:12px; align-items:flex-start; }
+  .pe-complete-icon { font-size:20px; flex-shrink:0; margin-top:1px; }
+  .pe-complete-content h4 { font-size:11px; font-weight:600; color:var(--success); margin-bottom:6px; }
+  .pe-complete-items { display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+  @media(max-width:600px){.pe-complete-items{grid-template-columns:1fr}}
+  .pe-complete-item { font-size:9px; color:var(--muted); padding:3px 0; padding-left:14px; position:relative; line-height:1.5; }
+  .pe-complete-item::before { content:'✓'; position:absolute; left:0; color:var(--success); font-weight:700; }
+
+  /* ── Premium Tab Hero ── */
+  .mp-hero { text-align:center; padding:6px 0 14px; }
+  .mp-hero-tags { display:flex; justify-content:center; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+  .mp-hero-tag { display:inline-flex; align-items:center; gap:3px; font-size:7px; font-weight:600; letter-spacing:0.07em; padding:2px 8px; border-radius:10px; background:var(--bg3); color:var(--muted); border:0.5px solid var(--border); text-transform:uppercase; }
+  .mp-hero-tag.accent { background:linear-gradient(135deg,rgba(201,169,110,0.12),rgba(201,169,110,0.04)); border-color:rgba(201,169,110,0.25); color:var(--accent); }
+  .mp-hero-tag.cyan { background:linear-gradient(135deg,rgba(74,208,224,0.1),rgba(74,208,224,0.03)); border-color:rgba(74,208,224,0.2); color:var(--cyan); }
+  .mp-hero-tag.green { background:linear-gradient(135deg,rgba(76,173,124,0.1),rgba(76,173,124,0.03)); border-color:rgba(76,173,124,0.2); color:var(--success); }
+  .mp-hero-title { font-size:18px; font-weight:700; letter-spacing:-0.3px; margin-bottom:2px; }
+  .mp-hero-title .hl { color:var(--gold); }
+  .mp-hero-sub { font-size:9px; color:var(--muted); max-width:500px; margin:0 auto; line-height:1.5; }
+
+  /* ── Enhanced Phase Cards ── */
+  .pc { transition:all 0.25s; border-left:2px solid transparent; }
+  .pc:hover { border-color:rgba(201,169,110,0.2); }
+  .pc .ph .pn2 { transition:all 0.3s; }
+  .pc .ph .pi2 h3 { font-size:13px; }
+  .pc .ph .ps3 { font-size:8px; }
+  .pc .ph .ar { font-size:10px; }
+  .cl .cl2 { transition:all 0.15s; padding:5px 0; }
+  .cl .cl2:hover { background:rgba(201,169,110,0.03); border-radius:4px; padding-left:4px; padding-right:4px; }
+
+  .phase-flow { display:flex; align-items:center; justify-content:center; gap:0; margin:12px 0 16px; padding:8px 12px; background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); flex-wrap:wrap; }
+  .phase-flow-item { display:flex; flex-direction:column; align-items:center; gap:2px; padding:3px 6px; border-radius:var(--r); }
+  .phase-flow-num { width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:700; background:var(--bg4); color:var(--muted); border:0.5px solid var(--border); }
+  .phase-flow-item.active .phase-flow-num { background:var(--accent); color:#0d0d0f; }
+  .phase-flow-label { font-size:6px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+  .phase-flow-item.active .phase-flow-label { color:var(--text); }
+  .phase-flow-arrow { color:var(--muted); font-size:10px; opacity:0.3; margin:0 1px; }
+
+  /* ── Enhanced Timeline ── */
+  .tl { padding:20px 0 16px 30px; }
+  .tl::before { left:11px; width:2px; background:linear-gradient(180deg,var(--accent),var(--success),var(--gold),var(--cyan),#a855f7); }
+  .tli { margin-bottom:18px; padding:10px 14px; background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r); transition:all 0.2s; }
+  .tli:hover { border-color:rgba(201,169,110,0.2); transform:translateX(2px); }
+  .tli .dot { left:-26px; top:14px; width:12px; height:12px; border:2px solid var(--bg); box-shadow:0 0 0 2px rgba(201,169,110,0.3); }
+  .tli .dot.dn { box-shadow:0 0 0 2px rgba(76,173,124,0.4); }
+  .tli .dot.gold { background:var(--gold); box-shadow:0 0 0 2px rgba(245,158,11,0.3); }
+  .tli h4 { font-size:11px; }
+  .tli .ti { font-size:8px; }
+  .tli .td2 { font-size:10px; }
+
+  /* ── Enhanced Metrics ── */
+  .mg { gap:8px; }
+  .mc3 { padding:14px 10px; transition:all 0.2s; position:relative; overflow:hidden; }
+  .mc3:hover { transform:translateY(-2px); border-color:rgba(201,169,110,0.3); box-shadow:0 6px 24px rgba(0,0,0,0.3); }
+  .mc3 .ml { font-size:7px; }
+  .mc3 .mv { font-size:20px; }
+  .mc3 .mnote { font-size:8px; color:var(--muted); margin-top:4px; }
+  .mc3 .mv.accent { color:var(--accent); }
+  .mc3 .mv.success { color:var(--success); }
+  .mc3 .mv.gold { color:var(--gold); }
+  .mc3 .mv.danger { color:var(--danger); }
+  .mc3 .mv.cyan { color:var(--cyan); }
+  .mc3::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:0; transition:opacity 0.3s; }
+  .mc3:hover::after { opacity:1; }
+
+  /* ── Enhanced Templates ── */
+  .tb { font-size:10px; padding:10px 12px; line-height:1.6; border-left:2px solid var(--border); }
+  .tb:hover { border-left-color:var(--accent); }
+  .tb .cpy { font-size:7px; padding:1px 6px; }
+
+  /* ── Enhanced Filter / Search Bar ── */
+  .sb { background:var(--bg2); border:0.5px solid var(--border); border-radius:var(--r2); padding:8px 10px; }
+  .sb input { font-size:10px; padding:6px 10px; }
+  .filter-btn { font-size:8px; padding:4px 8px; border-radius:var(--r); border:0.5px solid var(--border); cursor:pointer; background:var(--bg3); color:var(--muted); font-weight:500; transition:all 0.15s; font-family:var(--font); }
+  .filter-btn:hover { background:var(--bg4); color:var(--text); }
+  .filter-btn.act { background:var(--accent); color:#0d0d0f; border-color:var(--accent); }
+
+  /* ── Enhanced Phase Footer ── */
+  .phase-footer { display:flex; justify-content:space-between; align-items:center; padding:8px 10px; background:var(--bg3); border-radius:var(--r); margin:10px 0; border:0.5px solid var(--border); flex-wrap:wrap; gap:4px; }
+  .phase-footer .pf-item { font-size:8px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+  .phase-footer .pf-item strong { color:var(--text); }
+  .pe-complete-item strong { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <div class="mh">
+    <div class="bad">
+      <span class="live">HOJA DE RUTA ESTRATÉGICA</span>
+      <span>8 FASES · 981 LÍNEAS DE PLAN</span>
+      <span>localStorage · PROGRESO</span>
+    </div>
+    <h1>Master Plan <span class="gd">Ramón Orlando</span></h1>
+    <div class="sub">Las 8 fases del plan integrado: desde la fundación legal y auditoría técnica hasta la distribución global, tokenización Web3 y el evento del 50 Aniversario. Basado en el documento maestro de 132KB (start.txt).</div>
+  </div>
+
+  <!-- Progress Section -->
+  <div class="ps" id="progressSection">
+    <div class="pb">
+      <div class="pf" id="progressFill" style="width:0%"></div>
+      <div class="pt" id="progressText">0% Completado</div>
+    </div>
+    <div class="ps2">
+      <div class="pi"><div class="pn dn" id="taskDone">0</div><div class="pl">Tareas Hechas</div></div>
+      <div class="pi"><div class="pn pd" id="taskTotal">52</div><div class="pl">Tareas Totales</div></div>
+      <div class="pi"><div class="pn ac" id="currentPhase">—</div><div class="pl">Fase Actual</div></div>
+    </div>
+  </div>
+
+  <!-- Tab Nav -->
+  <div class="tn" id="tabNav">
+    <button class="act" onclick="switchT(this,0)">Fases</button>
+    <button onclick="switchT(this,1)">Linea de Tiempo</button>
+    <button onclick="switchT(this,2)">Metricas Clave</button>
+    <button onclick="switchT(this,3)">Plantillas</button>
+    <button onclick="switchT(this,4)">Pasos Estrella</button>
+    <button onclick="switchT(this,5)">Recursos</button>
+  </div>
+<div class="tc act" id="tab-phases">
+
+<div class="mp-hero">
+  <div class="mp-hero-tags">
+    <span class="mp-hero-tag accent">8 FASES</span>
+    <span class="mp-hero-tag">64 TAREAS</span>
+    <span class="mp-hero-tag green">localStorage</span>
+    <span class="mp-hero-tag cyan">PROGRESO EN VIVO</span>
+  </div>
+  <h2 class="mp-hero-title">Las <span class="hl">8 Fases</span> del Plan</h2>
+  <p class="mp-hero-sub">Desde la fundación legal hasta la escalabilidad. Marca tu progreso — los datos se guardan automáticamente.</p>
+</div>
+
+<div class="phase-flow">
+  <div class="phase-flow-item active"><div class="phase-flow-num">1</div><div class="phase-flow-label">Legal</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">2</div><div class="phase-flow-label">Auditoría</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">3</div><div class="phase-flow-label">Artista</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">4</div><div class="phase-flow-label">Gestión</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">5</div><div class="phase-flow-label">Pitch</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">6</div><div class="phase-flow-label">Web3</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">7</div><div class="phase-flow-label">Evento</div></div>
+  <div class="phase-flow-arrow">→</div>
+  <div class="phase-flow-item"><div class="phase-flow-num">8</div><div class="phase-flow-label">Escalar</div></div>
+</div>
+
+<div class="sb"><input type="text" id="searchInput" placeholder="Buscar en fases..." oninput="filterPhases()"><button class="filter-btn act" onclick="filterStatus('all')">Todas</button><button class="filter-btn" onclick="filterStatus('active')">En Progreso</button><button class="filter-btn" onclick="filterStatus('pending')">Pendientes</button></div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 an">🏛️</div>
+<div class="pi2"><h3>Fase 1: Fundacion Legal y Corporativa</h3><div class="psb">ONAPI, SAS, ONDA, Contrato Matriz</div></div>
+<div class="ps3 an">$800 - $1,200 USD</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Establecer la infraestructura legal y corporativa necesaria para operar como sello independiente y negociar con distribuidoras internacionales.</div>
+<div class="mr">
+<span class="mc2 accent">Semanas 1-3</span>
+<span class="mc2 success">$800 - $1,200 USD</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 an">En Progreso</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p1_0')"><div class="cb" id="cb_p1_0"></div><div class="ct" id="ct_p1_0">Registrar Nombre Comercial en ONAPI (Clase 41 y 35)</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_1')"><div class="cb" id="cb_p1_1"></div><div class="ct" id="ct_p1_1">Redactar estatutos SAS y pagar impuesto DGII</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_2')"><div class="cb" id="cb_p1_2"></div><div class="ct" id="ct_p1_2">Registro Mercantil en Camara de Comercio</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_3')"><div class="cb" id="cb_p1_3"></div><div class="ct" id="ct_p1_3">Obtener RNC (Registro Nacional Contribuyente)</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_4')"><div class="cb" id="cb_p1_4"></div><div class="ct" id="ct_p1_4">Registrar fonograma en ONDA a nombre de la empresa</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_5')"><div class="cb" id="cb_p1_5"></div><div class="ct" id="ct_p1_5">Firmar Contrato de Administracion con el artista</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_6')"><div class="cb" id="cb_p1_6"></div><div class="ct" id="ct_p1_6">Abrir cuenta bancaria corporativa</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p1_7')"><div class="cb" id="cb_p1_7"></div><div class="ct" id="ct_p1_7">Preparar lista oficial de 178 canciones</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 an">📊</div>
+<div class="pi2"><h3>Fase 2: Auditoria Tecnica del Catalogo</h3><div class="psb">12 principales + expansion a 178</div></div>
+<div class="ps3 an">$0 (herramientas propias)</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Ejecutar el analisis tecnico del catalogo para documentar el valor real del activo musical.</div>
+<div class="mr">
+<span class="mc2 accent">Semanas 2-4</span>
+<span class="mc2 success">$0 (herramientas propias)</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 an">En Progreso</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p2_0')"><div class="cb" id="cb_p2_0"></div><div class="ct" id="ct_p2_0">Auditar 12 canciones principales con The Tool</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_1')"><div class="cb" id="cb_p2_1"></div><div class="ct" id="ct_p2_1">Generar reporte ejecutivo de auditoria</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_2')"><div class="cb" id="cb_p2_2"></div><div class="ct" id="ct_p2_2">Expandir auditoria a las 178 canciones</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_3')"><div class="cb" id="cb_p2_3"></div><div class="ct" id="ct_p2_3">Calcular yield mensual total e ingreso fugado</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_4')"><div class="cb" id="cb_p2_4"></div><div class="ct" id="ct_p2_4">Identificar canales sin Content ID</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_5')"><div class="cb" id="cb_p2_5"></div><div class="ct" id="ct_p2_5">Preparar matriz de nodos por cancion</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_6')"><div class="cb" id="cb_p2_6"></div><div class="ct" id="ct_p2_6">Exportar reporte PDF ejecutivo</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p2_7')"><div class="cb" id="cb_p2_7"></div><div class="ct" id="ct_p2_7">Redactar carta de autorizacion notariada</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">🤝</div>
+<div class="pi2"><h3>Fase 3: Gestion con el Artista</h3><div class="psb">Expectativas, autorizacion y coordinacion</div></div>
+<div class="ps3 pd">$0</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Gestionar la relacion con el artista de manera profesional y gradual.</div>
+<div class="mr">
+<span class="mc2 accent">Semanas 1-2</span>
+<span class="mc2 success">$0</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p3_0')"><div class="cb" id="cb_p3_0"></div><div class="ct" id="ct_p3_0">Agendar reunion con Ramon Orlando</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_1')"><div class="cb" id="cb_p3_1"></div><div class="ct" id="ct_p3_1">Explicar importancia del registro ONDA</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_2')"><div class="cb" id="cb_p3_2"></div><div class="ct" id="ct_p3_2">No revelar LLC/tokenizacion prematuramente</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_3')"><div class="cb" id="cb_p3_3"></div><div class="ct" id="ct_p3_3">Gestionar expectativas sobre tiempos</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_4')"><div class="cb" id="cb_p3_4"></div><div class="ct" id="ct_p3_4">Presentar el 23 Sept como catalizador</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_5')"><div class="cb" id="cb_p3_5"></div><div class="ct" id="ct_p3_5">Firmar carta de autorizacion</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_6')"><div class="cb" id="cb_p3_6"></div><div class="ct" id="ct_p3_6">Obtener documentos del artista</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p3_7')"><div class="cb" id="cb_p3_7"></div><div class="ct" id="ct_p3_7">Coordinar visita a ONDA</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">🏦</div>
+<div class="pi2"><h3>Fase 4: Registro en Sociedades de Gestion</h3><div class="psb">SoundExchange, ASCAP/BMI, SGACEDOM</div></div>
+<div class="ps3 pd">$0 - $50</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Registrar el catalogo en todas las sociedades de gestion colectiva.</div>
+<div class="mr">
+<span class="mc2 accent">Semanas 3-6</span>
+<span class="mc2 success">$0 - $50</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p4_0')"><div class="cb" id="cb_p4_0"></div><div class="ct" id="ct_p4_0">Registrar catalogo en SoundExchange</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_1')"><div class="cb" id="cb_p4_1"></div><div class="ct" id="ct_p4_1">Reclamar regalias retroactivas 3 anos</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_2')"><div class="cb" id="cb_p4_2"></div><div class="ct" id="ct_p4_2">Registrar en ASCAP/BMI</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_3')"><div class="cb" id="cb_p4_3"></div><div class="ct" id="ct_p4_3">Registrar en SGACEDOM</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_4')"><div class="cb" id="cb_p4_4"></div><div class="ct" id="ct_p4_4">Configurar Content ID en YouTube</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_5')"><div class="cb" id="cb_p4_5"></div><div class="ct" id="ct_p4_5">Dividir 178 canciones en 6 colecciones</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_6')"><div class="cb" id="cb_p4_6"></div><div class="ct" id="ct_p4_6">Asignar ISRCs</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p4_7')"><div class="cb" id="cb_p4_7"></div><div class="ct" id="ct_p4_7">Configurar distribucion streaming</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">📬</div>
+<div class="pi2"><h3>Fase 5: Pitch a Multinacionales</h3><div class="psb">Believe, The Orchard, beatBread</div></div>
+<div class="ps3 pd">$0</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Ejecutar secuencia de 4 mensajes hacia multinacionales.</div>
+<div class="mr">
+<span class="mc2 accent">Semanas 4-8</span>
+<span class="mc2 success">$0</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p5_0')"><div class="cb" id="cb_p5_0"></div><div class="ct" id="ct_p5_0">Mensaje 1: Presentacion valor historico</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_1')"><div class="cb" id="cb_p5_1"></div><div class="ct" id="ct_p5_1">Mensaje 2: Envio auditoria + ONDA</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_2')"><div class="cb" id="cb_p5_2"></div><div class="ct" id="ct_p5_2">Mensaje 3: Propuesta formal + adelanto</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_3')"><div class="cb" id="cb_p5_3"></div><div class="ct" id="ct_p5_3">Mensaje 4: Cierre con deadline</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_4')"><div class="cb" id="cb_p5_4"></div><div class="ct" id="ct_p5_4">Contactar Believe Music</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_5')"><div class="cb" id="cb_p5_5"></div><div class="ct" id="ct_p5_5">Contactar The Orchard</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_6')"><div class="cb" id="cb_p5_6"></div><div class="ct" id="ct_p5_6">Evaluar beatBread como puente</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p5_7')"><div class="cb" id="cb_p5_7"></div><div class="ct" id="ct_p5_7">Negociar adelanto $500K-$1M</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">⚡</div>
+<div class="pi2"><h3>Fase 6: Infraestructura Web3 y Tokenizacion</h3><div class="psb">LLC, Smart Contracts, Frontend</div></div>
+<div class="ps3 pd">$2K - $5K</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Construir la infraestructura Web3: LLC, smart contracts, tokenizacion.</div>
+<div class="mr">
+<span class="mc2 accent">Meses 3-5</span>
+<span class="mc2 success">$2K - $5K</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p6_0')"><div class="cb" id="cb_p6_0"></div><div class="ct" id="ct_p6_0">Constituir LLC en Wyoming</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_1')"><div class="cb" id="cb_p6_1"></div><div class="ct" id="ct_p6_1">Abrir cuenta bancaria EE.UU.</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_2')"><div class="cb" id="cb_p6_2"></div><div class="ct" id="ct_p6_2">Desplegar smart contracts Base/Polygon</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_3')"><div class="cb" id="cb_p6_3"></div><div class="ct" id="ct_p6_3">Crear token de catalogo</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_4')"><div class="cb" id="cb_p6_4"></div><div class="ct" id="ct_p6_4">Frontend Next.js + wallet connect</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_5')"><div class="cb" id="cb_p6_5"></div><div class="ct" id="ct_p6_5">Preventa experiencias VIP</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_6')"><div class="cb" id="cb_p6_6"></div><div class="ct" id="ct_p6_6">Sistema de afiliados con smartlinks</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p6_7')"><div class="cb" id="cb_p6_7"></div><div class="ct" id="ct_p6_7">Boletos NFC + NFTs (Tuboleta Pass)</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">🏟️</div>
+<div class="pi2"><h3>Fase 7: Evento 50 Aniversario</h3><div class="psb">23 Sept 2026 - Estadio Olimpico</div></div>
+<div class="ps3 pd">$5K - $15K</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Utilizar el concierto como catalizador para maximizar ingresos.</div>
+<div class="mr">
+<span class="mc2 accent">Septiembre 2026</span>
+<span class="mc2 success">$5K - $15K</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p7_0')"><div class="cb" id="cb_p7_0"></div><div class="ct" id="ct_p7_0">Campana marketing organico pre-evento</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_1')"><div class="cb" id="cb_p7_1"></div><div class="ct" id="ct_p7_1">Venta experiencias premium</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_2')"><div class="cb" id="cb_p7_2"></div><div class="ct" id="ct_p7_2">Smartlinks afiliados 40 artistas</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_3')"><div class="cb" id="cb_p7_3"></div><div class="ct" id="ct_p7_3">Acceso virtual diaspora $25</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_4')"><div class="cb" id="cb_p7_4"></div><div class="ct" id="ct_p7_4">Distribucion masiva post-evento</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_5')"><div class="cb" id="cb_p7_5"></div><div class="ct" id="ct_p7_5">Capturar pico trafico</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_6')"><div class="cb" id="cb_p7_6"></div><div class="ct" id="ct_p7_6">Monitoreo ingresos tiempo real</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p7_7')"><div class="cb" id="cb_p7_7"></div><div class="ct" id="ct_p7_7">Content ID en picos de reproduccion</div></div>
+</div>
+</div>
+</div>
+<div class="pc">
+<div class="ph" onclick="togglePhase(this)">
+<div class="pn2 pd">🚀</div>
+<div class="pi2"><h3>Fase 8: Ejecucion y Escalabilidad</h3><div class="psb">MVP, documentacion, replicacion</div></div>
+<div class="ps3 pd">$1K - $3K</div>
+<div class="ar">▼</div>
+</div>
+<div class="pb2">
+<div class="pd2">Cerrar acuerdo, recibir capital, y documentar modelo como MVP.</div>
+<div class="mr">
+<span class="mc2 accent">Mes 6+</span>
+<span class="mc2 success">$1K - $3K</span>
+<span class="mc2">8 tareas</span>
+<span class="mc2 pd">Pendiente</span>
+</div>
+<div class="cl">
+<div class="cl2" onclick="toggleTask(this, 'p8_0')"><div class="cb" id="cb_p8_0"></div><div class="ct" id="ct_p8_0">Firmar contrato distribuidora</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_1')"><div class="cb" id="cb_p8_1"></div><div class="ct" id="ct_p8_1">Recibir capital adelanto</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_2')"><div class="cb" id="cb_p8_2"></div><div class="ct" id="ct_p8_2">Activar recoleccion regalias</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_3')"><div class="cb" id="cb_p8_3"></div><div class="ct" id="ct_p8_3">Documentar modelo MVP</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_4')"><div class="cb" id="cb_p8_4"></div><div class="ct" id="ct_p8_4">Identificar proximos catalogos</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_5')"><div class="cb" id="cb_p8_5"></div><div class="ct" id="ct_p8_5">Refinar procesos auditoria</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_6')"><div class="cb" id="cb_p8_6"></div><div class="ct" id="ct_p8_6">Escalar a multiples catalogos</div></div>
+<div class="cl2" onclick="toggleTask(this, 'p8_7')"><div class="cb" id="cb_p8_7"></div><div class="ct" id="ct_p8_7">Metricas de exito Hyperion</div></div>
+</div>
+</div>
+</div>
+
+<div class="phase-footer">
+  <div class="pf-item">📋 <strong>64 tareas</strong> en 8 fases</div>
+  <div class="pf-item">🔄 Datos guardados en <strong>localStorage</strong></div>
+  <div class="pf-item">🎯 Objetivo: <strong>Adelanto $500K–$1M</strong></div>
+</div>
+</div>
+<div class="tc" id="tab-timeline">
+
+<div class="mp-hero">
+  <div class="mp-hero-tags">
+    <span class="mp-hero-tag accent">8 HITOS</span>
+    <span class="mp-hero-tag">SEMANA 1 → MES 6+</span>
+    <span class="mp-hero-tag cyan">23 SEP 2026</span>
+    <span class="mp-hero-tag green">FECHAS CLAVE</span>
+  </div>
+  <h2 class="mp-hero-title">Línea de <span class="hl">Tiempo</span></h2>
+  <p class="mp-hero-sub">La secuencia temporal de las 8 fases. Algunas fases se ejecutan en paralelo para maximizar la velocidad.</p>
+</div>
+
+<div class="pc"><div class="ph"><div class="pn2 an">📅</div><div class="pi2"><h3>Linea de Tiempo del Plan</h3><div class="psb">8 fases desde la fundacion legal hasta la escalabilidad</div></div></div><div class="pb2 op"><div class="tl">
+<div class="tli">
+<div class="dot dn"></div>
+<h4>Fase 1: Fundacion Legal</h4>
+<div class="ti">Semanas 1–3</div>
+<div class="td2">🏛️ ONAPI, SAS, ONDA, Contrato Matriz</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 2: Auditoria Tecnica</h4>
+<div class="ti">Semanas 2–4 <span style="color:var(--accent);font-size:7px">(paralela a Fase 1)</span></div>
+<div class="td2">📊 Auditar 12 canciones principales, generar reporte ejecutivo</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 3: Gestion con el Artista</h4>
+<div class="ti">Semanas 1–2 <span style="color:var(--accent);font-size:7px">(temprano)</span></div>
+<div class="td2">🤝 Presentar plan, firmar autorizacion, coordinar ONDA</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 4: Registro en Sociedades de Gestion</h4>
+<div class="ti">Semanas 3–6</div>
+<div class="td2">🏦 SoundExchange, ASCAP/BMI, SGACEDOM</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 5: Pitch a Multinacionales</h4>
+<div class="ti">Semanas 4–8</div>
+<div class="td2">📬 Secuencia 4 mensajes + negociacion adelanto $500K–$1M</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 6: Infraestructura Web3 y Tokenizacion</h4>
+<div class="ti">Meses 3–5</div>
+<div class="td2">⚡ LLC Wyoming, Smart Contracts, 6 catalogos tokenizados</div>
+</div>
+<div class="tli">
+<div class="dot gold"></div>
+<h4>Fase 7: Evento 50 Aniversario</h4>
+<div class="ti" style="color:var(--gold);font-weight:600">23 Septiembre 2026</div>
+<div class="td2">🏟️ Estadio Olimpico, experiencias VIP, afiliados, streaming</div>
+</div>
+<div class="tli">
+<div class="dot"></div>
+<h4>Fase 8: Ejecucion y Escalabilidad</h4>
+<div class="ti">Mes 6+</div>
+<div class="td2">🚀 Cierre acuerdo, capital, replicacion del modelo MVP</div>
+</div>
+</div></div></div></div>
+<div class="tc" id="tab-metrics">
+
+<div class="mp-hero">
+  <div class="mp-hero-tags">
+    <span class="mp-hero-tag accent">KPIs</span>
+    <span class="mp-hero-tag">DATOS AUDITADOS</span>
+    <span class="mp-hero-tag cyan">PROYECCIONES</span>
+    <span class="mp-hero-tag green">eCPM $1.20</span>
+  </div>
+  <h2 class="mp-hero-title">Métricas <span class="hl">Clave</span></h2>
+  <p class="mp-hero-sub">Indicadores financieros y de volumen del catálogo de Ramón Orlando basados en la auditoría técnica.</p>
+</div>
+
+<div class="mg">
+<div class="mc3"><div class="ml">Canciones</div><div class="mv accent">190</div><div class="mnote">Catalogo completo registrado</div></div>
+<div class="mc3"><div class="ml">Albumes</div><div class="mv accent">17</div><div class="mnote">Discografia oficial</div></div>
+<div class="mc3"><div class="ml">Yield/mes</div><div class="mv success">$66.8K</div><div class="mnote">Ingreso fugado actualmente</div></div>
+<div class="mc3"><div class="ml">Proy. Anual</div><div class="mv gold">$801K</div><div class="mnote">Yield x 12 meses</div></div>
+<div class="mc3"><div class="ml">Adelanto 3yr</div><div class="mv success">$1.68M</div><div class="mnote">70% del flujo proyectado a 3 años</div></div>
+<div class="mc3"><div class="ml">Nodos</div><div class="mv danger">15K+</div><div class="mnote">Canales detectados sin monetizar</div></div>
+<div class="mc3"><div class="ml">Views/mes</div><div class="mv cyan">55.7M</div><div class="mnote">eCPM promedio $1.20 USD</div></div>
+<div class="mc3"><div class="ml">Tareas Plan</div><div class="mv accent">64</div><div class="mnote">8 fases x 8 tareas c/u</div></div>
+</div>
+
+<div class="hb"><div class="hl">💡 Nota Estrategica</div>El orden de las fases es critico. <strong>SoundExchange (Fase 4)</strong> puede comenzar en paralelo con Fase 1. El <strong>Pitch a Multinacionales (Fase 5)</strong> requiere auditoria completa (Fase 2) y registro ONDA (Fase 1).</div>
+</div>
+<div class="tc" id="tab-templates">
+
+<div class="mp-hero">
+  <div class="mp-hero-tags">
+    <span class="mp-hero-tag accent">4 MENSAJES</span>
+    <span class="mp-hero-tag">PITCH DECK</span>
+    <span class="mp-hero-tag cyan">AUDITORÍA</span>
+    <span class="mp-hero-tag green">LISTO PARA ENVIAR</span>
+  </div>
+  <h2 class="mp-hero-title">Plantillas <span class="hl">Ejecutivas</span></h2>
+  <p class="mp-hero-sub">Mensajes redactados para la negociación con distribuidoras multinacionales. Secuencia progresiva: de sondeo inicial a cierre con deadline.</p>
+</div>
+
+<div class="pc"><div class="ph" onclick="togglePhase(this)"><div class="pn2 an">📬</div><div class="pi2"><h3>Secuencia de 4 Mensajes para Multinacionales</h3><div class="psb">Believe, The Orchard y otras distribuidoras</div></div><div class="ar">▼</div></div><div class="pb2 op">
+<div class="pd2">Esta secuencia de mensajes progresivos esta disenada para pasar de un sondeo inicial a una propuesta formal de adelanto sin revelar toda la estrategia tecnica prematuramente. Usa el botón <strong>Copiar</strong> para llevar cada mensaje a tu bandeja de correo.</div>
+<div style="font-size:11px;font-weight:600;color:var(--accent);margin:10px 0 4px;display:flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#0d0d0f;font-size:9px;font-weight:700">1</span> Mensaje 1: Sondeo Inicial</div>
+<div class="tb">Hola [Nombre], te contactamos desde Nuclear AIMA, representando el catalogo de Ramon Orlando, leyenda del merengue dominicano con 50+ anos de carrera. Estamos preparando el lanzamiento digital de su catalogo completo de 190 canciones para su 50 Aniversario (23 Sept 2026, Estadio Olimpico). El catalogo ya genera +15M views/mes organicamente en YouTube. Nos gustaria explorar una posible colaboracion para la distribucion global. Estarian abiertos a una conversacion preliminar?<button class="cpy" onclick="copyMsg(this)">Copiar</button></div>
+<div style="font-size:11px;font-weight:600;color:var(--accent);margin:10px 0 4px;display:flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#0d0d0f;font-size:9px;font-weight:700">2</span> Mensaje 2: Confirmacion + Datos</div>
+<div class="tb">Gracias por su respuesta. Adjuntamos un resumen ejecutivo de nuestra auditoria tecnica, que documenta el rendimiento actual del catalogo en YouTube (nodos, vistas, ingresos fugados). Tambien confirmamos que el catalogo esta siendo registrado en ONDA (Oficina Nacional de Derecho de Autor) y contamos con carta de autorizacion notariada del artista. El potencial de recuperacion de ingresos es significativo. Nos gustaria compartir el detalle completo en una reunion virtual.<button class="cpy" onclick="copyMsg(this)">Copiar</button></div>
+<div style="font-size:11px;font-weight:600;color:var(--accent);margin:10px 0 4px;display:flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#0d0d0f;font-size:9px;font-weight:700">3</span> Mensaje 3: Propuesta Formal</div>
+<div class="tb">Estimado/a [Nombre], tras nuestra conversacion, formalizamos nuestra propuesta: ofrecemos el catalogo completo de Ramon Orlando (190 canciones, 17 albumes, categoria merengue/tropical) para distribucion global con Content ID activo, a cambio de un adelanto (signing bonus) en el rango de $500,000 - $1,000,000 USD. El catalogo tiene un yield mensual estimado de $66,824 y proyecta +$800K anuales en ingresos recuperables. Adjuntamos expediente completo con auditoria, registros ONDA y proyecciones financieras.<button class="cpy" onclick="copyMsg(this)">Copiar</button></div>
+<div style="font-size:11px;font-weight:600;color:var(--accent);margin:10px 0 4px;display:flex;align-items:center;gap:6px"><span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#0d0d0f;font-size:9px;font-weight:700">4</span> Mensaje 4: Cierre con Deadline</div>
+<div class="tb">Hola [Nombre], queremos informarles que estamos evaluando multiples ofertas y hemos establecido el [Fecha] como fecha limite para recibir propuestas formales. El concierto del 23 de septiembre generara un pico masivo de trafico y reproducciones, y necesitamos tener la distribucion activada antes de esa fecha para maximizar la captura de ingresos. Agradeceriamos su respuesta a la brevedad para continuar las conversaciones.<button class="cpy" onclick="copyMsg(this)">Copiar</button></div>
+</div></div>
+<div class="pc"><div class="ph" onclick="togglePhase(this)"><div class="pn2 an">📋</div><div class="pi2"><h3>Resumen Ejecutivo de Auditoria</h3><div class="psb">Argumento central para negociacion</div></div><div class="ar">▼</div></div><div class="pb2 op">
+<div class="pd2">El resumen ejecutivo es el documento que abre las puertas. Debe ser una pagina, maximo dos, con los datos clave del catalogo. Este es tu <strong>argumento de apertura</strong> ante cualquier distribuidora.</div>
+<div class="hb"><div class="hl">💡 El Argumento de Apertura</div><strong>"Este catalogo de 190 canciones esta generando $66,824/mes en ingresos no reclamados. Con 12 canciones auditadas que muestran $34,700/mes en fuga solo de nodos identificados. El potencial de recuperacion anual es de $800,000+. Ofrecemos el 100% del catalogo para distribucion con Content ID activo a cambio de un adelanto de $500K-$1M."</strong></div>
+<div class="mg" style="margin-top:10px">
+<div class="mc3"><div class="ml">Canciones</div><div class="mv accent">190</div><div class="mnote">Catalogo completo registrado</div></div>
+<div class="mc3"><div class="ml">Yield/Mes</div><div class="mv success">$66.8K</div><div class="mnote">Ingreso fugado actual</div></div>
+<div class="mc3"><div class="ml">Proy. Anual</div><div class="mv gold">$801K</div><div class="mnote">Yield x 12 meses</div></div>
+<div class="mc3"><div class="ml">Adelanto</div><div class="mv success">$500K–$1M</div><div class="mnote">Rango objetivo negociación</div></div>
+<div class="mc3"><div class="ml">Nodos</div><div class="mv danger">15K+</div><div class="mnote">Canales sin monetizar</div></div>
+<div class="mc3"><div class="ml">Views/Mes</div><div class="mv cyan">55.7M</div><div class="mnote">eCPM estimado $1.20</div></div>
+</div>
+</div></div>
+</div>
+<div class="tc" id="tab-pasos-estrella">
+
+  <!-- ═══ HERO ═══ -->
+  <div class="pe-hero">
+    <div class="pe-badges">
+      <span class="pe-badge gold">⭐ 4 PASOS</span>
+      <span class="pe-badge">~$1,050 USD</span>
+      <span class="pe-badge">~30 DÍAS</span>
+      <span class="pe-badge cyan">BASE LEGAL</span>
+    </div>
+    <h2 class="pe-title">Pasos <span>Estrella</span></h2>
+    <p class="pe-sub">El método definitivo para fundar un sello independiente en República Dominicana. Cada paso depende del anterior. El orden es irrompible.</p>
+  </div>
+
+  <!-- ═══ FLOW NAV ═══ -->
+  <div class="pe-flow" id="peFlow">
+    <div class="pe-flow-step active" onclick="document.querySelector('.pe-step[data-step=\'1\']').classList.toggle('open');this.classList.toggle('active')" data-flow="1">
+      <div class="pe-flow-num">1</div>
+      <div class="pe-flow-label">ONAPI</div>
+    </div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step" onclick="document.querySelector('.pe-step[data-step=\'2\']').classList.toggle('open');this.classList.toggle('active')" data-flow="2">
+      <div class="pe-flow-num">2</div>
+      <div class="pe-flow-label">SAS</div>
+    </div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step" onclick="document.querySelector('.pe-step[data-step=\'3\']').classList.toggle('open');this.classList.toggle('active')" data-flow="3">
+      <div class="pe-flow-num">3</div>
+      <div class="pe-flow-label">ONDA</div>
+    </div>
+    <div class="pe-flow-arrow">→</div>
+    <div class="pe-flow-step" onclick="document.querySelector('.pe-step[data-step=\'4\']').classList.toggle('open');this.classList.toggle('active')" data-flow="4">
+      <div class="pe-flow-num">4</div>
+      <div class="pe-flow-label">Contrato</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1: ONAPI ═══ -->
+  <div class="pe-step" data-step="1">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">🏛️</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 1 · Semana 1</div>
+        <h3 class="pe-step-title">Registrar Nombre Comercial en ONAPI</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$3,500–RD$6,500</span>
+          <span class="pe-meta">5–10 días</span>
+          <span class="pe-meta">Clase 41 + 35</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>La <strong>Oficina Nacional de la Propiedad Industrial</strong> es donde registras el nombre de tu sello como marca protegida en República Dominicana. El certificado de ONAPI es la primera prueba de que existes como entidad formal ante distribuidoras internacionales.</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📍 Dónde</span>
+          <span class="pe-detail-value"><strong>onapi.gob.do</strong> — Sistema E-SERPI en línea. Físicamente en Av. Los Próceres, Santo Domingo.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Clases Críticas</span>
+          <span class="pe-detail-value"><strong>Clase 41</strong> — Producción musical, edición discográfica, gestión de entretenimiento.<br><strong>Clase 35</strong> — Gestión de negocios comerciales, administración de activos intangibles.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">💰 Costo</span>
+          <span class="pe-detail-value">RD$3,500 a RD$6,500 (~$60–$110 USD) según modalidad. Registrar ambas clases cuesta lo mismo que una sola.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">⏱ Tiempo</span>
+          <span class="pe-detail-value">5 días hábiles para el certificado. Hasta 10 si hay revisión manual.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> Antes de pagar, busca en el portal de ONAPI si el nombre que elegiste ya está registrado. Elige un nombre que suene institucional en español e inglés: ej. <em>Antilles Music Group</em>, <em>Heritage Catalog Assets</em>, <em>Caribe Legacy Records</em>.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2: SAS/SRL ═══ -->
+  <div class="pe-step" data-step="2">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">🏢</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 2 · Semanas 1–3</div>
+        <h3 class="pe-step-title">Constituir la SAS (Sociedad por Acciones Simplificada)</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">~RD$28,000</span>
+          <span class="pe-meta">15–20 días</span>
+          <span class="pe-meta gold">✔ SAS > SRL</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>La estructura legal que separa tu patrimonio personal del de la empresa. Es el requisito para que distribuidoras internacionales firmen contratos contigo. <strong>En República Dominicana, la SAS (Sociedad por Acciones Simplificada) es superior a la SRL</strong> para proyectos de gestión de catálogos musicales.</p>
+
+      <div class="pe-compare-section" style="margin:8px 0;padding:12px">
+        <h3>💎 SAS vs SRL: ¿Cuál elegir?</h3>
+        <p>La SAS fue creada por la <strong>Ley 31-11</strong> y está diseñada para empresas modernas, tecnológicas y con proyección internacional. La SRL es un vehículo del siglo XX. Para un sello independiente que manejará activos digitales, contratos internacionales y tokenización, la SAS es la única opción correcta.</p>
+        <div class="pe-compare-grid">
+          <div class="pe-compare-col loser">
+            <div class="pe-compare-title">❌ SRL (Soc. Responsabilidad Limitada)</div>
+            <ul>
+              <li>Requiere <strong>mínimo 2 socios</strong> para constituirse</li>
+              <li>Transferencia de cuotas requiere asamblea y modificación de estatutos</li>
+              <li>Estructura de gobierno rígida definida por ley</li>
+              <li>Menos atractiva para inversores internacionales</li>
+              <li>Marco legal tradicional sin flexibilidad operativa</li>
+              <li>No permite emisión de acciones para captar capital</li>
+            </ul>
+          </div>
+          <div class="pe-compare-col winner">
+            <div class="pe-compare-title">✔ SAS (Soc. por Acciones Simplificada)</div>
+            <ul>
+              <li><strong>1 solo socio es suficiente</strong> — control total</li>
+              <li>Acciones transferibles libremente sin trámites complejos</li>
+              <li>Flexibilidad total: los estatutos definen el gobierno corporativo</li>
+              <li>Diseñada para inversión extranjera y capital de riesgo</li>
+              <li>Marco moderno (Ley 31-11) alineado con estándares internacionales</li>
+              <li>Puede emitir acciones para inversionistas y tokenización futura</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pe-detail-grid" style="margin-top:8px">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📝 Objeto Social</span>
+          <span class="pe-detail-value">Debe decir: <em>Distribución digital, administración, licenciamiento y explotación comercial de fonogramas, catálogos musicales y derechos conexos, desarrollo de infraestructura tecnológica</em>. Si es genérico, las distribuidoras cuestionarán tu facultad legal.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">🏦 Cuenta Bancaria</span>
+          <span class="pe-detail-value"><strong>Abrirla inmediatamente después del RNC.</strong> Banreservas y BHD León manejan transferencias internacionales de regalías. Sin cuenta corporativa, no puedes recibir pagos de SoundExchange ni distribuidoras.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> El capital social mínimo legal es RD$100,000. Declara ese monto — pagas 1% de impuesto de constitución = RD$1,000. No declares más de lo necesario en esta etapa. Busca un abogado que haya constituido SAS antes, no es lo mismo que una SRL.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3: ONDA ═══ -->
+  <div class="pe-step" data-step="3">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">📜</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 3 · Semanas 2–4</div>
+        <h3 class="pe-step-title">Registrar la SAS como Productor Fonográfico en ONDA</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$8,000–RD$10,000</span>
+          <span class="pe-meta">10–15 días</span>
+          <span class="pe-meta">⚠️ Productor Fonográfico</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p><strong>Este es el paso que casi todos omiten y es el más poderoso.</strong> La mayoría sabe que la ONDA protege a los autores. Lo que no saben es que también reconoce a los <strong>Productores Fonográficos</strong> — los dueños de las grabaciones (masters). Al registrar tu SAS bajo esta categoría, el Estado dominicano te reconoce formalmente como una entidad con facultad legal para poseer, distribuir y reclamar masters.</p>
+      <p>Cuando YouTube recibe un reclamo de derechos de tu empresa respaldado por una certificación de la ONDA, lo procesa con <strong>prioridad institucional</strong>.</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📍 Dónde</span>
+          <span class="pe-detail-value">Oficinas físicas de la ONDA en Santo Domingo. Este trámite <strong>no se hace en línea</strong>.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📄 Documentos</span>
+          <span class="pe-detail-value">RNC de la SAS, Registro Mercantil (Cámara de Comercio), certificado de ONAPI (Paso 1).</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">🎯 Solicitar</span>
+          <span class="pe-detail-value"><strong>Productor Fonográfico</strong> — no como autor individual. Son categorías diferentes en la ONDA.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">💰 Costo</span>
+          <span class="pe-detail-value">RD$8,000 a RD$10,000 (~$135–$170 USD).</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 El truco de la Obra Colectiva:</strong> En la misma visita, pregunta por el registro de <strong>Obra Colectiva</strong>. Registrar las 178 canciones como compilación en lugar de una por una reduce el costo de <strong>RD$300,000 a menos de RD$10,000</strong>.</div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4: CONTRATO ═══ -->
+  <div class="pe-step" data-step="4">
+    <div class="pe-step-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pe-step-icon">✍️</div>
+      <div class="pe-step-info">
+        <div class="pe-step-num">PASO 4 · Semana 3</div>
+        <h3 class="pe-step-title">Contrato Matriz de Administración (Abogado Especializado)</h3>
+        <div class="pe-step-meta">
+          <span class="pe-meta">RD$15,000–RD$18,000</span>
+          <span class="pe-meta">3–5 días</span>
+          <span class="pe-meta">✔ Activo legal</span>
+        </div>
+      </div>
+      <div class="pe-step-arrow">▼</div>
+    </div>
+    <div class="pe-step-body">
+      <p>Lo pagas una vez y lo usas con cada artista que incorpores al sello durante años. Es <strong>tu activo legal más valioso</strong>. Bien redactado, te protege ante cualquier disputa y le da al artista la certeza de que no te quedarás con su música.</p>
+      <div class="pe-detail-grid">
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 1</span>
+          <span class="pe-detail-value"><strong>Mandato de Administración Exclusiva</strong> — Poder para negociar distribución, reclamar derechos, registrar ISRCs y administrar plataformas digitales.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 2</span>
+          <span class="pe-detail-value"><strong>Claim & Monetize</strong> — No eliminar videos de terceros. Solo reclamar la monetización. Protege el tráfico orgánico histórico.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 3</span>
+          <span class="pe-detail-value"><strong>Split de Regalías</strong> — 70% artista / 30% sello (fee de administración). Para catálogos muy valiosos, negociar 75/25.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 4</span>
+          <span class="pe-detail-value"><strong>Duración 10 años</strong> — Con renovación automática. Protege tu inversión en digitalización y gestión del catálogo.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 5</span>
+          <span class="pe-detail-value"><strong>Adelanto Recuperable</strong> — Cualquier adelanto al artista se recupera de las primeras regalías antes del split.</span>
+        </div>
+        <div class="pe-detail-item">
+          <span class="pe-detail-label">📋 Cláusula 6</span>
+          <span class="pe-detail-value"><strong>Explotación Web3</strong> — Autorización expresa para tokenización, mercado secundario y activos digitales del catálogo.</span>
+        </div>
+      </div>
+      <div class="pe-tip"><strong>💡 Tip clave:</strong> Busca un abogado que haya trabajado con <strong>artistas o sellos discográficos</strong>, no un corporativo general. La diferencia en calidad del contrato es enorme. La ONDA puede orientarte sobre especialistas en derecho de autor en el país.</div>
+    </div>
+  </div>
+
+  <!-- ═══ BOTTLENECK ═══ -->
+  <div class="pe-bottleneck">
+    <div class="pe-bn-icon">🚨</div>
+    <div class="pe-bn-content">
+      <div class="pe-bn-title">EL CUELLO DE BOTELLA — ORDEN IRROMPIBLE</div>
+      <p><strong>ONAPI → SAS → RNC → Cuenta Bancaria → ONDA → Contrato → Pitch.</strong> No puedes ir a la ONDA como empresa sin el RNC. No puedes pedir el RNC sin el Registro Mercantil. No puedes hacer el Registro Mercantil sin un nombre de ONAPI registrado. Cada paso depende del anterior. Saltarse uno es perder semanas en devoluciones.</p>
+    </div>
+  </div>
+
+  <!-- ═══ COMPARATIVA SAS ═══ -->
+  <div class="pe-compare-section">
+    <h3>💎 ¿Por qué SAS y no SRL? La explicación definitiva</h3>
+    <p>En República Dominicana existen dos figuras jurídicas para empresas privadas: la SRL (Sociedad de Responsabilidad Limitada, Ley 479-08) y la SAS (Sociedad por Acciones Simplificada, Ley 31-11). Aunque ambas limitan la responsabilidad personal, la SAS fue creada específicamente para emprendimientos modernos, tecnológicos y con proyección internacional.</p>
+    <p><strong>Para un sello independiente que manejará activos digitales, contratos internacionales y tokenización Web3, la SAS es la única opción correcta.</strong> La SRL fue diseñada para negocios tradicionales (tiendas, restaurantes, servicios locales) donde no se espera inversión externa ni transferencia de participaciones. La SAS fue diseñada para startups, scale-ups y empresas de propiedad intelectual.</p>
+    <p>La diferencia decisiva: en una SRL, transferir las cuotas de participación requiere modificar los estatutos ante la Cámara de Comercio. En una SAS, las acciones se transfieren con un simple endoso. Cuando llegue el momento de la LLC en Wyoming y la tokenización, la estructura de acciones de la SAS facilita la cesión de derechos de explotación internacional sin fricción legal.</p>
+    <div class="pe-compare-grid">
+      <div class="pe-compare-col loser">
+        <div class="pe-compare-title">❌ SRL (Tradicional)</div>
+        <ul>
+          <li>Mínimo <strong>2 socios</strong> requeridos</li>
+          <li>Transferencia de cuotas requiere asamblea y modificación de estatutos</li>
+          <li>Estructura de gobierno rígida (Junta Directiva obligatoria)</li>
+          <li>No puede emitir acciones para captar capital</li>
+          <li>Marco legal tradicional sin flexibilidad operativa</li>
+          <li>Requiere asamblea para cambios de administración</li>
+        </ul>
+      </div>
+      <div class="pe-compare-col winner">
+        <div class="pe-compare-title">✔ SAS (Modern — Recomendada)</div>
+        <ul>
+          <li><strong>1 solo socio</strong> es suficiente — control total</li>
+          <li>Acciones transferibles libremente sin trámites complejos</li>
+          <li>Flexibilidad total: los estatutos definen el gobierno corporativo</li>
+          <li>Puede emitir acciones para inversionistas y tokenización</li>
+          <li>Marco moderno (Ley 31-11) alineado con estándares internacionales</li>
+          <li>Cambios de administración simples según estatutos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pe-sas-cta">✔ RECOMENDACIÓN: Constituye una SAS, no una SRL. Tu abogado debe saber la diferencia.</div>
+  </div>
+
+  <!-- ═══ INVESTMENT SUMMARY ═══ -->
+  <div class="pe-summary-card">
+    <div class="pe-summary-header">
+      <span class="icon">💰</span>
+      <h3>Inversión Total Fase 1</h3>
+      <span class="total-badge">~$1,050 USD</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="pe-summary-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Paso</th>
+            <th>Institución</th>
+            <th>Costo RD$</th>
+            <th>Costo USD</th>
+            <th>Tiempo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Nombre Comercial</td>
+            <td>ONAPI</td>
+            <td>RD$3,500–6,500</td>
+            <td class="gold">~$100</td>
+            <td>5–10 días</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Constitución SAS</td>
+            <td>Cámara Comercio + DGII</td>
+            <td>RD$24,000–30,000</td>
+            <td class="gold">~$500</td>
+            <td>15–20 días</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Productor Fonográfico</td>
+            <td>ONDA</td>
+            <td>RD$8,000–10,000</td>
+            <td class="gold">~$150</td>
+            <td>10–15 días</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Contrato Matriz</td>
+            <td>Abogado Especializado</td>
+            <td>RD$15,000–18,000</td>
+            <td class="gold">~$300</td>
+            <td>3–5 días</td>
+          </tr>
+          <tr class="total">
+            <td></td>
+            <td><strong>TOTAL</strong></td>
+            <td></td>
+            <td><strong>~RD$52,000</strong></td>
+            <td class="gold"><strong>~$1,050</strong></td>
+            <td><strong>~30 días</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══ COMPLETION ═══ -->
+  <div class="pe-complete">
+    <div class="pe-complete-icon">🏆</div>
+    <div class="pe-complete-content">
+      <h4>✅ Al completar esta fase tienes</h4>
+      <div class="pe-complete-items">
+        <div class="pe-complete-item"><strong>1.</strong> Certificado de ONAPI — Tu nombre comercial protegido en RD</div>
+        <div class="pe-complete-item"><strong>2.</strong> RNC y Registro Mercantil — Tu SAS existe legalmente</div>
+        <div class="pe-complete-item"><strong>3.</strong> Certificación ONDA — Facultad legal para administrar masters</div>
+        <div class="pe-complete-item"><strong>4.</strong> Contrato Matriz firmado — Términos claros con cada artista</div>
+      </div>
+    </div>
+  </div>
+
+</div><div class="tc" id="tab-resources">
+<div class="pc"><div class="ph"><div class="pn2 an">📁</div><div class="pi2"><h3>Recursos Relacionados</h3><div class="psb">Herramientas del ecosistema Nuclear AIMA</div></div></div><div class="pb2 op">
+<div class="rg">
+<a href="oraculo.html"><span class="r-icon">🔮</span>Oraculo en Vivo - Yield y datos tiempo real</a>
+<a href="adelantos.html"><span class="r-icon">💰</span>Adelantos - Plataformas de financiamiento</a>
+<a href="onapi-onda.html"><span class="r-icon">🏛️</span>ONAPI/ONDA - Guia legal paso a paso</a>
+<a href="short-tracker.html"><span class="r-icon">🎬</span>Short Tracker - Replicas virales YouTube</a>
+<a href="osint-center.html"><span class="r-icon">🕵️</span>OSINT Center - Dorks, Keywords, Dominios</a>
+<a href="index.html"><span class="r-icon">📊</span>Dashboard Principal - Centro de Comando</a>
+<a href="data/catalogo-completo-ramon-orlando.csv"><span class="r-icon">📄</span>Catalogo Completo CSV</a>
+<a href="ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt"><span class="r-icon">📜</span>Contrato de Asesoramiento</a>
+</div>
+</div></div>
+</div>
+<div style="text-align:center;padding:16px 0;border-top:0.5px solid var(--border);margin-top:8px"><p style="font-size:9px;color:var(--muted);font-family:var(--mono)">Master Plan · Nuclear AIMA · Basado en start.txt (981 lineas) · Progreso guardado en localStorage</p></div>
+<script>  function filterStatus(s) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('act'));
+    if (event && event.target) event.target.classList.add('act');
+    document.querySelectorAll('.pc').forEach(card => {
+      if (s === 'all') { card.style.display = ''; return; }
+      const st = card.querySelector('.ps3');
+      if (!st) { card.style.display = ''; return; }
+      const txt = st.textContent.toLowerCase();
+      if (s === 'active') card.style.display = txt.includes('progreso') ? '' : 'none';
+      else if (s === 'done') card.style.display = txt.includes('completada') ? '' : 'none';
+      else card.style.display = txt.includes('pendiente') ? '' : 'none';
+    });
+  }
+
+  const STORAGE_KEY = 'nuclear-masterplan-check';
+  const TOTAL_TASKS = 64;
+
+  function getChecks() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveChecks(d) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+  catch {}
+}
+function toggleTask(el, id) {
+  const checks = getChecks();
+  const cb = document.getElementById('cb_' + id);
+  const ct = document.getElementById('ct_' + id);
+  if (checks[id]) {
+    delete checks[id];
+    cb.classList.remove('ch');
+    cb.textContent = '';
+    ct.classList.remove('do');
+  } else {
+    checks[id] = true;
+    cb.classList.add('ch');
+    cb.textContent = '\u2713';
+    ct.classList.add('do');
+  }
+  saveChecks(checks);
+  updateProgress();
+}
+function togglePhase(el) {
+  const body = el.nextElementSibling;
+  const arrow = el.querySelector('.ar');
+  body.classList.toggle('op');
+  arrow.classList.toggle('op');
+}
+function updateProgress() {
+  const checks = getChecks();
+  const done = Object.keys(checks).length;
+  const pct = Math.round((done / TOTAL_TASKS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = pct + '% Completado';
+  document.getElementById('taskDone').textContent = done;
+  document.getElementById('taskTotal').textContent = TOTAL_TASKS;
+  document.getElementById('currentPhase').textContent = 'Fase 1-2';
+}
+function switchT(btn, idx) {
+  document.querySelectorAll('.tn button').forEach(b => b.classList.remove('act'));
+  document.querySelectorAll('.tc').forEach(t => t.classList.remove('act'));
+  btn.classList.add('act');
+  const tabs = ['tab-phases', 'tab-timeline', 'tab-metrics', 'tab-templates', 'tab-pasos-estrella', 'tab-resources'];
+  document.getElementById(tabs[idx]).classList.add('act');
+}
+function copyMsg(btn) {
+  const text = btn.parentNode.textContent.replace('Copiar', '').trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '\u2713 Copiado';
+    setTimeout(() => { btn.textContent = 'Copiar'; }, 2000);
+  });
+}
+function filterPhases() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.pc').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const checks = getChecks();
+  Object.keys(checks).forEach(id => {
+    const cb = document.getElementById('cb_' + id);
+    const ct = document.getElementById('ct_' + id);
+    if (cb) { cb.classList.add('ch'); cb.textContent = '\u2713'; }
+    if (ct) ct.classList.add('do');
+  });
+  updateProgress();
+});
+</script>
+</div>
+</body>
+</html>

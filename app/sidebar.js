@@ -11,31 +11,31 @@
       { icon: '☢️', label: 'Dashboard', href: 'index.html', keywords: 'inicio dashboard principal centro comando' }
     ]},
     { section: 'Apps & Herramientas', items: [
-      { icon: '📊', label: 'Cotizador', href: 'cotizador.html', keywords: 'cotizador presupuesto multi-key admin' },
-      { icon: '🔍', label: 'Live Search Nodos', href: 'live-search.html', keywords: 'live search nodos virales fugas youtube' },
-      { icon: '🕵️', label: 'OSINT Command Center', href: 'osint-center.html', keywords: 'osint dorking google keyword planner cpc domain traffic news discovery' },
-      { icon: '🎬', label: 'Short Tracker', href: 'short-tracker.html', keywords: 'shorts tracker replicas virales youtube fan videos' },
-      { icon: '💰', label: 'Adelantos', href: 'adelantos.html', keywords: 'adelantos financiamiento beatbread believe orchard sonosuite soundexchange' },
-      { icon: '⭐', label: 'Master Plan', href: 'master-plan.html', keywords: 'master plan fases hoja ruta estrategia checklists' },
-      { icon: '🔮', label: 'Oráculo en Vivo', href: 'oraculo.html', keywords: 'oráculo oracle yield canciones tiempo real top 12' },
-      { icon: '📡', label: 'Streaming', href: 'streaming.html', keywords: 'streaming 24/7 youtube twitch facebook' },
-      { icon: '🌐', label: 'Landing Page', href: 'landing-page.html', keywords: 'landing page aterrizaje leads' },
-      { icon: '🧲', label: 'Lead Magnet', href: 'lead-magnet.html', keywords: 'lead magnet captación leads' }
+      { icon: '📊', label: 'Cotizador', href: '../modulos/cotizador.html', keywords: 'cotizador presupuesto multi-key admin' },
+      { icon: '🔍', label: 'Live Search Nodos', href: '../modulos/live-search.html', keywords: 'live search nodos virales fugas youtube' },
+      { icon: '🕵️', label: 'OSINT Command Center', href: '../modulos/osint-center.html', keywords: 'osint dorking google keyword planner cpc domain traffic news discovery' },
+      { icon: '🎬', label: 'Short Tracker', href: '../modulos/short-tracker.html', keywords: 'shorts tracker replicas virales youtube fan videos' },
+      { icon: '💰', label: 'Adelantos', href: '../modulos/adelantos.html', keywords: 'adelantos financiamiento beatbread believe orchard sonosuite soundexchange' },
+      { icon: '⭐', label: 'Master Plan', href: '../modulos/master-plan.html', keywords: 'master plan fases hoja ruta estrategia checklists' },
+      { icon: '🔮', label: 'Oráculo en Vivo', href: '../modulos/oraculo.html', keywords: 'oráculo oracle yield canciones tiempo real top 12' },
+      { icon: '📡', label: 'Streaming', href: '../modulos/streaming.html', keywords: 'streaming 24/7 youtube twitch facebook' },
+      { icon: '🌐', label: 'Landing Page', href: '../modulos/landing-page.html', keywords: 'landing page aterrizaje leads' },
+      { icon: '🧲', label: 'Lead Magnet', href: '../modulos/lead-magnet.html', keywords: 'lead magnet captación leads' }
     ]},
     { section: '🎵 Ramón Orlando', items: [
-      { icon: '🎯', label: 'Proyecto Completo', href: 'ramon-orlando-proyecto.html', keywords: 'proyecto ramón orlando completo nuclear aima ecosistema' },
+      { icon: '🎯', label: 'Proyecto Completo', href: '../modulos/ramon-orlando-proyecto.html', keywords: 'proyecto ramón orlando completo nuclear aima ecosistema' },
       { icon: '🏟️', label: '50 Aniversario', href: 'ramon-orlando/evento-50/ramon-orlando-50.html', keywords: '50 aniversario estadio olímpico evento' },
       { icon: '💿', label: 'Catálogo Completo', href: 'data/catalogo-completo-ramon-orlando.csv', keywords: 'catálogo albums canciones 190' },
       { icon: '📜', label: 'Contrato', href: 'ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt', keywords: 'contrato asesoramiento legal' },
-      { icon: '⭐', label: 'Pasos Estrella', href: 'pasos-estrella.html', keywords: 'pasos estrella sello independiente guía fundación legal onapi onda sas' },
+      { icon: '⭐', label: 'Pasos Estrella', href: '../modulos/pasos-estrella.html', keywords: 'pasos estrella sello independiente guía fundación legal onapi onda sas' },
       { icon: '📄', label: 'Pasos Estrella (RAW)', href: 'ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/start.txt', keywords: 'pasos estrella raw original texto' },
       { icon: '🛡️', label: 'La Clave Registrar', href: 'ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/LA%20CLAVE%20PARA%20REGISTRAR%20Y%20SER%20INMUN.txt', keywords: 'clave registrar inmune protección' },
       { icon: '💰', label: 'Financiadoras', href: 'ramon-orlando/boveda%20de%20seguridad/financiadoras%20principales/financiadoras%20principales.txt', keywords: 'financiadoras beatbread adelantos' },
-      { icon: '📊', label: 'Dashboard Campañas', href: 'dashboard-campanas.html', keywords: 'dashboard unificado campañas pagas todas plataformas google meta youtube tiktok linkedin x twitter métricas cross-platform' },
-      { icon: '📅', label: 'Plan Semanal Grupos', href: 'plan-semanal-grupos.html', keywords: 'plan semanal grupos facebook contenido orgánico calendario lunes martes miércoles jueves viernes sábado domingo weekly schedule' },
-      { icon: '🌑', label: 'Shadow Silo Oracle', href: 'shadow-silo-oraculo.html', keywords: 'shadow silo oráculo contenido tendencias news seo blogger generación artículos posicionamiento google keyword cpc silos' },
-      { icon: '🧠', label: 'AdsPro Estrategia', href: 'adspro-estrategia.html', keywords: 'adspro estrategia campañas audiencias grupos facebook creativos copys targeting segmentos' },
-      { icon: '📢', label: 'Campañas Pagas', href: 'campanas-pagas.html', keywords: 'campañas pagas publicidad ads google facebook youtube métricas dashboard panel kpi' },
+      { icon: '📊', label: 'Dashboard Campañas', href: '../modulos/dashboard-campanas.html', keywords: 'dashboard unificado campañas pagas todas plataformas google meta youtube tiktok linkedin x twitter métricas cross-platform' },
+      { icon: '📅', label: 'Plan Semanal Grupos', href: '../modulos/plan-semanal-grupos.html', keywords: 'plan semanal grupos facebook contenido orgánico calendario lunes martes miércoles jueves viernes sábado domingo weekly schedule' },
+      { icon: '🌑', label: 'Shadow Silo Oracle', href: '../modulos/shadow-silo-oraculo.html', keywords: 'shadow silo oráculo contenido tendencias news seo blogger generación artículos posicionamiento google keyword cpc silos' },
+      { icon: '🧠', label: 'AdsPro Estrategia', href: '../modulos/adspro-estrategia.html', keywords: 'adspro estrategia campañas audiencias grupos facebook creativos copys targeting segmentos' },
+      { icon: '📢', label: 'Campañas Pagas', href: '../modulos/campanas-pagas.html', keywords: 'campañas pagas publicidad ads google facebook youtube métricas dashboard panel kpi' },
       { icon: '🔴', label: 'Google Ads', href: 'https://ads.google.com/', keywords: 'google ads campañas publicidad search display', external: true },
       { icon: '📘', label: 'Meta Ads Manager', href: 'https://business.facebook.com/adsmanager/', keywords: 'meta facebook ads manager campañas publicidad instagram', external: true },
       { icon: '▶️', label: 'YouTube Studio', href: 'https://studio.youtube.com/', keywords: 'youtube studio analytics videos campañas contenido', external: true },
@@ -44,7 +44,7 @@
       { icon: '🐦', label: 'X (Twitter) Ads', href: 'https://ads.x.com/', keywords: 'x twitter ads campañas publicidad social', external: true }
     ]},
     { section: '🏛️ Legal', items: [
-      { icon: '🏛️', label: 'ONAPI · ONDA · SRL', href: 'onapi-onda.html', keywords: 'onapi onda srl registro legal fundación' }
+      { icon: '🏛️', label: 'ONAPI · ONDA · SRL', href: '../modulos/onapi-onda.html', keywords: 'onapi onda srl registro legal fundación' }
     ]},
     { section: '📄 Biblioteca', items: [
       { icon: '📋', label: 'Propuesta Maestra', href: 'pdf/PROPUESTA-MAESTRA-NUCLEAR-AIMAtm.pdf', keywords: 'propuesta maestra nuclear aima' },
