@@ -1,0 +1,13 @@
+{
+  "name": "nuclear-aima-route",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SMAC — Sistema Modular de Auditoría Comercial (Hoja de Captura de Ruta)",
+  "scripts": {
+    "dev": "npx http-server . -p 3000 -c-1",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

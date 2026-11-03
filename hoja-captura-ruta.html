@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoja de Captura de Ruta — SMAC Nuclear AIMA</title>
+<style>
+  :root{
+    --primary:#1a1a2e; --secondary:#16213e; --accent:#e94560; --bg:#f5f5f7; --card:#fff; --text:#333; --text-light:#777; --border:#ddd;
+    --stripes:#ffcc00; --warn:#e53e3e; --ok:#38a169;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:20px 16px;line-height:1.55}
+  h1{font-size:1.5rem;font-weight:800;text-align:center;color:var(--primary);margin-bottom:2px}
+  h2{font-size:1.05rem;font-weight:700}
+  .subtitle{text-align:center;color:var(--text-light);margin-bottom:16px;font-size:.92rem}
+  .blue-bar{background:#e3f2fd;border:1px solid #90caf9;color:#0d47a1;padding:14px 16px;border-radius:10px;font-size:.9rem;margin-bottom:16px}
+  .block{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+  .block-title{background:var(--primary);color:#fff;padding:11px 16px;border-radius:9px;margin:-16px -16px 16px -16px;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:8px}
+  .block-title::before{content:"";display:inline-block;width:10px;height:10px;background:var(--stripes);border-radius:50%}
+  .grid{margin:10px 0;display:grid;gap:8px}
+  .grid-2{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:1fr 1fr 1fr}
+  .field{margin-bottom:8px;display:flex;flex-direction:column}
+  .field label{font-weight:600;font-size:.88rem;margin-bottom:3px}
+  .field input,.field select,.field textarea{width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-size:.92rem;font-family:inherit;background:#fff}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:54px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{padding:5px 10px;border:1.5px solid var(--border);border-radius:6px;cursor:pointer;font-size:.86rem;background:#fafafa;user-select:none;transition:.15s}
+  .chip:hover{transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.07)}
+  .chip input{width:auto;margin:0}
+  .chip.on{border-color:var(--accent);background:#fdf3f2}
+  .radio-row{display:flex;gap:6px;flex-wrap:wrap}
+  .radio-row label{padding:4px 10px;border:1.5px solid var(--border);border-radius:6px;cursor:pointer;font-size:.84rem;background:#fafafa;position:relative}
+  .radio-row input{width:auto;margin:0;position:absolute;opacity:0}
+  .radio-row label:hover{background:#f0f0f0}
+  .radio-row input:checked + label{background:#fdf3f2;border-color:var(--accent)}
+  .narrow{width:100%;max-width:460px}
+  .row-eq{display:flex;gap:12px}
+  .row-eq .field{flex:1}
+  .score-card{background:#f8f9fa;border:1px solid var(--border);border-radius:10px;padding:16px}
+  .semáforo{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px;border-radius:10px;margin-top:10px}
+  .semáforo .s-bar{height:16px;background:#e0e0e0;border-radius:8px;overflow:hidden;width:100%}
+  .semáforo .s-fill{height:100%;border-radius:8px;width:0%;transition:width .4s}
+  .semáforo .s-txt{font-weight:700;font-size:.95rem}
+  .semáforo .s-sub{color:var(--text-light);font-size:.82rem}
+  .action{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .action .field{flex:1;min-width:180px}
+  ul.dots{list-style:none}
+  ul.dots li{display:inline-block;padding:3px 7px;border:1px solid var(--border);border-radius:14px;font-size:.75rem;background:#f5f5f5;margin:3px}
+  .paginate{display:flex;justify-content:center;gap:14px;margin:14px 0;padding-top:8px;border-top:1px dashed var(--border);font-size:.86rem}
+  .paginate button{background:#fff;border:1.5px solid var(--border);padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+  .paginate button:hover{border-color:var(--accent)}
+  .paginate button.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .footer-note{margin-top:16px;text-align:center;font-size:.8rem;color:var(--text-light)}
+  @media print{
+    body{padding:0;background:#fff}
+    .block{box-shadow:none}
+    .chip,.radio-row label{cursor:default}
+    .bar select,.bar input{border:none;background:#fff}
+    .action button{display:none}
+    .paginate button{display:none}
+  }
+  @media (max-width:600px){
+    .grid-2,.grid-3{grid-template-columns:1fr}
+    .row-eq{flex-direction:column}
+  }
+</style>
+</head>
+<body>
+
+<h1>📋 SMAC · Sistema Modular de Auditoría Comercial</h1>
+<p class="subtitle"><strong>Nuclear AIMA</strong> — Hoja de Captura de Ruta · Villa Faro · Prospectador: ____</p>
+
+<div class="blue-bar">
+  <strong>Instrucciones:</strong> Marca las casillas que aplican, escribe los datos faltantes y en la parte inferior tendrás el <strong>Semáforo de Urgencia</strong> calculado por ti mismo. Al final → <button onclick="window.print()" style="background:var(--primary);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.88rem;margin-left:6px">🖨️ Imprimir / Guardar PDF</button>
+</div>
+
+<!-- ===== BLOQUE 1 ===== -->
+<div class="block">
+  <div class="block-title">📍 Bloque 1 · Metadatos y Tiempo de Operación</div>
+  <div class="grid">
+    <div class="field"><label for="b1_fecha">Fecha y Hora de Auditoría (DD/MM/AAAA — HH:MM)</label><input id="b1_fecha" type="text" placeholder="03/11/2026 — 10:30"></div>
+    <div class="field"><label for="b1_sector">Sector / Cuadrante / Calle</label><input id="b1_sector" type="text" placeholder="Villa Faro, Calle Principal"></div>
+    <div class="field"><label for="b1_agent">Nombre del Prospectador / ID Agente</label><input id="b1_agent" type="text" placeholder="Ej: Romny / NA-03"></div>
+    <div class="field"><label for="b1_local">Nombre Comercial del Local</label><input id="b1_local" type="text" placeholder="Ej: Centro Odontológico Sonrisas RD"></div>
+  </div>
+  <div class="grid">
+    <div class="field"><label for="b1_direc">Dirección Exacta</label><input id="b1_direc" type="text" placeholder="Calle principal, número, plaza o referencia"></div>
+    <div class="field"><label for="b1_vecinos">Negocios Vecinos de Referencia (Contexto Físico)</label><input id="b1_vecinos" type="text" placeholder="Al lado de una farmacia y frente a una estación de gas"></div>
+  </div>
+  <div class="field"><label>¿Es un negocio nuevo o veterano?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'new','new')"> Nuevo (&lt;6 meses)</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'crec','crec'))"> En crecimiento (6m–2 años)</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'cons','cons')"> Consolidado (+2 años)</label>
+    </div>
+  </div>
+  <div class="field"><label for="b1_tiempo">Tiempo exacto en el mercado (aprox.)</label><input id="b1_tiempo" type="text" placeholder="Ej: 3 años y 4 meses"></div>
+</div>
+
+<!-- ===== BLOQUE 2 ===== -->
+<div class="block">
+  <div class="block-title">🏗️ Bloque 2 · Identidad Visual, Física y Branding Local</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Tienen letrero físico en la fachada?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'letrero','letrero')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'noletrero','noletrero')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>Estado del letrero</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'excelente','excelente')"> Excelente</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'desac','desac')"> Desactualizado / Apagado</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'modificar','modificar')"> Necesita modificación urgente</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen logotipo corporativo definido?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'logo_prof','logo_prof')"> Sí (Profesional)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'logo_ama','logo_ama')"> Sí (Muy amateur)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_logo','no_logo')"> No tienen logo</label>
+      </div>
+    </div>
+    <div class="field"><label>Presencia Física en Ruta</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'abierto','abierto')"> Local abierto al público</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'cerrado','cerrado')"> Oficina cerrada</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'hidro','hidro')"> Híbrido / operativo desde casa</label>
+      </div>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label for="b2_obs">Observación Crítica del Local</label><input id="b2_obs" type="text" placeholder="Ej: Buen flujo, Instagram muerto desde hace 4 meses y no responden WhatsApp"></div>
+</div>
+
+<!-- ===== BLOQUE 3 ===== -->
+<div class="block">
+  <div class="block-title">🌐 Bloque 3 · Ecosistema Web, Embudos y Pasarelas</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Aparece en Google Maps?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'gmaps','gmaps')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_gmaps','no_gmaps')"> No (¡Oportunidad de SEO Local!)</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tiene Ficha de Perfil Empresarial de Google reclamada y verificada?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'gm_ficha','gm_ficha')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_gm','no_gm')"> No (¡Oportunidad de oro!)</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label for="b3_ventas_gm">Ventas mensuales estimadas de Google Maps</label><input id="b3_ventas_gm" type="text" placeholder="Cantidad o N/D"></div>
+    <div class="field"><label>¿Tienen Sitio Web propio?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'web_s','web_s')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_web','no_web')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen Página de Venta optimizada?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'pventa','pventa')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_pventa','no_pventa')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen Página de Gracias configurada?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'gracias','gracias')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_gracias','no_gracias')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen pasarela de pagos integrada en su web?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'pago','pago')"> Sí (Tarjeta/PayPal/Trans.)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_pago','no_pago')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen sistema de facturación digital?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'fact','fact')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_fact','no_fact')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen base de datos digitales de productos y servicios?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'bdd','bdd')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_bdd','no_bdd')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Utilizan Biolink o Linktree en sus perfiles?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'bio','bio')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_bio','no_bio')"> No</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 4 ===== -->
+<div class="block">
+  <div class="block-title">📱 Bloque 4 · Redes Sociales, Tráfico, Contenido y Ads</div>
+  <div class="field"><strong style="font-size:.92rem">Redes Sociales Actuales (Estado)</strong></div>
+  <div class="grid grid-2">
+    <div class="field"><label>Instagram · Última fecha de publicación: ____</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ig_act','ig_act')"> Activa</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ig_aban','ig_aban')"> Abandonada</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_ig','no_ig')"> No la tienen</label>
+      </div>
+    </div>
+    <div class="field"><label>TikTok · Última fecha de publicación: ____</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'tt_act','tt_act')"> Activa</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'tt_aban','tt_aban')"> Abandonada</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_tt','no_tt')"> No la tienen</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>Facebook (Fanpage/Grupo) · Última fecha: ____</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'fb_act','fb_act')"> Activa</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'fb_aban','fb_aban')"> Abandonada</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_fb','no_fb')"> No la tienen</label>
+      </div>
+    </div>
+    <div class="field"><label>YouTube · Última fecha de publicación: ____</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'yt_act','yt_act')"> Activa</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'yt_aban','yt_aban')"> Abandonada</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_yt','no_yt')"> No la tienen</label>
+      </div>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label for="b4_revivir">¿Qué redes hay que revivir o crear desde cero?</label><input id="b4_revivir" type="text" placeholder="Ej: TikTok, FB grupo de la comunidad"></div>
+  <div class="field"><label>Optimización de Perfiles (Bio, enlaces, CTAs)</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'opt','opt')"> Optimizados</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_opt','no_opt')"> Mal optimizados / Desordenados</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label for="b4_viral">Vídeo o publicación más viral detectado</label><input id="b4_viral" type="text" placeholder="Link o descripción / Vistas aproximadas"></div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label for="b4_ventas_rs">Ventas mensuales estimadas de Redes Sociales</label><input id="b4_ventas_rs" type="text" placeholder="Cantidad o N/D"></div>
+    <div class="field"><label>¿Están haciendo publicidad pagada actualmente?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ads_s','ads_s')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_ads','no_ads')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Dónde la hacen?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'meta_ads','meta_ads')"> Meta (FB/IG)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'tiktok_ads','tiktok_ads')"> TikTok</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'google_ads','google_ads')"> Google</label>
+      </div>
+    </div>
+    <div class="field"><label for="b4_campanas">Cantidad de campañas activas en Meta</label><input id="b4_campanas" type="text" placeholder="Número"></div>
+  </div>
+  <div class="field" style="margin-top:10px"><label for="b4_presupuesto">Presupuesto estimado de publicidad al mes ($)</label><input id="b4_presupuesto" type="text" placeholder="$____"></div>
+  <div class="field"><label>¿Tienen el Píxel de Facebook instalado y activo?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'pixel','pixel')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_pixel','no_pixel')"> No</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 5 ===== -->
+<div class="block">
+  <div class="block-title">💬 Bloque 5 · Canales de Comunicación, Automatización y WhatsApp</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Tienen número de WhatsApp corporativo?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'wa_s','wa_s')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_wa','no_wa')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿El WhatsApp está visible en su Ficha de Google?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'wa_gm','wa_gm')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_wa_gm','no_wa_gm')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿El WhatsApp está visible en sus Redes Sociales?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'wa_rs','wa_rs')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_wa_rs','no_wa_rs')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Utilizan enlaces directos tipo Wa.link?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'walink','walink')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_walink','no_walink')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen Chatbot automatizado configurado?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'chatbot','chatbot')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_chatbot','no_chatbot')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>Comportamiento del Chatbot actual</label><input type="text" placeholder="Qué tiene: ___ | Qué le falta: ___"></div>
+  </div>
+  <div class="field" style="margin-top:10px"><strong style="font-size:.92rem">Estrategia de Retención y Comunidad</strong></div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Tienen grupos de WhatsApp/Telegram para retener comunidad?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'grupo_wa','grupo_wa')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_grupo','no_grupo')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Hacen Email Marketing?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'email','email')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_email','no_email')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Hacen marketing por SMS?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'sms','sms')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_sms','no_sms')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Hacen micro-lanzamientos semanales a su comunidad de WhatsApp?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'micro_wa','micro_wa')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_micro','no_micro')"> No</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 6 ===== -->
+<div class="block">
+  <div class="block-title">🎯 Bloque 6 · Oferta, Monetización Interna y Necesidades Comerciales</div>
+  <div class="grid grid-2">
+    <div class="field"><strong style="font-size:.92rem">Rango de Precio de sus Productos/Servicios:</strong>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'low','low')"> Low Ticket (&lt;1,000 Pesos)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'mid','mid')"> Mid Ticket</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'high','high')"> High Ticket (&gt;15,000 Pesos)</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen flujo de caja saludable o estrangulamiento financiero?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'sano','sano')"> Saludable</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'lote','lote')"> Estrangulado / Necesita inyección</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'crisis','crisis')"> No cubre la nómina (En crisis)</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label for="b6_persona">Buyer Persona / Cliente Ideal</label><input id="b6_persona" type="text" placeholder="¿A quién apuntan?"></div>
+    <div class="field"><label for="b6_dolor">Dolor o Problema principal que resuelven</label><input id="b6_dolor" type="text" placeholder="¿Qué problema solucionan?"></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>Monetización Interna (YouTube/Facebook propios)</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'mono_s','mono_s')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_mono','no_mono')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>Infoproductos (cursos, talleres, webinars grabados)</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'infopro','infopro')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_infopro','no_infopro')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>Lead Magnet: recurso gratuito para captar leads</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'lead_mag','lead_mag')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_lead','no_lead')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>Eventos y Promociones (rifas, sorteos, patrocinios)</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'eventos','eventos')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_eventos','no_eventos')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Necesitan patrocinadores externos para sus proyectos?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'patro','patro')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_patro','no_patro')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Necesitan nuevos proveedores o importadores?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'proveedores','proveedores')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_proveedores','no_proveedores')"> No</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 2.1 ===== -->
+<div class="block">
+  <div class="block-title">🏬 Bloque 2.1 · Infraestructura Física y Espacio de Trabajo</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿El local es amplio o reducido?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'amplio','amplio')"> Amplio / Cómodo</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'reducido','reducido')"> Pequeño / Reducido</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'desde_casa','desde_casa')"> Operativo desde casa</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen aire acondicionado funcional?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ac_s','ac_s')"> Sí (En buen estado)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'sin_ac','sin_ac')"> No tiene</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ac_da','ac_da')"> Está dañado</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen área de recepción o sala de espera definida?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'recep','recep')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_recep','no_recep')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen almacén o depósito de mercancía separado?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'almacen','almacen')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_almacen','no_almacen')"> No</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 2.2 ===== -->
+<div class="block">
+  <div class="block-title">🏷️ Bloque 2.2 · Material POP, Merchandising y Branding Físico</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Tienen branding físico unificado?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'branding','branding')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_branding','no_branding')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen folletos, volantes o plegables impresos?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'folletos_act','folletos_act')"> Sí (Actualizados)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'folletos_ant','folletos_ant')"> Sí (Antiguos/Desactualizados)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_folletos','no_folletos')"> No tienen</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen tarjetas de presentación física del negocio?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'tarjetas','tarjetas')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_tarjetas','no_tarjetas')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen banners, bajantes o roll-ups visibles?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'banners','banners')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_banners','no_banners')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen gorras, poloches o uniformes con la marca?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'gorras_usan','gorras_usan')"> Sí (El equipo los usa)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'gorras_no_usan','gorras_no_usan')"> Tienen pero no los usan</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_gorras','no_gorras')"> No tienen</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Ofrecen mercancías promocionales o souvenirs?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'merch','merch')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_merch','no_merch')"> No</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 4.1 ===== -->
+<div class="block">
+  <div class="block-title">📢 Bloque 4.1 · Publicidad Tradicional y Flujo de Tráfico</div>
+  <div class="field"><label>¿Están pagando guaguas anunciadoras o altoparlantes locales?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'guaguas','guaguas')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_guaguas','no_guaguas')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Qué otros medios tradicionales usan?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'radio','radio')"> Radio local</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'flyers','flyers')"> Flyers en esquinas</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ninguno','ninguno')"> Ninguno</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 6.1 ===== -->
+<div class="block">
+  <div class="block-title">💰 Bloque 6.1 · Salud Financiera, Flujo de Caja y Rentabilidad</div>
+  <div class="grid grid-2">
+    <div class="field"><label for="b6_venta_mensual">Cantidad de clientes aproximados atendidos al mes</label><input id="b6_venta_mensual" type="text" placeholder="Número"></div>
+    <div class="field"><label for="b6_ganancias_mensual">Volumen de ganancias estimadas al mes ($)</label><input id="b6_ganancias_mensual" type="text" placeholder="Cantidad"></div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿El negocio genera lo suficiente para cubrir su nómina?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'nomina_sana','nomina_sana')"> Sí (Flujo sano)</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'nomina_rd','nomina_rd')"> Va al límite / Sufre para pagar</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'nomina_crisis','nomina_crisis')"> No cubre la nómina (En crisis)</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 4.2 ===== -->
+<div class="block">
+  <div class="block-title">📱 Bloque 4.2 · Interacción y Conversión Real en Redes</div>
+  <div class="field"><label>Interacción en Redes (Comentarios, me gusta, compartidos)</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'inter_alta','inter_alta')"> Alta y fluida</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'inter_baja','inter_baja')"> Baja / Cuentas fantasma</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'inter_nula','inter_nula')"> Nula</label>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>Crecimiento Orgánico Reciente</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'crecimiento','crecimiento')"> Sí, gente nueva cada semana</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'crecimiento_est','crecimiento_est')"> Estancado / Nadie nuevo llega</label>
+      </div>
+    </div>
+    <div class="field"><label>Conversión de Seguidores</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'compran','compran')"> Los seguidores compran</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'solo_like','solo_like')"> Solo dan like pero no compran</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'sin_compra','sin_compra')"> No hay interacción de compra</label>
+      </div>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>Experiencia de Usuario (UX en la atención digital/física)</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ux_fluido','ux_fluido')"> Fluida y profesional</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ux_deficiente','ux_deficiente')"> Deficiente / Lenta</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 7 ===== -->
+<div class="block">
+  <div class="block-title">🛠️ Bloque 7 · Diagnóstico de Necesidades y Upsell Nuclear AIMA</div>
+  <div class="field"><strong>(Lo que el prospectador marca al terminar la auditoría)</strong></div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Necesitan Posicionamiento SEO / Google Index rápido?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'seo','seo')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_seo','no_seo')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen equipo interno para manejar lo digital?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'equipo','equipo')"> Tienen equipo</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'dependen','dependen')"> No tienen a nadie (Dependen de nosotros)</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Quieres bases de datos para sincronizar contactos (Redes + Google Contacts)?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'bd_base','bd_base')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_bd','no_bd')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Quieres automatizaciones especiales (CRM, pasarelas, bots avanzados)?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'auto','auto')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_auto','no_auto')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Quieren ideas de nuevos productos o líneas de negocio?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ideas','ideas')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_ideas','no_ideas')"> No</label>
+      </div>
+    </div>
+    <div class="field"><strong>Objetivos de Crecimiento en Plataformas</strong></div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Desean crecer en Facebook?</label>
+      <div class="chips" style="gap:6px"><label class="chip"><input type="checkbox" onclick="toggleChip(this,'crece_fb','crece_fb')"> Sí</label></div>
+    </div>
+    <div class="field"><label>¿Desean crecer en YouTube?</label>
+      <div class="chips" style="gap:6px"><label class="chip"><input type="checkbox" onclick="toggleChip(this,'crece_yt','crece_yt')"> Sí</label></div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Desean crecer en TikTok?</label>
+      <div class="chips" style="gap:6px"><label class="chip"><input type="checkbox" onclick="toggleChip(this,'crece_tt','crece_tt')"> Sí</label></div>
+    </div>
+    <div class="field"><label>¿Quieres crecer en Instagram?</label>
+      <div class="chips" style="gap:6px"><label class="chip"><input type="checkbox" onclick="toggleChip(this,'crece_ig','crece_ig')"> Sí</label></div>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label><strong>Reseñas en Google:</strong> (Cantidad total: ____)</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'reseñas','reseñas')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_reseñas','no_reseñas')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>Comportamiento de reseñas</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'positivas','positivas')"> Mayormente Positivas</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'negativas','negativas')"> Negativas recientes</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BLOQUE 6.2 ===== -->
+<div class="block">
+  <div class="block-title">📦 Bloque 6.2 · Capital Físico y Publicidad Tradicional Complementaria</div>
+  <div class="grid grid-2">
+    <div class="field"><label>¿Tienen folletos/material impreso?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'fol_v2_1','fol_v2_1')"> Sí (Actualizados)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'fol_v2_2','fol_v2_2')"> Sí (Antiguos)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_fol_v2_1','no_fol_v2_1')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen gorras, poloches o uniformes?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'unif_usan','unif_usan')"> Sí (Usan)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'unif_no_usan','unif_no_usan')"> Sí (No los usan)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_unif','no_unif')"> No tienen</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen tarjetas de negocio?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'tar_v2_1','tar_v2_1')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_tar_v2_1','no_tar_v2_1')"> No</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Tienen banners o bajantes?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ban_v2_1','ban_v2_1')"> Sí</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_ban_v2_1','no_ban_v2_1')"> No</label>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-2" style="margin-top:10px">
+    <div class="field"><label>¿Tienen aire acondicionado?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ac_v2_1','ac_v2_1')"> Sí (Funcional)</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ac_v2_2','ac_v2_2')"> No tiene</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ac_v2_3','ac_v2_3')"> Dañado</label>
+      </div>
+    </div>
+    <div class="field"><label>¿Es amplio el local?</label>
+      <div class="chips" style="gap:6px">
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'am_v2_1','am_v2_1')"> Amplio / Cómodo</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'am_v2_2','am_v2_2')"> Pequeño / Reducido</label>
+        <label class="chip"><input type="checkbox" onclick="toggleChip(this,'am_v2_3','am_v2_3')"> Operativo desde casa</label>
+      </div>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Tienen almacén o almacenamiento de mercancía?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'almacen_v2','almacen_v2')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_almacen_v2','no_almacen_v2')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Tienen área de recepción/sala de espera?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'recep_v2','recep_v2')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_recep_v2','no_recep_v2')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Tienen branding físico unificado?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'branding_v2','branding_v2')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_branding_v2','no_branding_v2')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Tienen mercancías / souvenirs con la marca?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'merch_v2','merch_v2')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_merch_v2','no_merch_v2')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Pagando guaguas anunciadoras?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'guaguas_v2','guaguas_v2')"> Sí</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'no_guaguas_v2','no_guaguas_v2')"> No</label>
+    </div>
+  </div>
+  <div class="field" style="margin-top:10px"><label>¿Otros medios tradicionales?</label>
+    <div class="chips" style="gap:6px">
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'radio_v2','radio_v2')"> Radio local</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'flyers_v2','flyers_v2')"> Flyers en esquinas</label>
+      <label class="chip"><input type="checkbox" onclick="toggleChip(this,'ninguno_v2','ninguno_v2')"> Ninguno</label>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SEMÁFORO ===== -->
+<div class="block">
+  <div class="block-title">🚦 Semáforo de Urgencia Comercial (Lead Scoring)</div>
+  <p style="font-size:.88rem;color:var(--text-light);margin-bottom:10px">Suma los puntos según las fallas detectadas:</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.86rem">
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,20)"> ✓ No tiene Google Maps <span style="color:var(--accent)">+20</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,15)"> ✓ Ficha de Google NO reclamada <span style="color:var(--accent)">+15</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,12)"> ✓ WhatsApp NO visible en redes o Google <span style="color:var(--accent)">+12</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,10)"> ✓ Instagram/ABANDONADA <span style="color:var(--accent)">+10</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,15)"> ✓ No tienen website/webpage de venta <span style="color:var(--accent)">+15</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,10)"> ✓ No tienen pasarela de pagos <span style="color:var(--accent)">+10</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,8)"> ✓ No tienen chatbot <span style="color:var(--accent)">+8</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,8)"> ✓ Ni folletos ni merchandising <span style="color:var(--accent)">+8</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,5)"> ✓ Local pequeño/reducido o sin AC <span style="color:var(--accent)">+5</span></label></div>
+    <div><label class="chip" style="justify-content:space-between"><input type="checkbox" onclick="addPuntos(this,8)"> ✓ Sin logos / branding físico <span style="color:var(--accent)">+8</span></label></div>
+  </div>
+  <div class="score-card">
+    <div class="semáforo">
+      <div class="s-bar"><div class="s-fill" id="scoreFill"></div></div>
+      <div class="s-txt" id="scoreText">0 puntos</div>
+      <div class="s-sub">🔴 &ge;20 · 🟠 10–19 · 🟢 &lt;10</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  📄 Versión HTML interactiva · Imprime o guarda como PDF ·<br>
+  © Nuclear AIMA · SMAC · Sistema Modular de Auditoría Comercial
+</div>
+
+<script>
+let globalPuntos = 0;
+
+function addPuntos(checkbox, p) {
+  if (checkbox.checked) { globalPuntos += p; }
+  else { globalPuntos -= p; }
+  actualizarPuntuacion();
+}
+
+function actualizarPuntuacion() {
+  const fill = document.getElementById('scoreFill');
+  const text = document.getElementById('scoreText');
+  if (globalPuntos >= 20) { fill.style.background = '#e53e3e'; text.textContent = globalPuntos + ' puntos — 🔴 Alerta Roja'; }
+  else if (globalPuntos >= 10) { fill.style.background = '#ed8936'; text.textContent = globalPuntos + ' puntos — 🟠 Alerta Naranja'; }
+  else { fill.style.background = '#38a169'; text.textContent = globalPuntos + ' puntos — 🟢 Verde'; }
+  fill.style.width = globalPuntos + '%';
+}
+
+window.addEventListener('DOMContentLoaded', function(){ globalPuntos = 0; actualizarPuntuacion(); });
+</script>
+</body>
+</html>
