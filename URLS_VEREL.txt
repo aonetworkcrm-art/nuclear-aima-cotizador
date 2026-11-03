@@ -1,0 +1,42 @@
+SMAC - Sistema Modular de Auditoría Comercial (Hoja de Captura de Ruta)
+Nuclear AIMA - Villa Faro
+
+================================================================================
+URLES DE VERCEL - PROYECTO NUCLEAR AIMA ROUTE
+================================================================================
+
+Página principal de Vercel (desde donde se sirve la propuesta de Ramón Orlando):
+==============================================================================
+URL:  https://nuclear-aima-route.vercel.app
+Estado: EN PRODUCCIÓN
+Alias: nuclear-aima-route.vercel.app
+
+Hoja de captura de ruta (versión interactiva):
+==============================================================================
+URL:  https://nuclear-aima-route.vercel.app/hoja-captura-ruta.html
+Estado: EN PRODUCCIÓN
+
+Herramienta de extracción de datos (genera .txt / .csv):
+==============================================================================
+URL:  https://nuclear-aima-route.vercel.app/extraer-datos.html
+Estado: EN PRODUCCIÓN
+
+PRECAUCIONES:
+==============================================================================
+* El dominio "nuclear-aima-route.vercel.app" es el de producción actual.
+* Si Vercel genera otra URL de despliegue (por ejemplo, un ID aleatorio), usa
+  esa URL. El archivo "URLS_VEREL.txt" se actualiza manualmente cuando se
+  realiza un nuevo despliegue en producción.
+* Los enlaces son públicos a menos que se configure autenticación en Vercel.
+* No se almacena información personal en este archivo; solo se reflejan URLs.
+
+COMO USAR:
+==============================================================================
+1. Abre la URL de producción en un navegador.
+2. Para la hoja de captura: usa "/hoja-captura-ruta.html".
+3. Para el extraer datos: usa "/extraer-datos.html".
+4. Solo se necesita Internet (no se requieren claves para acceder a la web de
+   la propuesta).
+
+================================================================================
+----------------------------------------------------------------------------------------

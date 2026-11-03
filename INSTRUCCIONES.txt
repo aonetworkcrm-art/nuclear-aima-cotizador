@@ -1,0 +1,61 @@
+SMAC - Sistema Modular de Auditoría Comercial (Hoja de Captura de Ruta)
+Nuclear AIMA - Villa Faro
+=============================================================
+
+INSTRUCCIONES DE USO
+-------------------------------------------------------------
+Esta carpeta contiene la Hoja de Captura de Ruta completa, en tres
+formatos. Solo abre el archivo que necesites; no necesitas instalar
+nada.
+
+-------------------------------------------------------------
+1) hoja-captura-ruta.html   (lo que se usa en el campo)
+-------------------------------------------------------------
+Abre este archivo con cualquier navegador (Chrome, Edge, Firefox):
+  - Doble clic en el archivo, o arrástralo al navegador.
+  - Se abre la hoja de captura en pantalla completa, lista para
+    llenar en el celular o en la computadora.
+
+Qué puedes hacer en el navegador:
+  - Marca las casillas "chip" que aplican.
+  - Escribe datos en los campos de texto.
+  - Al final del formulario aparece el SEMÁFORO DE URGENCIA
+    calculado automáticamente (rojo/alerta, naranja/requiere
+    atención, verde/suficiente).
+  - Botón al final: IMPRIMIR / GUARDAR PDF.
+
+Tip: en el celular, abre la página y, si es necesario, puedes
+"compartir / guardar como" para tener una copia en la galería.
+-------------------------------------------------------------
+
+2) hoja-captura-ruta.xlsx   (versión Excel de piso / para
+                            control y reportes)
+-------------------------------------------------------------
+Abre con Microsoft Excel, LibreOffice Calc, o WPS Spreadsheets.
+
+Qué incluye:
+  - 1_MetaDatos
+  - 2_IdentidadVisual
+  - 3_WebEmbudos
+  - 4_RedesAds
+  - 5_WhatsAppAuto
+  - 6_OfertaFinanzas
+  - 7_MerchInfra
+  - ResumenScore (puntuación y semáforo automático)
+
+En "ResumenScore", la puntuación se calcula sola si escribís 1/0
+en las celdas de "Selecciona (1/0)".
+
+Tip: guarda el archivo con un nombre de expediente, por ejemplo
+    VillaFaro_Romny_2026-11-03.xlsx
+-------------------------------------------------------------
+
+3) hoja-captura-ruta.pdf    (versión impresa / imprimible)
+-------------------------------------------------------------
+Abre con cualquier visor de PDF (Chrome, Edge, Acrobat, Preview).
+Puedes imprimir directamente o guardar como PDF.
+
+Nota: el PDF es estático. Para editar, usa el archivo .html (celda
+de campo) o el .xlsx (Excel). El PDF es ideal para dejar en
+impresora o fotocopiadora.
+-------------------------------------------------------------

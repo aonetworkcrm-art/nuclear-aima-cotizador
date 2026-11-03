@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extraer Datos · SMAC Nuclear AIMA</title>
+<style>
+  :root{
+    --primary:#1a1a2e; --accent:#e94560; --bg:#f5f5f7; --card:#fff; --text:#333; --border:#ddd; --ok:#38a169; --warn:#e53e3e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Tahoma,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);padding:24px 16px;line-height:1.55}
+  h1{font-size:1.5rem;font-weight:800;text-align:center;color:var(--primary);margin-bottom:8px}
+  .subtitle{text-align:center;color:var(--text-light,#777);margin-bottom:20px;font-size:.92rem}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 2px 6px rgba(0,0,0,.05)}
+  .field{margin-bottom:16px}
+  .field label{font-weight:600;font-size:.9rem;color:#444}
+  .field input[type=file]{font-size:.92rem}
+  .hint{font-size:.82rem;color:#777;margin-top:6px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .actions button{margin-left:8px;background:var(--primary);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.92rem}
+  .actions button:hover{background:#333}
+  .actions button.ghost{background:#fff;border:1.5px solid var(--border);color:var(--text)}
+  .actions button.ghost:hover{background:#f5f5f5}
+  .preview{background:#1a1a2e;color:#e6e6e6;border:1px solid #2a2a2a;border-radius:8px;padding:12px;min-height:220px;max-height:520px;overflow:auto;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
+  .status{margin-top:12px;text-align:center;font-size:.9rem;color:#444}
+  .status.ok{color:var(--ok);font-weight:700}
+  .status.err{color:var(--warn);font-weight:700}
+  @media print{
+    .actions button{display:none}
+    .card{border:none}
+  }
+</style>
+</head>
+<body>
+
+<h1>📦 Extraer Datos · SMAC Nuclear AIMA</h1>
+<p class="subtitle">Hoja de Captura de Ruta · Villa Faro · Inteligencia competitiva (OSINT)</p>
+
+<div class="card">
+  <div class="field">
+    <label for="fileInput">Elegir archivo de la hoja de captura</label>
+    <input type="file" id="fileInput" accept=".html,.htm,.xlsx,.xls,.csv,.txt,.pdf">
+    <div class="hint">Puedes elegir el .html de la hoja de captura, el .xlsx o un .csv exportado.<br>
+      El botón lo procesa en tu navegador sin subir nada a Internet.</div>
+  </div>
+  <div class="actions">
+    <button id="extractBtn" onclick="extraer()">🔍 Extraer datos</button>
+    <button id="copyBtn" class="ghost" disabled onclick="copiar()">📋 Copiar texto</button>
+  </div>
+
+  <div id="previewWrap" style="display:none">
+    <div class="field">
+      <label>Vista previa del resultado</label>
+      <div class="preview" id="preview"></div>
+    </div>
+    <div class="actions">
+      <button onclick="descargarTxt()">⬇️ Descargar .txt</button>
+      <button onclick="descargarCsv()">⬇️ Descargar .csv</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+</div>
+
+<div class="status" id="statusLine"></div>
+
+<script>
+function esc(s){return s==null?'':String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')};
+
+function textoDeHtml(el){
+  if(!el) return '';
+  // inputs y textareas
+  const inputs = [];
+  const all = el.querySelectorAll('input, textarea, select');
+  all.forEach(el2 => {
+    const t = el2.type || (el2.tagName==='SELECT'?'select':'');
+    if(t === 'checkbox' || t === 'radio') return;
+    if(t === 'select'){
+      const opt = el2.options[el2.selectedIndex];
+      inputs.push(opt ? opt.textContent : '');
+      return;
+    }
+    inputs.push(el2.value || '');
+  });
+
+  // labels y campos de texto
+  const blocks = [];
+  el.querySelectorAll('label').forEach(lb => {
+    const txt = lb.textContent.trim();
+    if(txt) blocks.push(txt);
+  });
+
+  // rows: para los checks, tomamos el label y el input contenedor
+  return inputs.length ? inputs.join('\n') : (blocks.join('\n') || '—');
+}
+
+function caminarRuta(r){
+  let cur = document;
+  const parts = String(r).split('/').filter(Boolean);
+  for(const p of parts){
+    if(p==='..'){ cur = cur.parentElement; continue; }
+    const el = (cur&&cur.querySelector?cur.querySelector(p) : null);
+    if(el) cur = el;
+    else return null;
+  }
+  return cur;
+}
+
+function mascaraHtml(html){
+  return html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+async function extraer(){
+  const input = document.getElementById('fileInput');
+  const file = input.files && input.files[0];
+  if(!file){ alert('Selecciona un archivo primero.'); return; }
+
+  const ext = getExtension(file.name).toLowerCase();
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    const data = e.target.result;
+    const out = await procesarArchivo(file, data, ext);
+    const preview = document.getElementById('preview');
+    const wrap = document.getElementById('previewWrap');
+    const status = document.getElementById('statusLine');
+    preview.textContent = out.text;
+    wrap.style.display = 'block';
+    document.getElementById('copyBtn').disabled = false;
+    document.getElementById('extractBtn').disabled = true;
+
+    // guardar texto para descarga
+    window._TEXTO_RESULTADO = out.text;
+
+    if(out.hasTable){
+      status.className='status ok';
+      status.textContent = `${out.filas} filas detectadas · ${out.columnas} camadas · ${out.bucles} bucles`;
+    } else {
+      status.className='status ok';
+      status.textContent = `${out.linhas} líneas extraídas`;
+    }
+  };
+  // SOPORTE: leer como texto (para html, txt, csv). Para xlsx/pdf se requiere librería y se recomienda .html.
+  if(/\.(html?|csv|txt)$/i.test(file.name)){
+    reader.readAsText(file, 'UTF-8');
+  } else {
+    // xlsx/pdf: sin librería, se indica formato no soportado
+    statusLine.textContent='Formato no soportado sin librería (xlsx/pdf) · úsalo en Excel o elige .html/.csv/.txt';
+    statusLine.className='status err';
+    reader.onload=function(){};
+    reader.readAsBinaryString(file);
+  }
+}
+
+function getExtension(name){
+  return (name||'').split(/[\\/]/).pop().split('.').pop();
+}
+
+function procesarArchivo(file, data, ext){
+  return new Promise((resolve) => {
+    if(/\.(html?)$/i.test(file.name)){
+      // html: parsear con DOMParser
+      const doc = new DOMParser().parseFromString(data, 'text/html');
+      // obtener el body de la hoja de captura
+      const hoja = doc.querySelector('#hoja-captura-ruta, body');
+      let texto = hoja ? hoja.innerHTML : data;
+      // quitar scripts y estilos
+      const cleaner = () => {
+        doc.querySelectorAll('script, style, noscript, svg').forEach(el => el.remove());
+        return doc;
+      };
+      texto = texto.replace(/<script[\s\S]*?<\/script>/gi, '');
+      // remover comentarios
+      texto = texto.replace(/<!--[\s\S]*?-->/g, '');
+
+      // extraer filas/estructura a texto
+      const rows = [];
+      const process = (node) => {
+        if(!node) return;
+        if(node.nodeType === Node.TEXT_NODE){
+          const t = node.textContent.trim();
+          if(t) rows.push(t);
+        } else if(node.nodeType === Node.ELEMENT_NODE){
+          // etiquetas que actuan como campos
+          const tag = node.tagName;
+          if(tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'){
+            const val = node.value || (node.tagName === 'SELECT' ? (node.selectedOptions[0]?node.selectedOptions[0].textContent:''):'');
+            if(val) rows.push('• '+val);
+            return;
+          }
+          // secciones
+          if(/^H[1-6]$/.test(tag)){
+            rows.push('\n'+node.textContent.trim()+'\n');
+          }
+        }
+        node.childNodes.forEach(process);
+      };
+      process(doc.body);
+      // si solo hay texto, tomar texto plano
+      let text = rows.join('\n');
+      text = text.replace(/\n{3,}/g, '\n\n').trim();
+      if(text.length > 30000) text = text.slice(0,30000);
+
+      resolve({ text, archivo: file.name, modo: 'html' });
+      return;
+    }
+
+    if(/\.(xlsx|xls)$/i.test(file.name)){
+      // xlsx sin librería: no se puede leer de forma fiable en navegador sin SheetJS.
+      // Mostramos un aviso y ofrecemos usar Excel para exportar a CSV.
+      resolve({ text: 'No se pudo leer un archivo .xlsx sin una librería. \n'+
+        'Recomendación:\n'+
+        '  1. Abrir el .xlsx en Excel / LibreOffice.\n'+
+        '  2. Archivo → Exportar / Guardar como → CSV.\n'+
+        '  3. Elegir un archivo .csv y luego usar "Extraer datos" aquí con .csv.', archivo: file.name, modo:'xlsx-pending' });
+      return;
+    }
+
+    if(/\.pdf$/i.test(file.name)){
+      // pdf sin librería: mensaje indicando que requiere extracción
+      resolve({ text: 'No se puede extraer un .pdf sin una herramienta de texto cruzado de PDF en el navegador.\n'+
+        'Recomendación:\n'+
+        '  - Usar Python: pdfminer / PyPDF2 / pdfplumber.\n'+
+        '  - Usar Excel: no abre PDF directamente; mejor convertir a TXT o CSV.', archivo: file.name, modo:'pdf-pending' });
+      return;
+    }
+
+    if(/\.(csv)$/i.test(file.name)){
+      const text = data;
+      resolve({ text, archivo: file.name, modo:'csv' });
+      return;
+    }
+
+    if(/\.(txt)$/i.test(file.name)){
+      resolve({ text: data, archivo: file.name, modo:'txt' });
+      return;
+    }
+
+    resolve({ text: 'Formato no soportado.', archivo: file.name, modo:'unknown' });
+  });
+}
+
+function descargarTxt(){
+  const text = window._TEXTO_RESULTADO || document.getElementById('preview').textContent;
+  const name = 'SMAC_Data_Extractado.txt';
+  descargar(text, name, 'text/plain;charset=utf-8');
+}
+
+function descargarCsv(){
+  const text = window._TEXTO_RESULTADO || document.getElementById('preview').textContent;
+  const lines = text.split('\n').map(l => {
+    // si la línea tiene comas o comillas, entrecomillar y escapar
+    const q = l.replace(/"/g,'""');
+    return '"'+q+'"';
+  }).join('\n');
+  const name = 'SMAC_Data_Extractado.csv';
+  descargar(lines, name, 'text/csv;charset=utf-8');
+}
+
+function descargar(content, name, mime){
+  const blob = new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function copiar(){
+  const e = document.getElementById('preview');
+  if(!e) return;
+  navigator.clipboard.writeText(e.textContent).then(()=>{
+    const st = document.getElementById('statusLine');
+    st.textContent = '✅ Copiado al portapapeles';
+    st.className='status ok';
+  }).catch(()=>{
+    const st = document.getElementById('statusLine');
+    st.textContent = 'No se pudo copiar (seguridad del navegador)';
+    st.className='status err';
+  });
+}
+</script>
+</body>
+</html>
