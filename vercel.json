@@ -1,24 +1,8 @@
 {
   "version": 2,
   "name": "nuclear-aima-route",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/hoja-captura-ruta.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
-      ]
-    }
+  "builds": [],
+  "routes": [
+    { "src": "/(.*)", "dest": "/hoja-captura-ruta.html" }
   ]
 }
