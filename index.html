@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuclear AIMA · Propuesta Ramón Orlando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0c;
+  --bg2: #111114;
+  --bg3: #18181d;
+  --surface: #1e1e24;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0ede8;
+  --text2: #c8c4bc;
+  --muted: #7a7875;
+  --gold: #C9A84C;
+  --gold2: #e8c98a;
+  --gold3: #8b6c3a;
+  --gold-dim: rgba(201,169,76,0.12);
+  --gold-border: rgba(201,169,76,0.25);
+  --danger: #e05c5c;
+  --success: #4cad7c;
+  --cyan: #4ad0e0;
+  --purple: #9e7de8;
+  --blue: #7db8e8;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --display: 'Playfair Display', serif;
+  --r: 12px;
+  --r2: 20px;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  min-height: 100vh;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(201,169,110,0.02) 0%, transparent 50%);
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ── HEADER / HERO ── */
+.hero {
+  text-align: center;
+  padding: 80px 20px 50px;
+  border-bottom: 0.5px solid var(--border);
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.logo-mark {
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--gold), var(--gold3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #0a0a0c;
+  box-shadow: 0 0 40px rgba(201,169,76,0.15);
+}
+.badge-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-dim);
+  border: 0.5px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 10px;
+}
+.hero .subtitle {
+  font-family: var(--display);
+  font-size: 16px;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero p {
+  font-size: 14px;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.hero .version {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* ── STATS ROW ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 40px auto;
+  max-width: 800px;
+}
+.stat-card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 40px 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid var(--border);
+}
+.section-title .line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--border);
+}
+
+/* ── CARDS GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.card {
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  border-color: var(--gold-border);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.card:hover .card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+.card-icon { font-size: 28px; margin-bottom: 10px; }
+.card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+}
+.card .meta {
+  font-size: 10px;
+  color: var(--gold);
+  font-family: var(--mono);
+  margin-top: 12px;
+  letter-spacing: 0.02em;
+}
+.card .tag {
+  display: inline-block;
+  font-size: 9px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--gold-dim);
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+.card-arrow {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-size: 18px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.2s;
+  color: var(--gold);
+}
+.card-highlight {
+  background: linear-gradient(135deg, rgba(201,169,76,0.06), rgba(201,169,76,0.02));
+  border-color: var(--gold-border);
+}
+
+/* ── HERO CARD (main CTA) ── */
+.hero-card {
+  text-align: center;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, rgba(201,169,76,0.08), rgba(201,169,76,0.02));
+  border: 0.5px solid var(--gold-border);
+  border-radius: var(--r2);
+  margin: 30px 0;
+}
+.hero-card .big-icon { font-size: 48px; margin-bottom: 12px; }
+.hero-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+.hero-card p { font-size: 13px; color: var(--muted); max-width: 500px; margin: 0 auto 20px; line-height: 1.6; }
+.btn-group { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary {
+  background: var(--gold);
+  color: #0a0a0c;
+}
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-1px);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 0.5px solid var(--border2);
+}
+.btn-ghost:hover {
+  background: var(--bg3);
+  border-color: var(--gold-border);
+  color: var(--gold);
+}
+.btn-download {
+  background: rgba(76,173,124,0.12);
+  color: var(--success);
+  border: 0.5px solid rgba(76,173,124,0.3);
+}
+.btn-download:hover {
+  background: rgba(76,173,124,0.2);
+}
+
+/* ── LINKS LIST ── */
+.links-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+}
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text2);
+  font-size: 12px;
+  transition: all 0.15s;
+}
+.link-item:hover {
+  background: var(--bg3);
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+.link-item .li-icon { font-size: 16px; width: 24px; text-align: center; }
+.link-item .li-label { flex: 1; }
+.link-item .li-meta {
+  font-size: 9px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 0.5px solid var(--border);
+  margin-top: 40px;
+}
+.footer p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.footer .gold { color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+  .hero { padding: 40px 16px 30px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: 1fr; }
+  .links-list { grid-template-columns: 1fr; }
+  .btn-group { flex-direction: column; align-items: center; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate { animation: fadeUp 0.6s ease-out both; }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero animate">
+    <div class="logo-mark">NA</div>
+    <div class="badge-hero">🔒 Documento Confidencial · Acceso Privado</div>
+    <h1>Operación <span class="gold">"50 Años de Infinito<br>para Ramón Orlando"</span></h1>
+    <div class="subtitle">Estructura Perpetua y Crecimiento Infinito</div>
+    <p>Arquitectura de Ecosistema, Marketing de Guerrilla y Capitalización de Activos para el Maestro Ramón Orlando</p>
+    <div class="version">Nuclear AIMA · v2.0 · Junio 2026</div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="stats animate delay-1">
+    <div class="stat-card"><div class="stat-num">190</div><div class="stat-label">Canciones Auditadas</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger);">15K+</div><div class="stat-label">Nodos sin Content ID</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:var(--danger);">$66.8K</div><div class="stat-label">Fuga / mes</div></div>
+    <div class="stat-card"><div class="stat-num">$500K</div><div class="stat-label">Adelanto Est.</div></div>
+  </div>
+
+  <!-- ═══ MAIN CTA ═══ -->
+  <div class="hero-card animate delay-2">
+    <div class="big-icon">🎬</div>
+    <h2>Presentación <span class="gold">Interactiva</span></h2>
+    <p>Deck de 18 slides con la propuesta completa. Navegue con ESPACIO o las flechas del teclado.</p>
+    <div class="btn-group">
+      <a href="presentacion-deck.html" class="btn btn-primary">▶ Abrir presentación</a>
+      <a href="pdf/propuesta-completa.pdf" class="btn btn-download" download>📄 Descargar PDF (1.7 MB)</a>
+      <a href="pdf/resumen-ejecutivo.pdf" class="btn btn-download" download>📄 Resumen (1.1 MB)</a>
+    </div>
+  </div>
+
+  <!-- ═══ PAQUETE DE ENTREGA ═══ -->
+  <div class="section-title animate delay-2">
+    📦 Paquete de Entrega
+    <span class="line"></span>
+  </div>
+  <div class="grid animate delay-3">
+    <a href="pdf/propuesta-completa.pdf" class="card card-highlight" download>
+      <div class="card-icon">📋</div>
+      <h3>Propuesta Completa <span class="tag">PDF 1.7 MB</span></h3>
+      <p>Documento maestro con plan detallado, estructura financiera, ROI y cronograma. 18 secciones.</p>
+      <div class="meta">Descargar →</div>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="pdf/resumen-ejecutivo.pdf" class="card card-highlight" download>
+      <div class="card-icon">📄</div>
+      <h3>Resumen Ejecutivo <span class="tag">PDF 1.1 MB</span></h3>
+      <p>Visión general condensada con puntos clave de la propuesta. Ideal para lectura rápida.</p>
+      <div class="meta">Descargar →</div>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="presentacion-deck.html" class="card card-highlight">
+      <div class="card-icon">🎬</div>
+      <h3>Deck Interactivo <span class="tag">18 Slides</span></h3>
+      <p>Presentación visual navegable con animaciones. Compatible con teclado y touch.</p>
+      <div class="meta">Abrir en navegador →</div>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="entrega-final/" class="card">
+      <div class="card-icon">📁</div>
+      <h3>Carpeta de Entrega</h3>
+      <p>Archivos fuente organizados: .md, HTML, PDFs, scripts y más. Para descarga masiva.</p>
+      <div class="meta">Ver contenido →</div>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="PROPUESTA_COMERCIAL_MAESTRA_RAMON_ORLANDO.md" class="card">
+      <div class="card-icon">📝</div>
+      <h3>Documento Fuente (.md)</h3>
+      <p>Propuesta completa en Markdown. Editable y versionable. Ideal para modificaciones.</p>
+      <div class="meta">Ver archivo →</div>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ═══ MÓDULOS DE INFRAESTRUCTURA ═══ -->
+  <div class="section-title animate delay-3">
+    ⚡ Módulos del Ecosistema
+    <span class="line"></span>
+  </div>
+  <div class="links-list animate delay-4">
+    <a href="modulos/cotizador.html" class="link-item"><span class="li-icon">📊</span><span class="li-label">Cotizador de Tráfico</span><span class="li-meta">Web App</span></a>
+    <a href="modulos/live-search.html" class="link-item"><span class="li-icon">🔍</span><span class="li-label">Live Search · Nodos Virales</span><span class="li-meta">Herramienta</span></a>
+    <a href="modulos/short-tracker.html" class="link-item"><span class="li-icon">🎬</span><span class="li-label">Short Tracker · Réplicas</span><span class="li-meta">Herramienta</span></a>
+    <a href="modulos/oraculo.html" class="link-item"><span class="li-icon">🔮</span><span class="li-label">Oráculo de Yield en Vivo</span><span class="li-meta">Dashboard</span></a>
+    <a href="modulos/master-plan.html" class="link-item"><span class="li-icon">⭐</span><span class="li-label">Master Plan · 8 Fases</span><span class="li-meta">Plan</span></a>
+    <a href="modulos/streaming.html" class="link-item"><span class="li-icon">📡</span><span class="li-label">Streaming 24/7</span><span class="li-meta">Landing</span></a>
+    <a href="modulos/osint-center.html" class="link-item"><span class="li-icon">🕵️</span><span class="li-label">OSINT Command Center</span><span class="li-meta">Toolkit</span></a>
+    <a href="modulos/adelantos.html" class="link-item"><span class="li-icon">💰</span><span class="li-label">Adelantos y Financiamiento</span><span class="li-meta">Guía</span></a>
+    <a href="modulos/adspro-estrategia.html" class="link-item"><span class="li-icon">📢</span><span class="li-label">AdsPro · Estrategia</span><span class="li-meta">Plan</span></a>
+    <a href="modulos/campanas-pagas.html" class="link-item"><span class="li-icon">📈</span><span class="li-label">Campañas Pagas</span><span class="li-meta">Dashboard</span></a>
+    <a href="modulos/dashboard-campanas.html" class="link-item"><span class="li-icon">📊</span><span class="li-label">Dashboard Unificado</span><span class="li-meta">Métricas</span></a>
+    <a href="modulos/plan-semanal-grupos.html" class="link-item"><span class="li-icon">👥</span><span class="li-label">Plan Grupos Facebook</span><span class="li-meta">Calendario</span></a>
+  </div>
+
+  <!-- ═══ LEGAL & DOCS ═══ -->
+  <div class="section-title animate delay-4">
+    🏛️ Legal y Documentación
+    <span class="line"></span>
+  </div>
+  <div class="links-list animate delay-4">
+    <a href="modulos/onapi-onda.html" class="link-item"><span class="li-icon">🏛️</span><span class="li-label">ONAPI · ONDA · Fundación Legal</span><span class="li-meta">Guía</span></a>
+    <a href="modulos/pasos-estrella.html" class="link-item"><span class="li-icon">⭐</span><span class="li-label">Pasos Estrella · Sello</span><span class="li-meta">Guía</span></a>
+    <a href="ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt" class="link-item"><span class="li-icon">📜</span><span class="li-label">Contrato de Asesoramiento</span><span class="li-meta">Legal</span></a>
+    <a href="data/catalogo-completo-ramon-orlando.csv" class="link-item"><span class="li-icon">💿</span><span class="li-label">Catálogo Completo (CSV)</span><span class="li-meta">Datos</span></a>
+  </div>
+
+  <!-- ═══ PANEL INTERNO ═══ -->
+  <div class="section-title animate delay-4">
+    🔒 Panel Interno
+    <span class="line"></span>
+  </div>
+  <div style="text-align:center;margin-bottom:30px;" class="animate delay-4">
+    <a href="app/index.html" class="btn btn-ghost">☢️ Acceder al Panel de Administración</a>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Requiere llave de acceso privada · Solo personal autorizado</p>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="footer">
+    <p>
+      <strong>Nuclear AIMA</strong> · Scaling Flow IA · Nuclear Music Networks<br>
+      <span class="gold">Romny Regalado</span> · CEO &amp; Arquitecto de Sistemas<br>
+      Documento CONFIDENCIAL — Prohibida su divulgación externa<br>
+      <span style="font-size:10px;">© 2026 Nuclear AIMA · Todos los derechos reservados · v2.0</span>
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

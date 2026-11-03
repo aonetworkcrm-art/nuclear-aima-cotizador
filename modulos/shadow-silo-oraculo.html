@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌑 Shadow Silo · Oráculo de Contenido · Ramón Orlando · Nuclear AIMA</title>
+<meta name="description" content="Shadow Silo Oracle: sistema de caza de tendencias, generación automatizada de contenido SEO y posicionamiento rápido para Ramón Orlando. Basado en análisis de catálogo de 178 canciones y datos de audiencia en tiempo real.">
+<meta name="keywords" content="shadow silo, oráculo contenido, SEO automático, tendencias merengue, ramón orlando, generación contenido, blogger, posicionamiento google, nuclear aima">
+<meta name="author" content="Nuclear AIMA">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="🌑 Shadow Silo · Oráculo de Contenido · Ramón Orlando">
+<meta property="og:description" content="Sistema de inteligencia de contenido que caza tendencias, genera artículos SEO con silos satélites y posiciona en Google. Aplicado al catálogo de Ramón Orlando y su concierto del 50 Aniversario.">
+<meta property="og:site_name" content="Nuclear AIMA">
+<meta property="og:locale" content="es_DO">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%2333ff57' stroke-width='2'/%3E%3Ctext x='600' y='210' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='44' font-weight='300' fill='%236b6966'%3EShadow%3C/text%3E%3Ctext x='600' y='270' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='60' font-weight='700' fill='%2333ff57'%3ESILO%3C/text%3E%3Ctext x='600' y='340' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='26' fill='%23f0ede8'%3EOr%C3%A1culo de Contenido y Tendencias%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='20' fill='%236b6966'%3ENoticias → CPC → Contenido → Silo → Posicionamiento%3C/text%3E%3Ctext x='600' y='480' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3EIntegrado con Ram%C3%B3n Orlando · 50 Aniversario · Cat%C3%A1logo 178 canciones%3C/text%3E%3Ctext x='600' y='530' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:url" content="https://nuclearaima.com/shadow-silo-oraculo.html">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🌑 Shadow Silo · Oráculo de Contenido · Ramón Orlando">
+<meta name="twitter:description" content="Sistema de caza de tendencias y generación automatizada de contenido SEO para posicionar el legado de Ramón Orlando.">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%2333ff57' stroke-width='2'/%3E%3Ctext x='600' y='210' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='44' font-weight='300' fill='%236b6966'%3EShadow%3C/text%3E%3Ctext x='600' y='270' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='60' font-weight='700' fill='%2333ff57'%3ESILO%3C/text%3E%3Ctext x='600' y='340' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='26' fill='%23f0ede8'%3EOr%C3%A1culo de Contenido y Tendencias%3C/text%3E%3Ctext x='600' y='400' text-anchor='middle' font-family='monospace' font-size='20' fill='%236b6966'%3ENoticias → CPC → Contenido → Silo → Posicionamiento%3C/text%3E%3Ctext x='600' y='480' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3EIntegrado con Ram%C3%B3n Orlando · 50 Aniversario · Cat%C3%A1logo 178 canciones%3C/text%3E%3Ctext x='600' y='530' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0c; --bg2:#0d0d10; --bg3:#111114; --bg4:#18181c;
+    --border:rgba(255,255,255,0.05); --border2:rgba(255,255,255,0.12);
+    --text:#f0ede8; --muted:#6b6966;
+    --accent:#c9a96e; --accent2:#e8c98a;
+    --danger:#e05c5c; --success:#4cad7c;
+    --cyan:#4ad0e0; --gold:#f59e0b; --purple:#a78bfa; --pink:#f472b6;
+    --neon:#33ff57; --neon2:#00ffcc;
+    --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Fira Code',monospace;
+    --r:10px; --r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 0%,rgba(51,255,87,0.03) 0%,transparent 50%),
+      radial-gradient(ellipse at 80% 100%,rgba(0,255,204,0.02) 0%,transparent 50%),
+      radial-gradient(ellipse at 50% 50%,rgba(10,10,12,0.8) 0%,transparent 100%);
+  }
+  .mc{max-width:1200px;margin:0 auto;padding:20px}
+
+  /* ── Header ── */
+  .ss-header{text-align:center;padding:32px 0 18px;border-bottom:0.5px solid var(--border);margin-bottom:16px;position:relative}
+  .ss-header::after{content:'';position:absolute;bottom:-1px;left:25%;right:25%;height:1px;background:linear-gradient(90deg,transparent,var(--neon),transparent);opacity:0.3}
+  .ss-badges{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+  .ss-badge{display:inline-flex;align-items:center;gap:4px;font-size:7px;font-weight:600;letter-spacing:0.07em;padding:3px 10px;border-radius:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);text-transform:uppercase}
+  .ss-badge.neon{background:linear-gradient(135deg,rgba(51,255,87,0.12),rgba(51,255,87,0.04));border-color:rgba(51,255,87,0.3);color:var(--neon)}
+  .ss-badge.neon2{background:linear-gradient(135deg,rgba(0,255,204,0.12),rgba(0,255,204,0.04));border-color:rgba(0,255,204,0.3);color:var(--neon2)}
+  .ss-badge.gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border-color:rgba(245,158,11,0.3);color:var(--gold)}
+  .ss-badge.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04));border-color:rgba(74,208,224,0.25);color:var(--cyan)}
+  .ss-badge.purple{background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border-color:rgba(167,139,250,0.25);color:var(--purple)}
+  .ss-title{font-size:28px;font-weight:700;letter-spacing:-0.5px;margin-bottom:3px}
+  .ss-title .hl{color:var(--neon)}
+  .ss-title .hl2{color:var(--muted);font-weight:300}
+  .ss-sub{font-size:10px;color:var(--muted);max-width:700px;margin:0 auto;line-height:1.6}
+  .ss-version{font-size:8px;color:var(--muted);font-family:var(--mono);margin-top:6px}
+
+  /* ── Stats Row ── */
+  .ss-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:14px 0}
+  @media(max-width:900px){.ss-stats{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:500px){.ss-stats{grid-template-columns:1fr 1fr}}
+  .ss-stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px 10px;text-align:center;transition:all 0.2s;position:relative;overflow:hidden}
+  .ss-stat:hover{border-color:rgba(51,255,87,0.25);transform:translateY(-1px)}
+  .ss-stat .glow{position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(51,255,87,0.03) 0%,transparent 60%);pointer-events:none}
+  .ss-stat .ss-sn{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+  .ss-stat .ss-sv{font-size:16px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .ss-stat .ss-sv.neon{color:var(--neon)}.ss-stat .ss-sv.gold{color:var(--gold)}
+  .ss-stat .ss-sv.success{color:var(--success)}.ss-stat .ss-sv.cyan{color:var(--cyan)}
+  .ss-stat .ss-sv.accent{color:var(--accent)}.ss-stat .ss-sv.danger{color:var(--danger)}
+  .ss-stat .ss-sv.neon2{color:var(--neon2)}.ss-stat .ss-sv.purple{color:var(--purple)}
+  .ss-stat .ss-ss{font-size:7px;color:var(--muted);margin-top:1px}
+
+  /* ── Section Title ── */
+  .ss-st{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:24px 0 10px;padding-bottom:5px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+  .ss-st .hl{color:var(--neon)}
+  .ss-st .hl2{color:var(--accent)}
+
+  /* ── Actions ── */
+  .ss-actions{display:flex;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+  .ss-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r2);border:none;cursor:pointer;font-size:11px;font-weight:600;font-family:var(--font);transition:all 0.2s;text-decoration:none}
+  .ss-btn-primary{background:linear-gradient(135deg,rgba(51,255,87,0.15),rgba(51,255,87,0.05));color:var(--neon);border:0.5px solid rgba(51,255,87,0.35)}
+  .ss-btn-primary:hover{background:rgba(51,255,87,0.2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(51,255,87,0.1)}
+  .ss-btn-back{background:var(--bg2);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .ss-btn-back:hover{background:var(--bg3);transform:translateY(-1px)}
+  .ss-btn-gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));color:var(--gold);border:0.5px solid rgba(245,158,11,0.35)}
+  .ss-btn-gold:hover{background:rgba(245,158,11,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.12)}
+
+  /* ── Oracle Flow ── */
+  .ss-flow{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:12px 0;align-items:start}
+  @media(max-width:900px){.ss-flow{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:500px){.ss-flow{grid-template-columns:1fr 1fr}}
+  .ss-fstep{text-align:center;padding:10px 6px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);transition:all 0.2s}
+  .ss-fstep:hover{border-color:rgba(51,255,87,0.3);transform:translateY(-2px)}
+  .ss-fstep .fs-icon{font-size:20px;margin-bottom:4px}
+  .ss-fstep .fs-num{font-size:6px;color:var(--muted);font-family:var(--mono);margin-bottom:2px}
+  .ss-fstep .fs-title{font-size:9px;font-weight:600;margin-bottom:2px}
+  .ss-fstep .fs-desc{font-size:7px;color:var(--muted);line-height:1.5}
+  .ss-fstep .fs-metric{font-size:10px;font-weight:700;font-family:var(--mono);margin-top:3px}
+  .ss-fstep .fs-metric.gold{color:var(--gold)}.ss-fstep .fs-metric.neon{color:var(--neon)}
+  .ss-fstep .fs-metric.cyan{color:var(--cyan)}.ss-fstep .fs-metric.success{color:var(--success)}
+
+  /* ── Tab System ── */
+  .ss-tabs{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:4px}
+  .ss-tab{padding:7px 14px;border-radius:var(--r);border:none;cursor:pointer;font-size:9px;font-weight:500;font-family:var(--font);background:transparent;color:var(--muted);transition:all 0.15s;display:flex;align-items:center;gap:4px}
+  .ss-tab:hover{color:var(--text);background:var(--bg3)}
+  .ss-tab.act{background:var(--neon);color:#0d0d0f}
+  .ss-tcontent{display:none}
+  .ss-tcontent.act{display:block}
+
+  /* ── Keyword Cards ── */
+  .ss-kw{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin:8px 0}
+  .ss-kwcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px 12px;transition:all 0.15s;border-left:3px solid var(--border2)}
+  .ss-kwcard:hover{border-color:rgba(51,255,87,0.2);transform:translateY(-1px)}
+  .ss-kwcard.k1{border-left-color:var(--neon)}
+  .ss-kwcard.k2{border-left-color:var(--gold)}
+  .ss-kwcard.k3{border-left-color:var(--cyan)}
+  .ss-kwcard.k4{border-left-color:var(--purple)}
+  .ss-kwcard.k5{border-left-color:var(--success)}
+  .ss-kwcard .kw-term{font-size:10px;font-weight:600;margin-bottom:3px}
+  .ss-kwcard .kw-term .kw-icon{font-size:12px;margin-right:4px}
+  .ss-kwcard .kw-stats{display:flex;gap:10px;flex-wrap:wrap;font-size:7px;color:var(--muted);font-family:var(--mono);margin-bottom:4px}
+  .ss-kwcard .kw-stats strong{color:var(--text);font-size:8px}
+  .ss-kwcard .kw-desc{font-size:8px;color:var(--muted);line-height:1.5}
+
+  /* ── Traffic Projection Cards ── */
+  .ss-traffic{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;margin:8px 0}
+  .ss-tcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;transition:all 0.15s;position:relative;overflow:hidden}
+  .ss-tcard:hover{border-color:rgba(51,255,87,0.25);transform:translateY(-1px)}
+  .ss-tcard .tc-glow{position:absolute;top:-30%;right:-30%;width:100px;height:100px;background:radial-gradient(circle,rgba(51,255,87,0.04) 0%,transparent 70%);pointer-events:none}
+  .ss-tcard .tc-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .ss-tcard .tc-icon{font-size:18px}
+  .ss-tcard .tc-name{font-size:11px;font-weight:600}
+  .ss-tcard .tc-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:5px}
+  .ss-tcard .tc-meta span{font-size:7px;color:var(--muted)}
+  .ss-tcard .tc-meta strong{font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text)}
+  .ss-tcard .tc-bar{background:var(--bg3);border-radius:6px;height:5px;overflow:hidden;margin-top:4px}
+  .ss-tcard .tc-fill{height:100%;border-radius:6px;transition:width 0.5s}
+  .ss-tcard .tc-desc{font-size:8px;color:var(--muted);margin-top:5px;line-height:1.5}
+
+  /* ── Content Silos ── */
+  .ss-silos{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin:8px 0}
+  .ss-silo{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px;border-top:3px solid var(--border2);transition:all 0.15s}
+  .ss-silo:hover{border-color:rgba(51,255,87,0.2);transform:translateY(-1px)}
+  .ss-silo.s1{border-top-color:var(--neon)}
+  .ss-silo.s2{border-top-color:var(--gold)}
+  .ss-silo.s3{border-top-color:var(--cyan)}
+  .ss-silo.s4{border-top-color:var(--purple)}
+  .ss-silo.s5{border-top-color:var(--success)}
+  .ss-silo.s6{border-top-color:var(--pink)}
+  .ss-silo .sl-head{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+  .ss-silo .sl-icon{font-size:16px}
+  .ss-silo .sl-name{font-size:10px;font-weight:600}
+  .ss-silo .sl-count{font-size:6px;padding:1px 5px;border-radius:3px;background:var(--bg4);color:var(--muted);margin-left:auto}
+  .ss-silo .sl-keywords{font-size:7px;color:var(--cyan);font-family:var(--mono);margin-bottom:3px}
+  .ss-silo .sl-topics{font-size:7px;color:var(--muted);line-height:1.5}
+
+  /* ── Tech Stack ── */
+  .ss-tech{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin:8px 0}
+  .ss-tech-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px;text-align:center;transition:all 0.15s}
+  .ss-tech-card:hover{border-color:rgba(51,255,87,0.2)}
+  .ss-tech-card .t-icon{font-size:22px;margin-bottom:4px}
+  .ss-tech-card .t-name{font-size:9px;font-weight:600}
+  .ss-tech-card .t-desc{font-size:7px;color:var(--muted);margin-top:2px}
+
+  /* ── Concert Integration ── */
+  .ss-concert{background:linear-gradient(135deg,rgba(51,255,87,0.04),rgba(0,255,204,0.02));border:0.5px solid rgba(51,255,87,0.2);border-radius:var(--r2);padding:16px;margin:8px 0}
+  .ss-concert .cc-head{font-size:12px;font-weight:700;color:var(--neon);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .ss-concert .cc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  @media(max-width:600px){.ss-concert .cc-grid{grid-template-columns:1fr}}
+  .ss-concert .cc-item{background:rgba(51,255,87,0.03);border:0.5px solid rgba(51,255,87,0.1);border-radius:var(--r);padding:10px}
+  .ss-concert .cc-item .ci-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .ss-concert .cc-item .ci-text{font-size:9px;color:var(--muted);line-height:1.5;margin-top:2px}
+  .ss-concert .cc-item .ci-text strong{color:var(--text)}
+
+  /* ── Timeline ── */
+  .ss-timeline{padding:10px 0 10px 24px;position:relative;margin:8px 0}
+  .ss-timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1.5px;background:linear-gradient(180deg,var(--neon),var(--cyan),var(--gold),var(--success),var(--purple))}
+  .ss-tl-item{position:relative;margin-bottom:14px}
+  .ss-tl-item:last-child{margin-bottom:0}
+  .ss-tl-item .dot{position:absolute;left:-21px;top:3px;width:9px;height:9px;border-radius:50%;border:2px solid var(--bg)}
+  .ss-tl-item .dot.d1{background:var(--neon)}
+  .ss-tl-item .dot.d2{background:var(--cyan)}
+  .ss-tl-item .dot.d3{background:var(--gold)}
+  .ss-tl-item .dot.d4{background:var(--success)}
+  .ss-tl-item .dot.d5{background:var(--purple)}
+  .ss-tl-item .tl-phase{font-size:8px;color:var(--muted);font-family:var(--mono)}
+  .ss-tl-item .tl-title{font-size:11px;font-weight:600;margin:1px 0}
+  .ss-tl-item .tl-desc{font-size:8px;color:var(--muted);line-height:1.5}
+
+  /* ── Projection Table ── */
+  .ss-table{width:100%;border-collapse:collapse;font-size:8px;margin:8px 0}
+  .ss-table th{text-align:left;padding:6px 8px;font-weight:600;font-size:7px;text-transform:uppercase;letter-spacing:0.06em;border-bottom:0.5px solid var(--border);background:var(--bg3);color:var(--muted)}
+  .ss-table td{padding:5px 8px;border-bottom:0.5px solid rgba(255,255,255,0.03);vertical-align:middle;font-family:var(--mono)}
+  .ss-table tr:hover td{background:rgba(51,255,87,0.03)}
+  .ss-table .val-neon{color:var(--neon);font-weight:600}
+  .ss-table .val-gold{color:var(--gold);font-weight:600}
+  .ss-table .val-cyan{color:var(--cyan)}.ss-table .val-success{color:var(--success)}
+  .ss-table .val-accent{color:var(--accent)}
+
+  /* ── Tip Box ── */
+  .ss-tip{background:linear-gradient(135deg,rgba(51,255,87,0.05),rgba(51,255,87,0.02));border-left:2px solid var(--neon);padding:10px 14px;border-radius:0 var(--r) var(--r) 0;margin:8px 0;font-size:9px;color:var(--muted);line-height:1.6}
+  .ss-tip strong{color:var(--text)}
+  .ss-tip.gold{background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(245,158,11,0.02));border-left-color:var(--gold)}
+  .ss-tip.purple{background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02));border-left-color:var(--purple)}
+  .ss-tip.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.06),rgba(74,208,224,0.02));border-left-color:var(--cyan)}
+  .ss-tip.danger{background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(224,92,92,0.02));border-left-color:var(--danger)}
+
+  /* ── Footer ── */
+  .ss-footer{text-align:center;padding:18px 0;border-top:0.5px solid var(--border);margin-top:20px}
+  .ss-footer p{font-size:8px;color:var(--muted);font-family:var(--mono)}
+  .ss-footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:5px}
+  .ss-footer-links a{color:var(--accent);text-decoration:none;font-size:9px}
+  .ss-footer-links a:hover{text-decoration:underline}
+
+  /* ── Quick Links ── */
+  .ss-quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin:8px 0 14px}
+  .ss-quick a{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);text-decoration:none;color:var(--muted);font-size:10px;transition:all 0.15s}
+  .ss-quick a:hover{border-color:var(--accent);background:var(--bg3);color:var(--text)}
+  .ss-quick a .qicon{font-size:14px}
+
+  /* ── Responsive ── */
+  @media(max-width:700px){
+    .mc{padding:10px}.ss-title{font-size:20px}
+    .ss-stats{grid-template-columns:1fr 1fr}
+    .ss-flow{grid-template-columns:1fr 1fr 1fr}
+    .ss-tcard .tc-meta{grid-template-columns:1fr}
+    .ss-concert .cc-grid{grid-template-columns:1fr}
+  }
+
+  /* ── Animations ── */
+  @keyframes pulseBorder{0%,100%{border-color:rgba(51,255,87,0.2)}50%{border-color:rgba(51,255,87,0.5)}}
+  .ss-pulse{border:0.5px solid rgba(51,255,87,0.2);animation:pulseBorder 2s ease-in-out infinite}
+
+  /* ── Print ── */
+  @media print {
+    body{background:#fff;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mc{max-width:100%;padding:6px}
+    .ss-header{border-bottom-color:#ddd;padding:10px 0}
+    .ss-title{font-size:18px;color:#111}.ss-title .hl,.ss-title .hl2{color:#1a7a2e}.ss-sub{color:#555}
+    .ss-badge,.ss-badge.neon,.ss-badge.neon2{background:#f0f0f0!important;color:#555!important;border-color:#ddd!important}
+    .ss-stat,.ss-fstep,.ss-kwcard,.ss-tcard,.ss-silo,.ss-tech-card,.ss-concert{background:#f8f8f8!important;border-color:#ddd!important;box-shadow:none!important}
+    .ss-stat:hover,.ss-fstep:hover,.ss-tcard:hover{transform:none!important}
+    .ss-btn,.ss-actions,.ns-sidebar,.ns-mobile-hamburger,#nuclear-sidebar{display:none!important}
+    body.ns-sidebar-ready{margin-left:0!important}
+    .ss-footer{border-top-color:#ddd}.ss-footer p,.ss-version{color:#777!important}
+    @page{margin:8mm}
+    .ss-tcard,.ss-silo,.ss-fstep{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="ss-header">
+    <div class="ss-badges">
+      <span class="ss-badge neon">🌑 SHADOW SILO</span>
+      <span class="ss-badge gold">ORÁCULO EN VIVO</span>
+      <span class="ss-badge cyan">CONTENIDO AUTOMATIZADO</span>
+      <span class="ss-badge neon2">SEO + BLOGGER</span>
+      <span class="ss-badge purple">INTEGRADO R.O.</span>
+    </div>
+    <h1 class="ss-title"><span class="hl">Shadow Silo</span> <span class="hl2">Oráculo de Contenido</span></h1>
+    <p class="ss-sub">Sistema de inteligencia que caza noticias en tendencia por keyword, evalúa CPC potencial, genera contenido SEO con silos satélites (1,500–2,800 palabras), crea prompts de imagen, y publica automáticamente en Blogger con posicionamiento rápido en Google. Aplicado al ecosistema de Ramón Orlando.</p>
+    <div class="ss-version">v1.0 · Nuclear AIMA · Integrado con catálogo de 178 canciones · 6 eras · 23 Sept 2026 · Shadow Silo Engine</div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="ss-stats">
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">Keywords Monitoreadas</div>
+      <div class="ss-sv neon">28</div>
+      <div class="ss-ss">Merengue · RO · Concierto</div>
+    </div>
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">Artículos/Día Estimados</div>
+      <div class="ss-sv gold">4-6</div>
+      <div class="ss-ss">1,500–2,800 palabras c/u</div>
+    </div>
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">Tráfico Orgánico Proyectado</div>
+      <div class="ss-sv success">85K/mes</div>
+      <div class="ss-ss">A los 90 días</div>
+    </div>
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">Silos Satélites</div>
+      <div class="ss-sv cyan">6</div>
+      <div class="ss-ss">Interconectados</div>
+    </div>
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">CPC Prom. Keywords</div>
+      <div class="ss-sv accent">$0.38</div>
+      <div class="ss-ss">Basado en data real</div>
+    </div>
+    <div class="ss-stat">
+      <div class="glow"></div>
+      <div class="ss-sn">Yield Adicional Est.</div>
+      <div class="ss-sv danger">$4,200/mes</div>
+      <div class="ss-ss">Tráfico → Monetización</div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="ss-actions">
+    <a href="adspro-estrategia.html" class="ss-btn ss-btn-gold">🧠 AdsPro Estrategia</a>
+    <a href="oraculo.html" class="ss-btn ss-btn-primary">🔮 Oráculo en Vivo</a>
+    <a href="plan-semanal-grupos.html" class="ss-btn ss-btn-back">📅 Plan Grupos</a>
+    <a href="dashboard-campanas.html" class="ss-btn ss-btn-back">📊 Dashboard</a>
+    <a href="ramon-orlando-proyecto.html" class="ss-btn ss-btn-back">← Proyecto RO</a>
+  </div>
+
+  <!-- ═══ ORACLE FLOW ═══ -->
+  <div class="ss-st"><span class="hl">⚡</span> El Ciclo del Shadow Silo Oracle</div>
+  <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+    Así funciona el ciclo completo — desde la caza de noticias hasta el posicionamiento en Google. Cada paso está automatizado y optimizado para el ecosistema de Ramón Orlando.
+  </p>
+
+  <div class="ss-flow">
+    <div class="ss-fstep">
+      <div class="fs-icon">🔍</div>
+      <div class="fs-num">FASE 1</div>
+      <div class="fs-title">Cazar Noticias</div>
+      <div class="fs-desc">Escanea Google News, Trends, RSS en tiempo real por keywords como "merengue", "Ramón Orlando", "concierto latino", "música dominicana"</div>
+      <div class="fs-metric neon">28 Keywords</div>
+    </div>
+    <div class="ss-fstep">
+      <div class="fs-icon">📊</div>
+      <div class="fs-num">FASE 2</div>
+      <div class="fs-title">Evaluar CPC</div>
+      <div class="fs-desc">Mide CPC potencial de cada noticia, volumen de búsqueda, competencia, y yield de visitas por hora</div>
+      <div class="fs-metric gold">CPC $0.10-$1.20</div>
+    </div>
+    <div class="ss-fstep">
+      <div class="fs-icon">🏆</div>
+      <div class="fs-num">FASE 3</div>
+      <div class="fs-title">Seleccionar Top</div>
+      <div class="fs-desc">El algoritmo elige la(s) noticia(s) con mejor impacto potencial basado en CPC × volumen × tendencia</div>
+      <div class="fs-metric success">Top 3/día</div>
+    </div>
+    <div class="ss-fstep">
+      <div class="fs-icon">🤖</div>
+      <div class="fs-num">FASE 4</div>
+      <div class="fs-title">Generar Contenido</div>
+      <div class="fs-desc">IA crea artículo 1,500–2,800 palabras con silos satélites, keywords LSI, interlinking, prompts de imagen y metadescripción</div>
+      <div class="fs-metric cyan">2,000 palabras</div>
+    </div>
+    <div class="ss-fstep">
+      <div class="fs-icon">🚀</div>
+      <div class="fs-num">FASE 5</div>
+      <div class="fs-title">Publicar + Indexar</div>
+      <div class="fs-desc">Subida automática a Blogger + ping a Google Search Console + indexación en 15-30 minutos</div>
+      <div class="fs-metric neon">15 min ⚡</div>
+    </div>
+    <div class="ss-fstep">
+      <div class="fs-icon">📈</div>
+      <div class="fs-num">FASE 6</div>
+      <div class="fs-title">Medir + Reforzar</div>
+      <div class="fs-desc">Monitoreo de posiciones, CTR, tráfico. Refuerzo con silos satélites y actualización de contenido existente</div>
+      <div class="fs-metric accent">85K/mes</div>
+    </div>
+  </div>
+
+  <!-- ═══ TABS ═══ -->
+  <div class="ss-tabs" id="ssTabs">
+    <button class="ss-tab act" onclick="switchSsTab(this,0)">🎯 Keywords</button>
+    <button class="ss-tab" onclick="switchSsTab(this,1)">📈 Tráfico Proyectado</button>
+    <button class="ss-tab" onclick="switchSsTab(this,2)">🧱 Silos Contenido</button>
+    <button class="ss-tab" onclick="switchSsTab(this,3)">🏟️ Concierto 50 Años</button>
+    <button class="ss-tab" onclick="switchSsTab(this,4)">⚙️ Stack Técnico</button>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 1: KEYWORDS -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ss-tcontent act" id="ssTab0">
+    <div class="ss-st"><span class="hl">🎯</span> Keywords Monitoreadas <span class="hl2">(28 activas)</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      El oráculo monitorea estas keywords en Google News, Trends, y fuentes RSS en tiempo real. Cuando detecta un pico de tendencia, activa automáticamente la generación de contenido que conecta la noticia con el catálogo de Ramón Orlando. Los CPC están basados en datos reales de las campañas de Google Ads.
+    </p>
+
+    <div class="ss-kw">
+      <div class="ss-kwcard k1">
+        <div class="kw-term"><span class="kw-icon">🎵</span>Merengue</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.38</strong></span><span>Vol: <strong>49.5K/mes</strong></span><span>Competencia: <strong>Media</strong></span></div>
+        <div class="kw-desc">Keyword principal. Cualquier noticia sobre merengue — nuevos lanzamientos, artistas, festivales, historia — se conecta automáticamente con el catálogo RO.</div>
+      </div>
+      <div class="ss-kwcard k2">
+        <div class="kw-term"><span class="kw-icon">🎹</span>Ramón Orlando</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.42</strong></span><span>Vol: <strong>8.2K/mes</strong></span><span>Competencia: <strong>Baja</strong></span></div>
+        <div class="kw-desc">Marca personal. Ideal para capturar tráfico de fans buscando noticias del artista. Baja competencia = CPC eficiente.</div>
+      </div>
+      <div class="ss-kwcard k3">
+        <div class="kw-term"><span class="kw-icon">🎤</span>Concierto Merengue</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.55</strong></span><span>Vol: <strong>22.1K/mes</strong></span><span>Competencia: <strong>Media-Alta</strong></span></div>
+        <div class="kw-desc">Estacional. Picos en temporada de festivales y conciertos. Crítico para promocionar el 23 Sept.</div>
+      </div>
+      <div class="ss-kwcard k4">
+        <div class="kw-term"><span class="kw-icon">🇩🇴</span>Música Dominicana</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.45</strong></span><span>Vol: <strong>33.7K/mes</strong></span><span>Competencia: <strong>Media</strong></span></div>
+        <div class="kw-desc">Genérica pero potente. Atrae tráfico de orgullo cultural dominicano. Ideal para contenido sobre legado musical.</div>
+      </div>
+      <div class="ss-kwcard k5">
+        <div class="kw-term"><span class="kw-icon">💃</span>Bailar Merengue</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.32</strong></span><span>Vol: <strong>14.8K/mes</strong></span><span>Competencia: <strong>Baja</strong></span></div>
+        <div class="kw-desc">Intención de baile. CPC bajo, alta conversión a visualizaciones de video. Perfecta para vincular a canciones RO.</div>
+      </div>
+      <div class="ss-kwcard k1">
+        <div class="kw-term"><span class="kw-icon">💿</span>Merengue Clásico</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.28</strong></span><span>Vol: <strong>9.3K/mes</strong></span><span>Competencia: <strong>Baja</strong></span></div>
+        <div class="kw-desc">Keyword de nicho con CPC muy bajo. Audiencia nostálgica de alta intención. Conecta directamente con RO-01 y RO-02.</div>
+      </div>
+      <div class="ss-kwcard k2">
+        <div class="kw-term"><span class="kw-icon">🎧</span>Música Latina 80s</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.35</strong></span><span>Vol: <strong>27.4K/mes</strong></span><span>Competencia: <strong>Media</strong></span></div>
+        <div class="kw-desc">Público nostálgico de los 80s. El catálogo RO-01 cubre exactamente esta demanda.</div>
+      </div>
+      <div class="ss-kwcard k3">
+        <div class="kw-term"><span class="kw-icon">🎬</span>Te Compro Tu Novia</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.48</strong></span><span>Vol: <strong>6.1K/mes</strong></span><span>Competencia: <strong>Media</strong></span></div>
+        <div class="kw-desc">Canción específica con volumen de búsqueda propio. Gente buscando la letra, historia, o video. Conversión directa.</div>
+      </div>
+      <div class="ss-kwcard k4">
+        <div class="kw-term"><span class="kw-icon">💒</span>Música para Bodas</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.65</strong></span><span>Vol: <strong>18.5K/mes</strong></span><span>Competencia: <strong>Alta</strong></span></div>
+        <div class="kw-desc">CPC alto pero también alta intención de compra. "Te Compro Tu Novia" es himno de bodas dominicanas.</div>
+      </div>
+      <div class="ss-kwcard k5">
+        <div class="kw-term"><span class="kw-icon">🙏</span>Música Cristiana Latina</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.22</strong></span><span>Vol: <strong>12.4K/mes</strong></span><span>Competencia: <strong>Baja</strong></span></div>
+        <div class="kw-desc">Keyword de nicho para el álbum RO-05 (Adoración en el Trono). CPC bajo, audiencia muy leal.</div>
+      </div>
+      <div class="ss-kwcard k1">
+        <div class="kw-term"><span class="kw-icon">🌎</span>Diáspora Dominicana</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.40</strong></span><span>Vol: <strong>5.6K/mes</strong></span><span>Competencia: <strong>Baja</strong></span></div>
+        <div class="kw-desc">Keyword emocional. Los dominicanos en el exterior buscan contenido que los conecte con su tierra. RO-04 es perfecto.</div>
+      </div>
+      <div class="ss-kwcard k2">
+        <div class="kw-term"><span class="kw-icon">🔥</span>Fiesta Dominicana</div>
+        <div class="kw-stats"><span>CPC: <strong>$0.50</strong></span><span>Vol: <strong>11.2K/mes</strong></span><span>Competencia: <strong>Media</strong></span></div>
+        <div class="kw-desc">Búsqueda de entretenimiento. Playlists, canciones para fiesta, recomendaciones. Ideal para contenido de RO-02.</div>
+      </div>
+    </div>
+
+    <div class="ss-tip">
+      <strong>💡 Estrategia Keyword Shadow Silo:</strong> El oráculo no compite por keywords ya dominadas. Busca <strong>huecos de contenido</strong> — preguntas sin responder, tendencias emergentes, noticias de última hora que nadie ha cubierto desde la perspectiva del merengue/RO. Por ejemplo, si una noticia sobre "patrimonio cultural inmaterial de la UNESCO" menciona música dominicana, el Shadow Silo genera automáticamente un artículo de 2,000 palabras conectando eso con el legado de Ramón Orlando.
+    </div>
+
+    <!-- Proyección Posiciones -->
+    <div class="ss-st"><span class="hl">📊</span> Proyección de Posicionamiento <span class="hl2">a 90 días</span></div>
+    <table class="ss-table">
+      <thead>
+        <tr>
+          <th>Keyword</th>
+          <th>Dificultad</th>
+          <th>Posición Actual</th>
+          <th>Pos. 30 Días</th>
+          <th>Pos. 90 Días</th>
+          <th>Tráfico Est. 90d</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ramón Orlando</td>
+          <td>🟢 Baja</td>
+          <td>—</td>
+          <td><span class="val-neon">#12</span></td>
+          <td><span class="val-gold">#3-#5</span></td>
+          <td><span class="val-cyan">3,800/mes</span></td>
+        </tr>
+        <tr>
+          <td>Merengue Clásico</td>
+          <td>🟢 Baja</td>
+          <td>—</td>
+          <td><span class="val-neon">#8</span></td>
+          <td><span class="val-gold">#2-#4</span></td>
+          <td><span class="val-cyan">5,200/mes</span></td>
+        </tr>
+        <tr>
+          <td>Te Compro Tu Novia letra</td>
+          <td>🟡 Media</td>
+          <td>—</td>
+          <td><span class="val-neon">#10</span></td>
+          <td><span class="val-gold">#4-#6</span></td>
+          <td><span class="val-cyan">2,100/mes</span></td>
+        </tr>
+        <tr>
+          <td>Historia del Merengue</td>
+          <td>🟡 Media</td>
+          <td>—</td>
+          <td><span class="val-neon">#15</span></td>
+          <td><span class="val-gold">#5-#8</span></td>
+          <td><span class="val-cyan">8,400/mes</span></td>
+        </tr>
+        <tr>
+          <td>Concierto 23 Sept 2026</td>
+          <td>🟢 Baja</td>
+          <td>—</td>
+          <td><span class="val-neon">#3</span></td>
+          <td><span class="val-gold">#1-#2</span></td>
+          <td><span class="val-cyan">12,500/mes</span></td>
+        </tr>
+        <tr>
+          <td>Música Dominicana 80s</td>
+          <td>🟡 Media</td>
+          <td>—</td>
+          <td><span class="val-neon">#10</span></td>
+          <td><span class="val-gold">#4-#6</span></td>
+          <td><span class="val-cyan">6,800/mes</span></td>
+        </tr>
+        <tr>
+          <td>Bailar Merengue pasos</td>
+          <td>🟢 Baja</td>
+          <td>—</td>
+          <td><span class="val-neon">#7</span></td>
+          <td><span class="val-gold">#3-#5</span></td>
+          <td><span class="val-cyan">4,600/mes</span></td>
+        </tr>
+        <tr>
+          <td>Playlist Merengue 2026</td>
+          <td>🟡 Media</td>
+          <td>—</td>
+          <td><span class="val-neon">#11</span></td>
+          <td><span class="val-gold">#5-#8</span></td>
+          <td><span class="val-cyan">9,100/mes</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:7px;color:var(--muted);margin-top:4px;font-family:var(--mono)">Proyecciones basadas en: dificultad de keyword, calidad del dominio (Blogger/Google), velocidad de indexación del Shadow Silo, y datos históricos del catálogo RO. Resultados reales pueden variar.</p>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 2: TRÁFICO PROYECTADO -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ss-tcontent" id="ssTab1">
+    <div class="ss-st"><span class="hl">📈</span> Proyección de Tráfico y Yield <span class="hl2">(Shadow Silo + RO)</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Proyección de tráfico orgánico generado por el Shadow Silo Oracle en los primeros 6 meses de operación. Basado en: volumen de búsqueda real de keywords, tasa de clics por posición, y velocidad de indexación del sistema. El tráfico se monetiza a través de: visualizaciones en plataformas, venta de boletos para el concierto, y captación de leads para el sello.
+    </p>
+
+    <div class="ss-traffic">
+      <div class="ss-tcard">
+        <div class="tc-glow"></div>
+        <div class="tc-head">
+          <span class="tc-icon">🌱</span>
+          <span class="tc-name">Mes 1 — Siembra</span>
+        </div>
+        <div class="tc-meta">
+          <span>Artículos publicados: <strong>120-180</strong></span>
+          <span>Keywords posicionadas: <strong>8-12</strong></span>
+          <span>Tráfico estimado: <strong>8K-15K/mes</strong></span>
+          <span>Yield estimado: <strong>$400-$750/mes</strong></span>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="width:12%;background:linear-gradient(90deg,var(--neon),#66ff88)"></div></div>
+        <div class="tc-desc">Fase de construcción de autoridad. El Shadow Silo publica 4-6 artículos/día. Google empieza a indexar y posicionar keywords de baja competencia (Ramón Orlando, merengue clásico). Tráfico inicial de cola larga.</div>
+      </div>
+
+      <div class="ss-tcard">
+        <div class="tc-glow"></div>
+        <div class="tc-head">
+          <span class="tc-icon">🌿</span>
+          <span class="tc-name">Mes 3 — Crecimiento</span>
+        </div>
+        <div class="tc-meta">
+          <span>Artículos publicados: <strong>360-540</strong></span>
+          <span>Keywords posicionadas: <strong>25-40</strong></span>
+          <span>Tráfico estimado: <strong>45K-85K/mes</strong></span>
+          <span>Yield estimado: <strong>$2,250-$4,250/mes</strong></span>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="width:48%;background:linear-gradient(90deg,var(--gold),#ffd700)"></div></div>
+        <div class="tc-desc">Punto de inflexión. Google reconoce la autoridad temática del silo. Keywords de competencia media empiezan a posicionar. El tráfico se acelera por el efecto de contenido long-tail + silos interconectados. El concierto del 23 Sept genera un pico adicional de búsquedas.</div>
+      </div>
+
+      <div class="ss-tcard">
+        <div class="tc-glow"></div>
+        <div class="tc-head">
+          <span class="tc-icon">🌳</span>
+          <span class="tc-name">Mes 6 — Consolidación</span>
+        </div>
+        <div class="tc-meta">
+          <span>Artículos publicados: <strong>720-1,080</strong></span>
+          <span>Keywords posicionadas: <strong>60-90</strong></span>
+          <span>Tráfico estimado: <strong>120K-200K/mes</strong></span>
+          <span>Yield estimado: <strong>$6,000-$10,000/mes</strong></span>
+        </div>
+        <div class="tc-bar"><div class="tc-fill" style="width:100%;background:linear-gradient(90deg,var(--success),#66ddaa)"></div></div>
+        <div class="tc-desc">Masa crítica alcanzada. El silo es autoridad en el nicho de merengue/música dominicana. Keywords de alta competencia (conciertos, música latina) comienzan a posicionar. El tráfico se mantiene con contenido fresco diario. El yield proviene de: vistas a plataformas, boletos, leads, y publicidad display en el blog.</div>
+      </div>
+    </div>
+
+    <!-- Tabla detallada de proyección -->
+    <div class="ss-st"><span class="hl">📊</span> Desglose Mensual Proyectado</div>
+    <table class="ss-table">
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th>Artículos</th>
+          <th>Keywords</th>
+          <th>Tráfico</th>
+          <th>Tasa Crec.</th>
+          <th>Yield Est.</th>
+          <th>CPA Adq.</th>
+          <th>ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="val-neon">1</span></td>
+          <td>150</td>
+          <td>10</td>
+          <td class="val-cyan">12K</td>
+          <td>—</td>
+          <td class="val-gold">$600</td>
+          <td>$0.02</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><span class="val-neon">2</span></td>
+          <td>180</td>
+          <td>18</td>
+          <td class="val-cyan">28K</td>
+          <td>+133%</td>
+          <td class="val-gold">$1,400</td>
+          <td>$0.02</td>
+          <td>2.3x</td>
+        </tr>
+        <tr>
+          <td><span class="val-neon">3</span></td>
+          <td>180</td>
+          <td>32</td>
+          <td class="val-cyan">65K</td>
+          <td>+132%</td>
+          <td class="val-gold">$3,250</td>
+          <td>$0.02</td>
+          <td>5.4x</td>
+        </tr>
+        <tr>
+          <td><span class="val-neon">4</span></td>
+          <td>150</td>
+          <td>48</td>
+          <td class="val-cyan">95K</td>
+          <td>+46%</td>
+          <td class="val-gold">$4,750</td>
+          <td>$0.01</td>
+          <td>7.9x</td>
+        </tr>
+        <tr>
+          <td><span class="val-neon">5</span></td>
+          <td>120</td>
+          <td>65</td>
+          <td class="val-cyan">140K</td>
+          <td>+47%</td>
+          <td class="val-gold">$7,000</td>
+          <td>$0.01</td>
+          <td>11.7x</td>
+        </tr>
+        <tr>
+          <td><span class="val-neon">6</span></td>
+          <td>120</td>
+          <td>75</td>
+          <td class="val-cyan">160K</td>
+          <td>+14%</td>
+          <td class="val-gold">$8,000</td>
+          <td>$0.01</td>
+          <td>13.3x</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ss-tip gold">
+      <strong>💰 Margen de Tráfico vs Inversión:</strong> El Shadow Silo opera con un costo marginal de ~$0.02 por visitante (costo de API + hosting + dominio). Con un tráfico proyectado de 160K/mes al mes 6, el costo operativo es de ~$3,200/mes. El yield estimado de $8,000/mes representa un <strong>ROI de 2.5x</strong> solo en monetización directa — sin contar el valor del posicionamiento de marca, venta de boletos, y captación de leads para el sello.
+    </div>
+
+    <div class="ss-st"><span class="hl">📊</span> Comparativa: Tráfico Orgánico vs Campañas Pagas</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0">
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px">
+        <div style="font-size:9px;font-weight:600;color:var(--neon);margin-bottom:6px">⚡ Shadow Silo (Orgánico)</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          <strong style="color:var(--text);">Costo por visita:</strong> $0.02<br>
+          <strong style="color:var(--text);">Tráfico mensual (mes 6):</strong> 160K visitas<br>
+          <strong style="color:var(--text);">Costo operativo:</strong> $3,200/mes<br>
+          <strong style="color:var(--text);">Yield estimado:</strong> $8,000/mes<br>
+          <strong style="color:var(--text);">ROI:</strong> 2.5x (solo directo)<br>
+          <strong style="color:var(--text);">Ventajas:</strong> Tráfico acumulativo, autoridad de dominio, activo a largo plazo, sin límite de escalado
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px">
+        <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:6px">📢 Campañas Pagas (Ads)</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          <strong style="color:var(--text);">Costo por visita:</strong> $0.42 (CPC)<br>
+          <strong style="color:var(--text);">Tráfico mensual:</strong> 13,840 clics<br>
+          <strong style="color:var(--text);">Inversión:</strong> $5,840/mes<br>
+          <strong style="color:var(--text);">Retorno est.:</strong> $17,520/mes (3.0x ROAS)<br>
+          <strong style="color:var(--text);">ROI:</strong> 3.0x<br>
+          <strong style="color:var(--text);">Ventajas:</strong> Resultados inmediatos, segmentación precisa, escalable con presupuesto
+        </div>
+      </div>
+    </div>
+    <div class="ss-tip">
+      <strong>💡 Estrategia Combinada:</strong> El Shadow Silo y las campañas pagas son <strong>complementarios</strong>, no sustitutos. El orgánico construye el activo a largo plazo (autoridad, tráfico gratuito, reconocimiento de marca). Las campañas pagas capturan tráfico inmediato y estacional (concierto, lanzamientos). La sinergia: el contenido del Shadow Silo alimenta las landing pages de las campañas pagas, mejorando el Quality Score de Google Ads y reduciendo el CPC.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 3: SILOS DE CONTENIDO -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ss-tcontent" id="ssTab2">
+    <div class="ss-st"><span class="hl">🧱</span> Estructura de Silos Satélites <span class="hl2">(6 silos interconectados)</span></div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Cada silo es un pilar de contenido que se alimenta de las noticias en tendencia. Los artículos dentro de cada silo se interconectan mediante enlaces internos estratégicos, creando una red temática que Google reconoce como autoridad. Cada silo tiene su propio Blogger (subdominio o blog separado).
+    </p>
+
+    <div class="ss-silos">
+      <div class="ss-silo s1">
+        <div class="sl-head">
+          <span class="sl-icon">🎵</span>
+          <span class="sl-name">Merengue y Ritmo</span>
+          <span class="sl-count">Blog #1</span>
+        </div>
+        <div class="sl-keywords">merengue, ritmo dominicano, música bailable, percusión, piano merenguero</div>
+        <div class="sl-topics">Historia del merengue · Evolución del género · Artistas icónicos · Técnicas de piano · Cómo bailar merengue · Festivales y eventos · Legado cultural</div>
+      </div>
+      <div class="ss-silo s2">
+        <div class="sl-head">
+          <span class="sl-icon">🎤</span>
+          <span class="sl-name">Conciertos y Eventos</span>
+          <span class="sl-count">Blog #2</span>
+        </div>
+        <div class="sl-keywords">concierto merengue, festival latino, evento dominicano, 23 septiembre, boletos</div>
+        <div class="sl-topics">Calendario de conciertos · Guías de festivales · Cobertura de eventos · Crónicas de conciertos · Venta de boletos · Artistas en gira · Experiencias VIP</div>
+      </div>
+      <div class="ss-silo s3">
+        <div class="sl-head">
+          <span class="sl-icon">💿</span>
+          <span class="sl-name">Catálogo y Discografía</span>
+          <span class="sl-count">Blog #3</span>
+        </div>
+        <div class="sl-keywords">discografía dominicana, álbumes merengue, canciones clásicas, historia musical</div>
+        <div class="sl-topics">Análisis de álbumes · Letras de canciones · Historias detrás de las canciones · Grabaciones históricas · Producción musical · Coleccionismo · Listas de reproducción</div>
+      </div>
+      <div class="ss-silo s4">
+        <div class="sl-head">
+          <span class="sl-icon">🌎</span>
+          <span class="sl-name">Diáspora y Orgullo</span>
+          <span class="sl-count">Blog #4</span>
+        </div>
+        <div class="sl-keywords">diáspora dominicana, dominicanos en USA, orgullo latino, cultura caribeña</div>
+        <div class="sl-topics">Historias de migrantes · Eventos latinos en USA · Conexión cultural · Recetas y tradiciones · Música como identidad · Comunidades dominicanas en el exterior</div>
+      </div>
+      <div class="ss-silo s5">
+        <div class="sl-head">
+          <span class="sl-icon">🙏</span>
+          <span class="sl-name">Espiritual y Reflexión</span>
+          <span class="sl-count">Blog #5</span>
+        </div>
+        <div class="sl-keywords">música cristiana, alabanza, fe, espiritual, piano cristiano</div>
+        <div class="sl-topics">Música de alabanza · Reflexiones espirituales · Testimonios · Piano y fe · Canciones de gratitud · Eventos cristianos · Música que sana</div>
+      </div>
+      <div class="ss-silo s6">
+        <div class="sl-head">
+          <span class="sl-icon">📚</span>
+          <span class="sl-name">Legado y Educación</span>
+          <span class="sl-count">Blog #6</span>
+        </div>
+        <div class="sl-keywords">legado musical, educación musical, piano, composición, historia música latina</div>
+        <div class="sl-topics">Biografías de músicos · Técnicas de composición · Historia de la música latina · Entrevistas · Análisis de innovación musical · El negocio de la música</div>
+      </div>
+    </div>
+
+    <div class="ss-tip purple">
+      <strong>🔗 Estrategia de Interlinking:</strong> Cada artículo en un silo enlaza a 3-5 artículos relacionados en otros silos. Ejemplo: un artículo sobre "Historia del Merengue" (Silo 1) enlaza a "Álbumes Clásicos de los 80s" (Silo 3) y "Dominicanos en NY y el Merengue" (Silo 4). Esta red de enlaces internos es la señal más fuerte que Google usa para determinar autoridad temática.
+    </div>
+
+    <div class="ss-st"><span class="hl">📝</span> Anatomía de un Artículo Shadow Silo</div>
+    <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:14px;margin:8px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--neon);margin-bottom:4px">Estructura (1,500-2,800 palabras)</div>
+          <div style="font-size:8px;color:var(--muted);line-height:1.7">
+            1. <strong style="color:var(--text);">Título SEO</strong> (60-70 chars, keyword principal al inicio)<br>
+            2. <strong style="color:var(--text);">Meta descripción</strong> (150-160 chars con CTA)<br>
+            3. <strong style="color:var(--text);">H1 + Introducción</strong> (150-200 palabras con keyword)<br>
+            4. <strong style="color:var(--text);">3-5 H2</strong> con subtemas relacionados<br>
+            5. <strong style="color:var(--text);">~~Sub H3</strong> para profundizar en cada subtema<br>
+            6. <strong style="color:var(--text);">Imagen generada por IA</strong> con prompt optimizado<br>
+            7. <strong style="color:var(--text);">3-5 enlaces internos</strong> a otros artículos del silo<br>
+            8. <strong style="color:var(--text);">CTA final</strong> a YouTube/Spotify/Evento
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">Prompt de Imagen Generado</div>
+          <div style="font-size:8px;color:var(--muted);line-height:1.7">
+            Ejemplo para artículo sobre "Historia del Merengue":<br><br>
+            <em style="color:var(--accent)">"Merengue band playing at a Dominican festival, 1980s style, warm colors, dancing crowd, piano and accordion visible, golden hour, photorealistic, 8K, documentary style --ar 16:9"</em><br><br>
+            <strong style="color:var(--text);">Estilos por silo:</strong><br>
+            • Merengue: <strong style="color:var(--cyan)">Fotográfico, cálido, acción</strong><br>
+            • Conciertos: <strong style="color:var(--cyan)">Luces, multitudes, energía</strong><br>
+            • Espiritual: <strong style="color:var(--cyan)">Luz suave, sereno, naturaleza</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 4: CONCIERTO 50 AÑOS -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ss-tcontent" id="ssTab3">
+    <div class="ss-st"><span class="hl">🏟️</span> Integración del Concierto 23 Sept 2026</div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      El concierto del 50 Aniversario es el catalizador perfecto para el Shadow Silo. A continuación, cómo el oráculo genera contenido en torno al evento, conectando cada noticia tendencia con la promoción del concierto y del catálogo.
+    </p>
+
+    <div class="ss-concert">
+      <div class="cc-head">🏟️ Shadow Silo + Concierto 50 Aniversario</div>
+      <div class="cc-grid">
+        <div class="cc-item">
+          <div class="ci-label">Pre-evento (Jul-Ago)</div>
+          <div class="ci-text">
+            <strong>60+ artículos</strong> generados sobre: historia del Estadio Olímpico, mejores conciertos dominicanos en ese recinto, cómo prepararse para un concierto de merengue, guías de viaje a RD para el evento, qué canciones sonará.<br><br>
+            <strong>Keywords:</strong> "concierto Ramón Orlando", "Estadio Olímpico Santo Domingo", "boletos concierto merengue 2026"<br>
+            <strong>Tráfico estimado:</strong> 35K-50K/mes pre-evento
+          </div>
+        </div>
+        <div class="cc-item">
+          <div class="ci-label">Durante el Evento (23 Sept)</div>
+          <div class="ci-text">
+            <strong>Cobertura en tiempo real:</strong> El Shadow Silo monitorea menciones en redes sociales y noticias. Cada hora se publica contenido nuevo: crónicas del evento, fotos, videos, reacciones de asistentes.<br><br>
+            <strong>Keywords:</strong> "Ramón Orlando en vivo", "concierto 50 aniversario", "Estadio Olímpico lleno"<br>
+            <strong>Tráfico estimado:</strong> 15K-25K en 24 horas
+          </div>
+        </div>
+        <div class="cc-item">
+          <div class="ci-label">Post-evento (Oct-Dic)</div>
+          <div class="ci-text">
+            <strong>50+ artículos</strong> de recap: resúmenes del concierto, mejores momentos, videos destacados, entrevistas post-evento, análisis de audiencia, impacto cultural.<br><br>
+            <strong>Keywords:</strong> "resumen concierto Ramón Orlando", "mejores momentos", "concierto merengue histórico"<br>
+            <strong>Tráfico estimado:</strong> 25K-40K/mes post-evento
+          </div>
+        </div>
+        <div class="cc-item">
+          <div class="ci-label">Contenido Viral Generado</div>
+          <div class="ci-text">
+            El Shadow Silo detecta automáticamente <strong>picos de tendencia</strong> durante el concierto y genera contenido optimizado para capturar ese tráfico:<br><br>
+            • "Momento viral: Ramón Orlando toca [canción] y el estadio explota"<br>
+            • "Invitado sorpresa en el concierto de Ramón Orlando"<br>
+            • "Las lágrimas de emoción durante [canción específica]"<br>
+            • "Estadísticas: cuánta gente asistió, cuánto recaudó"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="ss-st"><span class="hl">📅</span> Timeline de Contenido del Concierto</div>
+    <div class="ss-timeline">
+      <div class="ss-tl-item">
+        <span class="dot d1"></span>
+        <div class="tl-phase">FASE 1 · Jun-Ago 2026 · 90 días antes</div>
+        <div class="tl-title">🚀 Construcción de Expectativa</div>
+        <div class="tl-desc">El Shadow Silo genera 90+ artículos sobre: historia de Ramón Orlando, mejores canciones para un concierto, guía de viaje a Santo Domingo, cómo conseguir boletos, playlist pre-concierto. Objetivo: posicionar <strong>"concierto Ramón Orlando 2026"</strong> en #1 de Google. Tráfico objetivo: 50K/mes.</div>
+      </div>
+      <div class="ss-tl-item">
+        <span class="dot d2"></span>
+        <div class="tl-phase">FASE 2 · 1-22 Sept · Cuenta regresiva</div>
+        <div class="tl-title">🔥 Pico de Intensidad</div>
+        <div class="tl-desc">Publicación diaria doble. Contenido: countdown posts, sneak peeks, ensayos, entrevistas con músicos invitados, trivia diaria. El oráculo monitorea trends cada hora y ajusta contenido. Objetivo: capturar todo el tráfico de búsqueda de última hora. Tráfico objetivo: 100K+ en la semana del evento.</div>
+      </div>
+      <div class="ss-tl-item">
+        <span class="dot d3"></span>
+        <div class="tl-phase">FASE 3 · 23 Sept · El día del evento</div>
+        <div class="tl-title">⚡ Tiempo Real</div>
+        <div class="tl-desc">El Shadow Silo publica contenido cada 2-3 horas: crónicas en vivo, fotos, video reacciones, highlights. Monitoreo de redes sociales para detectar contenido generado por fans y republicarlo. Objetivo: ser la fuente #1 de información del concierto en Google. Tráfico objetivo: 25K en 24 horas.</div>
+      </div>
+      <div class="ss-tl-item">
+        <span class="dot d4"></span>
+        <div class="tl-phase">FASE 4 · Oct-Dic · Post-concierto</div>
+        <div class="tl-title">📈 Capitalización de Momento</div>
+        <div class="tl-desc">50+ artículos de recap. Análisis de datos: cuánta gente asistió, ingresos generados, impacto en streaming. Videos del concierto promocionados desde el blog. El silo de "Conciertos y Eventos" se refuerza con contenido perpetuo. Objetivo: mantener el tráfico del concierto como contenido perenne. Tráfico objetivo: 40K/mes.</div>
+      </div>
+      <div class="ss-tl-item">
+        <span class="dot d5"></span>
+        <div class="tl-phase">FASE 5 · 2027+ · Legado</div>
+        <div class="tl-title">🌳 Contenido Evergreen</div>
+        <div class="tl-desc">Los artículos del concierto se convierten en contenido perenne. Se actualizan periódicamente con nuevos datos, fotos adicionales, y enlaces a nuevos lanzamientos. El tráfico se mantiene estable como referencia histórica del concierto. Tráfico objetivo: 15K-20K/mes continuo.</div>
+      </div>
+    </div>
+
+    <div class="ss-tip gold">
+      <strong>💰 Proyección de Ingresos del Concierto vía Shadow Silo:</strong> Con 100K+ visitas/mes durante el pico del concierto, estimamos: <strong>2,500-4,000 boletos vendidos</strong> directamente desde el blog (tasa de conversión 2.5-4%), <strong>$15,000-$25,000 en ingresos</strong> por afiliación/venta de boletos, <strong>+500% en reproducciones</strong> del catálogo en plataformas durante Sept-Oct, y <strong>+3,000 nuevos suscriptores</strong> a la base de datos del sello.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- TAB 5: STACK TÉCNICO -->
+  <!-- ════════════════════════════════════════════ -->
+  <div class="ss-tcontent" id="ssTab4">
+    <div class="ss-st"><span class="hl">⚙️</span> Stack Tecnológico del Shadow Silo</div>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+      Componentes técnicos necesarios para operar el Shadow Silo Oracle. Cada capa está diseñada para escalar automáticamente sin intervención manual.
+    </p>
+
+    <div class="ss-tech">
+      <div class="ss-tech-card">
+        <div class="t-icon">🔍</div>
+        <div class="t-name">News API + RSS</div>
+        <div class="t-desc">Google News RSS, NewsAPI.org, feeds RSS de medios dominicanos. Escaneo cada 15 minutos de 28 keywords.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">📊</div>
+        <div class="t-name">Google Trends</div>
+        <div class="t-desc">Monitoreo de tendencias en tiempo real. Detecta picos de búsqueda antes de que sean noticia mainstream.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">🧠</div>
+        <div class="t-name">IA Generativa</div>
+        <div class="t-desc">API de OpenAI o Claude para generación de artículos, prompts de imagen, y optimización SEO del contenido.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">🎨</div>
+        <div class="t-name">IA de Imágenes</div>
+        <div class="t-desc">DALL-E 3 o Stable Diffusion para generar imágenes únicas para cada artículo (prompts automáticos).</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">📝</div>
+        <div class="t-name">Blogger API</div>
+        <div class="t-desc">Google Blogger API v3 para publicación automática en 6 blogs (uno por silo). Subida directa con formato HTML.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">⚡</div>
+        <div class="t-name">Google Search Console</div>
+        <div class="t-desc">Indexación instantánea mediante URL Inspection API. Ping automático tras cada publicación para indexar en minutos.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">📈</div>
+        <div class="t-name">Google Analytics</div>
+        <div class="t-desc">Monitoreo de tráfico, posiciones, CTR, y comportamiento de usuarios. Feedback loop para optimizar contenido.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">🔗</div>
+        <div class="t-name">Link Management</div>
+        <div class="t-desc">Sistema de interlinking automático. Cada artículo nuevo recibe 3-5 enlaces a artículos existentes en otros silos.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">💾</div>
+        <div class="t-name">Base de Datos</div>
+        <div class="t-desc">Registro de todos los artículos publicados, keywords posicionadas, métricas de tráfico, y rendimiento por silo.</div>
+      </div>
+      <div class="ss-tech-card">
+        <div class="t-icon">🚀</div>
+        <div class="t-name">Orquestador Central</div>
+        <div class="t-desc">Script central (Python/Node.js) que coordina: escaneo → evaluación → generación → publicación → monitoreo.</div>
+      </div>
+    </div>
+
+    <div class="ss-st"><span class="hl">🔧</span> Plan de Implementación</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--neon);margin-bottom:4px">⬜ Semana 1-2 · Fundación</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Crear 6 blogs en Blogger (uno por silo)<br>
+          • Configurar Google Search Console + Analytics<br>
+          • Obtener API keys (NewsAPI, OpenAI, Blogger API)<br>
+          • Configurar dominio personalizado para cada blog<br>
+          • Instalar orquestador central en VPS/Cloud
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--gold);margin-bottom:4px">⬜ Semana 2-3 · Motor de Contenido</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Configurar prompts de generación de artículos<br>
+          • Definir 28 keywords y fuentes RSS<br>
+          • Implementar sistema de evaluación CPC<br>
+          • Crear templates de artículos por silo<br>
+          • Configurar generación de imágenes automática
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--cyan);margin-bottom:4px">⬜ Semana 3-4 · Automatización</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Implementar sistema de publicación automática<br>
+          • Configurar indexación Search Console API<br>
+          • Sistema de interlinking automático<br>
+          • Monitoreo de tráfico y posiciones<br>
+          • Feedback loop de optimización
+        </div>
+      </div>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:12px">
+        <div style="font-size:9px;font-weight:600;color:var(--success);margin-bottom:4px">⬜ Mes 2+ · Escalar y Optimizar</div>
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          • Expandir a 50+ keywords<br>
+          • Añadir silos adicionales por demanda<br>
+          • Integrar con YouTube API para datos de video<br>
+          • Sistema de A/B testing de títulos/CTAs<br>
+          • Dashboard de rendimiento del Shadow Silo
+        </div>
+      </div>
+    </div>
+
+    <div class="ss-tip danger">
+      <strong>⚠️ Consideraciones Importantes:</strong><br>
+      1) <strong>Calidad sobre cantidad:</strong> Aunque el sistema publica 4-6 artículos/día, cada uno debe ser único, bien escrito, y aportar valor real. Google penaliza contenido generado masivamente de baja calidad.<br>
+      2) <strong>Actualización de contenido:</strong> Los artículos existentes deben actualizarse periódicamente para mantener frescura. El Shadow Silo debe re-indexar artículos antiguos con nuevas secciones.<br>
+      3) <strong>Diversificación de plataformas:</strong> Blogger es el punto de partida, pero el sistema puede extenderse a WordPress, Medium, y LinkedIn Articles para diversificar fuentes de tráfico.<br>
+      4) <strong>Cumplimiento de TOS:</strong> Asegurar que todo el contenido generado cumple con las políticas de Google (contenido original, útil, no spam).
+    </div>
+  </div>
+
+  <!-- ═══ QUICK LINKS ═══ -->
+  <div class="ss-st"><span class="hl">🔗</span> Enlaces del Ecosistema</div>
+  <div class="ss-quick">
+    <a href="oraculo.html"><span class="qicon">🔮</span>Oráculo en Vivo</a>
+    <a href="adspro-estrategia.html"><span class="qicon">🧠</span>AdsPro Estrategia</a>
+    <a href="plan-semanal-grupos.html"><span class="qicon">📅</span>Plan Semanal Grupos</a>
+    <a href="dashboard-campanas.html"><span class="qicon">📊</span>Dashboard Campañas</a>
+    <a href="campanas-pagas.html"><span class="qicon">📢</span>Campañas Pagas</a>
+    <a href="ramon-orlando-proyecto.html"><span class="qicon">🎵</span>Proyecto RO</a>
+    <a href="master-plan.html"><span class="qicon">⭐</span>Master Plan</a>
+    <a href="index.html"><span class="qicon">☢️</span>Dashboard Principal</a>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="ss-footer">
+    <p>🌑 Shadow Silo · Oráculo de Contenido · Ramón Orlando · Nuclear AIMA</p>
+    <div class="ss-footer-links">
+      <a href="oraculo.html">🔮 Oráculo</a>
+      <a href="adspro-estrategia.html">🧠 AdsPro</a>
+      <a href="master-plan.html">⭐ Plan Maestro</a>
+      <a href="index.html">☢️ Nuclear AIMA</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Tab switching
+function switchSsTab(btn, idx) {
+  document.querySelectorAll('.ss-tab').forEach(t => t.classList.remove('act'));
+  document.querySelectorAll('.ss-tcontent').forEach(t => t.classList.remove('act'));
+  btn.classList.add('act');
+  document.getElementById('ssTab' + idx).classList.add('act');
+}
+</script>
+</body>
+</html>

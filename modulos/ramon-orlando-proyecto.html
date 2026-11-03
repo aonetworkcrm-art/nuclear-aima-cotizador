@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto Ramón Orlando · Nuclear AIMA</title>
+<script defer src="sidebar.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0c; --bg2: #111114; --bg3: #18181c; --bg4: #202024;
+    --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8; --muted: #6b6966;
+    --accent: #c9a96e; --accent2: #e8c98a;
+    --danger: #e05c5c; --success: #4cad7c;
+    --cyan: #4ad0e0; --gold: #f59e0b;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --r: 10px; --r2: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--font); min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(201,169,110,0.06) 0%, transparent 70%),
+      radial-gradient(ellipse at 80% 80%, rgba(224,92,92,0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 60%, rgba(74,208,224,0.02) 0%, transparent 40%);
+  }
+  .mc { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+  /* ── HERO ── */
+  .hero { text-align: center; padding: 36px 0 24px; border-bottom: 0.5px solid var(--border); margin-bottom: 20px; position: relative; }
+  .hero .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .hero .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04));
+    border: 0.5px solid rgba(201,169,110,0.25); border-radius: 20px;
+    padding: 4px 12px; font-size: 9px; font-weight: 500; color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .hero .badge.live { background: rgba(224,92,92,0.1); border-color: rgba(224,92,92,0.25); color: var(--danger); }
+  .hero .badge.live .pd { width: 5px; height: 5px; background: var(--danger); border-radius: 50%; animation: pulse-dot 1.2s infinite; }
+  @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.4)} }
+  .hero h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.5px; }
+  .hero h1 .gd { background: linear-gradient(135deg, var(--gold), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero h1 .ac { color: var(--accent); }
+  .hero .sub { font-size: 13px; color: var(--muted); margin-top: 6px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+  /* ── STATS ROW ── */
+  .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .stat-card {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 14px; text-align: center; position: relative; overflow: hidden;
+  }
+  .stat-card .glow {
+    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .stat-card .num { font-size: 24px; font-weight: 700; font-family: var(--mono); position: relative; }
+  .stat-card .lbl { font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+  .stat-card .sub { font-size: 9px; color: var(--muted); margin-top: 2px; font-family: var(--mono); }
+  .stat-card.danger .num { color: var(--danger); }
+  .stat-card.success .num { color: var(--success); }
+  .stat-card.accent .num { color: var(--accent); }
+  .stat-card.cyan .num { color: var(--cyan); }
+  .stat-card.gold .num { color: var(--gold); }
+
+  /* ── SECTION TITLE ── */
+  .sec-title {
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin: 28px 0 14px; padding-bottom: 8px;
+    border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 8px;
+  }
+  .sec-title .count { font-size: 9px; background: var(--bg3); padding: 2px 8px; border-radius: 10px; color: var(--muted); }
+
+  /* ── ECOSYSTEM GRID ── */
+  .eco-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;
+  }
+  .eco-card {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2);
+    padding: 18px; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
+    text-decoration: none; color: inherit;
+  }
+  .eco-card:hover {
+    border-color: rgba(201,169,110,0.3); transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .eco-card .ec-icon { font-size: 24px; margin-bottom: 8px; }
+  .eco-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .eco-card p { font-size: 10px; color: var(--muted); line-height: 1.5; }
+  .eco-card .tag {
+    display: inline-block; font-size: 8px; padding: 2px 6px; border-radius: 4px;
+    background: rgba(201,169,110,0.1); color: var(--accent); margin-top: 6px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  /* ── PHASE CARD ── */
+  .phase-grid { display: grid; gap: 8px; }
+  .phase-card {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r2);
+    overflow: hidden;
+  }
+  .phase-card .ph {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; cursor: pointer; transition: background 0.15s;
+  }
+  .phase-card .ph:hover { background: var(--bg3); }
+  .phase-card .ph .pnum {
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; background: var(--bg4); color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .phase-card .ph .pnum.act { background: var(--accent); color: #0d0d0f; border-color: var(--accent); }
+  .phase-card .ph .pnum.pd { background: rgba(107,105,102,0.12); color: var(--muted); }
+  .phase-card .ph .pi { flex: 1; }
+  .phase-card .ph .pi h4 { font-size: 12px; font-weight: 600; }
+  .phase-card .ph .pi .ps { font-size: 9px; color: var(--muted); }
+  .phase-card .ph .pcost { font-size: 8px; padding: 2px 6px; border-radius: 4px; font-weight: 500; background: rgba(76,173,124,0.12); color: var(--success); }
+  .phase-card .pb { display: none; padding: 0 16px 14px; font-size: 10px; color: var(--muted); line-height: 1.6; }
+  .phase-card .pb.op { display: block; }
+
+  /* ── TIMELINE ── */
+  .tl { padding: 12px 0 12px 24px; position: relative; margin: 10px 0; }
+  .tl::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 1.5px; background: linear-gradient(180deg, var(--accent), var(--success), var(--gold), var(--cyan), var(--danger)); }
+  .tl .tli { position: relative; margin-bottom: 16px; }
+  .tl .tli .dot { position: absolute; left: -20px; top: 3px; width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--bg); }
+  .tl .tli .dot.done { background: var(--success); }
+  .tl .tli .dot.now { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .tl .tli h4 { font-size: 11px; font-weight: 600; }
+  .tl .tli .ti { font-size: 8px; color: var(--muted); font-family: var(--mono); margin-top: 1px; }
+  .tl .tli .td2 { font-size: 9px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ── REVENUE STREAMS ── */
+  .rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .rev-card {
+    background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--r);
+    padding: 14px; text-align: center;
+  }
+  .rev-card .rval { font-size: 18px; font-weight: 700; font-family: var(--mono); }
+  .rev-card .rval.danger { color: var(--danger); }
+  .rev-card .rval.success { color: var(--success); }
+  .rev-card .rval.accent { color: var(--accent); }
+  .rev-card .rval.cyan { color: var(--cyan); }
+  .rev-card .rval.gold { color: var(--gold); }
+  .rev-card .rlbl { font-size: 9px; color: var(--muted); margin-top: 3px; }
+  .rev-card .rsub { font-size: 8px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+
+  /* ── RESOURCE LINKS ── */
+  .rg { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+  .rg a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; background: var(--bg3); border: 0.5px solid var(--border);
+    border-radius: var(--r); text-decoration: none; color: var(--text);
+    font-size: 10px; transition: all 0.15s;
+  }
+  .rg a:hover { border-color: var(--accent); background: var(--bg4); }
+
+  /* ── HIGHLIGHT BOX ── */
+  .hb {
+    background: linear-gradient(135deg, rgba(201,169,110,0.06), rgba(201,169,110,0.02));
+    border-left: 2px solid var(--accent); padding: 10px 14px;
+    border-radius: 0 var(--r) var(--r) 0; margin: 12px 0;
+    font-size: 10px; line-height: 1.6;
+  }
+  .hb .hl { font-size: 8px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+
+  /* ── FOOTER ── */
+  .ft { text-align: center; padding: 20px 0; border-top: 0.5px solid var(--border); margin-top: 20px; }
+  .ft p { font-size: 9px; color: var(--muted); font-family: var(--mono); }
+
+  @media (max-width: 768px) {
+    .mc { padding: 10px; }
+    .hero h1 { font-size: 22px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .eco-grid { grid-template-columns: 1fr; }
+    .rev-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HERO ═══ -->
+  <div class="hero">
+    <div class="badges">
+      <span class="badge live"><span class="pd"></span> PROYECTO ACTIVO</span>
+      <span class="badge">🎵 190 CANCIONES · 17 ÁLBUMES</span>
+      <span class="badge">🚀 8 FASES ESTRATÉGICAS</span>
+      <span class="badge">🏟️ 50 ANIVERSARIO · 23 SEP 2026</span>
+    </div>
+    <h1>Proyecto <span class="gd">Ramón Orlando</span></h1>
+    <div class="sub">El ecosistema completo del proyecto más ambicioso de Nuclear AIMA: auditoría técnica, distribución global con adelanto, tokenización Web3, evento del 50 Aniversario y recuperación de regalías para el catálogo del Maestro Ramón Orlando Valoy García.</div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="stats">
+    <div class="stat-card accent"><div class="glow"></div><div class="num">190</div><div class="lbl">Canciones Auditadas</div><div class="sub">Catálogo completo</div></div>
+    <div class="stat-card accent"><div class="glow"></div><div class="num">17</div><div class="lbl">Álbumes</div><div class="sub">Discografía oficial</div></div>
+    <div class="stat-card danger"><div class="glow"></div><div class="num">15K+</div><div class="lbl">Nodos Detectados</div><div class="sub">Canales sin monetizar</div></div>
+    <div class="stat-card danger"><div class="glow"></div><div class="num">$66.8K</div><div class="lbl">Yield Real / Mes</div><div class="sub">Ingreso fugado actual</div></div>
+    <div class="stat-card gold"><div class="glow"></div><div class="num">$801K</div><div class="lbl">Proyección Anual</div><div class="sub">Yield × 12 meses</div></div>
+    <div class="stat-card success"><div class="glow"></div><div class="num">$1.68M</div><div class="lbl">Adelanto Est. 3yr</div><div class="sub">70% flujo proyectado</div></div>
+    <div class="stat-card cyan"><div class="glow"></div><div class="num">55.7M</div><div class="lbl">Views / Mes</div><div class="sub">eCPM $1.20</div></div>
+    <div class="stat-card gold"><div class="glow"></div><div class="num">6</div><div class="lbl">Catálogos Tokenizados</div><div class="sub">RO-01 a RO-06</div></div>
+  </div>
+
+  <!-- ═══ CAMPAÑAS PAGAS CTA ═══ -->
+  <div style="display:flex;justify-content:center;margin:16px 0 10px">
+    <a href="campanas-pagas.html" style="
+      display:inline-flex;align-items:center;gap:10px;
+      padding:14px 28px;
+      background:linear-gradient(135deg,rgba(224,92,92,0.15),rgba(201,169,110,0.1));
+      border:1px solid rgba(224,92,92,0.35);
+      border-radius:var(--r2);
+      text-decoration:none;
+      color:var(--text);
+      transition:all 0.2s;
+      font-family:var(--font);
+      box-shadow:0 0 30px rgba(224,92,92,0.06);
+    " onmouseover="this.style.borderColor='rgba(224,92,92,0.6)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 30px rgba(224,92,92,0.15)'" onmouseout="this.style.borderColor='rgba(224,92,92,0.35)';this.style.transform='';this.style.boxShadow=''">
+      <span style="font-size:28px">📢</span>
+      <div style="text-align:left">
+        <div style="font-size:13px;font-weight:600;color:var(--gold)">🔥 Campañas Pagas · Ramón Orlando</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">Dashboard de métricas · Google Ads · Facebook Ads · YouTube Ads</div>
+      </div>
+      <span style="font-size:16px;color:var(--accent);margin-left:6px">→</span>
+    </a>
+  </div>
+
+  <!-- ═══ QUICK ACTIONS ═══ -->
+  <div class="sec-title">⚡ Acceso Rápido · Ecosistema Nuclear AIMA</div>
+  <div class="eco-grid" style="margin-bottom:6px">
+    <a href="oraculo.html" class="eco-card">
+      <div class="ec-icon">🔮</div>
+      <h3>Oráculo en Vivo</h3>
+      <p>Yield, nodos, vistas y fugas contados segundo a segundo. Top 12 en tiempo real con live counters.</p>
+      <span class="tag">TIEMPO REAL</span>
+    </a>
+    <a href="master-plan.html" class="eco-card">
+      <div class="ec-icon">⭐</div>
+      <h3>Master Plan</h3>
+      <p>Las 8 fases estratégicas con checklists interactivas, timeline, plantillas de mensajes y recursos.</p>
+      <span class="tag">ESTRATEGIA</span>
+    </a>
+    <a href="adelantos.html" class="eco-card">
+      <div class="ec-icon">💰</div>
+      <h3>Adelantos & Financiamiento</h3>
+      <p>SoundExchange, beatBread, Believe, The Orchard, SonoSuite. Calculadora de adelanto + Pitch Deck.</p>
+      <span class="tag">FINANZAS</span>
+    </a>
+    <a href="live-search.html" class="eco-card">
+      <div class="ec-icon">🔍</div>
+      <h3>Live Search · Nodos</h3>
+      <p>Detección de nodos virales en YouTube. Ingresos fugados por Content ID. Reportes ejecutivos.</p>
+      <span class="tag">AUDITORÍA</span>
+    </a>
+    <a href="short-tracker.html" class="eco-card">
+      <div class="ec-icon">🎬</div>
+      <h3>Short Tracker</h3>
+      <p>Detección de YouTube Shorts, réplicas virales, virality score y fugas en Shorts.</p>
+      <span class="tag">VIRALIDAD</span>
+    </a>
+    <a href="onapi-onda.html" class="eco-card">
+      <div class="ec-icon">🏛️</div>
+      <h3>Guía Legal · ONAPI / ONDA</h3>
+      <p>Registro de nombre comercial, constitución SRL, productor fonográfico y contrato matriz.</p>
+      <span class="tag">LEGAL</span>
+    </a>
+    <a href="osint-center.html" class="eco-card">
+      <div class="ec-icon">🕵️</div>
+      <h3>OSINT Command Center</h3>
+      <p>Google Dorks, Keyword Planner, Domain Analyzer, News Discovery y Trends.</p>
+      <span class="tag">INTELIGENCIA</span>
+    </a>
+    <a href="ramon-orlando/evento-50/ramon-orlando-50.html" class="eco-card">
+      <div class="ec-icon">🏟️</div>
+      <h3>50 Aniversario</h3>
+      <p>Cuenta regresiva, tracker de horas, timeline de hitos y datos astronómicos del Estadio Olímpico.</p>
+      <span class="tag">EVENTO</span>
+    </a>
+  </div>
+
+  <!-- ═══ 8 PHASES ═══ -->
+  <div class="sec-title">🎯 Las 8 Fases Estratégicas <span class="count">Del plan maestro</span></div>
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum act">1</div>
+        <div class="pi"><h4>Fundación Legal & Corporativa</h4><div class="ps">ONAPI · SRL · ONDA · Contrato Matriz</div></div>
+        <div class="pcost">~$1,050</div>
+      </div>
+      <div class="pb">Registrar el sello independiente: ONAPI (nombre comercial Clase 41 y 35), constitución SRL, registro como Productor Fonográfico en ONDA y contrato matriz de administración. Este es el cimiento legal sin el cual nada más funciona.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum act">2</div>
+        <div class="pi"><h4>Auditoría Técnica del Catálogo</h4><div class="ps">12 principales → 190 canciones</div></div>
+        <div class="pcost">$0</div>
+      </div>
+      <div class="pb">Usando herramientas propietarias de auditoría: rastreo de nodos, cálculo de yield por canción, identificación de Content ID faltante, proyección de ingresos recuperables. El resultado es el documento que abre las puertas de las multinacionales.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">3</div>
+        <div class="pi"><h4>Gestión con el Artista</h4><div class="ps">Autorización · Coordinación · Presentación</div></div>
+        <div class="pcost">$0</div>
+      </div>
+      <div class="pb">Relación con Ramón Orlando: carta de autorización notariada, gestión de expectativas, coordinación de registro en ONDA, obtención de documentos y lista oficial del catálogo.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">4</div>
+        <div class="pi"><h4>Registro en Sociedades de Gestión</h4><div class="ps">SoundExchange · ASCAP/BMI · SGACEDOM</div></div>
+        <div class="pcost">$0 - $50</div>
+      </div>
+      <div class="pb">Registro del catálogo en SoundExchange (regalías retroactivas 3 años), ASCAP/BMI (ejecución pública EE.UU.) y SGACEDOM (gestión colectiva dominicana). Configuración de Content ID en YouTube con política "Monetize".</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">5</div>
+        <div class="pi"><h4>Pitch a Multinacionales</h4><div class="ps">Believe · The Orchard · beatBread</div></div>
+        <div class="pcost">$0</div>
+      </div>
+      <div class="pb">Secuencia de 4 mensajes progresivos hacia distribuidoras internacionales. Presentación del valor histórico, auditoría como evidencia, propuesta formal de $500K-$1M y cierre con deadline del 23 de septiembre como catalizador.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">6</div>
+        <div class="pi"><h4>Infraestructura Web3 · Tokenización</h4><div class="ps">LLC Wyoming · Smart Contracts · Frontend</div></div>
+        <div class="pcost">$2K - $5K</div>
+      </div>
+      <div class="pb">Constitución de LLC en Wyoming con el adelanto. Cesión de derechos (Assignment of Rights). Despliegue de smart contracts en Base/Polygon para los 6 catálogos tokenizados (RO-01 a RO-06). Frontend con wallet connect.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">7</div>
+        <div class="pi"><h4>Evento 50 Aniversario</h4><div class="ps">23 Sept 2026 · Estadio Olímpico</div></div>
+        <div class="pcost">$5K - $15K</div>
+      </div>
+      <div class="pb">Concierto como catalizador. Campaña marketing pre-evento, venta de experiencias premium para la diáspora, smartlinks afiliados 40 artistas, acceso virtual $25, distribución masiva post-evento, Content ID en pico de tráfico.</div>
+    </div>
+    <div class="phase-card">
+      <div class="ph" onclick="this.nextElementSibling.classList.toggle('op')">
+        <div class="pnum pd">8</div>
+        <div class="pi"><h4>Ejecución & Escalabilidad</h4><div class="ps">MVP · Documentación · Replicación</div></div>
+        <div class="pcost">$1K - $3K</div>
+      </div>
+      <div class="pb">Cierre con distribuidora, recepción del capital, activación de recolección de regalías. Documentación del modelo MVP. Identificación de próximos catálogos para replicar el sistema Hyperion.</div>
+    </div>
+  </div>
+
+  <!-- ═══ TIMELINE ═══ -->
+  <div class="sec-title">📅 Línea de Tiempo</div>
+  <div class="hb"><div class="hl">Ruta Crítica</div>Todo está diseñado para maximizar el impacto antes del <strong>23 de septiembre de 2026</strong> — el concierto del 50 Aniversario que sirve como catalizador de urgencia y generador masivo de tráfico.</div>
+  <div class="tl">
+    <div class="tli"><div class="dot now"></div><h4>Semana 1-2</h4><div class="ti">AHORA</div><div class="td2">🏛️ Registro ONDA · 🏛️ ONAPI nombre comercial · 📊 Auditoría 12 canciones principales · 📬 Mensaje 1 a multinacionales</div></div>
+    <div class="tli"><div class="dot"></div><h4>Semana 3-4</h4><div class="ti">JUNIO</div><div class="td2">📝 Carta de autorización firmada · 📊 Auditoría completa 190 canciones · 📬 Mensaje 2 con resumen ejecutivo</div></div>
+    <div class="tli"><div class="dot"></div><h4>Semana 5-8</h4><div class="ti">JULIO</div><div class="td2">📜 Certificado ONDA en mano · 📬 Mensaje 3 con solicitud formal de adelanto · Negociación con distribuidoras</div></div>
+    <div class="tli"><div class="dot"></div><h4>Mes 3-4</h4><div class="ti">AGOSTO</div><div class="td2">💰 Adelanto confirmado · 🏢 LLC Wyoming constituida · ⚡ Smart contracts desplegados · 🎫 Preventa experiencias Olímpico</div></div>
+    <div class="tli"><div class="dot" style="background:var(--gold);border-color:var(--gold);box-shadow:0 0 8px var(--gold)"></div><h4>🏟️ 23 SEPTIEMBRE 2026</h4><div class="ti">EVENTO</div><div class="td2">🎺 50 Aniversario Estadio Olímpico · Captura masiva de tráfico · Tokens del concierto activos de por vida</div></div>
+    <div class="tli"><div class="dot"></div><h4>Mes 6+</h4><div class="ti">POST-EVENTO</div><div class="td2">📈 Escalamiento del modelo · Replicación a múltiples catálogos · 🚀 Hyperion en producción</div></div>
+  </div>
+
+  <!-- ═══ REVENUE STREAMS ═══ -->
+  <div class="sec-title">💵 Fuentes de Ingreso del Ecosistema</div>
+  <div class="rev-grid">
+    <div class="rev-card"><div class="rval success">$500K-$1M</div><div class="rlbl">Adelanto Multinacional</div><div class="rsub">Believe / The Orchard</div></div>
+    <div class="rev-card"><div class="rval accent">$66.8K/mes</div><div class="rlbl">Regalías Streaming</div><div class="rsub">Content ID + Spotify + Apple</div></div>
+    <div class="rev-card"><div class="rval gold">$23.6K</div><div class="rlbl">Paquetes Hospitalidad</div><div class="rsub">150 boletas · Diáspora</div></div>
+    <div class="rev-card"><div class="rval cyan">$250K</div><div class="rlbl">Streaming Privado</div><div class="rsub">10K accesos × $25</div></div>
+    <div class="rev-card"><div class="rval danger">$34.7K/mes</div><div class="rlbl">Recuperación YouTube</div><div class="rsub">15K+ nodos · Content ID</div></div>
+    <div class="rev-card"><div class="rval gold">$40-80K</div><div class="rlbl">SoundExchange Retroactivo</div><div class="rsub">3 años de radio digital EE.UU.</div></div>
+    <div class="rev-card"><div class="rval accent">30%</div><div class="rlbl">Fee Administración</div><div class="rsub">Sobre ingresos del catálogo</div></div>
+    <div class="rev-card"><div class="rval cyan">∞</div><div class="rlbl">Tokenización</div><div class="rsub">Mercado secundario · Smart contracts</div></div>
+  </div>
+
+  <!-- ═══ 6 CATALOGOS ═══ -->
+  <div class="sec-title">📀 Los 6 Catálogos Tokenizados <span class="count">178 canciones</span></div>
+  <div class="eco-grid">
+    <div class="eco-card"><div class="ec-icon">🎵</div><h3>RO-01 · Clásicos del Merengue</h3><p>1975-1990. Las canciones que lo establecieron. Mayor volumen de reproducciones históricas. Activo ancla.</p><span class="tag">ANCLA</span></div>
+    <div class="eco-card"><div class="ec-icon">🏆</div><h3>RO-02 · Década de Oro</h3><p>1990-2000. Máxima producción y reconocimiento internacional. Incluye "Te Compro Tu Novia" (2,100+ nodos).</p><span class="tag">PRODUCCIÓN</span></div>
+    <div class="eco-card"><div class="ec-icon">💔</div><h3>RO-03 · Baladas y Sentimiento</h3><p>Canciones que cruzaron géneros. Alto valor de sincronización para publicidad y cine.</p><span class="tag">SINCRONIZACIÓN</span></div>
+    <div class="eco-card"><div class="ec-icon">🤝</div><h3>RO-04 · Colaboraciones y Duetos</h3><p>Tracks con otros artistas. Activa el algoritmo en listas de los colaboradores. Multiplica alcance orgánico.</p><span class="tag">RED</span></div>
+    <div class="eco-card"><div class="ec-icon">🙏</div><h3>RO-05 · Espiritual y Motivacional</h3><p>Mensaje profundo. Diferenciador en mercado de bienestar que Spotify prioriza activamente.</p><span class="tag">BIENESTAR</span></div>
+    <div class="eco-card"><div class="ec-icon">✨</div><h3>RO-06 · 50 Aniversario Remasterizado</h3><p>2021-2026. Las canciones más importantes con audio moderno. Acompaña el evento del Olímpico.</p><span class="tag">NUEVO</span></div>
+  </div>
+
+  <!-- ═══ DOCUMENTS ═══ -->
+  <div class="sec-title">📄 Documentos Clave del Proyecto</div>
+  <div class="rg">
+    <a href="data/catalogo-completo-ramon-orlando.csv"><span>📊</span> Catálogo Completo CSV · 190 canciones</a>
+    <a href="ramon-orlando/CONTRATO%20DE%20ASESORAMIENTO%20ESTRAT%C3%89GI.txt"><span>📜</span> Contrato de Asesoramiento · Nuclear AIMA</a>
+    <a href="ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/start.txt"><span>⭐</span> Pasos Estrella · Guía Maestra 132KB</a>
+    <a href="ramon-orlando/PASOS%20ESTRELLA%20PARA%20SELLO%20INDEPENDIENTE%20DIRECTOR%20Y%20AGREGADOR%20DE%20CATALOGOS%20HISTORICOS/LA%20CLAVE%20PARA%20REGISTRAR%20Y%20SER%20INMUN.txt"><span>🛡️</span> La Clave para Registrar · Protección Legal</a>
+    <a href="ramon-orlando/boveda%20de%20seguridad/canciones%20y%20albums%20etc/albums%20con%20canciones/albumes%20con%20canciones.txt"><span>💿</span> Álbumes + Canciones · 17 discos</a>
+    <a href="ramon-orlando/boveda%20de%20seguridad/financiadoras%20principales/financiadoras%20principales.txt"><span>💰</span> Financiadoras · Fuentes de Capital</a>
+    <a href="ramon-orlando/github.comaonetworkcrm-artnuclear-a.txt"><span>🔑</span> Tarifario & Keys · Interno</a>
+    <a href="pdf/Proyecto%20Ram%C3%B3n%20Orlando.pdf"><span>📘</span> Proyecto Ramón Orlando PDF</a>
+    <a href="pdf/Estrategia%20de%20Repago%20y%20Colateral%20-%20Ram%C3%B3n%20Orlando.pdf"><span>💵</span> Estrategia de Repago PDF</a>
+    <a href="pdf/Proyecto%20Maestro%2050%20Aniversario.pdf"><span>🏟️</span> Proyecto 50 Aniversario PDF</a>
+  </div>
+
+  <!-- ═══ ESTRATEGIA ═══ -->
+  <div class="sec-title">🧠 Inteligencia Estratégica</div>
+  <div class="hb">
+    <div class="hl">Estrategia de Tokenización</div>
+    <strong>LLC Wyoming</strong> como vehículo internacional. <strong>Assignment of Rights</strong> desde el sello dominicano. <strong>Smart contracts</strong> en Base/Polygon para los 6 catálogos. <strong>TuBoleta Pass</strong> como aliado de boletería blockchain. <strong>Red de afiliados</strong> con smartlinks para 40+ artistas. <strong>Streaming privado</strong> a $25 USD por acceso virtual. <strong>Playlist strategy</strong> en Spotify para capturar tráfico orgánico.
+  </div>
+  <div class="hb" style="border-left-color: var(--danger);">
+    <div class="hl" style="color: var(--danger);">Lo que NO hacer</div>
+    No subir nada sin contrato firmado. No prometer cifras sin respaldo de auditoría. No mezclar adelanto con gastos operativos antes de tener la LLC. No usar bots en zonas grises regulatorias. No revelar los nombres de las multinacionales hasta tener el certificado ONDA.
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="ft">
+    <p>☢️ Proyecto Ramón Orlando · Nuclear AIMA · v2.0 · Junio 2026</p>
+    <p style="margin-top:4px;font-size:8px">🔮 Oráculo en Vivo · ⭐ Master Plan · 💰 Adelantos · 🏛️ Legal · 🏟️ 50 Aniversario · ⚡ Web3 · 📡 Streaming</p>
+  </div>
+
+</div>
+
+<script>
+// ── Toggle phase descriptions ──
+document.querySelectorAll('.phase-card .ph').forEach(el => {
+  el.addEventListener('click', function() {
+    this.nextElementSibling.classList.toggle('op');
+  });
+});
+</script>
+</body>
+</html>

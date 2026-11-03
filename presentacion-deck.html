@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuclear AIMA · Propuesta Maestra · Ramón Orlando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0a0c;
+  --bg2: #111114;
+  --bg3: #18181d;
+  --surface: #1e1e24;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.12);
+  --text: #f0ede8;
+  --text2: #c8c4bc;
+  --muted: #7a7875;
+  --gold: #C9A84C;
+  --gold2: #e8c98a;
+  --gold3: #8b6c3a;
+  --gold-dim: rgba(201,169,76,0.12);
+  --gold-border: rgba(201,169,76,0.25);
+  --danger: #e05c5c;
+  --success: #4cad7c;
+  --cyan: #4ad0e0;
+  --purple: #9e7de8;
+  --blue: #7db8e8;
+  --pink: #e87d9e;
+  --green: #6ecfa5;
+  --orange: #e8a84c;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --display: 'Playfair Display', serif;
+  --r: 12px;
+  --r2: 20px;
+  --slide-w: min(95vw, 1200px);
+  --slide-h: min(85vh, 700px);
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* ============================================================
+   SLIDE CONTAINER
+   ============================================================ */
+.deck {
+  position: relative;
+  width: var(--slide-w);
+  height: var(--slide-h);
+  overflow: hidden;
+  border-radius: var(--r2);
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  box-shadow: 0 25px 80px rgba(0,0,0,0.7);
+}
+.slides-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 56px);
+  overflow: hidden;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.98);
+  transition: all 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dim) transparent;
+}
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  z-index: 10;
+}
+.slide.prev {
+  transform: translateY(-20px) scale(0.98);
+  opacity: 0;
+}
+.slide.exit {
+  transform: translateY(30px) scale(0.96);
+  opacity: 0;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+h1 { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; }
+h4 { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.gold { color: var(--gold); }
+.gold2 { color: var(--gold2); }
+.muted { color: var(--muted); }
+.text-sm { font-size: 0.85rem; }
+.text-xs { font-size: 0.75rem; }
+.mono { font-family: var(--mono); }
+.display { font-family: var(--display); }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mt-auto { margin-top: auto; }
+
+/* ============================================================
+   BADGE
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-dim);
+  border: 0.5px solid var(--gold-border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   GRID / CARDS
+   ============================================================ */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.8rem; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; }
+.card {
+  background: var(--bg3);
+  border: 0.5px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.2rem;
+  transition: all 0.2s;
+}
+.card:hover { border-color: var(--gold-border); }
+.card-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.card-title { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
+.card-value { font-family: var(--mono); font-size: 1.3rem; font-weight: 600; color: var(--gold); }
+.card-sub { font-size: 0.7rem; color: var(--muted); margin-top: 0.2rem; }
+.card-highlight { background: linear-gradient(135deg, rgba(201,169,76,0.08), rgba(201,169,76,0.02)); border-color: var(--gold-border); }
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+thead th {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 0.5px solid var(--border);
+}
+tbody td {
+  padding: 0.45rem 0.6rem;
+  border-bottom: 0.5px solid rgba(255,255,255,0.03);
+}
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+td.r, th.r { text-align: right; }
+td.mono { font-family: var(--mono); }
+td.gold { color: var(--gold); }
+td.danger { color: var(--danger); }
+td.success { color: var(--success); }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-bar {
+  position: absolute;
+  bottom: 56px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border);
+  z-index: 20;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  width: 0%;
+}
+
+/* ============================================================
+   BOTTOM BAR
+   ============================================================ */
+.bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--bg3);
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 20;
+}
+.slide-counter {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+.slide-counter span { color: var(--gold); font-weight: 600; }
+.nav-btns { display: flex; gap: 6px; }
+.nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 0.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+.nav-btn:hover { background: var(--surface); border-color: var(--border2); color: var(--text); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nav-btn.primary { background: var(--gold); color: #0a0a0c; border-color: var(--gold); }
+.nav-btn.primary:hover { background: var(--gold2); }
+
+/* ============================================================
+   HIGHLIGHT NUMBERS (Stat rings)
+   ============================================================ */
+.stat-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.stat-ring-num {
+  font-family: var(--mono);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-ring-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 0.3rem;
+}
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--gold-border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 0.8rem;
+  padding-left: 1rem;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.15rem;
+  top: 0.4rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg2);
+}
+.timeline-item .date {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--gold);
+  font-weight: 500;
+}
+.timeline-item .desc {
+  font-size: 0.8rem;
+  color: var(--text2);
+  line-height: 1.4;
+}
+
+/* ============================================================
+   PILL / TAG
+   ============================================================ */
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  font-weight: 500;
+}
+.pill-gold { background: var(--gold-dim); color: var(--gold); }
+.pill-danger { background: rgba(224,92,92,0.12); color: var(--danger); }
+.pill-success { background: rgba(76,173,124,0.12); color: var(--success); }
+.pill-blue { background: rgba(125,184,232,0.12); color: var(--blue); }
+.pill-purple { background: rgba(158,125,232,0.12); color: var(--purple); }
+
+/* ============================================================
+   COVER SLIDE
+   ============================================================ */
+.slide-cover {
+  background: radial-gradient(ellipse at 50% 30%, rgba(201,169,76,0.06) 0%, transparent 60%), var(--bg);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.cover-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--gold), var(--gold3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 28px;
+  font-weight: 800;
+  color: #0a0a0c;
+}
+.cover-title {
+  font-size: 3.2rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin-bottom: 0.5rem;
+}
+.cover-sub {
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.cover-meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.cover-line {
+  width: 60px;
+  height: 2px;
+  background: var(--gold);
+  margin: 1.5rem auto;
+  border-radius: 2px;
+}
+.cover-cta {
+  padding: 0.7rem 2rem;
+  border-radius: 50px;
+  background: transparent;
+  border: 0.5px solid var(--gold-border);
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+}
+.cover-cta:hover { background: var(--gold); color: #0a0a0c; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --slide-w: 100vw;
+    --slide-h: 100vh;
+  }
+  .deck { border-radius: 0; box-shadow: none; }
+  .slide { padding: 1.5rem; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.4rem; }
+  .cover-title { font-size: 2rem; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .stat-ring-num { font-size: 1.6rem; }
+}
+
+/* slide id labels */
+.slide-label {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+
+/* divider line */
+.divider {
+  width: 40px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+  margin: 1rem 0;
+}
+
+/* section title helper */
+.section-num {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+
+/* key-value inline */
+.kv { display: flex; justify-content: space-between; align-items: center; padding: 0.3rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.03); }
+.kv:last-child { border-bottom: none; }
+.kv-label { font-size: 0.75rem; color: var(--muted); }
+.kv-value { font-family: var(--mono); font-size: 0.85rem; font-weight: 500; }
+
+/* flex center */
+.flex-center { display: flex; align-items: center; gap: 0.5rem; }
+
+/* chart bars */
+.chart-bar-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.chart-bar-row { display: flex; align-items: center; gap: 0.6rem; }
+.chart-bar-label { width: 100px; font-size: 0.7rem; color: var(--text2); flex-shrink: 0; }
+.chart-bar-track { flex: 1; height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.chart-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+.chart-bar-value { width: 50px; font-size: 0.7rem; font-family: var(--mono); color: var(--gold); text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+  <div class="slides-wrapper" id="slidesWrapper">
+    <!-- ============================================================
+    SLIDE 1 — COVER
+    ============================================================ -->
+    <div class="slide slide-cover active" data-index="0">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="cover-logo">NA</div>
+        <div class="badge" style="margin-bottom:1.5rem;">🔒 Documento Confidencial · VIP</div>
+        <h1 class="cover-title">Operación<br><span class="gold">"50 Años de Infinito<br>para Ramón Orlando"</span></h1>
+        <div style="font-size:0.75rem;color:var(--gold2);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem;">Estructura Perpetua y Crecimiento Infinito</div>
+        <div class="cover-sub">Arquitectura de Ecosistema, Marketing de Guerrilla<br>y Capitalización de Activos</div>
+        <div class="cover-line"></div>
+        <div class="cover-meta">
+          <strong>Presentado a:</strong> Ramón Orlando Valoy García<br>
+          <strong>Emitido por:</strong> Nuclear AIMA · Scaling Flow IA · Nuclear Music Networks<br>
+          <strong>CEO &amp; Arquitecto:</strong> Romny Regalado<br>
+          <strong>Versión:</strong> 2.0 — Junio 2026
+        </div>
+        <div class="cover-line"></div>
+        <div style="margin-top:1rem;font-family:var(--mono);font-size:0.7rem;color:var(--gold);letter-spacing:0.1em;">
+          ▸ Presiona ESPACIO o → para navegar ◂
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 2 — MANIFIESTO
+    ============================================================ -->
+    <div class="slide" data-index="1">
+      <span class="slide-label">01/18</span>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:800px;margin:0 auto;">
+        <div class="badge">El Manifiesto del Arquitecto</div>
+        <div style="font-family:var(--display);font-size:1.6rem;font-style:italic;color:var(--text);line-height:1.5;margin-bottom:1.5rem;">
+          "La industria de la música tradicional comete un error histórico: trata a los grandes creadores como activos temporales."
+        </div>
+        <div style="font-size:0.9rem;color:var(--text2);line-height:1.7;">
+          <p class="mb-2">Usted ha entregado <strong class="gold">50 años de su vida</strong> a construir el patrimonio cultural de nuestra nación y de América Latina. Su piano, sus composiciones y sus arreglos son inmortales.</p>
+          <p class="mb-2"><strong>Nuclear AIMA</strong> no es una agencia de marketing. Es una <span class="gold">fábrica de ingeniería de activos digitales</span>. Hemos construido un ecosistema de <strong>12 módulos interconectados</strong> que funcionan 24/7.</p>
+          <p>Esta propuesta no es un servicio. Es la <span class="gold">migración tecnológica</span> de su carrera del siglo XX al siglo XXI. Es el plan para que 50 años de genialidad musical se conviertan en un flujo de caja incancelable.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 3 — RESUMEN EJECUTIVO
+    ============================================================ -->
+    <div class="slide" data-index="2">
+      <span class="slide-label">02/18</span>
+      <div class="badge">Resumen Ejecutivo</div>
+      <h2 class="mb-3">El Ecosistema <span class="gold">en una Página</span></h2>
+      <div class="grid-4 mb-3">
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="card-icon">🎵</div>
+          <div class="card-value">190</div>
+          <div class="card-sub">Canciones Auditadas</div>
+        </div>
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="card-icon">🔴</div>
+          <div class="card-value" style="color:var(--danger);">15K+</div>
+          <div class="card-sub">Nodos sin Content ID</div>
+        </div>
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="card-icon">💰</div>
+          <div class="card-value" style="color:var(--danger);">$66.8K</div>
+          <div class="card-sub">Fuga / mes</div>
+        </div>
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="card-icon">📈</div>
+          <div class="card-value">$801K</div>
+          <div class="card-sub">Proyección Anual</div>
+        </div>
+      </div>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <h4 class="mb-2">Lo que Recibe el Maestro</h4>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.8;">
+            <div class="flex-center mb-1">✅ Auditoría completa de 190 canciones en 150+ plataformas</div>
+            <div class="flex-center mb-1">✅ Recuperación retroactiva entidades de gestión ($40K-$80K)</div>
+            <div class="flex-center mb-1">✅ Streaming 24/7 con 4 cámaras PTZ profesionales</div>
+            <div class="flex-center mb-1">✅ Automatización de marketing: 125+ posts por tirada</div>
+            <div class="flex-center mb-1">✅ SEO y posicionamiento con indexación acelerada</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Continuación</h4>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.8;">
+            <div class="flex-center mb-1">✅ Tokenización de 6 catálogos en blockchain (Base/Polygon)</div>
+            <div class="flex-center mb-1">✅ Boletería NFT con plataforma blockchain + Smart Links</div>
+            <div class="flex-center mb-1">✅ Dashboard en vivo con métricas en tiempo real</div>
+            <div class="flex-center mb-1">✅ Estructura legal completa (ONAPI + ONDA + SAS)</div>
+            <div class="flex-center mb-1">✅ Acceso a adelantos de $500K-$1M con distribuidoras globales</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 4 — 12 MÓDULOS
+    ============================================================ -->
+    <div class="slide" data-index="3">
+      <span class="slide-label">03/18</span>
+      <div class="badge">Infraestructura Tecnológica</div>
+      <h2 class="mb-3">Los <span class="gold">12 Módulos</span> del Ecosistema</h2>
+      <div class="grid-3" style="flex:1;">
+        <div class="card"><span class="card-icon">🔍</span><div class="card-title">Auditoría de Activos</div><div class="card-sub">Escaneo en 150+ plataformas globales</div></div>
+        <div class="card"><span class="card-icon">📊</span><div class="card-title">Oráculo de Yield</div><div class="card-sub">Monitoreo en vivo: $89.87/hora</div></div>
+        <div class="card"><span class="card-icon">📡</span><div class="card-title">Live Search</div><div class="card-sub">236 nodos virales detectados</div></div>
+        <div class="card"><span class="card-icon">🎬</span><div class="card-title">Short Tracker</div><div class="card-sub">4,397 réplicas en Shorts</div></div>
+        <div class="card"><span class="card-icon">🕵️</span><div class="card-title">OSINT Center</div><div class="card-sub">Inteligencia + Google Dorking</div></div>
+        <div class="card"><span class="card-icon">📹</span><div class="card-title">Streaming 24/7</div><div class="card-sub">4 cámaras PTZ, 3+ plataformas</div></div>
+        <div class="card"><span class="card-icon">💰</span><div class="card-title">Cotizador Tráfico</div><div class="card-sub">Análisis de costes, 40+ servicios</div></div>
+        <div class="card"><span class="card-icon">📢</span><div class="card-title">AdsPro</div><div class="card-sub">6 personas de audiencia, ROAS 3.0x</div></div>
+        <div class="card"><span class="card-icon">👥</span><div class="card-title">Grupos Facebook</div><div class="card-sub">16 grupos, 280K+ miembros c/u</div></div>
+        <div class="card"><span class="card-icon">⚡</span><div class="card-title">Indexación SEO</div><div class="card-sub">Publicación y posicionamiento automatizado</div></div>
+        <div class="card"><span class="card-icon">🤖</span><div class="card-title">CRM Social Multicanal</div><div class="card-sub">Automatización de conversión multicanal</div></div>
+        <div class="card"><span class="card-icon">🌱</span><div class="card-title">Crecimiento Orgánico</div><div class="card-sub">Instagram + TikTok + Facebook auto</div></div>
+        <div class="card"><span class="card-icon">💬</span><div class="card-title">Mensajería Multicanal</div><div class="card-sub">Facebook Messenger + WhatsApp</div></div>
+        <div class="card"><span class="card-icon">🛡️</span><div class="card-title">Infra. Cuentas</div><div class="card-sub">VPS + Proxies + Gestión perfiles</div></div>
+        <div class="card"><span class="card-icon">🌐</span><div class="card-title">Web Personal</div><div class="card-sub">Portal + Funnel + Hosting</div></div>
+        <div class="card"><span class="card-icon">📱</span><div class="card-title">Dashboard Unificado</div><div class="card-sub">Métricas en vivo, 6 plataformas</div></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 5 — AUDITORÍA
+    ============================================================ -->
+    <div class="slide" data-index="4">
+      <span class="slide-label">04/18</span>
+      <div class="badge">Fase 1 · Auditoría</div>
+      <h2 class="mb-3">Detección de <span class="gold">Fuga de Capital</span></h2>
+      <p class="muted mb-3" style="font-size:0.85rem;">El sistema de auditoría ha identificado <strong class="gold">$730,905/mes</strong> en ingresos fugados en nodos de YouTube sin Content ID activo.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <h4 class="mb-2">Top 5 Nodos con Mayor Fuga</h4>
+          <table>
+            <thead><tr><th>Nodo</th><th class="r">Vistas</th><th class="r">Fuga/mes</th></tr></thead>
+            <tbody>
+              <tr><td>Karen Records — Te Compro Tu Novia</td><td class="r mono">84.0M</td><td class="r mono gold">$291,656</td></tr>
+              <tr><td>Los Cantantes — Topic</td><td class="r mono">43.0M</td><td class="r mono gold">$149,300</td></tr>
+              <tr><td>The New York Band</td><td class="r mono">22.0M</td><td class="r mono gold">$76,386</td></tr>
+              <tr><td>Berna Marie — No Hay Nadie Más</td><td class="r mono">10.0M</td><td class="r mono gold">$34,721</td></tr>
+              <tr><td>Toño Rosario — Que Sabe Nadie</td><td class="r mono">5.2M</td><td class="r mono gold">$18,054</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 class="mb-2">Oráculo de Yield en Vivo</h4>
+          <div class="grid-2" style="gap:0.6rem;">
+            <div class="card" style="text-align:center;"><div class="stat-ring-num gold" style="font-size:1.8rem;">20.8</div><div class="card-sub">views/segundo</div></div>
+            <div class="card" style="text-align:center;"><div class="stat-ring-num gold" style="font-size:1.8rem;">$89.87</div><div class="card-sub">/hora</div></div>
+            <div class="card" style="text-align:center;"><div class="stat-ring-num gold" style="font-size:1.8rem;">$2,156</div><div class="card-sub">/día</div></div>
+            <div class="card" style="text-align:center;"><div class="stat-ring-num gold" style="font-size:1.8rem;">$64.7K</div><div class="card-sub">/mes</div></div>
+          </div>
+          <div style="margin-top:1rem;padding:0.8rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <span style="font-size:0.75rem;color:var(--muted);">Short Tracker: Réplicas</span>
+              <span class="mono gold" style="font-size:1rem;">4,397</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;margin-top:0.3rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">Views acumuladas réplicas</span>
+              <span class="mono gold" style="font-size:1rem;">112.8M</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;margin-top:0.3rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">Fuga adicional en Shorts</span>
+              <span class="mono" style="font-size:1rem;color:var(--danger);">$39,500/mes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 6 — STREAMING 24/7
+    ============================================================ -->
+    <div class="slide" data-index="5">
+      <span class="slide-label">05/18</span>
+      <div class="badge">Fase 2 · Producción</div>
+      <h2 class="mb-3">Streaming <span class="gold">24/7 Profesional</span></h2>
+      <p class="muted mb-3" style="font-size:0.85rem;">Infraestructura completa de transmisión en vivo para posicionamiento global con cobertura multicámara profesional.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <h4 class="mb-2">Hardware</h4>
+          <div class="card mb-2">
+            <div class="kv"><span class="kv-label">🎥 Cámaras PTZ</span><span class="kv-value">4 unidades · 4K</span></div>
+            <div class="kv"><span class="kv-label">⚡ Mezclador de Video</span><span class="kv-value">Blackmagic ATEM Mini Pro</span></div>
+            <div class="kv"><span class="kv-label">🎤 Interfaz de Audio</span><span class="kv-value">Focusrite Scarlett 2i2</span></div>
+            <div class="kv"><span class="kv-label">🔊 Micrófonos</span><span class="kv-value">Shure SM7B Profesional</span></div>
+            <div class="kv"><span class="kv-label">🔌 Switch PoE+</span><span class="kv-value">Netgear GS308PP + Cat6</span></div>
+          </div>
+          <h4 class="mb-2">Plataformas de Transmisión</h4>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <span class="pill pill-gold">YouTube</span>
+            <span class="pill pill-gold">Twitch</span>
+            <span class="pill pill-gold">Facebook</span>
+            <span class="pill pill-gold">TikTok</span>
+            <span class="pill pill-gold">Instagram</span>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Capacidades del Sistema</h4>
+          <div class="card card-highlight mb-2">
+            <div class="flex-center mb-2"><span style="font-size:2rem;">🔄</span><span style="margin-left:0.8rem;font-size:0.85rem;">Loop 24/7 automatizado con parrilla televisiva</span></div>
+            <div class="flex-center mb-2"><span style="font-size:2rem;">💰</span><span style="margin-left:0.8rem;font-size:0.85rem;">Monetización total: donaciones, suscripciones, PPV</span></div>
+            <div class="flex-center mb-2"><span style="font-size:2rem;">🤖</span><span style="margin-left:0.8rem;font-size:0.85rem;">IA + Automatización para clips automáticos</span></div>
+            <div class="flex-center"><span style="font-size:2rem;">📊</span><span style="margin-left:0.8rem;font-size:0.85rem;">Analytics en vivo con reportes detallados</span></div>
+          </div>
+          <div style="padding:0.8rem;background:rgba(76,173,124,0.08);border:0.5px solid rgba(76,173,124,0.25);border-radius:var(--r);">
+            <span style="font-size:0.75rem;color:var(--success);">✅ Paquete Executive adaptado — Producción multicámara con audio profesional, 8+ plataformas, 8 cámaras PTZ (escalable)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 7 — ESTRUCTURA FINANCIERA
+    ============================================================ -->
+    <div class="slide" data-index="6">
+      <span class="slide-label">06/18</span>
+      <div class="badge">Ingeniería Financiera</div>
+      <h2 class="mb-3">Los <span class="gold">5 Colchones</span> de Capital</h2>
+      <p class="muted mb-3" style="font-size:0.85rem;">Inversión total: <strong class="gold">$40,000 USD</strong> — dividida en colchones blindados que protegen el capital y aseguran entregables medibles.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--blue);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <div><span class="pill pill-blue">Etapa 1</span><span class="card-title" style="margin-left:0.5rem;">Activación e Infraestructura</span></div>
+              <span class="mono gold" style="font-size:1.1rem;">$4,000</span>
+            </div>
+            <div class="card-sub" style="margin-top:0.3rem;">Legal · Auditoría inicial · Setup técnico · Software propietario</div>
+          </div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--cyan);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <div><span class="pill pill-gold">Etapa 2</span><span class="card-title" style="margin-left:0.5rem;">Streaming y Producción 24/7</span></div>
+              <span class="mono gold" style="font-size:1.1rem;">$10,000</span>
+            </div>
+            <div class="card-sub" style="margin-top:0.3rem;">4 cámaras PTZ · Mezclador · Audio profesional · Setup</div>
+          </div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--orange);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <div><span class="pill pill-gold">Etapa 3A</span><span class="card-title" style="margin-left:0.5rem;">Tráfico y Generación de Leads</span></div>
+              <span class="mono gold" style="font-size:1.1rem;">$13,000</span>
+            </div>
+            <div class="card-sub" style="margin-top:0.3rem;">Campañas masivas · Embudos · Contenido · SEO inicial</div>
+          </div>
+          <div class="card card-highlight" style="border-left:3px solid var(--green);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <div><span class="pill pill-success">Etapa 3B</span><span class="card-title" style="margin-left:0.5rem;">Conversión y Tokenización</span></div>
+              <span class="mono gold" style="font-size:1.1rem;">$13,000</span>
+            </div>
+            <div class="card-sub" style="margin-top:0.3rem;">Retargeting · Smart Links · Web3 · Preventa NFT</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Distribución del Capital</h4>
+          <div style="position:relative;width:100%;height:180px;background:var(--bg3);border-radius:var(--r);overflow:hidden;margin-bottom:1rem;">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:10%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;">$4K</div>
+            <div style="position:absolute;left:10%;top:0;bottom:0;width:25%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;">$10K</div>
+            <div style="position:absolute;left:35%;top:0;bottom:0;width:32.5%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;">$13K</div>
+            <div style="position:absolute;left:67.5%;top:0;bottom:0;width:32.5%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;">$13K</div>
+          </div>
+          <div style="padding:1rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <div class="flex-center" style="justify-content:space-between;margin-bottom:0.5rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">ROI Esperado Etapa 3A</span>
+              <span class="mono gold" style="font-size:1.1rem;">2,500-3,500 leads</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;margin-bottom:0.5rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">ROI Esperado Etapa 3B</span>
+              <span class="mono gold" style="font-size:1.1rem;">$125K-$350K ingresos</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;">
+              <span style="font-size:0.75rem;color:var(--muted);">ROI General del Proyecto</span>
+              <span class="mono" style="font-size:1.1rem;color:var(--success);">3.1x - 8.75x</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 8 — ROI ETAPA 3A
+    ============================================================ -->
+    <div class="slide" data-index="7">
+      <span class="slide-label">07/18</span>
+      <div class="badge">ROI Semanal · Etapa 3A</div>
+      <h2 class="mb-3">Lanzamiento de Tráfico <span class="gold">($13,000)</span></h2>
+      <p class="muted mb-2" style="font-size:0.8rem;">4 semanas de tráfico masivo, captura de leads y estabilización algorítmica.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <table>
+            <thead><tr><th>Semana</th><th>Inversión</th><th>Acciones Clave</th><th class="r">Leads</th></tr></thead>
+            <tbody>               <tr><td class="mono gold">5</td><td class="mono">$3,250</td><td>Setup tráfico base + Meta Ads + CRM multicanal + 125 posts</td><td class="r mono">400-600</td></tr>
+              <tr><td class="mono gold">6</td><td class="mono">$3,250</td><td>Escalado Pop/Push + TikTok Ads + Google Ads + A/B Testing</td><td class="r mono">600-900</td></tr>
+              <tr><td class="mono gold">7</td><td class="mono">$3,250</td><td>Remarketing + YouTube Pre-roll + PopAds GEO + UGC</td><td class="r mono">800-1,200</td></tr>
+              <tr><td class="mono gold">8</td><td class="mono">$3,250</td><td>Consolidación ganadoras + Push + Pre-conversión</td><td class="r mono">700-800</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:1rem;padding:0.8rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <div class="kv"><span class="kv-label">Total Acumulado</span><span class="kv-value gold">2,500 - 3,500 leads</span></div>
+            <div class="kv"><span class="kv-label">CPL Promedio</span><span class="kv-value gold">$3.71 - $5.20</span></div>
+            <div class="kv"><span class="kv-label">Alcance Orgánico</span><span class="kv-value gold">500K - 1M</span></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Distribución por Plataforma</h4>
+          <div class="chart-bar-group">
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Tráfico Web</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:40%;background:var(--blue);"></div></div>
+              <span class="chart-bar-value">40%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Meta Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:20%;background:var(--purple);"></div></div>
+              <span class="chart-bar-value">20%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">TikTok Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:15%;background:var(--pink);"></div></div>
+              <span class="chart-bar-value">15%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Google Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:var(--green);"></div></div>
+              <span class="chart-bar-value">10%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">YouTube Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:var(--orange);"></div></div>
+              <span class="chart-bar-value">10%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Contingencia</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:5%;background:var(--muted);"></div></div>
+              <span class="chart-bar-value">5%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 9 — ROI ETAPA 3B
+    ============================================================ -->
+    <div class="slide" data-index="8">
+      <span class="slide-label">08/18</span>
+      <div class="badge">ROI Semanal · Etapa 3B</div>
+      <h2 class="mb-3">Conversión y Tokenización <span class="gold">($13,000)</span></h2>
+      <p class="muted mb-2" style="font-size:0.8rem;">4 semanas de retargeting, preventa NFT, smart links y escalado de ganadoras.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <table>
+            <thead><tr><th>Semana</th><th>Inversión</th><th class="r">Conversiones</th><th class="r">Boletos NFT</th><th class="r">Ingreso Est.</th></tr></thead>
+            <tbody>
+              <tr><td class="mono gold">9</td><td class="mono">$3,250</td><td class="r mono">100-150</td><td class="r mono">50-100</td><td class="r mono gold">$15K-$40K</td></tr>
+              <tr><td class="mono gold">10</td><td class="mono">$3,250</td><td class="r mono">150-250</td><td class="r mono">100-200</td><td class="r mono gold">$25K-$60K</td></tr>
+              <tr><td class="mono gold">11</td><td class="mono">$3,250</td><td class="r mono">400-600</td><td class="r mono">300-500</td><td class="r mono gold">$50K-$120K</td></tr>
+              <tr><td class="mono gold">12</td><td class="mono">$3,250</td><td class="r mono">350-600</td><td class="r mono">50-100</td><td class="r mono gold">$35K-$130K</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:1rem;padding:0.8rem;background:linear-gradient(135deg,rgba(76,173,124,0.08),rgba(76,173,124,0.02));border:0.5px solid rgba(76,173,124,0.2);border-radius:var(--r);">
+            <div class="kv"><span class="kv-label">ROI Total Acumulado</span><span class="kv-value" style="color:var(--success);font-size:1.1rem;">$125K - $350K</span></div>
+            <div class="kv"><span class="kv-label">ROAS sobre $13K invertido</span><span class="kv-value gold" style="font-size:1.1rem;">9.6x - 26.9x</span></div>
+            <div class="kv"><span class="kv-label">ROI General Proyecto ($40K)</span><span class="kv-value" style="color:var(--success);font-size:1.1rem;">3.1x - 8.75x</span></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Distribución por Plataforma</h4>
+          <div class="chart-bar-group">
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Google Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:25%;background:var(--green);"></div></div>
+              <span class="chart-bar-value">25%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Meta Retargeting</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:25%;background:var(--purple);"></div></div>
+              <span class="chart-bar-value">25%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">TikTok Conversion</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:15%;background:var(--pink);"></div></div>
+              <span class="chart-bar-value">15%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">YouTube Ads</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:var(--orange);"></div></div>
+              <span class="chart-bar-value">10%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Infraestructura Web3</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:15%;background:var(--cyan);"></div></div>
+              <span class="chart-bar-value">15%</span>
+            </div>
+            <div class="chart-bar-row">
+              <span class="chart-bar-label">Contingencia</span>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:var(--muted);"></div></div>
+              <span class="chart-bar-value">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 10 — MASTER PLAN
+    ============================================================ -->
+    <div class="slide" data-index="9">
+      <span class="slide-label">09/18</span>
+      <div class="badge">Ejecución</div>
+      <h2 class="mb-3">Master Plan: <span class="gold">8 Fases · 64 Tareas</span></h2>
+      <p class="muted mb-3" style="font-size:0.8rem;">Cada fase tiene entregables claros, costos estimados y responsables definidos.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <div class="card mb-1"><span class="pill pill-gold">F1</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Fundación Legal</span><div class="card-sub">ONAPI · SAS · ONDA · Contrato · Cuenta bancaria</div></div>
+          <div class="card mb-1"><span class="pill pill-blue">F2</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Auditoría Técnica</span><div class="card-sub">190 canciones · Yield · Nodos · Content ID</div></div>
+          <div class="card mb-1"><span class="pill pill-purple">F3</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Gestión Artista</span><div class="card-sub">Reuniones · Carta autorización · Documentos</div></div>
+          <div class="card mb-1"><span class="pill pill-gold">F4</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Sociedades Gestión</span><div class="card-sub">Entidades gestión · Sociedades autores · ISRCs</div></div>
+          <div class="card mb-1"><span class="pill pill-danger">F5</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Pitch Multinacionales</span><div class="card-sub">4 mensajes · $500K-$1M adelanto · Deadline 23S</div></div>
+        </div>
+        <div>
+          <div class="card mb-1"><span class="pill pill-gold">F6</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Web3 & Tokenización</span><div class="card-sub">LLC Wyoming · Smart contracts · NFTs · Afiliados</div></div>
+          <div class="card mb-1"><span class="pill pill-success">F7</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Evento 50 Aniversario</span><div class="card-sub">Marketing · Smartlinks · Acceso virtual · Content ID</div></div>
+          <div class="card mb-1"><span class="pill pill-blue">F8</span> <span class="card-title" style="display:inline;margin-left:0.4rem;">Escalabilidad</span><div class="card-sub">Contrato distribuidora · MVP · Replicación del sistema</div></div>
+          <div style="margin-top:1rem;padding:0.8rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <div class="flex-center" style="justify-content:space-between;">
+              <span style="font-size:0.75rem;color:var(--muted);">Inversión Legal Mínima</span>
+              <span class="mono gold">$710</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;margin-top:0.3rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">Inversión Legal Máxima</span>
+              <span class="mono gold">$1,050</span>
+            </div>
+            <div class="flex-center" style="justify-content:space-between;margin-top:0.3rem;">
+              <span style="font-size:0.75rem;color:var(--muted);">Adelanto Estimado (Distribuidoras multinacionales)</span>
+              <span class="mono" style="color:var(--success);font-size:0.95rem;">$500K - $1M USD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 11 — GIRA DE MEDIOS
+    ============================================================ -->
+    <div class="slide" data-index="10">
+      <span class="slide-label">10/18</span>
+      <div class="badge">Estrategia de Medios</div>
+      <h2 class="mb-3">Gira de Medios y <span class="gold">Pautas Publicitarias</span></h2>
+      <p class="muted mb-2" style="font-size:0.8rem;">Presencia en medios tradicionales y digitales coordinada con los picos de campañas y el conteo regresivo al 23S.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <table>
+            <thead><tr><th>Medio</th><th>Frecuencia</th><th class="r">Costo Est.</th></tr></thead>
+            <tbody>
+              <tr><td>📻 <strong>Radio Nacional</strong> — Zol FM, La Mega, Alofoke, Super Q, Viva FM</td><td>2-3/semana</td><td class="r mono">$0-$500</td></tr>
+              <tr><td>🌎 <strong>Radio Internacional</strong> — NY, Miami, Madrid, Puerto Rico</td><td>1-2/semana</td><td class="r mono">$0-$300</td></tr>
+              <tr><td>📺 <strong>TV Nacional</strong> — Divertido con Jochy, El Gordo, Noche de Luz</td><td>1/semana</td><td class="r mono">$0-$1,000</td></tr>
+              <tr><td>🌐 <strong>TV Internacional</strong> — Univisión, Telemundo, CNN en Español</td><td>2-3/mes</td><td class="r mono">$0-$800</td></tr>
+              <tr><td>📰 <strong>Prensa Escrita</strong> — Publirreportajes periódicos nacionales</td><td>Semanal</td><td class="r mono">$300-$2,500</td></tr>
+              <tr><td>📖 <strong>Revistas Especializadas</strong> — Música y entretenimiento</td><td>Mensual</td><td class="r mono">$200-$1,000</td></tr>
+              <tr><td>🎙️ <strong>Podcasts</strong> — Alta audiencia género tropical</td><td>2-3/mes</td><td class="r mono">$0-$200</td></tr>
+              <tr><td>🎤 <strong>Activaciones en Vivo</strong> — Acústicas en centros comerciales y plazas</td><td>Quincenal</td><td class="r mono">$500-$2,000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 class="mb-2">Estrategia de Coordinación</h4>
+          <div class="card mb-2">
+            <div class="flex-center mb-2"><span style="font-size:1.5rem;">🎯</span><span style="margin-left:0.6rem;font-size:0.8rem;">Giras de medios coordinadas con picos de campañas digitales (Etapas 3A y 3B)</span></div>
+            <div class="flex-center mb-2"><span style="font-size:1.5rem;">📱</span><span style="margin-left:0.6rem;font-size:0.8rem;">Cada aparición se graba, edita y distribuye como contenido corto viral</span></div>
+            <div class="flex-center mb-2"><span style="font-size:1.5rem;">📅</span><span style="margin-left:0.6rem;font-size:0.8rem;">Calendario editorial unificado cruzando fechas de medios con conteo regresivo al 23S</span></div>
+            <div class="flex-center"><span style="font-size:1.5rem;">🔗</span><span style="margin-left:0.6rem;font-size:0.8rem;">Smart links de venta de boletos y afiliados integrados en todas las apariciones</span></div>
+          </div>
+          <div style="padding:0.8rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <div class="kv"><span class="kv-label">Inversión Mensual Estimada</span><span class="kv-value gold">$1,500 - $5,000</span></div>
+            <div class="kv"><span class="kv-label">Inversión Total (Jun-Sep)</span><span class="kv-value gold">$6,000 - $20,000</span></div>
+            <div class="kv"><span class="kv-label">Alcance por Aparición TV Nacional</span><span class="kv-value gold">500K - 2M</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 12 — MARCO LEGAL
+    ============================================================ -->
+    <div class="slide" data-index="11">
+      <span class="slide-label">11/18</span>
+      <div class="badge">Estructura Legal</div>
+      <h2 class="mb-3">Los <span class="gold">4 Pasos Estratégicos</span></h2>
+      <p class="muted mb-3" style="font-size:0.8rem;">Se establece la estructura corporativa y de gestión que blinda el patrimonio y permite operar con distribuidoras multinacionales.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--gold);">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <span style="font-size:1.5rem;">🛡️</span>
+              <div>
+                <div class="card-title">Protección Patrimonial</div>
+                <div class="card-sub">Separación legal entre activos personales del Maestro y activos del sello</div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--blue);">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <span style="font-size:1.5rem;">🏛️</span>
+              <div>
+                <div class="card-title">Presencia Institucional</div>
+                <div class="card-sub">Figura legal para registrar catálogos, reclamar regalías y contratar con distribuidoras globales</div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-highlight mb-2" style="border-left:3px solid var(--success);">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <span style="font-size:1.5rem;">🎯</span>
+              <div>
+                <div class="card-title">Prioridad ante Plataformas</div>
+                <div class="card-sub">Gestión de Content ID, cobro de regalías y administración con respaldo legal</div>
+              </div>
+            </div>
+          </div>
+          <div class="card card-highlight" style="border-left:3px solid var(--purple);">
+            <div style="display:flex;align-items:center;gap:0.8rem;">
+              <span style="font-size:1.5rem;">🔗</span>
+              <div>
+                <div class="card-title">Preparación para Web3</div>
+                <div class="card-sub">Estructura corporativa necesaria para tokenización del catálogo y emisión de activos digitales</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="padding:1rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);margin-bottom:1rem;">
+            <h4 class="mb-2">Los 4 Pasos Estratégicos</h4>
+            <div class="flex-center mb-2"><span style="font-size:1.2rem;font-weight:700;color:var(--gold);margin-right:0.5rem;">1</span><span style="font-size:0.8rem;">Registro del sello y nombre comercial</span></div>
+            <div class="flex-center mb-2"><span style="font-size:1.2rem;font-weight:700;color:var(--gold);margin-right:0.5rem;">2</span><span style="font-size:0.8rem;">Constitución de la sociedad gestora</span></div>
+            <div class="flex-center mb-2"><span style="font-size:1.2rem;font-weight:700;color:var(--gold);margin-right:0.5rem;">3</span><span style="font-size:0.8rem;">Registro como productor fonográfico</span></div>
+            <div class="flex-center"><span style="font-size:1.2rem;font-weight:700;color:var(--gold);margin-right:0.5rem;">4</span><span style="font-size:0.8rem;">Contrato matriz de administración</span></div>
+          </div>
+          <div style="padding:0.8rem;background:rgba(201,169,76,0.06);border:0.5px solid var(--gold-border);border-radius:var(--r);">
+            <p style="font-size:0.7rem;color:var(--muted);font-style:italic;">
+              * Los detalles específicos del proceso — costos, tiempos, documentos y cronograma — se entregan en la sesión de trabajo posterior a la activación.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 13 — ESTRATEGIA DE REPAGO
+    ============================================================ -->
+    <div class="slide" data-index="12">
+      <span class="slide-label">12/18</span>
+      <div class="badge">Amortización Acelerada</div>
+      <h2 class="mb-3">Repago en <span class="gold">9 Meses</span></h2>
+      <p class="muted mb-3" style="font-size:0.8rem;">Tres fuentes de capital independientes atacando la deuda simultáneamente.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <div class="card card-highlight mb-2">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><span class="pill pill-success">Fuente 1</span><span class="card-title" style="margin-left:0.5rem;">Recobro Pasivo</span></div>
+              <span class="mono gold">30% retención</span>
+            </div>
+            <div class="card-sub">300M+ vistas huérfanas · Sistema de auditoría · Distribución global</div>
+          </div>
+          <div class="card card-highlight mb-2">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><span class="pill pill-gold">Fuente 2</span><span class="card-title" style="margin-left:0.5rem;">Impacto en Vivo</span></div>
+              <span class="mono gold">15% retención</span>
+            </div>
+            <div class="card-sub">Taquilla Estadio Olímpico · Preventa Fiat/NFT · Streaming PPV</div>
+          </div>
+          <div class="card card-highlight">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div><span class="pill pill-blue">Fuente 3</span><span class="card-title" style="margin-left:0.5rem;">Convergencia Web3</span></div>
+              <span class="mono gold">100% flujo libre</span>
+            </div>
+            <div class="card-sub">Solana Blinks · NFTs · Venta directa desde redes sociales</div>
+          </div>
+        </div>
+        <div>
+          <h4 class="mb-2">Línea de Tiempo de Liberación</h4>
+          <div class="card mb-2">
+            <div class="kv"><span class="kv-label">Streaming tradicional (solo regalías)</span><span class="kv-value" style="color:var(--muted);">48 meses</span></div>
+            <div class="kv"><span class="kv-label">Sistema de Auditoría (Catálogo + Taquilla)</span><span class="kv-value gold">14 meses</span></div>
+            <div class="kv"><span class="kv-label" style="font-weight:600;">Sistema Total (Web3 cruzado)</span><span class="kv-value" style="color:var(--success);font-size:1.2rem;">9 meses</span></div>
+          </div>
+          <div style="position:relative;width:100%;height:60px;background:var(--bg3);border-radius:var(--r);overflow:hidden;margin-top:0.5rem;">
+            <div style="position:absolute;left:0;top:0;bottom:0;width:18.75%;background:linear-gradient(90deg,var(--gold-dim),var(--gold-border));display:flex;align-items:center;justify-content:center;font-size:0.55rem;color:var(--gold);">Setup</div>
+            <div style="position:absolute;left:18.75%;top:0;bottom:0;width:31.25%;background:rgba(201,169,76,0.3);display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:600;color:var(--gold);">Tracción Olímpica · 50%+</div>
+            <div style="position:absolute;left:50%;top:0;bottom:0;width:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:700;color:#0a0a0c;">Cierre · 100% Pagado</div>
+          </div>
+          <div style="margin-top:0.8rem;display:flex;justify-content:space-between;font-size:0.6rem;color:var(--muted);font-family:var(--mono);">
+            <span>Mes 1</span><span>Mes 3</span><span>Mes 6</span><span>Mes 9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 14 — TOKENIZACIÓN Y WEB3
+    ============================================================ -->
+    <div class="slide" data-index="13">
+      <span class="slide-label">13/18</span>
+      <div class="badge">Blockchain</div>
+      <h2 class="mb-3">Tokenización del <span class="gold">Catálogo</span></h2>
+      <p class="muted mb-3" style="font-size:0.8rem;">Los 6 catálogos (190 canciones) convertidos en activos financieros digitales fraccionables.</p>
+      <div class="grid-2" style="flex:1;">
+        <div>
+          <h4 class="mb-2">Los 6 Catálogos Tokenizados</h4>
+          <table>
+            <thead><tr><th>Catálogo</th><th>Época</th><th class="r">Yield/mes</th></tr></thead>
+            <tbody>
+              <tr><td class="gold">RO-01 Clásicos Merengue</td><td>1975-1990</td><td class="r mono gold">$15,000+</td></tr>
+              <tr><td class="gold">RO-02 Década de Oro</td><td>1990-2000</td><td class="r mono gold">$18,000+</td></tr>
+              <tr><td>RO-03 Baladas y Sentimiento</td><td>2001</td><td class="r mono gold">$1,688</td></tr>
+              <tr><td>RO-04 Colaboraciones</td><td>2005-2007</td><td class="r mono gold">$1,616</td></tr>
+              <tr><td>RO-05 Espiritual</td><td>2014</td><td class="r mono gold">$924</td></tr>
+              <tr><td class="gold">RO-06 50 Aniversario</td><td>2021-2026</td><td class="r mono gold">$3,536</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4 class="mb-2">Arquitectura del Ecosistema</h4>
+          <div class="card card-highlight mb-2">
+            <div style="font-family:var(--mono);font-size:0.75rem;line-height:1.8;">
+              [SRL Dominicana] → [LLC Wyoming] → [Smart Contract Base Network]<br>
+              &nbsp;&nbsp;├── Token RO-01 · Clásicos del Merengue<br>
+              &nbsp;&nbsp;├── Token RO-02 · Década de Oro<br>
+              &nbsp;&nbsp;├── Token RO-03 · Baladas y Sentimiento<br>
+              &nbsp;&nbsp;├── Token RO-04 · Colaboraciones<br>
+              &nbsp;&nbsp;├── Token RO-05 · Espiritual<br>
+              &nbsp;&nbsp;└── Token RO-06 · 50 Aniversario
+            </div>
+          </div>
+          <div style="padding:0.8rem;background:var(--bg3);border-radius:var(--r);border:0.5px solid var(--border);">
+            <h4 class="mb-1">Boletería NFT · Plataforma blockchain</h4>
+            <div class="kv"><span class="kv-label">Paquete Individual Diáspora</span><span class="kv-value gold">$499 USD</span></div>
+            <div class="kv"><span class="kv-label">Paquete Familiar (paga 2 lleva 3)</span><span class="kv-value gold">$998 USD</span></div>
+            <div class="kv"><span class="kv-label">Ganancia Neta (50 grupos)</span><span class="kv-value" style="color:var(--success);">$23,650</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 15 — AUDIENCIAS Y COPY
+    ============================================================ -->
+    <div class="slide" data-index="14">
+      <span class="slide-label">14/18</span>
+      <div class="badge">Estrategia de Audiencia</div>
+      <h2 class="mb-3">Las <span class="gold">6 Personas</span> de Audiencia</h2>
+      <p class="muted mb-2" style="font-size:0.8rem;">Segmentación precisa con mensajes personalizados para cada perfil.</p>
+      <div class="grid-3" style="flex:1;">
+        <div class="card">
+          <div class="card-icon">👴</div>
+          <div class="card-title">Nostálgico Romántico</div>
+          <div class="card-sub">45-65 años · 289M views · $10,160 yield/mes · Facebook 65%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            "Hay canciones que no se escuchan con los oídos, se escuchan con los recuerdos."
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🕺</div>
+          <div class="card-title">Fiestero Clásico</div>
+          <div class="card-sub">35-55 años · 326M views · $13,320 yield/mes · FB 45% IG 30%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            "¿Existe alguna boda dominicana donde no haya sonado 'Te Compro Tu Novia'?"
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧑</div>
+          <div class="card-title">Joven Descubridor</div>
+          <div class="card-sub">18-30 años · +35% crecimiento trimestral · TikTok 48% IG 35%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            Contenido corto · Challenges · Virales · Descubrimiento del catálogo
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">✈️</div>
+          <div class="card-title">Diáspora Dominicana</div>
+          <div class="card-sub">30-60 años · USA/España · Mayor poder adquisitivo · FB 50%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            "Desde Nueva York, Madrid o Miami, el merengue nos conecta con nuestra tierra."
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎸</div>
+          <div class="card-title">Bachatero Romántico</div>
+          <div class="card-sub">25-45 años · Nicho leal · $1,688 yield/mes · IG 38% YT 35%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            Baladas · Letras profundas · Contenido emocional · Lealtad de nicho
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🙏</div>
+          <div class="card-title">Cristiano Espiritual</div>
+          <div class="card-sub">30-60 años · Mayor lealtad · $924 yield/mes · FB 58%</div>
+          <div style="margin-top:0.5rem;font-size:0.65rem;color:var(--text2);font-style:italic;border-top:0.5px solid var(--border);padding-top:0.4rem;">
+            Contenido espiritual · Reflexión · Conexión emocional profunda
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 16 — CRONOGRAMA
+    ============================================================ -->
+    <div class="slide" data-index="15">
+      <span class="slide-label">15/18</span>
+      <div class="badge">Hoja de Ruta</div>
+      <h2 class="mb-3">Cronograma hacia el <span class="gold">23 de Septiembre</span></h2>
+      <p class="muted mb-2" style="font-size:0.8rem;">14 semanas de ejecución intensiva desde el inicio hasta el Estadio Olímpico.</p>
+      <div class="timeline" style="flex:1;">
+        <div class="timeline-item"><div class="date">Semana 1-2 · Junio</div><div class="desc">Registro ONDA · SAS · Carta autorización · Auditoría inicial · Mensaje 1 multinacionales</div></div>
+        <div class="timeline-item"><div class="date">Semana 3-4 · Junio</div><div class="desc">Certificado ONDA · RNC · Auditoría completa · Mensaje 2 · Streaming 24/7 · Campañas iniciales</div></div>
+        <div class="timeline-item"><div class="date">Semana 5-8 · Julio</div><div class="desc"><strong class="gold">ETAPA 3A</strong> · Tráfico masivo · Mensaje 3 · Grupos Facebook · Indexación SEO · 2,500+ leads</div></div>
+        <div class="timeline-item"><div class="date">Semana 9-12 · Agosto</div><div class="desc"><strong class="gold">ETAPA 3B</strong> · Retargeting · Smart Links · Preventa NFT · Mensaje 4 · Adelanto en curso</div></div>
+        <div class="timeline-item"><div class="date">Semana 13-16 · Ago-Sep</div><div class="desc">LLC Wyoming · Adelanto confirmado · Escalado masivo · 40+ afiliados · Urgencia</div></div>
+        <div class="timeline-item"><div class="date" style="color:var(--success);font-weight:700;">23 SEPTIEMBRE</div><div class="desc" style="color:var(--gold);"><strong>🏟️ ESTADIO OLÍMPICO</strong> · Transmisión 24/7 · Tokens concierto · PPV Diáspora · Content ID activo</div></div>
+        <div class="timeline-item"><div class="date">Octubre+</div><div class="desc">Liquidación adelanto · Escalamiento · MVP · Replicación del sistema · Nuevos catálogos</div></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 17 — PLAN DE LIBERTAD Y LEGADO
+    ============================================================ -->
+    <div class="slide" data-index="16">
+      <span class="slide-label">16/18</span>
+      <div class="badge">Legado</div>
+      <h2 class="mb-3">Plan de <span class="gold">Libertad y Legado</span></h2>
+      <p class="muted mb-3" style="font-size:0.85rem;">Tres ejes para blindar el patrimonio del Maestro y su familia para siempre.</p>
+      <div class="grid-3" style="flex:1;">
+        <div class="card card-highlight" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+          <div style="font-size:3rem;margin-bottom:0.8rem;">🛡️</div>
+          <h3 class="gold mb-2">Paz Financiera</h3>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.6;text-align:left;">
+            <div class="flex-center mb-1">✅ Adelanto $500K-$1M con distribuidoras globales</div>
+            <div class="flex-center mb-1">✅ Blindaje económico personal desde el día 1</div>
+            <div class="flex-center">✅ Evento sin tocar ahorros familiares</div>
+          </div>
+        </div>
+        <div class="card card-highlight" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+          <div style="font-size:3rem;margin-bottom:0.8rem;">👁️</div>
+          <h3 class="gold mb-2">Control del Patrimonio</h3>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.6;text-align:left;">
+            <div class="flex-center mb-1">✅ Toma de control de 300M+ reproducciones huérfanas</div>
+            <div class="flex-center mb-1">✅ Blindaje ONDA/ONAPI/SAS de metadatos</div>
+            <div class="flex-center">✅ Recobro retroactivo entidades gestión ($40K-$80K)</div>
+          </div>
+        </div>
+        <div class="card card-highlight" style="text-align:center;display:flex;flex-direction:column;align-items:center;">
+          <div style="font-size:3rem;margin-bottom:0.8rem;">🌌</div>
+          <h3 class="gold mb-2">Eternidad Digital</h3>
+          <div style="font-size:0.78rem;color:var(--text2);line-height:1.6;text-align:left;">
+            <div class="flex-center mb-1">✅ Tokenización en Base/Polygon (6 catálogos)</div>
+            <div class="flex-center mb-1">✅ Smart contracts para regalías automáticas</div>
+            <div class="flex-center">✅ Streaming privado para la diáspora mundial</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:0.8rem 1.2rem;background:linear-gradient(135deg,rgba(201,169,76,0.06),rgba(201,169,76,0.02));border:0.5px solid var(--gold-border);border-radius:var(--r2);text-align:center;">
+        <span style="font-family:var(--display);font-style:italic;font-size:0.9rem;color:var(--gold);">
+          "Hemos diseñado la fortaleza; usted solo tiene que dar el paso para habitarla."
+        </span>
+      </div>
+    </div>
+
+    <!-- ============================================================
+    SLIDE 18 — CIERRE
+    ============================================================ -->
+    <div class="slide" data-index="17">
+      <span class="slide-label">17/18</span>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">🚀</div>
+        <h2 class="mb-2">¿Listos para <span class="gold">Hacer Historia</span>?</h2>
+        <p class="muted mb-3" style="max-width:500px;line-height:1.6;">
+          El 23 de septiembre de 2026, el Estadio Olímpico será testigo del concierto más importante de la historia del merengue. 
+          Pero más allá de esa noche, lo que estamos construyendo es el <strong class="gold">legado eterno</strong> de 50 años de genialidad musical.
+        </p>
+        <div class="cover-line"></div>
+        <div style="margin:1rem 0;font-size:0.8rem;color:var(--text2);line-height:1.6;">
+          <strong>Inversión Total:</strong> <span class="gold" style="font-size:1.2rem;">$40,000 USD</span><br>
+          <strong>ROI Proyectado:</strong> <span style="color:var(--success);">3.1x - 8.75x</span><br>
+          <strong>Adelanto Estimado:</strong> <span class="gold">$500K - $1M USD</span>
+        </div>
+        <div class="cover-line"></div>
+        <div style="margin:1.5rem 0;font-size:0.8rem;border:0.5px solid var(--gold-border);border-radius:var(--r);padding:1rem 2rem;background:var(--bg3);">
+          <div style="font-family:var(--display);font-style:italic;color:var(--gold);margin-bottom:0.5rem;">
+            "Migremos su carrera del siglo XX al siglo XXI."
+          </div>
+          <div style="font-size:0.7rem;color:var(--muted);">
+            Romny Regalado · CEO & Arquitecto de Sistemas · Nuclear AIMA
+          </div>
+        </div>
+        <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+          <span class="pill pill-gold">Nuclear AIMA</span>
+          <span class="pill pill-gold">Scaling Flow IA</span>
+          <span class="pill pill-gold">Nuclear Music Networks</span>
+        </div>
+        <div style="margin-top:1.5rem;font-size:0.6rem;color:var(--muted);letter-spacing:0.05em;">
+          DOCUMENTO CONFIDENCIAL · © 2026 NUCLEAR AIMA · TODOS LOS DERECHOS RESERVADOS
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="slide-counter">
+      <span id="currentSlide">1</span> / <span id="totalSlides">17</span>
+    </div>
+    <div style="font-size:0.65rem;color:var(--muted);letter-spacing:0.03em;">
+      <span style="color:var(--gold);">◀</span> Flechas · Espacio <span style="color:var(--gold);">▶</span>
+    </div>
+    <div class="nav-btns">
+      <button class="nav-btn" id="prevBtn" onclick="prevSlide()">◀</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="nextSlide()">▶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// SLIDE CONTROLLER
+// ============================================================
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+let current = 0;
+let isTransitioning = false;
+
+document.getElementById('totalSlides').textContent = total;
+
+function goToSlide(index) {
+  if (isTransitioning || index === current || index < 0 || index >= total) return;
+  isTransitioning = true;
+
+  const direction = index > current ? 1 : -1;
+
+  slides[current].classList.remove('active');
+  slides[current].classList.add(direction > 0 ? 'exit' : 'prev');
+
+  setTimeout(() => {
+    slides[current].classList.remove('exit', 'prev');
+  }, 560);
+
+  current = index;
+  slides[current].classList.add('active');
+
+  document.getElementById('currentSlide').textContent = current + 1;
+  document.getElementById('progressFill').style.width = ((current) / (total - 1)) * 100 + '%';
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+
+  // Reset scroll position
+  slides[current].scrollTop = 0;
+
+  setTimeout(() => { isTransitioning = false; }, 560);
+}
+
+function nextSlide() {
+  if (current < total - 1) goToSlide(current + 1);
+}
+
+function prevSlide() {
+  if (current > 0) goToSlide(current - 1);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+    e.preventDefault();
+    nextSlide();
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    prevSlide();
+  } else if (e.key === 'Home') {
+    e.preventDefault();
+    goToSlide(0);
+  } else if (e.key === 'End') {
+    e.preventDefault();
+    goToSlide(total - 1);
+  }
+});
+
+// Click on sides to navigate
+document.querySelector('.slides-wrapper').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  if (x < rect.width * 0.3) {
+    prevSlide();
+  } else if (x > rect.width * 0.7) {
+    nextSlide();
+  }
+});
+
+// Touch support
+let touchStartX = 0;
+document.querySelector('.slides-wrapper').addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+document.querySelector('.slides-wrapper').addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) nextSlide();
+    else prevSlide();
+  }
+});
+
+// Init progress
+document.getElementById('progressFill').style.width = '0%';
+document.getElementById('prevBtn').disabled = true;
+</script>
+
+</body>
+</html>

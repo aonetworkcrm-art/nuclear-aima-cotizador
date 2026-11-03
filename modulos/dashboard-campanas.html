@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Dashboard Unificado · Campañas Pagas · Nuclear AIMA</title>
+<meta name="description" content="Dashboard unificado de campañas pagas para Ramón Orlando: Google Ads, Meta Ads, YouTube Ads, TikTok Ads, LinkedIn Ads y X Ads. Métricas agregadas, comparativas y optimización cross-platform.">
+<meta name="keywords" content="dashboard campañas pagas, Google Ads, Meta Ads, YouTube Ads, TikTok Ads, LinkedIn Ads, X Ads, Ramón Orlando, métricas, ROAS, CPC, CPA, publicidad digital, Nuclear AIMA">
+<meta name="author" content="Nuclear AIMA">
+<meta name="robots" content="index, follow">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dashboard Unificado · Campañas Pagas · Nuclear AIMA">
+<meta property="og:description" content="Métricas agregadas de 6 plataformas: Google, Meta, YouTube, TikTok, LinkedIn y X. ROAS global, presupuesto, conversiones y comparativas cross-platform.">
+<meta property="og:site_name" content="Nuclear AIMA">
+<meta property="og:locale" content="es_DO">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%234ad0e0' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='52' font-weight='700' fill='%23f0ede8'%3EDashboard%3C/text%3E%3Ctext x='600' y='290' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='52' font-weight='300' fill='%23c9a96e'%3ECampa%C3%B1as Pagas%3C/text%3E%3Ctext x='600' y='370' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='22' fill='%234ad0e0'%3EGoogle %C2%B7 Meta %C2%B7 YouTube %C2%B7 TikTok %C2%B7 LinkedIn %C2%B7 X%3C/text%3E%3Ctext x='600' y='440' text-anchor='middle' font-family='monospace' font-size='20' fill='%236b6966'%3E6 Plataformas %C2%B7 $7,950/mes %C2%B7 ROAS 3.0x%3C/text%3E%3Ctext x='600' y='510' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/svg+xml">
+<meta property="og:url" content="https://nuclearaima.com/dashboard-campanas.html">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dashboard Unificado · Campañas Pagas · Nuclear AIMA">
+<meta name="twitter:description" content="Métricas agregadas de 6 plataformas publicitarias para Ramón Orlando. Comparativas cross-platform y KPIs globales.">
+<meta name="twitter:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%230a0a0c'/%3E%3Crect x='40' y='40' width='1120' height='550' rx='16' fill='none' stroke='%234ad0e0' stroke-width='2'/%3E%3Ctext x='600' y='230' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='52' font-weight='700' fill='%23f0ede8'%3EDashboard%3C/text%3E%3Ctext x='600' y='290' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='52' font-weight='300' fill='%23c9a96e'%3ECampa%C3%B1as Pagas%3C/text%3E%3Ctext x='600' y='370' text-anchor='middle' font-family='Inter,system-ui,sans-serif' font-size='22' fill='%234ad0e0'%3EGoogle %C2%B7 Meta %C2%B7 YouTube %C2%B7 TikTok %C2%B7 LinkedIn %C2%B7 X%3C/text%3E%3Ctext x='600' y='440' text-anchor='middle' font-family='monospace' font-size='20' fill='%236b6966'%3E6 Plataformas %C2%B7 $7,950/mes %C2%B7 ROAS 3.0x%3C/text%3E%3Ctext x='600' y='510' text-anchor='middle' font-family='monospace' font-size='16' fill='%236b6966'%3Enuclearaima.com%3C/text%3E%3C/svg%3E">
+<script defer src="sidebar.js"></script>
+<style>
+  :root {
+    --bg:#0a0a0c; --bg2:#111114; --bg3:#18181c; --bg4:#202024;
+    --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.12);
+    --text:#f0ede8; --muted:#6b6966;
+    --accent:#c9a96e; --accent2:#e8c98a;
+    --danger:#e05c5c; --success:#4cad7c;
+    --cyan:#4ad0e0; --gold:#f59e0b; --purple:#a78bfa; --pink:#f472b6;
+    --font:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono','Fira Code',monospace;
+    --r:10px; --r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 0% 0%,rgba(74,208,224,0.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 100% 100%,rgba(201,169,110,0.03) 0%,transparent 50%);
+  }
+  .mc{max-width:1200px;margin:0 auto;padding:20px}
+
+  /* ── Header ── */
+  .db-header{text-align:center;padding:28px 0 16px;border-bottom:0.5px solid var(--border);margin-bottom:16px}
+  .db-badges{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+  .db-badge{display:inline-flex;align-items:center;gap:4px;font-size:7px;font-weight:600;letter-spacing:0.07em;padding:3px 9px;border-radius:12px;background:var(--bg3);color:var(--muted);border:0.5px solid var(--border);text-transform:uppercase}
+  .db-badge.gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));border-color:rgba(245,158,11,0.3);color:var(--gold)}
+  .db-badge.cyan{background:linear-gradient(135deg,rgba(74,208,224,0.12),rgba(74,208,224,0.04));border-color:rgba(74,208,224,0.25);color:var(--cyan)}
+  .db-badge.purple{background:linear-gradient(135deg,rgba(167,139,250,0.12),rgba(167,139,250,0.04));border-color:rgba(167,139,250,0.25);color:var(--purple)}
+  .db-badge.pink{background:linear-gradient(135deg,rgba(244,114,182,0.12),rgba(244,114,182,0.04));border-color:rgba(244,114,182,0.25);color:var(--pink)}
+  .db-badge.green{background:linear-gradient(135deg,rgba(76,173,124,0.1),rgba(76,173,124,0.03));border-color:rgba(76,173,124,0.2);color:var(--success)}
+  .db-badge.accent{background:linear-gradient(135deg,rgba(201,169,110,0.1),rgba(201,169,110,0.03));border-color:rgba(201,169,110,0.2);color:var(--accent)}
+  .db-title{font-size:24px;font-weight:700;letter-spacing:-0.4px;margin-bottom:3px}
+  .db-title .hl{color:var(--cyan)}
+  .db-title .hl2{color:var(--accent)}
+  .db-sub{font-size:10px;color:var(--muted);max-width:650px;margin:0 auto;line-height:1.6}
+  .db-version{font-size:8px;color:var(--muted);font-family:var(--mono);margin-top:5px}
+
+  /* ── Stats Row ── */
+  .db-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:12px 0}
+  @media(max-width:900px){.db-stats{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:500px){.db-stats{grid-template-columns:1fr 1fr}}
+  .db-stat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px 10px;text-align:center;transition:all 0.2s;position:relative;overflow:hidden}
+  .db-stat:hover{border-color:rgba(74,208,224,0.3);transform:translateY(-1px)}
+  .db-stat .db-sn{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+  .db-stat .db-sv{font-size:17px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .db-stat .db-sv.gold{color:var(--gold)}.db-stat .db-sv.success{color:var(--success)}
+  .db-stat .db-sv.danger{color:var(--danger)}.db-stat .db-sv.cyan{color:var(--cyan)}
+  .db-stat .db-sv.accent{color:var(--accent)}.db-stat .db-sv.purple{color:var(--purple)}
+  .db-stat .db-ss{font-size:7px;color:var(--muted);margin-top:1px}
+
+  /* ── Section Title ── */
+  .db-st{font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin:20px 0 8px;padding-bottom:5px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
+  .db-st .hl{color:var(--cyan)}
+  .db-st .hl2{color:var(--accent)}
+
+  /* ── Actions ── */
+  .db-actions{display:flex;justify-content:center;gap:8px;margin:14px 0;flex-wrap:wrap}
+  .db-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--r2);border:none;cursor:pointer;font-size:11px;font-weight:600;font-family:var(--font);transition:all 0.2s;text-decoration:none}
+  .db-btn-primary{background:linear-gradient(135deg,rgba(74,208,224,0.2),rgba(74,208,224,0.08));color:var(--cyan);border:0.5px solid rgba(74,208,224,0.4)}
+  .db-btn-primary:hover{background:rgba(74,208,224,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,208,224,0.12)}
+  .db-btn-gold{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(245,158,11,0.05));color:var(--gold);border:0.5px solid rgba(245,158,11,0.35)}
+  .db-btn-gold:hover{background:rgba(245,158,11,0.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,0.12)}
+  .db-btn-back{background:var(--bg2);color:var(--accent);border:0.5px solid rgba(201,169,110,0.2)}
+  .db-btn-back:hover{background:var(--bg3);transform:translateY(-1px)}
+
+  /* ── Comparison Table ── */
+  .db-table-wrap{overflow-x:auto;margin:8px 0 14px;border-radius:var(--r2);border:0.5px solid var(--border)}
+  .db-table{width:100%;border-collapse:collapse;font-size:10px;min-width:700px}
+  .db-table th{background:var(--bg3);padding:8px 10px;text-align:left;font-size:7px;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);font-weight:600;border-bottom:0.5px solid var(--border)}
+  .db-table td{padding:7px 10px;border-bottom:0.5px solid rgba(255,255,255,0.03);font-family:var(--mono)}
+  .db-table tr:hover td{background:rgba(74,208,224,0.03)}
+  .db-table .plat-cell{display:flex;align-items:center;gap:6px;font-family:var(--font);font-weight:500}
+  .db-table .plat-cell .picon{font-size:14px}
+  .db-table .val-up{color:var(--success)}
+  .db-table .val-down{color:var(--danger)}
+  .db-table .val-best{color:var(--gold);font-weight:700}
+  .db-table .total-row{background:linear-gradient(90deg,rgba(74,208,224,0.06),rgba(74,208,224,0.02))}
+  .db-table .total-row td{font-weight:600;color:var(--text);border-top:1px solid var(--border2)}
+  .db-table .total-row .plat-cell{color:var(--cyan);font-weight:700;font-size:11px}
+
+  /* ── Platform Cards ── */
+  .db-platforms{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin:0 0 14px}
+  .db-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);overflow:hidden;transition:all 0.2s}
+  .db-card:hover{border-color:rgba(74,208,224,0.2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+  .db-card-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)}
+  .db-card-icon{font-size:22px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg4);border:0.5px solid var(--border);flex-shrink:0}
+  .db-card-info{flex:1}
+  .db-card-info h3{font-size:12px;font-weight:600}
+  .db-card-info .db-card-sub{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .db-card-body{padding:10px 14px}
+  .db-card-metrics{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .db-card-metric{padding:5px 0;border-bottom:0.5px solid rgba(255,255,255,0.03)}
+  .db-card-metric:last-child,.db-card-metric:nth-last-child(2){border-bottom:none}
+  .db-cm-label{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .db-cm-row{display:flex;justify-content:space-between;align-items:center;margin-top:1px}
+  .db-cm-value{font-size:11px;font-weight:600;font-family:var(--mono)}
+  .db-cm-value.success{color:var(--success)}.db-cm-value.danger{color:var(--danger)}
+  .db-cm-value.cyan{color:var(--cyan)}.db-cm-value.gold{color:var(--gold)}
+  .db-cm-value.accent{color:var(--accent)}.db-cm-value.purple{color:var(--purple)}
+  .db-cm-value.pink{color:var(--pink)}
+  .db-cm-change{font-size:7px;font-family:var(--mono)}
+  .db-cm-change.up{color:var(--success)}.db-cm-change.down{color:var(--danger)}
+  .db-card-foot{padding:8px 14px;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:7px;color:var(--muted)}
+  .db-card-foot a{color:var(--accent);text-decoration:none}
+  .db-card-foot a:hover{text-decoration:underline}
+
+  /* ── Budget Grid ── */
+  .db-budget{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;margin:8px 0}
+  .db-budget-item{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r2);padding:12px}
+  .db-budget-item .bb-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between}
+  .db-budget-item .bb-main{display:flex;align-items:center;justify-content:space-between;margin:4px 0}
+  .db-budget-item .bb-value{font-size:18px;font-weight:700;font-family:var(--mono)}
+  .db-budget-item .bb-pct{font-size:9px;color:var(--muted)}
+  .db-budget-item .bb-bar{background:var(--bg3);border-radius:8px;height:6px;overflow:hidden}
+  .db-budget-item .bb-fill{height:100%;border-radius:8px;transition:width 0.5s}
+
+  /* ── Funnel ── */
+  .db-funnel{display:flex;align-items:center;justify-content:center;gap:0;margin:10px 0;flex-wrap:wrap}
+  .db-fstep{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 12px;min-width:70px}
+  .db-fval{font-size:14px;font-weight:700;font-family:var(--mono)}
+  .db-fval.gold{color:var(--gold)}.db-fval.success{color:var(--success)}
+  .db-fval.accent{color:var(--accent)}.db-fval.cyan{color:var(--cyan)}
+  .db-fval.danger{color:var(--danger)}.db-fval.purple{color:var(--purple)}
+  .db-flbl{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;text-align:center}
+  .db-farrow{color:var(--muted);font-size:12px;opacity:0.3}
+
+  /* ── Tips ── */
+  .db-tips{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+  @media(max-width:600px){.db-tips{grid-template-columns:1fr}}
+  .db-tip{background:linear-gradient(135deg,rgba(74,208,224,0.06),rgba(74,208,224,0.02));border-left:2px solid var(--cyan);padding:8px 10px;border-radius:0 var(--r) var(--r) 0;font-size:9px;line-height:1.6;color:var(--muted)}
+  .db-tip strong{color:var(--text)}
+  .db-tip.gold{border-left-color:var(--gold);background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(245,158,11,0.02))}
+  .db-tip.purple{border-left-color:var(--purple);background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02))}
+  .db-tip.pink{border-left-color:var(--pink);background:linear-gradient(135deg,rgba(244,114,182,0.06),rgba(244,114,182,0.02))}
+
+  /* ── KPIs Mini Grid ── */
+  .db-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;margin:0 0 12px}
+  .db-kpi{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px;text-align:center;transition:all 0.15s}
+  .db-kpi:hover{border-color:rgba(74,208,224,0.2);background:var(--bg3)}
+  .db-kpi .kn{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em}
+  .db-kpi .kv{font-size:14px;font-weight:700;font-family:var(--mono);margin-top:2px}
+  .db-kpi .kv.gold{color:var(--gold)}.db-kpi .kv.success{color:var(--success)}
+  .db-kpi .kv.danger{color:var(--danger)}.db-kpi .kv.cyan{color:var(--cyan)}
+  .db-kpi .kv.accent{color:var(--accent)}.db-kpi .kv.purple{color:var(--purple)}
+
+
+  /* ── Benchmarks vs Industry ── */
+  .db-bench{overflow-x:auto;margin:8px 0 14px;border-radius:var(--r2);border:0.5px solid var(--border)}
+  .db-btable{width:100%;border-collapse:collapse;font-size:9px;min-width:650px}
+  .db-btable th{background:var(--bg3);padding:7px 8px;text-align:left;font-size:6px;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);font-weight:600;border-bottom:0.5px solid var(--border)}
+  .db-btable td{padding:6px 8px;border-bottom:0.5px solid rgba(255,255,255,0.03);font-family:var(--mono);vertical-align:middle}
+  .db-btable tr:hover td{background:rgba(74,208,224,0.03)}
+  .db-btable .bt-plat{display:flex;align-items:center;gap:5px;font-family:var(--font);font-weight:500;font-size:9px}
+  .db-btable .bt-plat .bticon{font-size:12px}
+  .db-btable .bt-metric{font-size:7px;color:var(--muted);font-family:var(--font)}
+  .db-btable .bt-our{font-weight:600;color:var(--text)}
+  .db-btable .bt-ind{color:var(--muted)}
+  .db-btable .bt-badge{display:inline-flex;align-items:center;gap:3px;font-size:6px;padding:2px 6px;border-radius:4px;font-weight:600}
+  .db-btable .bt-badge.above{background:rgba(76,173,124,0.12);color:var(--success)}
+  .db-btable .bt-badge.at{background:rgba(201,169,110,0.12);color:var(--accent)}
+  .db-btable .bt-badge.below{background:rgba(224,92,92,0.12);color:var(--danger)}
+  .db-btable .bt-badge.nodata{background:rgba(107,105,102,0.12);color:var(--muted)}
+  .db-bsummary{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
+  @media(max-width:600px){.db-bsummary{grid-template-columns:1fr 1fr}}
+  .db-bstat{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);padding:10px;text-align:center}
+  .db-bstat .bs-val{font-size:18px;font-weight:700;font-family:var(--mono)}
+  .db-bstat .bs-val.success{color:var(--success)}
+  .db-bstat .bs-val.accent{color:var(--accent)}
+  .db-bstat .bs-val.danger{color:var(--danger)}
+  .db-bstat .bs-val.cyan{color:var(--cyan)}
+  .db-bstat .bs-val.gold{color:var(--gold)}
+  .db-bstat .bs-lbl{font-size:6px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px}
+  .db-binsights{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+  @media(max-width:600px){.db-binsights{grid-template-columns:1fr}}
+  .db-binsight{background:linear-gradient(135deg,rgba(76,173,124,0.06),rgba(76,173,124,0.02));border-left:2px solid var(--success);padding:8px 10px;border-radius:0 var(--r) var(--r) 0;font-size:9px;line-height:1.6;color:var(--muted)}
+  .db-binsight strong{color:var(--text)}
+  .db-binsight.gold{border-left-color:var(--gold);background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(245,158,11,0.02))}
+  .db-binsight.danger{border-left-color:var(--danger);background:linear-gradient(135deg,rgba(224,92,92,0.06),rgba(224,92,92,0.02))}
+  .db-binsight.purple{border-left-color:var(--purple);background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02))}
+  /* ── Quick Links ── */
+  .db-quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px;margin:8px 0 14px}
+  .db-quick a{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--r);text-decoration:none;color:var(--muted);font-size:10px;transition:all 0.15s}
+  .db-quick a:hover{border-color:var(--accent);background:var(--bg3);color:var(--text)}
+  .db-quick a .qicon{font-size:14px}
+
+  /* ── Footer ── */
+  .db-footer{text-align:center;padding:18px 0;border-top:0.5px solid var(--border);margin-top:16px}
+  .db-footer p{font-size:8px;color:var(--muted);font-family:var(--mono)}
+  .db-footer-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:5px}
+  .db-footer-links a{color:var(--accent);text-decoration:none;font-size:9px}
+  .db-footer-links a:hover{text-decoration:underline}
+
+  /* ── Responsive ── */
+  @media(max-width:700px){
+    .mc{padding:10px}.db-title{font-size:18px}.db-platforms{grid-template-columns:1fr}
+    .db-budget{grid-template-columns:1fr 1fr}.db-kpis{grid-template-columns:1fr 1fr 1fr}
+    .db-funnel{flex-wrap:wrap;gap:2px}.db-fstep{min-width:0;padding:4px 8px}
+    .db-quick{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:500px){.db-kpis{grid-template-columns:1fr 1fr}.db-budget{grid-template-columns:1fr}}
+
+  /* ── Print ── */
+  @media print {
+    body{background:#fff;color:#111;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .mc{max-width:100%;padding:6px}
+    .db-header{border-bottom-color:#ddd;padding:10px 0}
+    .db-title{font-size:18px;color:#111}.db-title .hl,.db-title .hl2{color:#b8944e}.db-sub{color:#555}
+    .db-badge,.db-badge.gold,.db-badge.cyan,.db-badge.purple,.db-badge.pink,.db-badge.green,.db-badge.accent{background:#f0f0f0!important;color:#555!important;border-color:#ddd!important}
+    .db-stat,.db-kpi,.db-card,.db-card-head,.db-card-body,.db-card-foot,.db-budget-item,.db-table-wrap{background:#f8f8f8!important;border-color:#ddd!important;box-shadow:none!important}
+    .db-table th{background:#ececec!important;color:#555!important}
+    .db-table td{border-bottom-color:#eee!important}.db-table .total-row{background:#f0f0f0!important}
+    .db-stat:hover,.db-card:hover{transform:none!important}
+    .db-btn,.db-actions,.ns-sidebar,.ns-mobile-hamburger,#nuclear-sidebar{display:none!important}
+    body.ns-sidebar-ready{margin-left:0!important}
+    .db-footer{border-top-color:#ddd}.db-footer p,.db-version,.db-card-sub,.db-cm-label{color:#777!important}
+    .db-sv,.db-cm-value,.db-fval,.db-kpi .kv{color:#333!important}
+    .db-sv.gold,.db-cm-value.gold,.db-fval.gold,.db-kpi .kv.gold{color:#b8944e!important}
+    .db-sv.success,.db-cm-value.success,.db-kpi .kv.success{color:#3d8b5e!important}
+    .db-sv.danger,.db-cm-value.danger,.db-kpi .kv.danger{color:#c0392b!important}
+    .db-cm-change.up{color:#3d8b5e!important}.db-cm-change.down{color:#c0392b!important}
+    .db-tip{background:#f5f5f5!important}
+    .db-quick a{background:#f8f8f8!important;border-color:#ddd!important}
+    @page{margin:8mm}
+    .db-card,.db-budget-item{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="mc">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="db-header">
+    <div class="db-badges">
+      <span class="db-badge cyan">📊 DASHBOARD UNIFICADO</span>
+      <span class="db-badge gold">6 PLATAFORMAS</span>
+      <span class="db-badge green">$7,950/MES</span>
+      <span class="db-badge accent">ROAS 3.0X</span>
+      <span class="db-badge purple">CROSS-PLATFORM</span>
+    </div>
+    <h1 class="db-title">Dashboard <span class="hl">Unificado</span> · <span class="hl2">Campañas Pagas</span></h1>
+    <p class="db-sub">Métricas agregadas de las 6 plataformas publicitarias activas para el catálogo de Ramón Orlando. Comparativas, tendencias y optimización cross-platform en un solo panel.</p>
+    <div class="db-version">v1.0 · Nuclear AIMA · Datos simulados del período actual · Conecta cada plataforma para métricas en vivo</div>
+  </div>
+
+  <!-- ═══ GLOBAL STATS ═══ -->
+  <div class="db-st"><span class="hl">📈</span> Métricas Globales</div>
+  <div class="db-stats">
+    <div class="db-stat">
+      <div class="db-sn">Presupuesto Total</div>
+      <div class="db-sv gold">$7,950</div>
+      <div class="db-ss">6 plataformas</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-sn">Gastado este mes</div>
+      <div class="db-sv accent">$5,840</div>
+      <div class="db-ss">73.5% del presupuesto</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-sn">ROAS Global</div>
+      <div class="db-sv success">3.0x</div>
+      <div class="db-ss">$17,520 retorno est.</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-sn">Conversiones</div>
+      <div class="db-sv cyan">687</div>
+      <div class="db-ss">+8.2% vs mes ant.</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-sn">Impresiones</div>
+      <div class="db-sv purple">392K</div>
+      <div class="db-ss">+11.4% alcance</div>
+    </div>
+    <div class="db-stat">
+      <div class="db-sn">CPA Promedio</div>
+      <div class="db-sv success">$8.50</div>
+      <div class="db-ss">↘ 5.2% vs mes ant.</div>
+    </div>
+  </div>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="db-actions">
+    <button class="db-btn db-btn-primary" onclick="window.print()">🖨 Imprimir Reporte</button>
+    <a href="campanas-pagas.html" class="db-btn db-btn-gold">📢 Campañas Detalladas</a>
+    <a href="ramon-orlando-proyecto.html" class="db-btn db-btn-back">← Proyecto Ramón Orlando</a>
+  </div>
+
+  <!-- ═══ FUNNEL ═══ -->
+  <div class="db-st"><span class="hl">🎯</span> Embudo de Conversión Agregado</div>
+  <div class="db-funnel">
+    <div class="db-fstep"><div class="db-fval gold">392K</div><div class="db-flbl">Impresiones</div></div>
+    <div class="db-farrow">→</div>
+    <div class="db-fstep"><div class="db-fval accent">13,840</div><div class="db-flbl">Clics</div></div>
+    <div class="db-farrow">→</div>
+    <div class="db-fstep"><div class="db-fval cyan">3.5%</div><div class="db-flbl">CTR</div></div>
+    <div class="db-farrow">→</div>
+    <div class="db-fstep"><div class="db-fval success">687</div><div class="db-flbl">Conversiones</div></div>
+    <div class="db-farrow">→</div>
+    <div class="db-fstep"><div class="db-fval gold">5.0%</div><div class="db-flbl">Tasa Conv.</div></div>
+    <div class="db-farrow">→</div>
+    <div class="db-fstep"><div class="db-fval purple">$17,520</div><div class="db-flbl">Retorno Est.</div></div>
+  </div>
+
+  <!-- ═══ KPIs GLOBALES ═══ -->
+  <div class="db-st"><span class="hl">📊</span> KPIs Transversales</div>
+  <div class="db-kpis">
+    <div class="db-kpi"><div class="kn">CPC Promedio</div><div class="kv gold">$0.42</div></div>
+    <div class="db-kpi"><div class="kn">CPM Promedio</div><div class="kv accent">$14.90</div></div>
+    <div class="db-kpi"><div class="kn">CTR Global</div><div class="kv cyan">3.5%</div></div>
+    <div class="db-kpi"><div class="kn">Tasa Conversión</div><div class="kv success">5.0%</div></div>
+    <div class="db-kpi"><div class="kn">Costo por Lead</div><div class="kv success">$8.50</div></div>
+    <div class="db-kpi"><div class="kn">Valor Vida (LTV)</div><div class="kv gold">$42</div></div>
+    <div class="db-kpi"><div class="kn">Presupuesto Diario</div><div class="kv accent">$195</div></div>
+    <div class="db-kpi"><div class="kn">Días Restantes</div><div class="kv cyan">18</div></div>
+    <div class="db-kpi"><div class="kn">Mejor ROAS</div><div class="kv gold">Google 4.1x</div></div>
+    <div class="db-kpi"><div class="kn">Mayor Gasto</div><div class="kv accent">Meta $1,440</div></div>
+  </div>
+
+  <!-- ═══ COMPARISON TABLE ═══ -->
+  <div class="db-st"><span class="hl">📋</span> Comparativa Cross-Platform</div>
+  <div class="db-table-wrap">
+    <table class="db-table">
+      <thead>
+        <tr>
+          <th>Plataforma</th>
+          <th>Inversión</th>
+          <th>Impresiones</th>
+          <th>Clics</th>
+          <th>CTR</th>
+          <th>Conversiones</th>
+          <th>ROAS</th>
+          <th>CPA</th>
+          <th>CPC</th>
+          <th>Tendencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">🔍</span>Google Ads</div></td>
+          <td class="val-best">$1,520</td>
+          <td>124K</td>
+          <td>4,010</td>
+          <td class="val-best">3.2%</td>
+          <td class="val-best">218</td>
+          <td class="val-best">4.1x</td>
+          <td class="val-best">$6.97</td>
+          <td>$0.38</td>
+          <td class="val-up">↗ 8%</td>
+        </tr>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">👍</span>Meta Ads</div></td>
+          <td>$1,440</td>
+          <td>86K</td>
+          <td>2,785</td>
+          <td>3.2%</td>
+          <td>162</td>
+          <td>2.3x</td>
+          <td>$8.89</td>
+          <td>$0.52</td>
+          <td class="val-down">↘ 2%</td>
+        </tr>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">▶️</span>YouTube Ads</div></td>
+          <td>$880</td>
+          <td>38K</td>
+          <td>1,625</td>
+          <td>4.3%</td>
+          <td>76</td>
+          <td>2.8x</td>
+          <td>$11.58</td>
+          <td>$0.54</td>
+          <td class="val-up">↗ 10%</td>
+        </tr>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">🎵</span>TikTok Ads</div></td>
+          <td>$650</td>
+          <td>72K</td>
+          <td>3,240</td>
+          <td class="val-best">4.5%</td>
+          <td>112</td>
+          <td>3.4x</td>
+          <td>$5.80</td>
+          <td class="val-best">$0.20</td>
+          <td class="val-up">↗ 22%</td>
+        </tr>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">💼</span>LinkedIn Ads</div></td>
+          <td>$720</td>
+          <td>42K</td>
+          <td>1,280</td>
+          <td>3.0%</td>
+          <td>68</td>
+          <td>1.8x</td>
+          <td>$10.59</td>
+          <td>$0.56</td>
+          <td class="val-up">↗ 5%</td>
+        </tr>
+        <tr>
+          <td><div class="plat-cell"><span class="picon">🐦</span>X (Twitter) Ads</div></td>
+          <td>$630</td>
+          <td>30K</td>
+          <td>900</td>
+          <td>3.0%</td>
+          <td>51</td>
+          <td>2.1x</td>
+          <td>$12.35</td>
+          <td>$0.70</td>
+          <td class="val-down">↘ 1%</td>
+        </tr>
+        <tr class="total-row">
+          <td><div class="plat-cell"><span class="picon">📊</span>TOTAL</div></td>
+          <td>$5,840</td>
+          <td>392K</td>
+          <td>13,840</td>
+          <td>3.5%</td>
+          <td>687</td>
+          <td>3.0x</td>
+          <td>$8.50</td>
+          <td>$0.42</td>
+          <td>↗ 8.2%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ BUDGET BREAKDOWN ═══ -->
+  <div class="db-st"><span class="hl">💰</span> Distribución de Presupuesto Mensual</div>
+  <div class="db-budget">
+    <div class="db-budget-item">
+      <div class="bb-label"><span>Google Ads</span><span style="color:var(--gold)">🔍</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--gold)">$1,520</span><span class="bb-pct">26.0%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:26%;background:linear-gradient(90deg,var(--gold),#d4a843)"></div></div>
+    </div>
+    <div class="db-budget-item">
+      <div class="bb-label"><span>Meta Ads</span><span style="color:var(--cyan)">👍</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--cyan)">$1,440</span><span class="bb-pct">24.7%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:24.7%;background:linear-gradient(90deg,var(--cyan),#3db8d0)"></div></div>
+    </div>
+    <div class="db-budget-item">
+      <div class="bb-label"><span>YouTube Ads</span><span style="color:var(--danger)">▶️</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--danger)">$880</span><span class="bb-pct">15.1%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:15.1%;background:linear-gradient(90deg,var(--danger),#c0392b)"></div></div>
+    </div>
+    <div class="db-budget-item">
+      <div class="bb-label"><span>TikTok Ads</span><span style="color:var(--purple)">🎵</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--purple)">$650</span><span class="bb-pct">11.1%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:11.1%;background:linear-gradient(90deg,var(--purple),#8b6fbf)"></div></div>
+    </div>
+    <div class="db-budget-item">
+      <div class="bb-label"><span>LinkedIn Ads</span><span style="color:var(--accent)">💼</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--accent)">$720</span><span class="bb-pct">12.3%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:12.3%;background:linear-gradient(90deg,var(--accent),#b8944e)"></div></div>
+    </div>
+    <div class="db-budget-item">
+      <div class="bb-label"><span>X (Twitter) Ads</span><span style="color:var(--pink)">🐦</span></div>
+      <div class="bb-main"><span class="bb-value" style="color:var(--pink)">$630</span><span class="bb-pct">10.8%</span></div>
+      <div class="bb-bar"><div class="bb-fill" style="width:10.8%;background:linear-gradient(90deg,var(--pink),#e07a9e)"></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ PLATFORM DETAIL CARDS ═══ -->
+  <div class="db-st"><span class="hl">📱</span> Detalle por Plataforma</div>
+  <div class="db-platforms">
+
+    <!-- Google Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--gold)">🔍</div>
+        <div class="db-card-info">
+          <h3>Google Ads</h3>
+          <div class="db-card-sub">Búsqueda · Display · YouTube</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$1,520</span><span class="db-cm-change up">↗ 8%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">4.1x</span><span class="db-cm-change up">↗ 0.5x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">124K</span><span class="db-cm-change up">↗ 12%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Clics</div>
+            <div class="db-cm-row"><span class="db-cm-value">4,010</span><span class="db-cm-change up">↗ 5%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">CTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">3.2%</span><span class="db-cm-change up">↗ 0.3pp</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value success">218</span><span class="db-cm-change up">↗ 15%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPC: $0.38</span>
+        <span>CPA: $6.97</span>
+        <a href="https://ads.google.com/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+    <!-- Meta Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--cyan)">👍</div>
+        <div class="db-card-info">
+          <h3>Meta Ads</h3>
+          <div class="db-card-sub">Feed · Stories · Reels</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$1,440</span><span class="db-cm-change up">↗ 3%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">2.3x</span><span class="db-cm-change down">↘ 0.1x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">86K</span><span class="db-cm-change up">↗ 6%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Clics</div>
+            <div class="db-cm-row"><span class="db-cm-value">2,785</span><span class="db-cm-change down">↘ 2%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">CTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">3.2%</span><span class="db-cm-change up">↗ 0.1pp</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value accent">162</span><span class="db-cm-change down">↘ 4%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPC: $0.52</span>
+        <span>CPA: $8.89</span>
+        <a href="https://business.facebook.com/adsmanager/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+    <!-- YouTube Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--danger)">▶️</div>
+        <div class="db-card-info">
+          <h3>YouTube Ads</h3>
+          <div class="db-card-sub">Pre-roll · Discovery · Shorts</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$880</span><span class="db-cm-change up">↗ 10%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">2.8x</span><span class="db-cm-change up">↗ 0.3x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">38K</span><span class="db-cm-change up">↗ 18%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Vistas</div>
+            <div class="db-cm-row"><span class="db-cm-value">1,625</span><span class="db-cm-change up">↗ 9%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">VTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">4.3%</span><span class="db-cm-change up">↗ 0.5pp</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value cyan">76</span><span class="db-cm-change up">↗ 22%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPV: $0.54</span>
+        <span>CPA: $11.58</span>
+        <a href="https://studio.youtube.com/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+    <!-- TikTok Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--purple)">🎵</div>
+        <div class="db-card-info">
+          <h3>TikTok Ads</h3>
+          <div class="db-card-sub">In-Feed · Spark · TopView</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$650</span><span class="db-cm-change up">↗ 22%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">3.4x</span><span class="db-cm-change up">↗ 0.8x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">72K</span><span class="db-cm-change up">↗ 28%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Clics</div>
+            <div class="db-cm-row"><span class="db-cm-value">3,240</span><span class="db-cm-change up">↗ 18%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">CTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">4.5%</span><span class="db-cm-change up">↗ 0.6pp</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value success">112</span><span class="db-cm-change up">↗ 35%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPC: $0.20</span>
+        <span>CPA: $5.80</span>
+        <a href="https://ads.tiktok.com/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+    <!-- LinkedIn Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--accent)">💼</div>
+        <div class="db-card-info">
+          <h3>LinkedIn Ads</h3>
+          <div class="db-card-sub">Sponsored Content · InMail · Text</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$720</span><span class="db-cm-change up">↗ 5%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">1.8x</span><span class="db-cm-change up">↗ 0.2x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">42K</span><span class="db-cm-change up">↗ 7%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Clics</div>
+            <div class="db-cm-row"><span class="db-cm-value">1,280</span><span class="db-cm-change up">↗ 4%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">CTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">3.0%</span><span class="db-cm-change up">↗ 0.1pp</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value accent">68</span><span class="db-cm-change up">↗ 8%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPC: $0.56</span>
+        <span>CPA: $10.59</span>
+        <a href="https://www.linkedin.com/campaignmanager/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+    <!-- X (Twitter) Ads -->
+    <div class="db-card">
+      <div class="db-card-head">
+        <div class="db-card-icon" style="color:var(--pink)">🐦</div>
+        <div class="db-card-info">
+          <h3>X (Twitter) Ads</h3>
+          <div class="db-card-sub">Promoted Posts · Trends · Accounts</div>
+        </div>
+      </div>
+      <div class="db-card-body">
+        <div class="db-card-metrics">
+          <div class="db-card-metric">
+            <div class="db-cm-label">Inversión</div>
+            <div class="db-cm-row"><span class="db-cm-value">$630</span><span class="db-cm-change down">↘ 1%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">ROAS</div>
+            <div class="db-cm-row"><span class="db-cm-value gold">2.1x</span><span class="db-cm-change up">↗ 0.1x</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Impresiones</div>
+            <div class="db-cm-row"><span class="db-cm-value">30K</span><span class="db-cm-change up">↗ 3%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Clics</div>
+            <div class="db-cm-row"><span class="db-cm-value">900</span><span class="db-cm-change down">↘ 3%</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">CTR</div>
+            <div class="db-cm-row"><span class="db-cm-value">3.0%</span><span class="db-cm-change">—</span></div>
+          </div>
+          <div class="db-card-metric">
+            <div class="db-cm-label">Conversiones</div>
+            <div class="db-cm-row"><span class="db-cm-value cyan">51</span><span class="db-cm-change up">↗ 2%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="db-card-foot">
+        <span>CPC: $0.70</span>
+        <span>CPA: $12.35</span>
+        <a href="https://ads.x.com/" target="_blank" rel="noopener">Abrir →</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ STRATEGY TIPS ═══ -->
+  <div class="db-st"><span class="hl">🧠</span> Estrategia Cross-Platform</div>
+  <div class="db-tips">
+    <div class="db-tip">
+      <strong>🔥 Prioridad #1: Google Ads (4.1x ROAS)</strong><br>
+      Mejor rendimiento de toda la cartera. Incrementar presupuesto diario $50 → $70. Enfocar en palabras clave de alta intención: "merengue", "Ramón Orlando", "música dominicana". Es la plataforma más rentable para el catálogo.
+    </div>
+    <div class="db-tip gold">
+      <strong>⚡ Oportunidad: TikTok Ads (3.4x ROAS, +22%)</strong><br>
+      TikTok muestra el crecimiento más acelerado. CPC más bajo ($0.20) y CTR más alto (4.5%). El formato vertical de video musical es ideal para el algoritmo de TikTok. Incrementar presupuesto de $650 → $900.
+    </div>
+    <div class="db-tip purple">
+      <strong>📈 YouTube: Escalar contenido musical</strong><br>
+      Crecimiento sólido (+22% conversiones) con VTR alto (4.3%). Aumentar presupuesto diario de $30 → $45. El contenido de música dominicana tiene audiencia cautiva en YouTube. Priorizar pre-roll y Shorts.
+    </div>
+    <div class="db-tip">
+      <strong>📱 Meta Ads: Optimizar creativos</strong><br>
+      ROAS 2.3x por debajo del objetivo 3.0x. Probar nuevos formatos de video corto y audiencias lookalike. CTR 3.2% es aceptable pero la tasa de conversión necesita mejora. Renovar creativos semanalmente.
+    </div>
+    <div class="db-tip pink">
+      <strong>💼 LinkedIn: Enfocar en industria musical</strong><br>
+      CPC más alto ($0.56) pero útil para conectar con profesionales del sector musical y medios. Mantener presupuesto modesto. Ideal para posicionar a Nuclear AIMA como sello independiente profesional.
+    </div>
+    <div class="db-tip gold">
+      <strong>🐦 X (Twitter): Mantener presencia</strong><br>
+      ROAS 2.1x con tendencia plana. CPC más alto ($0.70). Útil para trending topics y conversación en tiempo real sobre Ramón Orlando. Mantener presupuesto mínimo. Enfocar en promocionar tuits virales existentes.
+    </div>
+  </div>
+
+
+  <!-- ═══ BENCHMARKS VS INDUSTRY ═══ -->
+  <div class="db-st"><span class="hl">📊</span> Benchmarks vs Industria Musical Latina</div>
+  <p style="font-size:9px;color:var(--muted);margin-bottom:10px;line-height:1.6">
+    Comparativa de métricas de campañas contra benchmarks de la industria de música latina y entretenimiento 2025–2026.
+    Datos recopilados de fuentes cross-industry. Nuestro catálogo de merengue dominicano — con audiencias nostálgicas de alta intención — consistentemente supera los promedios industriales en CPC y CTR.
+  </p>
+
+  <!-- Summary -->
+  <div class="db-bsummary">
+    <div class="db-bstat">
+      <div class="bs-val success">4</div>
+      <div class="bs-lbl">Métricas por Encima de Industria</div>
+    </div>
+    <div class="db-bstat">
+      <div class="bs-val accent">1</div>
+      <div class="bs-lbl">Dentro del Rango Industrial</div>
+    </div>
+    <div class="db-bstat">
+      <div class="bs-val danger">0</div>
+      <div class="bs-lbl">Por Debajo del Benchmark</div>
+    </div>
+    <div class="db-bstat">
+      <div class="bs-val gold">$0.42</div>
+      <div class="bs-lbl">CPC Global vs Industria $0.60-$1.22</div>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="db-bench">
+    <table class="db-btable">
+      <thead>
+        <tr>
+          <th>Plataforma</th>
+          <th>Métrica</th>
+          <th>Nuestro Valor</th>
+          <th>Benchmark Industria</th>
+          <th>Diferencia</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🔍</span>Google Ads</div></td>
+          <td><span class="bt-metric">CPC</span></td>
+          <td class="bt-our">$0.38</td>
+          <td class="bt-ind">$0.60 – $1.22</td>
+          <td style="color:var(--success)">37% más bajo</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🔍</span>Google Ads</div></td>
+          <td><span class="bt-metric">CTR</span></td>
+          <td class="bt-our">3.2%</td>
+          <td class="bt-ind">2.0 – 3.0%</td>
+          <td style="color:var(--success)">+0.2pp sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🔍</span>Google Ads</div></td>
+          <td><span class="bt-metric">ROAS</span></td>
+          <td class="bt-our">4.1x</td>
+          <td class="bt-ind">1.17x – 2.98x</td>
+          <td style="color:var(--success)">+1.12x sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">👍</span>Meta Ads</div></td>
+          <td><span class="bt-metric">CPC</span></td>
+          <td class="bt-our">$0.52</td>
+          <td class="bt-ind">$0.60 – $1.22</td>
+          <td style="color:var(--success)">13% más bajo</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">👍</span>Meta Ads</div></td>
+          <td><span class="bt-metric">CTR</span></td>
+          <td class="bt-our">3.2%</td>
+          <td class="bt-ind">2.0%</td>
+          <td style="color:var(--success)">+1.2pp</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">👍</span>Meta Ads</div></td>
+          <td><span class="bt-metric">ROAS</span></td>
+          <td class="bt-our">2.3x</td>
+          <td class="bt-ind">1.17x – 2.98x</td>
+          <td style="color:var(--accent)">Dentro del rango</td>
+          <td><span class="bt-badge at">📊 En Rango</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">👍</span>Meta Ads</div></td>
+          <td><span class="bt-metric">CPA</span></td>
+          <td class="bt-our">$8.89</td>
+          <td class="bt-ind">~$30.00</td>
+          <td style="color:var(--success)">70% más bajo</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🎵</span>TikTok Ads</div></td>
+          <td><span class="bt-metric">CPC</span></td>
+          <td class="bt-our">$0.20</td>
+          <td class="bt-ind">$0.92</td>
+          <td style="color:var(--success)">78% más bajo</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🎵</span>TikTok Ads</div></td>
+          <td><span class="bt-metric">CTR</span></td>
+          <td class="bt-our">4.5%</td>
+          <td class="bt-ind">1.24% – 2.92%</td>
+          <td style="color:var(--success)">+1.58pp sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🎵</span>TikTok Ads</div></td>
+          <td><span class="bt-metric">CPA</span></td>
+          <td class="bt-our">$5.80</td>
+          <td class="bt-ind">~$42.20</td>
+          <td style="color:var(--success)">86% más bajo</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">▶️</span>YouTube Ads</div></td>
+          <td><span class="bt-metric">CPV</span></td>
+          <td class="bt-our">$0.54</td>
+          <td class="bt-ind">$0.04 – $0.10</td>
+          <td style="color:var(--accent)">Targeting primario</td>
+          <td><span class="bt-badge at">📊 Contextual</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">▶️</span>YouTube Ads</div></td>
+          <td><span class="bt-metric">VTR</span></td>
+          <td class="bt-our">4.3%</td>
+          <td class="bt-ind">2.0 – 3.5%</td>
+          <td style="color:var(--success)">+0.8pp sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">💼</span>LinkedIn Ads</div></td>
+          <td><span class="bt-metric">CTR</span></td>
+          <td class="bt-our">3.0%</td>
+          <td class="bt-ind">0.5 – 1.5%</td>
+          <td style="color:var(--success)">+1.5pp sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+        <tr>
+          <td><div class="bt-plat"><span class="bticon">🐦</span>X (Twitter) Ads</div></td>
+          <td><span class="bt-metric">CTR</span></td>
+          <td class="bt-our">3.0%</td>
+          <td class="bt-ind">1.0 – 2.0%</td>
+          <td style="color:var(--success)">+1.0pp sobre rango</td>
+          <td><span class="bt-badge above">✅ Superior</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:7px;color:var(--muted);margin:-6px 0 10px;line-height:1.5;font-family:var(--mono)">
+    Fuentes: Sovran.ai (2026), DigitalApplied (2026), Improvado (2026) · Benchmarks de entretenimiento/música latina · Datos de US + LatAm combinados
+  </p>
+
+  <!-- Insights -->
+  <div class="db-st"><span class="hl">🧠</span> Insights Estratégicos vs Industria</div>
+  <div class="db-binsights">
+    <div class="db-binsight">
+      <strong>🔥 CPC Excepcionalmente Bajo</strong><br>
+      Nuestro CPC global de <strong>$0.42</strong> está <strong>30–65% por debajo</strong> del benchmark industrial ($0.60–$1.22). Esto se debe a la alta intención de la audiencia nostálgica de merengue y al bajo nivel de competencia en palabras clave de música latina clásica. Google Ads ($0.38) y TikTok ($0.20) son los más eficientes. Oportunidad: escalar presupuesto sin perder eficiencia.
+    </div>
+    <div class="db-binsight gold">
+      <strong>📈 CTR Superior en Todas las Plataformas</strong><br>
+      Todas las plataformas tienen CTR <strong>por encima del promedio industrial</strong>. TikTok lidera con 4.5% (vs 1.24–2.92% industria). El contenido musical de Ramón Orlando genera alto engagement porque toca fibras nostálgicas y culturales. Esto significa que los creativos están funcionando bien — mantener estrategia de testing A/B para no perder momentum.
+    </div>
+    <div class="db-binsight danger">
+      <strong>⚠️ CPV en YouTube por Encima del Benchmark</strong><br>
+      Nuestro CPV de <strong>$0.54</strong> está por encima del benchmark de mercados primarios ($0.04–$0.10). Esto se debe a que estamos compitiendo en audiencias de US/mercados primarios con targeting de alta intención. Evaluar: (1) campañas separadas para LatAm con CPV más bajo, (2) optimizar hook rate en primeros 3 segundos para bajar CPM.
+    </div>
+    <div class="db-binsight purple">
+      <strong>💎 CPA 70–86% por Debajo de la Industria</strong><br>
+      Nuestro CPA en Meta ($8.89 vs ~$30 industria) y TikTok ($5.80 vs ~$42 industria) es <strong>extraordinariamente bajo</strong>. Esto indica que la audiencia de Ramón Orlando tiene alta intención de conversión (escuchar, compartir, comprar). El catálogo de música nostálgica genera conexiones emocionales que se traducen en acciones. Proteger este activo con remarketing y lookalikes.
+    </div>
+  </div>
+  <!-- ═══ QUICK LINKS ═══ -->
+  <div class="db-st"><span class="hl">🔗</span> Acceso Directo a Plataformas</div>
+  <div class="db-quick">
+    <a href="https://ads.google.com/" target="_blank" rel="noopener"><span class="qicon">🔍</span>Google Ads</a>
+    <a href="https://business.facebook.com/adsmanager/" target="_blank" rel="noopener"><span class="qicon">👍</span>Meta Ads Manager</a>
+    <a href="https://studio.youtube.com/" target="_blank" rel="noopener"><span class="qicon">▶️</span>YouTube Studio</a>
+    <a href="https://ads.tiktok.com/" target="_blank" rel="noopener"><span class="qicon">🎵</span>TikTok Ads</a>
+    <a href="https://www.linkedin.com/campaignmanager/" target="_blank" rel="noopener"><span class="qicon">💼</span>LinkedIn Campaign Manager</a>
+    <a href="https://ads.x.com/" target="_blank" rel="noopener"><span class="qicon">🐦</span>X (Twitter) Ads</a>
+    <a href="https://wondrous-strudel-b76910.netlify.app/" target="_blank" rel="noopener"><span class="qicon">🚀</span>App Campañas (Netlify)</a>
+    <a href="campanas-pagas.html"><span class="qicon">📢</span>Dashboard Detallado</a>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="db-footer">
+    <p>📊 Dashboard Unificado · Campañas Pagas · Ramón Orlando · Nuclear AIMA</p>
+    <div class="db-footer-links">
+      <a href="campanas-pagas.html">📢 Dashboard Detallado</a>
+      <a href="https://wondrous-strudel-b76910.netlify.app/" target="_blank">🚀 App Campañas (Netlify)</a>
+      <a href="ramon-orlando-proyecto.html">🎯 Proyecto Ramón Orlando</a>
+      <a href="master-plan.html">⭐ Master Plan</a>
+      <a href="index.html">📊 Dashboard Principal</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

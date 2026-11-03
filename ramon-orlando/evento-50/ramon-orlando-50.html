@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Aniversario — Ramón Orlando · Estadio Olímpico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --gold-dim: #7A5E1F;
+    --dark: #0A0A0E;
+    --dark2: #13131A;
+    --dark3: #1C1C28;
+    --dark4: #252535;
+    --text: #E8E2D4;
+    --text-muted: #8A8070;
+    --text-dim: #4A4438;
+    --blue-acc: #4A9EFF;
+    --teal: #2ABFA0;
+    --danger: #E05050;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .page-header {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 2.5rem;
+  }
+  .stadium-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.35) saturate(0.7);
+  }
+  .header-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, var(--dark) 100%);
+  }
+  .header-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+  }
+  .header-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    text-shadow: 0 2px 40px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+  }
+  .header-title span { color: var(--gold-light); }
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  .gold-line {
+    width: 60px; height: 2px;
+    background: var(--gold);
+    margin: 12px auto;
+  }
+
+  /* HOURGLASS BADGE */
+  .hourglass-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+    position: relative;
+    z-index: 5;
+    margin-bottom: 1.5rem;
+  }
+  .hourglass-badge {
+    background: var(--dark2);
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    width: 64px; height: 64px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 0 30px rgba(201,168,76,0.15);
+    animation: hg-spin 8s ease-in-out infinite;
+  }
+  @keyframes hg-spin {
+    0%,100% { transform: rotate(0deg); }
+    45% { transform: rotate(180deg); }
+    55% { transform: rotate(180deg); }
+  }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+
+  /* TIMER */
+  .timer-section { margin-bottom: 2.5rem; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--dark4); }
+  .timer-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+  }
+  .timer-cell {
+    background: var(--dark2);
+    border: 1px solid var(--dark4);
+    border-radius: 10px;
+    padding: 16px 4px 12px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .timer-cell::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.6;
+  }
+  .timer-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    color: #fff;
+    display: block;
+    line-height: 1;
+  }
+  .timer-lbl {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-top: 6px;
+  }
+  .secs-cell .timer-num { color: var(--gold-light); }
+
+  /* METRIC CARDS */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+  .metric-card {
+    background: var(--dark2);
+    border: 1px solid var(--dark4);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .metric-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .metric-lbl { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* WORK TRACKER */
+  .work-card {
+    background: var(--dark2);
+    border: 1px solid var(--dark4);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .work-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--gold), var(--gold-dim));
+    border-radius: 3px 0 0 3px;
+  }
+  .work-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .work-icon {
+    background: var(--dark3);
+    border: 1px solid var(--gold-dim);
+    border-radius: 10px;
+    width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .work-name {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2px;
+  }
+  .work-person {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1px;
+  }
+  .work-project {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .work-big {
+    margin-left: auto;
+    text-align: right;
+  }
+  .work-big-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .work-big-lbl { font-size: 11px; color: var(--text-muted); text-align: right; }
+  .work-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .work-stat {
+    background: var(--dark3);
+    border-radius: 8px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .work-stat-val { font-size: 18px; font-weight: 500; color: var(--text); }
+  .work-stat-lbl { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .prog-track {
+    background: var(--dark4);
+    border-radius: 4px;
+    height: 8px;
+    margin-bottom: 4px;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    transition: width 0.6s ease;
+  }
+  .prog-labels { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-dim); margin-bottom: 1rem; }
+  .add-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .add-input {
+    background: var(--dark3);
+    border: 1px solid var(--dark4);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    width: 90px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .add-input:focus { border-color: var(--gold-dim); }
+  .add-btn {
+    background: var(--gold-dim);
+    border: none;
+    border-radius: 8px;
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .add-btn:hover { background: var(--gold); }
+  .add-btn:active { transform: scale(0.97); }
+  .add-feedback { font-size: 12px; color: var(--teal); }
+
+  /* TIMELINE */
+  .timeline-card {
+    background: var(--dark2);
+    border: 1px solid var(--dark4);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 2.5rem;
+  }
+  .tl-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--dark3);
+    transition: background 0.15s;
+  }
+  .tl-row:last-child { border-bottom: none; }
+  .tl-row.past { opacity: 0.4; }
+  .tl-row.main-event { background: rgba(201,168,76,0.07); }
+  .tl-row.next-event { background: rgba(74,158,255,0.06); }
+  .tl-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--dark4);
+    flex-shrink: 0;
+  }
+  .tl-row.past .tl-dot { background: var(--dark4); }
+  .tl-row.next-event .tl-dot { background: var(--blue-acc); box-shadow: 0 0 6px var(--blue-acc); }
+  .tl-row.main-event .tl-dot { background: var(--gold); box-shadow: 0 0 8px var(--gold); width: 10px; height: 10px; }
+  .tl-name { flex: 1; font-size: 13px; color: var(--text); }
+  .tl-row.main-event .tl-name { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--gold-light); font-weight: 700; }
+  .tl-date { font-size: 11px; color: var(--text-dim); white-space: nowrap; }
+  .tl-days { font-size: 12px; font-weight: 500; color: var(--text-muted); white-space: nowrap; min-width: 58px; text-align: right; }
+  .tl-days.soon { color: var(--blue-acc); }
+  .tl-days.gold { color: var(--gold); }
+  .tag-next {
+    font-size: 9px; font-weight: 500;
+    background: rgba(74,158,255,0.15);
+    color: var(--blue-acc);
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-left: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ASTRO */
+  .astro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+  .astro-card {
+    background: var(--dark2);
+    border: 1px solid var(--dark4);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .astro-icon { font-size: 22px; margin-top: 1px; }
+  .astro-val { font-size: 14px; font-weight: 500; color: var(--text); }
+  .astro-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* FOOTER */
+  .page-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--dark4);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+  .page-footer span { color: var(--gold-dim); }
+  #last-updated { font-size: 11px; color: var(--text-dim); text-align: center; margin-top: 1.5rem; }
+
+  @media (max-width: 560px) {
+    .timer-grid { grid-template-columns: repeat(3, 1fr); }
+    .work-big { margin-left: 0; }
+    .work-header { flex-direction: column; }
+    .work-stats { grid-template-columns: repeat(3, 1fr); }
+    .page-header { height: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER WITH STADIUM -->
+<header class="page-header">
+  <!-- Estadio Olímpico desde Wikimedia Commons (dominio público) -->
+  <img
+    class="stadium-img"
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Estadio_Ol%C3%ADmpico_F%C3%A9lix_S%C3%A1nchez.jpg/1280px-Estadio_Ol%C3%ADmpico_F%C3%A9lix_S%C3%A1nchez.jpg"
+    alt="Estadio Olímpico Félix Sánchez, Santo Domingo"
+    onerror="this.style.display='none'"
+  />
+  <div class="header-overlay"></div>
+  <div class="header-content">
+    <p class="header-eyebrow">Estadio Olímpico Félix Sánchez · Santo Domingo, RD</p>
+    <h1 class="header-title">Ramón Orlando<br><span>50 Aniversario</span></h1>
+    <div class="gold-line"></div>
+    <p class="header-sub">23 de septiembre de 2026 · 8:00 PM</p>
+  </div>
+</header>
+
+<!-- HOURGLASS -->
+<div class="hourglass-wrap">
+  <div class="hourglass-badge" title="Reloj de arena — el tiempo corre">⏳</div>
+</div>
+
+<div class="container">
+
+  <!-- TIMER -->
+  <p class="section-label">Cuenta regresiva en vivo</p>
+  <div class="timer-grid" style="margin-bottom:2rem;">
+    <div class="timer-cell"><span class="timer-num" id="t-months">--</span><span class="timer-lbl">Meses</span></div>
+    <div class="timer-cell"><span class="timer-num" id="t-weeks">--</span><span class="timer-lbl">Semanas</span></div>
+    <div class="timer-cell"><span class="timer-num" id="t-days">--</span><span class="timer-lbl">Días</span></div>
+    <div class="timer-cell"><span class="timer-num" id="t-hours">--</span><span class="timer-lbl">Horas</span></div>
+    <div class="timer-cell"><span class="timer-num" id="t-mins">--</span><span class="timer-lbl">Minutos</span></div>
+    <div class="timer-cell secs-cell"><span class="timer-num" id="t-secs">--</span><span class="timer-lbl">Segundos</span></div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics-grid">
+    <div class="metric-card"><div class="metric-val" id="m-total">--</div><div class="metric-lbl">Días totales restantes</div></div>
+    <div class="metric-card"><div class="metric-val" id="m-soles">--</div><div class="metric-lbl">Soles (amaneceres)</div></div>
+    <div class="metric-card"><div class="metric-val" id="m-lunas">--</div><div class="metric-lbl">Ciclos lunares</div></div>
+    <div class="metric-card"><div class="metric-val" id="m-pct">--</div><div class="metric-lbl">% del tiempo transcurrido</div></div>
+  </div>
+
+  <!-- WORK TRACKER -->
+  <p class="section-label">Registro de trabajo</p>
+  <div class="work-card">
+    <div class="work-header">
+      <div class="work-icon">⏳</div>
+      <div>
+        <div class="work-name">Horas acumuladas aplicadas</div>
+        <div class="work-person">Romny Regalado</div>
+        <div class="work-project">Proyecto 50 Aniversario — Ramón Orlando</div>
+      </div>
+      <div class="work-big">
+        <div class="work-big-num" id="work-total">228</div>
+        <div class="work-big-lbl">horas aplicadas</div>
+      </div>
+    </div>
+    <div class="work-stats">
+      <div class="work-stat"><div class="work-stat-val" id="w-days">--</div><div class="work-stat-lbl">Días trabajando</div></div>
+      <div class="work-stat"><div class="work-stat-val" id="w-avg">--</div><div class="work-stat-lbl">Hrs/día promedio</div></div>
+      <div class="work-stat"><div class="work-stat-val" id="w-pct">--</div><div class="work-stat-lbl">% de jornadas 12h</div></div>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="w-bar" style="width:0%"></div></div>
+    <div class="prog-labels"><span>0</span><span id="w-bar-label">Meta estimada</span></div>
+    <div class="add-row">
+      <input class="add-input" type="number" id="add-hrs" min="0.5" max="24" step="0.5" placeholder="horas" />
+      <button class="add-btn" onclick="addHours()">+ Registrar horas</button>
+      <span class="add-feedback" id="add-fb"></span>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <p class="section-label">Línea de tiempo de hitos</p>
+  <div class="timeline-card" id="timeline"></div>
+
+  <!-- ASTRO -->
+  <p class="section-label" style="margin-top:2.5rem;">Datos astronómicos y clima</p>
+  <div class="astro-grid">
+    <div class="astro-card"><div class="astro-icon">🌙</div><div><div class="astro-val">Giba creciente ~88%</div><div class="astro-lbl">Luna la noche del concierto (23 sep)</div></div></div>
+    <div class="astro-card"><div class="astro-icon">☀️</div><div><div class="astro-val" id="a-soles">-- soles</div><div class="astro-lbl">Amaneceres antes del evento</div></div></div>
+    <div class="astro-card"><div class="astro-icon">🌀</div><div><div class="astro-val">Temporada activa</div><div class="astro-lbl">Temporada ciclónica 1 jun – 30 nov</div></div></div>
+    <div class="astro-card"><div class="astro-icon">🌕</div><div><div class="astro-val">~4.3 ciclos</div><div class="astro-lbl">Lunas llenas hasta el evento</div></div></div>
+  </div>
+
+  <p id="last-updated"></p>
+</div>
+
+<footer class="page-footer">
+  Proyecto <span>50 Aniversario Ramón Orlando</span> · Desarrollado por Romny Regalado · Santo Domingo, RD
+</footer>
+
+<script>
+const TARGET = new Date('2026-09-23T20:00:00');
+const START_REF = new Date('2026-05-18T03:46:00');
+const WORK_KEY = 'ro50_work_v3';
+
+const EVENTS = [
+  { d: new Date('2026-05-31'), label: 'Día de las Madres 🇩🇴' },
+  { d: new Date('2026-06-01'), label: 'Inicio temporada de huracanes 🌀' },
+  { d: new Date('2026-06-11'), label: 'Corpus Christi — feriado nacional' },
+  { d: new Date('2026-07-29'), label: '🎂 Cumpleaños Ramón Orlando (66 años)' },
+  { d: new Date('2026-08-16'), label: 'Día de la Restauración 🇩🇴 — feriado' },
+  { d: new Date('2026-08-23'), label: '🎂 Cumpleaños Aramis Camilo' },
+  { d: new Date('2026-08-27'), label: '🎂 Cumpleaños Pochy Familia' },
+  { d: new Date('2026-08-28'), label: '🎂 Cumpleaños Sexappeal' },
+  { d: new Date('2026-09-23T20:00:00'), label: '🎺 50 ANIVERSARIO — ESTADIO OLÍMPICO', main: true },
+  { d: new Date('2026-09-24'), label: 'Día de la Virgen de las Mercedes 🇩🇴' },
+];
+
+function getWork() {
+  try { const v = localStorage.getItem(WORK_KEY); return v ? parseFloat(v) : 228; } catch(e) { return 228; }
+}
+function saveWork(v) { try { localStorage.setItem(WORK_KEY, v); } catch(e) {} }
+
+let workHours = getWork();
+
+function pad(n) { return String(Math.floor(Math.abs(n))).padStart(2,'0'); }
+
+function tick() {
+  const now = new Date();
+  const diff = TARGET - now;
+  if (diff <= 0) {
+    ['t-months','t-weeks','t-days','t-hours','t-mins','t-secs'].forEach(id => document.getElementById(id).textContent = '0');
+    return;
+  }
+  const totalSecs = Math.floor(diff / 1000);
+  const secs = totalSecs % 60;
+  const totalMins = Math.floor(totalSecs / 60);
+  const mins = totalMins % 60;
+  const totalHours = Math.floor(totalMins / 60);
+  const hours = totalHours % 24;
+  const totalDays = Math.floor(totalHours / 24);
+  const months = Math.floor(totalDays / 30.44);
+  const weeks = Math.floor(totalDays / 7);
+  const remDays = totalDays % 7;
+
+  document.getElementById('t-months').textContent = months;
+  document.getElementById('t-weeks').textContent = weeks;
+  document.getElementById('t-days').textContent = remDays;
+  document.getElementById('t-hours').textContent = pad(hours);
+  document.getElementById('t-mins').textContent = pad(mins);
+  document.getElementById('t-secs').textContent = pad(secs);
+
+  document.getElementById('m-total').textContent = totalDays;
+  document.getElementById('m-soles').textContent = totalDays;
+  document.getElementById('m-lunas').textContent = (totalDays / 29.5).toFixed(1);
+  document.getElementById('a-soles').textContent = totalDays + ' soles';
+
+  const span = TARGET - START_REF;
+  const elapsed = now - START_REF;
+  document.getElementById('m-pct').textContent = Math.min(100, Math.max(0, elapsed / span * 100)).toFixed(1) + '%';
+
+  document.getElementById('last-updated').textContent = 'Actualizado: ' + now.toLocaleString('es-DO', { dateStyle: 'full', timeStyle: 'medium' });
+}
+
+function renderWork() {
+  document.getElementById('work-total').textContent = workHours;
+  const wStart = new Date('2026-05-05');
+  const days = Math.max(1, Math.floor((new Date() - wStart) / 86400000));
+  const avg = (workHours / days).toFixed(1);
+  const goal = days * 12;
+  const pct = Math.min(100, workHours / goal * 100);
+  document.getElementById('w-days').textContent = days;
+  document.getElementById('w-avg').textContent = avg;
+  document.getElementById('w-pct').textContent = pct.toFixed(0) + '%';
+  document.getElementById('w-bar').style.width = pct.toFixed(1) + '%';
+  document.getElementById('w-bar-label').textContent = 'Meta ~' + goal + ' hrs (12h/día)';
+}
+
+function addHours() {
+  const inp = document.getElementById('add-hrs');
+  const val = parseFloat(inp.value);
+  if (isNaN(val) || val <= 0) { document.getElementById('add-fb').textContent = 'Ingresa un número válido'; return; }
+  workHours = Math.round((workHours + val) * 10) / 10;
+  saveWork(workHours);
+  inp.value = '';
+  renderWork();
+  document.getElementById('add-fb').textContent = '✓ +' + val + ' hrs registradas';
+  setTimeout(() => document.getElementById('add-fb').textContent = '', 2500);
+}
+
+function buildTimeline() {
+  const tl = document.getElementById('timeline');
+  const now = new Date();
+  let nextDone = false;
+  EVENTS.forEach(ev => {
+    const diff = Math.ceil((ev.d - now) / 86400000);
+    const past = diff < 0;
+    const isNext = !past && !nextDone;
+    if (isNext) nextDone = true;
+
+    const row = document.createElement('div');
+    row.className = 'tl-row' + (past ? ' past' : '') + (ev.main ? ' main-event' : '') + (isNext ? ' next-event' : '');
+
+    const dot = document.createElement('div'); dot.className = 'tl-dot'; row.appendChild(dot);
+
+    const name = document.createElement('span'); name.className = 'tl-name'; name.textContent = ev.label;
+    if (isNext) {
+      const tag = document.createElement('span'); tag.className = 'tag-next'; tag.textContent = 'próximo';
+      name.appendChild(tag);
+    }
+    row.appendChild(name);
+
+    const dateEl = document.createElement('span'); dateEl.className = 'tl-date';
+    dateEl.textContent = ev.d.toLocaleDateString('es-DO', { day: 'numeric', month: 'short' });
+    row.appendChild(dateEl);
+
+    const dEl = document.createElement('span');
+    if (past) { dEl.className = 'tl-days'; dEl.textContent = 'pasó'; }
+    else if (diff === 0) { dEl.className = 'tl-days gold'; dEl.textContent = '¡hoy!'; }
+    else {
+      dEl.className = 'tl-days' + (diff <= 14 ? ' soon' : '') + (ev.main ? ' gold' : '');
+      dEl.textContent = diff + (diff === 1 ? ' día' : ' días');
+    }
+    row.appendChild(dEl);
+    tl.appendChild(row);
+  });
+}
+
+buildTimeline();
+renderWork();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
